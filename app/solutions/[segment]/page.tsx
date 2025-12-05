@@ -219,3 +219,4 @@ export default function SolutionPage({ params }: { params: { segment: string } }
   );
 }
 
+
