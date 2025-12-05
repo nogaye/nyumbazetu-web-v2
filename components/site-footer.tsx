@@ -12,6 +12,7 @@ const footerLinks = {
     { label: "Committees & HOAs", href: "/solutions/committees" },
     { label: "Developers", href: "/solutions/developers" },
     { label: "Banks & SACCOS", href: "/solutions/banks" },
+    { label: "Diaspora", href: "/solutions/diaspora" },
   ],
   resources: [
     { label: "Blog", href: "/resources" },

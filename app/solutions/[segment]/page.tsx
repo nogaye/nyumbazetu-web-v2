@@ -122,6 +122,33 @@ const segments: Record<string, {
       "Property Data Integration",
     ],
   },
+  diaspora: {
+    title: "Property Management Software for Diaspora in Kenya",
+    description: "Kenyans living abroad managing property investments and rentals back home in Kenya.",
+    pains: [
+      "Difficulty monitoring property from overseas",
+      "Challenges with rent collection and tenant communication across time zones",
+      "Lack of real-time visibility into property performance and maintenance",
+      "Complex currency conversions and international payment transfers",
+      "Dependency on family or friends for property management",
+    ],
+    solutions: [
+      "Real-time property dashboards accessible from anywhere in the world",
+      "Automated rent collection with M-Pesa and bank integration",
+      "Tenant portal and mobile app for direct communication",
+      "Automated maintenance request management with photo updates",
+      "Multi-currency support and international payment options",
+      "Owner portal with live financial statements and reports",
+    ],
+    features: [
+      "Remote Property Monitoring",
+      "Automated Rent Collection",
+      "Tenant Communication Portal",
+      "Maintenance Management",
+      "Multi-Currency Support",
+      "Owner Financial Reports",
+    ],
+  },
 };
 
 export async function generateMetadata({ params }: { params: { segment: string } }) {

@@ -20,22 +20,26 @@ const navItems = [
     label: "Solutions",
     href: "/solutions",
     children: [
-      { label: "Landlords & Agents", href: "/solutions/landlords" },
-      { label: "Property Managers", href: "/solutions/managers" },
-      { label: "Committees & HOAs", href: "/solutions/committees" },
-      { label: "Developers & Estates", href: "/solutions/developers" },
-      { label: "Banks & SACCOS", href: "/solutions/banks" },
+      { label: "Landlords & Agents", href: "/solutions/landlords", description: "For individual property owners and real estate agents" },
+      { label: "Property Managers & Management Companies", href: "/solutions/managers", description: "For professional property management firms" },
+      { label: "Committees & HOAs", href: "/solutions/committees", description: "For housing estate committees and homeowners associations" },
+      { label: "Developers & Estate Owners", href: "/solutions/developers", description: "For real estate developers and large estate owners" },
+      { label: "Banks & SACCOS / Mortgage Teams", href: "/solutions/banks", description: "For financial institutions managing mortgage portfolios" },
+      { label: "Diaspora", href: "/solutions/diaspora", description: "For Kenyans abroad managing property back home" },
     ],
   },
   {
     label: "Features",
     href: "/features",
     children: [
-      { label: "Accounting & GL", href: "/features/accounting" },
-      { label: "Rent Collection", href: "/features/collections" },
-      { label: "Tenant Experience", href: "/features/tenant-experience" },
-      { label: "Maintenance & Assets", href: "/features/maintenance" },
-      { label: "KRA eTIMS", href: "/features/etims" },
+      { label: "Rent & Service Charge Collections", href: "/features/collections", description: "Automated invoicing and payment tracking" },
+      { label: "Accounting & General Ledger", href: "/features/accounting", description: "Full double-entry accounting system" },
+      { label: "Tenant & Owner Experience", href: "/features/tenant-experience", description: "Portals, mobile apps, and WhatsApp chatbot" },
+      { label: "Maintenance & Assets", href: "/features/maintenance", description: "Maintenance requests and asset tracking" },
+      { label: "Tasks & Projects", href: "/features/tasks", description: "Project management for developments" },
+      { label: "KRA eTIMS & Compliance", href: "/features/etims", description: "eTIMS-ready invoicing and tax compliance" },
+      { label: "TPS & Rent-to-Own", href: "/features/tps", description: "Tenant Purchase Scheme tracking" },
+      { label: "Communication Hub", href: "/features/communications", description: "Email, SMS, and in-app messaging" },
     ],
   },
   { label: "Pricing", href: "/pricing" },
@@ -67,15 +71,22 @@ export function MainNav() {
                   {item.label}
                 </Link>
                 {item.children && (
-                  <div className="absolute left-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                  <div className="absolute left-0 mt-2 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                     <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 py-2">
                       {item.children.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-[#b98036]"
+                          className="block px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group/item"
                         >
-                          {child.label}
+                          <div className="font-medium text-slate-900 dark:text-slate-50 group-hover/item:text-[#b98036] transition-colors">
+                            {child.label}
+                          </div>
+                          {"description" in child && child.description && (
+                            <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
+                              {child.description}
+                            </div>
+                          )}
                         </Link>
                       ))}
                     </div>
@@ -125,15 +136,22 @@ export function MainNav() {
                 {item.label}
               </Link>
               {item.children && (
-                <div className="ml-4 mt-2 space-y-2">
+                <div className="ml-4 mt-2 space-y-3">
                   {item.children.map((child) => (
                     <Link
                       key={child.href}
                       href={child.href}
-                      className="block text-sm text-slate-600 dark:text-slate-400 py-1"
+                      className="block py-2"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      {child.label}
+                      <div className="text-sm font-medium text-slate-900 dark:text-slate-50">
+                        {child.label}
+                      </div>
+                      {"description" in child && child.description && (
+                        <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                          {child.description}
+                        </div>
+                      )}
                     </Link>
                   ))}
                 </div>

@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/solutions/committees',
     '/solutions/developers',
     '/solutions/banks',
+    '/solutions/diaspora',
     '/features/accounting',
     '/features/collections',
     '/features/tenant-experience',

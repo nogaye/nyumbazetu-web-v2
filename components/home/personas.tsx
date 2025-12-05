@@ -58,6 +58,16 @@ const personas = [
     ],
     href: "/solutions/banks",
   },
+  {
+    title: "Diaspora",
+    description: "Kenyans living abroad managing property investments and rentals back home in Kenya.",
+    bullets: [
+      "Remote property monitoring from anywhere",
+      "Automated rent collection and tenant communication",
+      "Real-time financial reports and maintenance updates",
+    ],
+    href: "/solutions/diaspora",
+  },
 ];
 
 export function Personas() {
