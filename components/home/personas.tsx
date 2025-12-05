@@ -77,7 +77,7 @@ export function Personas() {
         title="Built for every layer of real estate in Kenya."
         description="From individual landlords to banks, Nyumba Zetu scales to meet the needs of every property professional."
       />
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
         {personas.map((persona, idx) => (
           <motion.div
             key={idx}
@@ -86,17 +86,21 @@ export function Personas() {
             viewport={{ once: true }}
             transition={{ delay: idx * 0.1 }}
           >
-            <Card className="h-full hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <CardTitle className="text-xl">{persona.title}</CardTitle>
-                <p className="text-slate-600 mt-2">{persona.description}</p>
+            <Card className="h-full hover:shadow-md transition-all duration-200 hover:-translate-y-1">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-3">
+                  {persona.title}
+                </CardTitle>
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                  {persona.description}
+                </p>
               </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 mb-6">
+              <CardContent className="pt-0">
+                <ul className="space-y-2.5 mb-6">
                   {persona.bullets.map((bullet, bulletIdx) => (
-                    <li key={bulletIdx} className="text-sm text-slate-700 flex items-start">
-                      <span className="text-[#36b9a0] mr-2">•</span>
-                      {bullet}
+                    <li key={bulletIdx} className="text-sm text-slate-700 dark:text-slate-300 flex items-start leading-relaxed">
+                      <span className="text-[#36b9a0] mr-2.5 flex-shrink-0 mt-0.5">•</span>
+                      <span>{bullet}</span>
                     </li>
                   ))}
                 </ul>

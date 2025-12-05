@@ -43,7 +43,7 @@ export function Differentiators() {
         description="Built for institutions, trusted by banks, designed for the next decade of property operations."
         className="text-slate-900 dark:text-white"
       />
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
         {differentiators.map((item, idx) => (
           <motion.div
             key={idx}
@@ -52,13 +52,17 @@ export function Differentiators() {
             viewport={{ once: true }}
             transition={{ delay: idx * 0.1 }}
           >
-            <Card className="bg-white dark:bg-white/10 backdrop-blur-lg border-slate-200 dark:border-white/20 hover:bg-slate-50 dark:hover:bg-white/15 transition-all">
-              <CardHeader>
+            <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:shadow-md transition-all duration-200 hover:-translate-y-1">
+              <CardHeader className="pb-4">
                 <item.icon className="h-10 w-10 text-[#b98036] mb-4" />
-                <CardTitle className="text-slate-900 dark:text-white text-2xl">{item.title}</CardTitle>
+                <CardTitle className="text-slate-900 dark:text-slate-50 text-2xl font-semibold mb-2">
+                  {item.title}
+                </CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-slate-700 dark:text-slate-300 text-lg">{item.description}</p>
+              <CardContent className="pt-0">
+                <p className="text-slate-700 dark:text-slate-300 text-lg leading-relaxed">
+                  {item.description}
+                </p>
               </CardContent>
             </Card>
           </motion.div>

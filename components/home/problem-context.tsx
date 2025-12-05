@@ -18,8 +18,8 @@ export function ProblemContext() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
         >
-          <Card className="p-8 h-full border-red-200 bg-white">
-            <h3 className="text-2xl font-bold text-slate-900 mb-6">
+          <Card className="p-8 h-full border-red-200 dark:border-red-900/50 bg-white dark:bg-slate-900 hover:shadow-md transition-all duration-200">
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-6">
               How property is still managed today in Kenya.
             </h3>
             <ul className="space-y-4">
@@ -31,8 +31,8 @@ export function ProblemContext() {
                 "Fragility during audits with missing or incomplete records",
               ].map((item, idx) => (
                 <li key={idx} className="flex items-start space-x-3">
-                  <XCircleIcon className="h-6 w-6 text-red-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-slate-700">{item}</span>
+                  <XCircleIcon className="h-6 w-6 text-red-500 dark:text-red-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-700 dark:text-slate-300 leading-relaxed">{item}</span>
                 </li>
               ))}
             </ul>
@@ -45,8 +45,8 @@ export function ProblemContext() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
         >
-          <Card className="p-8 h-full border-[#36b9a0] bg-gradient-to-br from-white to-slate-50">
-            <h3 className="text-2xl font-bold text-slate-900 mb-6">
+          <Card className="p-8 h-full border-[#36b9a0] dark:border-[#36b9a0]/50 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800/50 hover:shadow-md transition-all duration-200">
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-6">
               How Nyumba Zetu future-proofs your operations.
             </h3>
             <ul className="space-y-4">
@@ -59,7 +59,7 @@ export function ProblemContext() {
               ].map((item, idx) => (
                 <li key={idx} className="flex items-start space-x-3">
                   <CheckCircleIcon className="h-6 w-6 text-[#36b9a0] flex-shrink-0 mt-0.5" />
-                  <span className="text-slate-700">{item}</span>
+                  <span className="text-slate-700 dark:text-slate-300 leading-relaxed">{item}</span>
                 </li>
               ))}
             </ul>

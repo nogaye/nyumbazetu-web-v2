@@ -32,7 +32,7 @@ export function ResourcesTeaser() {
         title="Property management insights for Kenyan landlords and property managers."
         description="Learn from industry experts and real-world case studies."
       />
-      <div className="grid md:grid-cols-3 gap-6 mb-8">
+      <div className="grid md:grid-cols-3 gap-6 lg:gap-8 mb-8">
         {resources.map((resource, idx) => (
           <motion.div
             key={idx}
@@ -41,15 +41,19 @@ export function ResourcesTeaser() {
             viewport={{ once: true }}
             transition={{ delay: idx * 0.1 }}
           >
-            <Card className="h-full hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="text-xs font-semibold text-[#b98036] uppercase tracking-wider mb-2">
+            <Card className="h-full hover:shadow-md transition-all duration-200 hover:-translate-y-1">
+              <CardHeader className="pb-4">
+                <div className="text-xs font-semibold text-[#b98036] uppercase tracking-wider mb-3">
                   {resource.type}
                 </div>
-                <CardTitle className="text-xl">{resource.title}</CardTitle>
+                <CardTitle className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-2">
+                  {resource.title}
+                </CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-slate-600 mb-4">{resource.description}</p>
+              <CardContent className="pt-0">
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                  {resource.description}
+                </p>
               </CardContent>
             </Card>
           </motion.div>

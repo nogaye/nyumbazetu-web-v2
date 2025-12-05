@@ -147,11 +147,11 @@ export function HeroCarousel() {
           >
             {/* Left Column - Copy */}
             <div className="text-slate-900 dark:text-white">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight">
                 {currentSlideData.title}
               </h1>
               
-              <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-[#b98036]">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-[#b98036] dark:text-[#b98036]">
                 {currentSlideData.subtitle}
               </h2>
               
@@ -169,7 +169,7 @@ export function HeroCarousel() {
                     className="flex items-start space-x-3"
                   >
                     <CheckCircleIcon className="h-6 w-6 text-[#36b9a0] flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-700 dark:text-slate-300">{item}</span>
+                    <span className="text-slate-700 dark:text-slate-300 leading-relaxed">{item}</span>
                   </motion.li>
                 ))}
               </ul>

@@ -25,14 +25,14 @@ export function SectionHeader({
       )}
       <h2
         className={cn(
-          "text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 leading-tight",
+          "text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-slate-50 mb-4 md:mb-6 leading-tight tracking-tight",
           titleClassName
         )}
       >
         {title}
       </h2>
       {description && (
-        <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
+        <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed">
           {description}
         </p>
       )}

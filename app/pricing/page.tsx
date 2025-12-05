@@ -76,11 +76,11 @@ export default function PricingPage() {
       </Section>
 
       <Section>
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
           {plans.map((plan, idx) => (
             <Card
               key={idx}
-              className={plan.popular ? "border-2 border-[#b98036] relative" : ""}
+              className={`${plan.popular ? "border-2 border-[#b98036] relative" : ""} hover:shadow-md transition-all duration-200`}
             >
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#b98036] text-white px-4 py-1 rounded-full text-sm font-semibold">
@@ -88,22 +88,34 @@ export default function PricingPage() {
                 </div>
               )}
               <CardHeader>
-                <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                <CardDescription>{plan.description}</CardDescription>
+                <CardTitle className="text-2xl font-semibold text-slate-900 dark:text-slate-50">
+                  {plan.name}
+                </CardTitle>
+                <CardDescription className="text-slate-600 dark:text-slate-400">
+                  {plan.description}
+                </CardDescription>
                 <div className="mt-4">
-                  <div className="text-4xl font-bold text-slate-900">{plan.price}</div>
+                  <div className="text-4xl font-bold text-slate-900 dark:text-slate-50">
+                    {plan.price}
+                  </div>
                   {plan.period && (
-                    <div className="text-sm text-slate-600">{plan.period}</div>
+                    <div className="text-sm text-slate-600 dark:text-slate-400">
+                      {plan.period}
+                    </div>
                   )}
-                  <div className="text-sm text-slate-500 mt-2">{plan.units}</div>
+                  <div className="text-sm text-slate-500 dark:text-slate-500 mt-2">
+                    {plan.units}
+                  </div>
                 </div>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-3">
                   {plan.features.map((feature, featureIdx) => (
-                    <li key={featureIdx} className="flex items-start space-x-2">
+                    <li key={featureIdx} className="flex items-start space-x-2.5">
                       <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-700">{feature}</span>
+                      <span className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                        {feature}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -148,12 +160,16 @@ export default function PricingPage() {
               a: "Yes, we offer a 14-day free trial for all plans. No credit card required.",
             },
           ].map((faq, idx) => (
-            <Card key={idx}>
+            <Card key={idx} className="hover:shadow-md transition-all duration-200">
               <CardHeader>
-                <CardTitle className="text-lg">{faq.q}</CardTitle>
+                <CardTitle className="text-lg font-semibold text-slate-900 dark:text-slate-50">
+                  {faq.q}
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-slate-600">{faq.a}</p>
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                  {faq.a}
+                </p>
               </CardContent>
             </Card>
           ))}
@@ -163,10 +179,10 @@ export default function PricingPage() {
       {/* CTA */}
       <Section>
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-slate-900 mb-4">
+          <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4 tracking-tight">
             Need help choosing a plan?
           </h2>
-          <p className="text-lg text-slate-600 mb-8">
+          <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
             Talk to our team to find the right solution for your portfolio.
           </p>
           <Button size="lg" variant="outline" asChild>

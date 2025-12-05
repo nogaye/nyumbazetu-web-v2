@@ -114,7 +114,7 @@ export function FeatureGrid() {
         title="One platform for every part of your property operations."
         description="From rent collection to accounting, tenant experience to compliance—everything you need in one integrated system."
       />
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
         {features.map((feature, idx) => (
           <motion.div
             key={idx}
@@ -123,24 +123,28 @@ export function FeatureGrid() {
             viewport={{ once: true }}
             transition={{ delay: idx * 0.05 }}
           >
-            <Card className="h-full hover:shadow-lg transition-shadow">
-              <CardHeader>
+            <Card className="h-full hover:shadow-md transition-all duration-200 hover:-translate-y-1">
+              <CardHeader className="pb-4">
                 <feature.icon className="h-8 w-8 text-[#b98036] mb-4" />
-                <CardTitle className="text-xl">{feature.title}</CardTitle>
-                <CardDescription>{feature.description}</CardDescription>
+                <CardTitle className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-2">
+                  {feature.title}
+                </CardTitle>
+                <CardDescription className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                  {feature.description}
+                </CardDescription>
               </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 mb-4">
+              <CardContent className="pt-0">
+                <ul className="space-y-2.5 mb-6">
                   {feature.bullets.map((bullet, bulletIdx) => (
-                    <li key={bulletIdx} className="text-sm text-slate-600 flex items-start">
-                      <span className="text-[#36b9a0] mr-2">•</span>
-                      {bullet}
+                    <li key={bulletIdx} className="text-sm text-slate-700 dark:text-slate-300 flex items-start leading-relaxed">
+                      <span className="text-[#36b9a0] mr-2.5 flex-shrink-0 mt-0.5">•</span>
+                      <span>{bullet}</span>
                     </li>
                   ))}
                 </ul>
                 <Link
                   href={feature.href}
-                  className="text-sm font-medium text-[#b98036] hover:underline inline-flex items-center"
+                  className="text-sm font-medium text-[#b98036] hover:text-[#a06f2d] dark:text-[#b98036] dark:hover:text-[#d4a574] hover:underline inline-flex items-center transition-colors"
                 >
                   Learn more →
                 </Link>

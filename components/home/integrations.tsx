@@ -19,7 +19,7 @@ export function Integrations() {
         title="Plug into the tools that already run your business."
         description="Nyumba Zetu becomes the operational and financial source of truth, while your bank, M-Pesa channels, and accounting tools stay connected."
       />
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-8 items-center">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-6 lg:gap-8 items-center">
         {integrations.map((integration, idx) => (
           <motion.div
             key={idx}
@@ -27,7 +27,7 @@ export function Integrations() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: idx * 0.1 }}
-            className="h-20 flex items-center justify-center bg-slate-50 rounded-lg border border-slate-200 text-slate-600 font-medium text-sm hover:border-[#b98036] transition-colors"
+            className="h-20 flex items-center justify-center bg-slate-50 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 font-medium text-sm hover:border-[#b98036] dark:hover:border-[#b98036] hover:shadow-sm transition-all duration-200"
           >
             {integration}
           </motion.div>

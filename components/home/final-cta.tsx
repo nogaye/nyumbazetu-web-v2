@@ -14,7 +14,7 @@ export function FinalCTA() {
         viewport={{ once: true }}
         className="text-center max-w-3xl mx-auto"
       >
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-slate-900 dark:text-slate-50 leading-tight tracking-tight">
           Ready to upgrade your property operations to Fortune-500 level?
         </h2>
         <p className="text-xl text-slate-700 dark:text-slate-300 mb-8 leading-relaxed">
