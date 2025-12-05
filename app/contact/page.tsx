@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/select";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
-import { CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import { CheckCircleIcon, ExclamationCircleIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -322,8 +322,9 @@ export default function ContactPage() {
                     </SelectContent>
                   </Select>
                 </div>
-                <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+                <Button type="submit" size="lg" className="w-full flex items-center justify-center gap-2" disabled={isSubmitting}>
                   {isSubmitting ? "Sending..." : "Send Message"}
+                  {!isSubmitting && <PaperAirplaneIcon className="h-4 w-4" />}
                 </Button>
               </form>
             </CardContent>

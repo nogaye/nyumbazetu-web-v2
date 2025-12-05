@@ -3,7 +3,7 @@ import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { CheckIcon } from "@heroicons/react/24/outline";
+import { CheckIcon, PhoneIcon } from "@heroicons/react/24/outline";
 
 export const metadata = {
   title: "Pricing | Nyumba Zetu",
@@ -186,7 +186,10 @@ export default function PricingPage() {
             Talk to our team to find the right solution for your portfolio.
           </p>
           <Button size="lg" variant="outline" asChild>
-            <Link href="/contact">Contact Sales</Link>
+            <Link href="/contact" className="flex items-center gap-2">
+              Contact Sales
+              <PhoneIcon className="h-4 w-4" />
+            </Link>
           </Button>
         </div>
       </Section>

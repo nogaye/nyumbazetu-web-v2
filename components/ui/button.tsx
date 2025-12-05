@@ -16,9 +16,9 @@ const buttonVariants = cva(
         secondary: "bg-[#e27d60] text-white hover:bg-[#d46a4d]",
       },
       size: {
-        default: "h-11 px-4 py-2 min-h-[44px]",
-        sm: "h-10 rounded-md px-3 min-h-[44px]",
-        lg: "h-14 rounded-lg px-8 text-base min-h-[44px]",
+        default: "h-11 px-6 min-h-[44px]",
+        sm: "h-10 rounded-md px-4 min-h-[44px]",
+        lg: "h-11 px-6 min-h-[44px]",
         icon: "h-11 w-11 min-h-[44px] min-w-[44px]",
       },
     },

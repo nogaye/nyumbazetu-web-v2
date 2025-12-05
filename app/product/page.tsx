@@ -3,6 +3,7 @@ import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 
 export const metadata = {
   title: "Platform Overview | Nyumba Zetu",
@@ -173,7 +174,10 @@ export default function ProductPage() {
             Schedule a demo with our team to explore how Nyumba Zetu can transform your property operations.
           </p>
           <Button size="lg" asChild>
-            <Link href="/contact">Request a Demo</Link>
+            <Link href="/contact" className="flex items-center gap-2">
+              Request a Demo
+              <CalendarDaysIcon className="h-4 w-4" />
+            </Link>
           </Button>
         </div>
       </Section>

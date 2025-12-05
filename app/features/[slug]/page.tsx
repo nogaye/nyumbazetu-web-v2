@@ -6,6 +6,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { LoadingSkeleton } from "@/components/loading-skeleton";
+import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 
 const features: Record<string, {
   title: string;
@@ -226,7 +227,10 @@ export default function FeaturePage({ params }: { params: { slug: string } }) {
             Schedule a demo to explore how this feature can help your property operations.
           </p>
           <Button size="lg" asChild>
-            <Link href="/contact">Request a Demo</Link>
+            <Link href="/contact" className="flex items-center gap-2">
+              Request a Demo
+              <CalendarDaysIcon className="h-4 w-4" />
+            </Link>
           </Button>
         </div>
       </Section>

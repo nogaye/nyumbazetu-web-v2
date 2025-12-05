@@ -6,6 +6,7 @@ import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 const resources = [
   {
@@ -61,7 +62,10 @@ export function ResourcesTeaser() {
       </div>
       <div className="text-center">
         <Button size="lg" variant="outline" asChild>
-          <Link href="/resources">View all resources →</Link>
+          <Link href="/resources" className="flex items-center gap-2">
+            View all resources
+            <ArrowRightIcon className="h-4 w-4" />
+          </Link>
         </Button>
       </div>
     </Section>

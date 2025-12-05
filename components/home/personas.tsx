@@ -6,6 +6,7 @@ import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 const personas = [
   {
@@ -105,7 +106,10 @@ export function Personas() {
                   ))}
                 </ul>
                 <Button variant="ghost" className="w-full" asChild>
-                  <Link href={persona.href}>View solution →</Link>
+                  <Link href={persona.href} className="flex items-center justify-center gap-2">
+                    View solution
+                    <ArrowRightIcon className="h-4 w-4" />
+                  </Link>
                 </Button>
               </CardContent>
             </Card>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { Sheet, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
@@ -108,7 +108,10 @@ export function MainNav() {
               <Link href="/login">Login</Link>
             </Button>
             <Button size="lg" asChild>
-              <Link href="/contact">Request a Demo</Link>
+              <Link href="/contact" className="flex items-center gap-2">
+                Request a Demo
+                <CalendarDaysIcon className="h-4 w-4" />
+              </Link>
             </Button>
           </div>
 

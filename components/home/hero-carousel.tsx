@@ -8,6 +8,11 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   CheckCircleIcon,
+  ArrowRightIcon,
+  CalendarDaysIcon,
+  EyeIcon,
+  BookOpenIcon,
+  DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 
 const heroSlides = [
@@ -167,23 +172,49 @@ export function HeroCarousel() {
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-8">
               <Button 
-                size="lg" 
-                className="bg-[#b98036] hover:bg-[#a06f2d] text-white focus-visible:ring-[#b98036] min-w-[180px]" 
+                size="lg"
+                className="bg-[#b98036] hover:bg-[#a06f2d] text-white focus-visible:ring-[#b98036] rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200 border-0" 
                 asChild
                 aria-label={`${currentSlideData.ctaPrimary} - ${currentSlideData.title}`}
               >
-                <Link href={currentSlideData.ctaPrimaryHref}>{currentSlideData.ctaPrimary}</Link>
+                <Link href={currentSlideData.ctaPrimaryHref} className="flex items-center gap-2">
+                  {currentSlideData.ctaPrimary}
+                  {currentSlideData.ctaPrimaryHref === "/contact" ? (
+                    <CalendarDaysIcon className="h-4 w-4" />
+                  ) : currentSlideData.ctaPrimaryHref === "/product" ? (
+                    <EyeIcon className="h-4 w-4" />
+                  ) : currentSlideData.ctaPrimaryHref === "/features/accounting" ? (
+                    <BookOpenIcon className="h-4 w-4" />
+                  ) : currentSlideData.ctaPrimaryHref === "/features/tenant-experience" ? (
+                    <EyeIcon className="h-4 w-4" />
+                  ) : currentSlideData.ctaPrimaryHref === "/resources" ? (
+                    <DocumentTextIcon className="h-4 w-4" />
+                  ) : (
+                    <ArrowRightIcon className="h-4 w-4" />
+                  )}
+                </Link>
               </Button>
               <Button 
-                size="lg" 
+                size="lg"
                 variant="outline" 
-                className="border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-50 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:ring-slate-400 min-w-[180px]" 
+                className="border border-slate-300 dark:border-slate-600 bg-transparent text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:border-slate-400 dark:hover:border-slate-500 focus-visible:ring-slate-400 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200" 
                 asChild
                 aria-label={`${currentSlideData.ctaSecondary} - ${currentSlideData.title}`}
               >
-                <Link href={currentSlideData.ctaSecondaryHref}>{currentSlideData.ctaSecondary}</Link>
+                <Link href={currentSlideData.ctaSecondaryHref} className="flex items-center gap-2">
+                  {currentSlideData.ctaSecondary}
+                  {currentSlideData.ctaSecondaryHref === "/contact" ? (
+                    <CalendarDaysIcon className="h-4 w-4" />
+                  ) : currentSlideData.ctaSecondaryHref === "/product" ? (
+                    <EyeIcon className="h-4 w-4" />
+                  ) : currentSlideData.ctaSecondaryHref === "/solutions" ? (
+                    <ArrowRightIcon className="h-4 w-4" />
+                  ) : (
+                    <ArrowRightIcon className="h-4 w-4" />
+                  )}
+                </Link>
               </Button>
             </div>
 
@@ -202,10 +233,10 @@ export function HeroCarousel() {
         size="icon"
         onClick={prevSlide}
         onMouseEnter={() => setIsAutoPlaying(false)}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white/80 dark:bg-slate-900/80 hover:bg-white dark:hover:bg-slate-800 backdrop-blur-sm border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 shadow-md hover:shadow-lg transition-all"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white/90 dark:bg-slate-900/90 hover:bg-white dark:hover:bg-slate-800 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 shadow-sm hover:shadow-md transition-all duration-200 h-10 w-10"
         aria-label="Previous slide"
       >
-        <ChevronLeftIcon className="h-5 w-5" />
+        <ChevronLeftIcon className="h-4 w-4" />
       </Button>
       <Button
         type="button"
@@ -213,10 +244,10 @@ export function HeroCarousel() {
         size="icon"
         onClick={nextSlide}
         onMouseEnter={() => setIsAutoPlaying(false)}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white/80 dark:bg-slate-900/80 hover:bg-white dark:hover:bg-slate-800 backdrop-blur-sm border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 shadow-md hover:shadow-lg transition-all"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white/90 dark:bg-slate-900/90 hover:bg-white dark:hover:bg-slate-800 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 shadow-sm hover:shadow-md transition-all duration-200 h-10 w-10"
         aria-label="Next slide"
       >
-        <ChevronRightIcon className="h-5 w-5" />
+        <ChevronRightIcon className="h-4 w-4" />
       </Button>
 
       {/* Dots Indicator */}
@@ -227,10 +258,10 @@ export function HeroCarousel() {
             type="button"
             onClick={() => goToSlide(index)}
             onMouseEnter={() => setIsAutoPlaying(false)}
-            className={`h-2 rounded-full transition-all duration-300 ${
+            className={`h-1.5 rounded-full transition-all duration-200 ${
               index === currentSlide
                 ? "w-8 bg-[#b98036]"
-                : "w-2 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600"
+                : "w-1.5 bg-slate-300/60 dark:bg-slate-600/60 hover:bg-slate-400 dark:hover:bg-slate-500"
             }`}
             aria-label={`Go to slide ${index + 1}`}
             aria-selected={index === currentSlide}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { HomeIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { HomeIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 
 export default function NotFound() {
   return (
@@ -18,15 +18,15 @@ export default function NotFound() {
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button size="lg" asChild>
-            <Link href="/">
-              <HomeIcon className="h-5 w-5 mr-2" />
+            <Link href="/" className="flex items-center gap-2">
               Go Home
+              <HomeIcon className="h-4 w-4" />
             </Link>
           </Button>
           <Button variant="outline" size="lg" asChild>
-            <Link href="/contact">
-              <MagnifyingGlassIcon className="h-5 w-5 mr-2" />
+            <Link href="/contact" className="flex items-center gap-2">
               Contact Support
+              <QuestionMarkCircleIcon className="h-4 w-4" />
             </Link>
           </Button>
         </div>
