@@ -18,6 +18,21 @@ import {
 const heroSlides = [
   {
     id: 1,
+    title: "Forget everything you know about property management systems.",
+    description: "Unlike generic software adapted for property management, Nyumba Zetu was built from the ground up for Kenyan real estate—with deep local integrations, workflows that match how property is actually managed here, and an accounting-first architecture that serious teams require.",
+    highlights: [
+      "Built specifically for the Kenyan market—not adapted from generic software",
+      "Accounting-first architecture ensures every transaction posts correctly to the general ledger",
+      "Deep local integrations: M-Pesa, KRA eTIMS, service charge workflows, committee management",
+      "Modern tenant and owner experience with portals, mobile apps, and WhatsApp chatbot",
+    ],
+    ctaPrimary: "Request a demo",
+    ctaPrimaryHref: "/contact",
+    ctaSecondary: "Explore the platform",
+    ctaSecondaryHref: "/product",
+  },
+  {
+    id: 2,
     title: "Property management infrastructure for modern Kenyan real estate.",
     description: "Full-stack platform for property operations, accounting, and tenant experience—built specifically for Kenya.",
     highlights: [
@@ -32,7 +47,7 @@ const heroSlides = [
     ctaSecondaryHref: "/product",
   },
   {
-    id: 2,
+    id: 3,
     title: "Built for Kenya from day one.",
     description: "M-Pesa, service charge, committees, KRA eTIMS—everything designed for the local market.",
     highlights: [
@@ -47,7 +62,7 @@ const heroSlides = [
     ctaSecondaryHref: "/solutions",
   },
   {
-    id: 3,
+    id: 4,
     title: "Accounting-first architecture for serious property teams.",
     description: "Every transaction posts correctly to a general ledger. Audit-ready financial records from day one.",
     highlights: [
@@ -62,7 +77,7 @@ const heroSlides = [
     ctaSecondaryHref: "/contact",
   },
   {
-    id: 4,
+    id: 5,
     title: "Transform tenant and owner experience with modern portals.",
     description: "Self-service portals, mobile apps, and WhatsApp chatbot for seamless engagement.",
     highlights: [
@@ -77,7 +92,7 @@ const heroSlides = [
     ctaSecondaryHref: "/contact",
   },
   {
-    id: 5,
+    id: 6,
     title: "Trusted by serious property teams, estates, and banks.",
     description: "500+ properties under management. 100,000+ transactions annually. 20–30% increase in collections.",
     highlights: [
