@@ -1,4 +1,5 @@
 import { HeroCarousel } from "@/components/home/hero-carousel";
+import { HeroCarousel2 } from "@/components/home/hero-carousel2";
 import { MetricsStrip } from "@/components/home/metrics-strip";
 import { ProblemContext } from "@/components/home/problem-context";
 import { FeatureGrid } from "@/components/home/feature-grid";
@@ -19,6 +20,7 @@ export default function Home() {
   return (
     <>
       <HeroCarousel />
+      <HeroCarousel2 />
       <MetricsStrip />
       <ProblemContext />
       <FeatureGrid />
