@@ -3,6 +3,7 @@
 import { useContext, useEffect, useState } from "react";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/outline";
 import { ThemeContext } from "./theme-provider";
+import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
@@ -47,10 +48,11 @@ export function ThemeToggle() {
   }
 
   return (
-    <button
+    <Button
       type="button"
+      variant="outline"
+      size="icon"
       onClick={toggleTheme}
-      className="p-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
     >
       {theme === "light" ? (
@@ -58,6 +60,6 @@ export function ThemeToggle() {
       ) : (
         <SunIcon className="h-5 w-5" />
       )}
-    </button>
+    </Button>
   );
 }

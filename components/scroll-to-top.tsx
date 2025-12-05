@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { ArrowUpIcon } from "@heroicons/react/24/outline";
 import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -30,17 +31,23 @@ export function ScrollToTop() {
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.button
+        <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
-          onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-[#b98036] text-white shadow-lg hover:bg-[#a06f2d] transition-colors focus:outline-none focus:ring-2 focus:ring-[#b98036] focus:ring-offset-2"
-          aria-label="Scroll to top"
-          tabIndex={isVisible ? 0 : -1}
+          className="fixed bottom-8 right-8 z-50"
         >
-          <ArrowUpIcon className="h-5 w-5" />
-        </motion.button>
+          <Button
+            type="button"
+            size="icon"
+            onClick={scrollToTop}
+            className="rounded-full shadow-lg"
+            aria-label="Scroll to top"
+            tabIndex={isVisible ? 0 : -1}
+          >
+            <ArrowUpIcon className="h-5 w-5" />
+          </Button>
+        </motion.div>
       )}
     </AnimatePresence>
   );

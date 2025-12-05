@@ -261,36 +261,42 @@ export function HeroCarousel() {
       </div>
 
       {/* Navigation Arrows */}
-      <button
+      <Button
         type="button"
+        variant="outline"
+        size="icon"
         onClick={prevSlide}
         onMouseEnter={() => setIsAutoPlaying(false)}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/90 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 backdrop-blur-sm border border-slate-300 dark:border-white/20 text-slate-900 dark:text-white transition-all shadow-lg"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white/90 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 backdrop-blur-sm border-slate-300 dark:border-white/20 text-slate-900 dark:text-white shadow-lg"
         aria-label="Previous slide"
       >
         <ChevronLeftIcon className="h-6 w-6" />
-      </button>
-      <button
+      </Button>
+      <Button
         type="button"
+        variant="outline"
+        size="icon"
         onClick={nextSlide}
         onMouseEnter={() => setIsAutoPlaying(false)}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/90 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 backdrop-blur-sm border border-slate-300 dark:border-white/20 text-slate-900 dark:text-white transition-all shadow-lg"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white/90 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 backdrop-blur-sm border-slate-300 dark:border-white/20 text-slate-900 dark:text-white shadow-lg"
         aria-label="Next slide"
       >
         <ChevronRightIcon className="h-6 w-6" />
-      </button>
+      </Button>
 
       {/* Dots Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2">
         {heroSlides.map((_, index) => (
-          <button
+          <Button
             key={index}
             type="button"
+            variant="ghost"
+            size="icon"
             onClick={() => goToSlide(index)}
             onMouseEnter={() => setIsAutoPlaying(false)}
-            className={`h-2 rounded-full transition-all ${
+            className={`h-2 rounded-full p-0 transition-all ${
               index === currentSlide
-                ? "w-8 bg-[#b98036]"
+                ? "w-8 bg-[#b98036] hover:bg-[#a06f2d]"
                 : "w-2 bg-slate-400 dark:bg-white/30 hover:bg-slate-500 dark:hover:bg-white/50"
             }`}
             aria-label={`Go to slide ${index + 1}`}

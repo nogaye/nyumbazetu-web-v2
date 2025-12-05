@@ -1,6 +1,7 @@
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export const metadata = {
@@ -60,13 +61,14 @@ export default function ResourcesPage() {
       <Section>
         <div className="flex flex-wrap gap-2 mb-8 justify-center">
           {["All", "Blog", "Guides", "Case Studies", "Webinars"].map((filter) => (
-            <button
+            <Button
               key={filter}
               type="button"
-              className="px-4 py-2 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-50 transition-colors"
+              variant="outline"
+              size="sm"
             >
               {filter}
-            </button>
+            </Button>
           ))}
         </div>
 

@@ -111,15 +111,17 @@ export function MainNav() {
           </div>
 
           {/* Mobile menu button */}
-          <button
+          <Button
             type="button"
-            className="lg:hidden p-2 text-slate-700 dark:text-slate-300"
+            variant="ghost"
+            size="icon"
+            className="lg:hidden"
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
             aria-expanded={mobileMenuOpen}
           >
             <Bars3Icon className="h-6 w-6" />
-          </button>
+          </Button>
         </div>
       </div>
 

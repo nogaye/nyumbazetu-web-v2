@@ -3,6 +3,7 @@
 import * as React from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface SheetProps {
   open: boolean;
@@ -46,15 +47,17 @@ const SheetTitle = ({ className, ...props }: React.HTMLAttributes<HTMLHeadingEle
 );
 
 const SheetClose = ({ onClick }: { onClick: () => void }) => (
-  <button
+  <Button
     type="button"
+    variant="ghost"
+    size="icon"
     onClick={onClick}
-    className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 z-10"
+    className="absolute right-4 top-4 z-10 opacity-70 hover:opacity-100"
     aria-label="Close menu"
   >
     <X className="h-5 w-5" />
     <span className="sr-only">Close</span>
-  </button>
+  </Button>
 );
 
 export { Sheet, SheetHeader, SheetTitle, SheetClose };
