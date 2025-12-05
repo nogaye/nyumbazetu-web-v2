@@ -20,27 +20,27 @@ export default function ContactPage() {
       <Section>
         <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900 mb-6">Get in Touch</h2>
-            <p className="text-lg text-slate-700 mb-8">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-6">Get in Touch</h2>
+            <p className="text-lg text-slate-700 dark:text-slate-300 mb-8">
               Fill out the form and our team will get back to you within 24 hours. We'll schedule
               a demo tailored to your portfolio and answer any questions you have.
             </p>
             <div className="space-y-4">
               <div>
-                <h3 className="font-semibold text-slate-900 mb-2">Email</h3>
+                <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Email</h3>
                 <a href="mailto:hello@nyumbazetu.com" className="text-[#b98036] hover:underline">
                   hello@nyumbazetu.com
                 </a>
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900 mb-2">Phone</h3>
+                <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Phone</h3>
                 <a href="tel:+254700000000" className="text-[#b98036] hover:underline">
                   +254 700 000 000
                 </a>
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900 mb-2">Response Time</h3>
-                <p className="text-slate-600">We typically respond within 24 hours during business days.</p>
+                <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Response Time</h3>
+                <p className="text-slate-600 dark:text-slate-400">We typically respond within 24 hours during business days.</p>
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@ export default function ContactPage() {
                 }}
               >
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-900 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
                     Name *
                   </label>
                   <input
@@ -68,39 +68,39 @@ export default function ContactPage() {
                     id="name"
                     name="name"
                     required
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   />
                 </div>
                 <div>
-                  <label htmlFor="company" className="block text-sm font-medium text-slate-900 mb-2">
+                  <label htmlFor="company" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
                     Company
                   </label>
                   <input
                     type="text"
                     id="company"
                     name="company"
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   />
                 </div>
                 <div>
-                  <label htmlFor="role" className="block text-sm font-medium text-slate-900 mb-2">
+                  <label htmlFor="role" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
                     Role
                   </label>
                   <input
                     type="text"
                     id="role"
                     name="role"
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   />
                 </div>
                 <div>
-                  <label htmlFor="portfolio" className="block text-sm font-medium text-slate-900 mb-2">
+                  <label htmlFor="portfolio" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
                     Portfolio Size
                   </label>
                   <select
                     id="portfolio"
                     name="portfolio"
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   >
                     <option value="">Select...</option>
                     <option value="1-10">1-10 units</option>
@@ -110,7 +110,7 @@ export default function ContactPage() {
                   </select>
                 </div>
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-slate-900 mb-2">
+                  <label htmlFor="phone" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
                     Phone *
                   </label>
                   <input
@@ -118,11 +118,11 @@ export default function ContactPage() {
                     id="phone"
                     name="phone"
                     required
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-900 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
                     Email *
                   </label>
                   <input
@@ -130,28 +130,28 @@ export default function ContactPage() {
                     id="email"
                     name="email"
                     required
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   />
                 </div>
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-slate-900 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
                     Message
                   </label>
                   <textarea
                     id="message"
                     name="message"
                     rows={4}
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   />
                 </div>
                 <div>
-                  <label htmlFor="source" className="block text-sm font-medium text-slate-900 mb-2">
+                  <label htmlFor="source" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
                     How did you hear about us?
                   </label>
                   <select
                     id="source"
                     name="source"
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   >
                     <option value="">Select...</option>
                     <option value="search">Search Engine</option>

@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { LoadingSkeleton } from "@/components/loading-skeleton";
 
 const features: Record<string, {
   title: string;
@@ -98,6 +100,57 @@ const features: Record<string, {
       },
     ],
   },
+  tasks: {
+    title: "Tasks & Project Management for Property Operations",
+    description: "Project management for property development, renovations, and capital improvements with task tracking and budget management.",
+    what: "Nyumba Zetu's Tasks & Projects module helps property teams manage development projects, renovations, and capital improvements. Track tasks, assign team members, monitor timelines, and manage budgets—all within the same platform that handles your property operations.",
+    how: "Create projects for developments, renovations, or capital improvements. Break down projects into tasks with assignees, due dates, and dependencies. Track progress with visual timelines, monitor budgets against actual costs, and generate project reports for stakeholders. All project expenses can be integrated with the accounting module.",
+    why: "Property management often involves ongoing projects and improvements. Without proper project management, timelines slip, budgets overrun, and stakeholders lack visibility. Nyumba Zetu brings project management into your property operations platform.",
+    faqs: [
+      {
+        q: "Can I track multiple projects simultaneously?",
+        a: "Yes, you can manage multiple projects at once, each with its own tasks, timeline, and budget.",
+      },
+      {
+        q: "How does project budgeting work?",
+        a: "Set project budgets and track actual costs. The system integrates with the accounting module to automatically capture expenses.",
+      },
+    ],
+  },
+  tps: {
+    title: "TPS & Rent-to-Own Management",
+    description: "Tenant Purchase Scheme and rent-to-own tracking with installment management and ownership transfer workflows.",
+    what: "Nyumba Zetu supports Tenant Purchase Schemes (TPS) and rent-to-own arrangements common in Kenyan real estate. Track installment payments, calculate ownership percentages, manage transfer processes, and maintain complete records of the ownership journey.",
+    how: "Set up TPS or rent-to-own agreements with initial purchase price, installment amounts, and payment schedules. The system tracks each payment, calculates the tenant's ownership percentage, and manages the transfer process when the final payment is made. All transactions are recorded in the accounting system, and tenants can view their progress through the tenant portal.",
+    why: "TPS and rent-to-own are popular in Kenya, but managing them manually is complex and error-prone. Nyumba Zetu automates the tracking, calculations, and documentation needed for these arrangements.",
+    faqs: [
+      {
+        q: "How does ownership percentage calculation work?",
+        a: "The system automatically calculates ownership percentage based on payments made versus the total purchase price.",
+      },
+      {
+        q: "Can tenants see their TPS progress?",
+        a: "Yes, tenants can view their TPS progress, remaining balance, and ownership percentage through the tenant portal.",
+      },
+    ],
+  },
+  communications: {
+    title: "Communication Hub for Property Management",
+    description: "Centralized communication with tenants, owners, and team members through email, SMS, and in-app messaging.",
+    what: "Nyumba Zetu's Communication Hub centralizes all property-related communication. Send automated notifications, broadcast announcements, manage in-app messaging, and maintain a complete communication history—all from one place.",
+    how: "Send automated emails and SMS for rent reminders, payment confirmations, maintenance updates, and announcements. Use in-app messaging for direct communication with tenants and owners. Broadcast announcements to specific groups (all tenants, specific buildings, etc.). All communications are logged and searchable.",
+    why: "Property management involves constant communication with tenants, owners, and team members. Scattered communication across WhatsApp, email, and phone calls creates chaos. Nyumba Zetu brings it all together in one platform.",
+    faqs: [
+      {
+        q: "Can I send bulk messages to tenants?",
+        a: "Yes, you can send bulk messages to all tenants, specific buildings, or custom groups.",
+      },
+      {
+        q: "Are SMS notifications included?",
+        a: "SMS notifications are available and can be configured for various events like rent reminders and payment confirmations.",
+      },
+    ],
+  },
 };
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
@@ -129,18 +182,18 @@ export default function FeaturePage({ params }: { params: { slug: string } }) {
       <Section>
         <div className="max-w-4xl mx-auto space-y-12">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900 mb-4">What It Is</h2>
-            <p className="text-lg text-slate-700 leading-relaxed">{feature.what}</p>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4">What It Is</h2>
+            <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">{feature.what}</p>
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold text-slate-900 mb-4">How It Works</h2>
-            <p className="text-lg text-slate-700 leading-relaxed">{feature.how}</p>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4">How It Works</h2>
+            <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">{feature.how}</p>
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold text-slate-900 mb-4">Why It Matters</h2>
-            <p className="text-lg text-slate-700 leading-relaxed">{feature.why}</p>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4">Why It Matters</h2>
+            <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">{feature.why}</p>
           </div>
         </div>
       </Section>
@@ -157,7 +210,7 @@ export default function FeaturePage({ params }: { params: { slug: string } }) {
                 <CardTitle className="text-lg">{faq.q}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-slate-600">{faq.a}</p>
+                <p className="text-slate-600 dark:text-slate-400">{faq.a}</p>
               </CardContent>
             </Card>
           ))}

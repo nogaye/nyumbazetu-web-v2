@@ -66,20 +66,20 @@ export function MainNav() {
               <div key={item.label} className="relative group">
                 <Link
                   href={item.href}
-                  className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-[#b98036] transition-colors"
+                  className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-[#b98036] transition-colors duration-200"
                 >
                   {item.label}
                 </Link>
                 {item.children && (
-                  <div className="absolute left-0 mt-2 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className="absolute left-0 mt-2 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50 transform group-hover:translate-y-0 translate-y-[-10px]">
                     <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 py-2">
                       {item.children.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group/item"
+                          className="block px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 group/item transform hover:translate-x-1"
                         >
-                          <div className="font-medium text-slate-900 dark:text-slate-50 group-hover/item:text-[#b98036] transition-colors">
+                          <div className="font-medium text-slate-900 dark:text-slate-50 group-hover/item:text-[#b98036] transition-colors duration-200">
                             {child.label}
                           </div>
                           {"description" in child && child.description && (

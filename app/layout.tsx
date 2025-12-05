@@ -4,6 +4,8 @@ import "./globals.css";
 import { MainNav } from "@/components/main-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ScrollToTop } from "@/components/scroll-to-top";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,9 +39,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          <MainNav />
-          <main className="min-h-screen">{children}</main>
-          <SiteFooter />
+          <ErrorBoundary>
+            <MainNav />
+            <main className="min-h-screen">{children}</main>
+            <SiteFooter />
+            <ScrollToTop />
+          </ErrorBoundary>
         </ThemeProvider>
       </body>
     </html>

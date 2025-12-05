@@ -20,7 +20,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/features/collections',
     '/features/tenant-experience',
     '/features/maintenance',
+    '/features/tasks',
     '/features/etims',
+    '/features/tps',
+    '/features/communications',
   ]
 
   return routes.map((route) => ({

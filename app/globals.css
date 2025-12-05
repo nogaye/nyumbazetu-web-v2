@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
 @layer base {
   :root {
     --background: #ffffff;
@@ -48,14 +53,26 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--slate-100);
+  background: rgb(241 245 249);
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: rgb(15 23 42);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--slate-400);
+  background: rgb(148 163 184);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--slate-500);
+  background: rgb(100 116 139);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgb(51 65 85);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgb(71 85 105);
 }
