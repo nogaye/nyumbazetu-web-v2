@@ -38,14 +38,14 @@ export function SiteFooter() {
         <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-8">
           <div className="col-span-2">
             <Link href="/" className="block mb-4">
-              <div className="text-2xl font-bold text-[#344767]">
+              <div className="text-2xl font-bold text-[#344767] dark:text-slate-50">
                 Nyumba Zetu
               </div>
             </Link>
-            <p className="text-sm text-slate-600 mb-4">
+            <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
               Property management infrastructure for modern Kenyan real estate.
             </p>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-500">
               Built in Kenya for African real estate.
             </p>
             <div className="mt-4 flex items-center space-x-1">
@@ -119,9 +119,9 @@ export function SiteFooter() {
         </div>
 
         <div className="border-t border-slate-200 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-slate-500 dark:text-slate-400">
-            © {new Date().getFullYear()} Nyumba Zetu. All rights reserved.
-          </p>
+            <p className="text-sm text-slate-500 dark:text-slate-500">
+              © {new Date().getFullYear()} Nyumba Zetu. All rights reserved.
+            </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             {footerLinks.legal.map((link) => (
               <Link

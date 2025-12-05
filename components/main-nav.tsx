@@ -59,7 +59,7 @@ export function MainNav() {
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-2" aria-label="Nyumba Zetu Home">
-            <div className="text-2xl font-bold text-[#344767]">
+            <div className="text-2xl font-bold text-[#344767] dark:text-slate-50">
               Nyumba Zetu
             </div>
           </Link>

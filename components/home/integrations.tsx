@@ -14,7 +14,7 @@ const integrations = [
 
 export function Integrations() {
   return (
-    <Section className="bg-white">
+    <Section className="bg-white dark:bg-slate-950">
       <SectionHeader
         title="Plug into the tools that already run your business."
         description="Nyumba Zetu becomes the operational and financial source of truth, while your bank, M-Pesa channels, and accounting tools stay connected."

@@ -21,7 +21,7 @@ export default function ProductPage() {
 
       {/* Platform Diagram */}
       <Section>
-        <div className="bg-slate-900 rounded-2xl p-8 md:p-12 text-white">
+        <div className="bg-slate-900 dark:bg-slate-800 rounded-2xl p-8 md:p-12 text-white">
           <div className="grid md:grid-cols-5 gap-6">
             <div className="md:col-span-2 space-y-4">
               <h3 className="text-xl font-semibold mb-6">Connected Ecosystem</h3>
@@ -50,7 +50,7 @@ export default function ProductPage() {
       </Section>
 
       {/* Modules */}
-      <Section className="bg-slate-50">
+      <Section className="bg-slate-50 dark:bg-slate-900">
         <SectionHeader
           title="Core Platform Modules"
           description="Everything you need to run modern property operations."
@@ -92,10 +92,10 @@ export default function ProductPage() {
           ].map((module, idx) => (
             <Card key={idx}>
               <CardHeader>
-                <CardTitle>{module.title}</CardTitle>
+                <CardTitle className="text-slate-900 dark:text-slate-50">{module.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-slate-600">{module.description}</p>
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{module.description}</p>
               </CardContent>
             </Card>
           ))}
