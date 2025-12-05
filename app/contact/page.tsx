@@ -4,6 +4,17 @@ import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
 import { CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
@@ -45,10 +56,22 @@ export default function ContactPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear error when user selects
     if (errors[name]) {
       setErrors(prev => {
         const newErrors = { ...prev };
@@ -145,31 +168,25 @@ export default function ContactPage() {
             </CardHeader>
             <CardContent>
               {submitStatus === "success" && (
-                <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg flex items-start gap-3">
-                  <CheckCircleIcon className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-medium text-green-800 dark:text-green-200">
-                      Thank you for your message!
-                    </p>
-                    <p className="text-sm text-green-700 dark:text-green-300 mt-1">
-                      We'll get back to you within 24 hours.
-                    </p>
-                  </div>
-                </div>
+                <Alert className="mb-6 border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20">
+                  <CheckCircleIcon className="h-5 w-5 text-green-600 dark:text-green-400" />
+                  <AlertTitle className="text-green-800 dark:text-green-200">
+                    Thank you for your message!
+                  </AlertTitle>
+                  <AlertDescription className="text-green-700 dark:text-green-300">
+                    We'll get back to you within 24 hours.
+                  </AlertDescription>
+                </Alert>
               )}
               
               {submitStatus === "error" && (
-                <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-start gap-3">
-                  <ExclamationCircleIcon className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-medium text-red-800 dark:text-red-200">
-                      Something went wrong
-                    </p>
-                    <p className="text-sm text-red-700 dark:text-red-300 mt-1">
-                      Please try again or contact us directly at hello@nyumbazetu.com
-                    </p>
-                  </div>
-                </div>
+                <Alert variant="destructive" className="mb-6">
+                  <ExclamationCircleIcon className="h-5 w-5" />
+                  <AlertTitle>Something went wrong</AlertTitle>
+                  <AlertDescription>
+                    Please try again or contact us directly at hello@nyumbazetu.com
+                  </AlertDescription>
+                </Alert>
               )}
               
               <form 
@@ -177,11 +194,11 @@ export default function ContactPage() {
                 onSubmit={handleSubmit}
                 noValidate
               >
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
+                <div className="space-y-2">
+                  <Label htmlFor="name">
                     Name *
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     type="text"
                     id="name"
                     name="name"
@@ -190,67 +207,56 @@ export default function ContactPage() {
                     required
                     aria-invalid={errors.name ? "true" : "false"}
                     aria-describedby={errors.name ? "name-error" : undefined}
-                    className={`w-full px-4 py-2 border rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent ${
-                      errors.name 
-                        ? "border-red-500 dark:border-red-500" 
-                        : "border-slate-300 dark:border-slate-700"
-                    }`}
+                    className={errors.name ? "border-red-500 dark:border-red-500" : ""}
                   />
                   {errors.name && (
-                    <p id="name-error" className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">
+                    <p id="name-error" className="text-sm text-red-600 dark:text-red-400" role="alert">
                       {errors.name}
                     </p>
                   )}
                 </div>
-                <div>
-                  <label htmlFor="company" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
-                    Company
-                  </label>
-                  <input
+                <div className="space-y-2">
+                  <Label htmlFor="company">Company</Label>
+                  <Input
                     type="text"
                     id="company"
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   />
                 </div>
-                <div>
-                  <label htmlFor="role" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
-                    Role
-                  </label>
-                  <input
+                <div className="space-y-2">
+                  <Label htmlFor="role">Role</Label>
+                  <Input
                     type="text"
                     id="role"
                     name="role"
                     value={formData.role}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   />
                 </div>
-                <div>
-                  <label htmlFor="portfolio" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
-                    Portfolio Size
-                  </label>
-                  <select
-                    id="portfolio"
-                    name="portfolio"
+                <div className="space-y-2">
+                  <Label htmlFor="portfolio">Portfolio Size</Label>
+                  <Select
                     value={formData.portfolio}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
+                    onValueChange={(value) => handleSelectChange("portfolio", value)}
                   >
-                    <option value="">Select...</option>
-                    <option value="1-10">1-10 units</option>
-                    <option value="11-50">11-50 units</option>
-                    <option value="51-100">51-100 units</option>
-                    <option value="100+">100+ units</option>
-                  </select>
+                    <SelectTrigger id="portfolio">
+                      <SelectValue placeholder="Select..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1-10">1-10 units</SelectItem>
+                      <SelectItem value="11-50">11-50 units</SelectItem>
+                      <SelectItem value="51-100">51-100 units</SelectItem>
+                      <SelectItem value="100+">100+ units</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
+                <div className="space-y-2">
+                  <Label htmlFor="phone">
                     Phone *
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     type="tel"
                     id="phone"
                     name="phone"
@@ -259,23 +265,19 @@ export default function ContactPage() {
                     required
                     aria-invalid={errors.phone ? "true" : "false"}
                     aria-describedby={errors.phone ? "phone-error" : undefined}
-                    className={`w-full px-4 py-2 border rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent ${
-                      errors.phone 
-                        ? "border-red-500 dark:border-red-500" 
-                        : "border-slate-300 dark:border-slate-700"
-                    }`}
+                    className={errors.phone ? "border-red-500 dark:border-red-500" : ""}
                   />
                   {errors.phone && (
-                    <p id="phone-error" className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">
+                    <p id="phone-error" className="text-sm text-red-600 dark:text-red-400" role="alert">
                       {errors.phone}
                     </p>
                   )}
                 </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
+                <div className="space-y-2">
+                  <Label htmlFor="email">
                     Email *
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     type="email"
                     id="email"
                     name="email"
@@ -284,49 +286,41 @@ export default function ContactPage() {
                     required
                     aria-invalid={errors.email ? "true" : "false"}
                     aria-describedby={errors.email ? "email-error" : undefined}
-                    className={`w-full px-4 py-2 border rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent ${
-                      errors.email 
-                        ? "border-red-500 dark:border-red-500" 
-                        : "border-slate-300 dark:border-slate-700"
-                    }`}
+                    className={errors.email ? "border-red-500 dark:border-red-500" : ""}
                   />
                   {errors.email && (
-                    <p id="email-error" className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">
+                    <p id="email-error" className="text-sm text-red-600 dark:text-red-400" role="alert">
                       {errors.email}
                     </p>
                   )}
                 </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
-                    Message
-                  </label>
-                  <textarea
+                <div className="space-y-2">
+                  <Label htmlFor="message">Message</Label>
+                  <Textarea
                     id="message"
                     name="message"
                     rows={4}
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   />
                 </div>
-                <div>
-                  <label htmlFor="source" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
-                    How did you hear about us?
-                  </label>
-                  <select
-                    id="source"
-                    name="source"
+                <div className="space-y-2">
+                  <Label htmlFor="source">How did you hear about us?</Label>
+                  <Select
                     value={formData.source}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
+                    onValueChange={(value) => handleSelectChange("source", value)}
                   >
-                    <option value="">Select...</option>
-                    <option value="search">Search Engine</option>
-                    <option value="referral">Referral</option>
-                    <option value="social">Social Media</option>
-                    <option value="event">Event/Conference</option>
-                    <option value="other">Other</option>
-                  </select>
+                    <SelectTrigger id="source">
+                      <SelectValue placeholder="Select..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="search">Search Engine</SelectItem>
+                      <SelectItem value="referral">Referral</SelectItem>
+                      <SelectItem value="social">Social Media</SelectItem>
+                      <SelectItem value="event">Event/Conference</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
                   {isSubmitting ? "Sending..." : "Send Message"}
