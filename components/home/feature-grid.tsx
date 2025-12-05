@@ -1,0 +1,155 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Section } from "@/components/section";
+import { SectionHeader } from "@/components/section-header";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
+import {
+  CurrencyDollarIcon,
+  CalculatorIcon,
+  UserGroupIcon,
+  WrenchScrewdriverIcon,
+  ClipboardDocumentCheckIcon,
+  DocumentTextIcon,
+  HomeIcon,
+  ChatBubbleLeftRightIcon,
+} from "@heroicons/react/24/outline";
+
+const features = [
+  {
+    title: "Rent & Service Charge Collections",
+    description: "Automated invoicing and payment tracking with M-Pesa, bank, and wallet integrations.",
+    bullets: [
+      "Automated rent and service charge invoicing",
+      "M-Pesa, bank, and mobile wallet payments",
+      "Real-time payment reconciliation",
+    ],
+    icon: CurrencyDollarIcon,
+    href: "/features/collections",
+  },
+  {
+    title: "Accounting & General Ledger",
+    description: "Full accounting system with journals, ledgers, trial balance, P&L, and balance sheet.",
+    bullets: [
+      "Double-entry accounting system",
+      "Automated journal entries",
+      "Financial reports and exports",
+    ],
+    icon: CalculatorIcon,
+    href: "/features/accounting",
+  },
+  {
+    title: "Tenant & Owner Experience",
+    description: "Portals, mobile apps, and WhatsApp chatbot for seamless tenant and owner engagement.",
+    bullets: [
+      "Self-service tenant and owner portals",
+      "Mobile apps for iOS and Android",
+      "WhatsApp chatbot for instant support",
+    ],
+    icon: UserGroupIcon,
+    href: "/features/tenant-experience",
+  },
+  {
+    title: "Maintenance & Assets",
+    description: "Track maintenance requests, work orders, and property assets with full history.",
+    bullets: [
+      "Maintenance request management",
+      "Asset tracking and depreciation",
+      "Vendor and contractor management",
+    ],
+    icon: WrenchScrewdriverIcon,
+    href: "/features/maintenance",
+  },
+  {
+    title: "Tasks & Projects",
+    description: "Project management for property development, renovations, and capital improvements.",
+    bullets: [
+      "Task assignment and tracking",
+      "Project timelines and milestones",
+      "Budget and cost tracking",
+    ],
+    icon: ClipboardDocumentCheckIcon,
+    href: "/features/tasks",
+  },
+  {
+    title: "KRA eTIMS & Compliance",
+    description: "KRA eTIMS-ready invoicing and tax-compliant workflows for property operations.",
+    bullets: [
+      "eTIMS invoice generation",
+      "Tax-compliant reporting",
+      "Audit-ready documentation",
+    ],
+    icon: DocumentTextIcon,
+    href: "/features/etims",
+  },
+  {
+    title: "TPS & Rent-to-Own",
+    description: "Tenant Purchase Scheme and rent-to-own tracking with installment management.",
+    bullets: [
+      "TPS installment tracking",
+      "Rent-to-own calculations",
+      "Ownership transfer workflows",
+    ],
+    icon: HomeIcon,
+    href: "/features/tps",
+  },
+  {
+    title: "Communication Hub",
+    description: "Centralized communication with tenants, owners, and team members.",
+    bullets: [
+      "Email and SMS notifications",
+      "In-app messaging",
+      "Announcement broadcasts",
+    ],
+    icon: ChatBubbleLeftRightIcon,
+    href: "/features/communications",
+  },
+];
+
+export function FeatureGrid() {
+  return (
+    <Section>
+      <SectionHeader
+        title="One platform for every part of your property operations."
+        description="From rent collection to accounting, tenant experience to compliance—everything you need in one integrated system."
+      />
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {features.map((feature, idx) => (
+          <motion.div
+            key={idx}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: idx * 0.05 }}
+          >
+            <Card className="h-full hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <feature.icon className="h-8 w-8 text-[#b98036] mb-4" />
+                <CardTitle className="text-xl">{feature.title}</CardTitle>
+                <CardDescription>{feature.description}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 mb-4">
+                  {feature.bullets.map((bullet, bulletIdx) => (
+                    <li key={bulletIdx} className="text-sm text-slate-600 flex items-start">
+                      <span className="text-[#36b9a0] mr-2">•</span>
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href={feature.href}
+                  className="text-sm font-medium text-[#b98036] hover:underline inline-flex items-center"
+                >
+                  Learn more →
+                </Link>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
