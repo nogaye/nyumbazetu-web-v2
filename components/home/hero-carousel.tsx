@@ -7,6 +7,7 @@ import Link from "next/link";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
+  CheckCircleIcon,
 } from "@heroicons/react/24/outline";
 
 const heroSlides = [
@@ -14,6 +15,12 @@ const heroSlides = [
     id: 1,
     title: "Property management infrastructure for modern Kenyan real estate.",
     description: "Full-stack platform for property operations, accounting, and tenant experience—built specifically for Kenya.",
+    highlights: [
+      "End-to-end rent and service charge collections with M-Pesa, bank, and wallet flows",
+      "Accounting-grade general ledger with journals, ledgers, trial balance, P&L, balance sheet",
+      "Tenant and owner portals, mobile apps, and WhatsApp chatbot",
+      "KRA eTIMS-ready invoicing and tax-compliant workflows",
+    ],
     ctaPrimary: "Request a demo",
     ctaPrimaryHref: "/contact",
     ctaSecondary: "Explore the platform",
@@ -23,6 +30,12 @@ const heroSlides = [
     id: 2,
     title: "Built for Kenya from day one.",
     description: "M-Pesa, service charge, committees, KRA eTIMS—everything designed for the local market.",
+    highlights: [
+      "Native M-Pesa integration with real-time reconciliation",
+      "Service charge management for estates and apartments",
+      "Committee workflows for HOAs and housing estates",
+      "KRA eTIMS compliance built-in from day one",
+    ],
     ctaPrimary: "See how it works",
     ctaPrimaryHref: "/product",
     ctaSecondary: "View solutions",
@@ -32,6 +45,12 @@ const heroSlides = [
     id: 3,
     title: "Accounting-first architecture for serious property teams.",
     description: "Every transaction posts correctly to a general ledger. Audit-ready financial records from day one.",
+    highlights: [
+      "Double-entry accounting system with automated journal entries",
+      "Real-time trial balance, P&L, and balance sheet reports",
+      "Export to QuickBooks and other accounting tools",
+      "Full audit trail for every transaction",
+    ],
     ctaPrimary: "Learn about accounting",
     ctaPrimaryHref: "/features/accounting",
     ctaSecondary: "Request a demo",
@@ -41,6 +60,12 @@ const heroSlides = [
     id: 4,
     title: "Transform tenant and owner experience with modern portals.",
     description: "Self-service portals, mobile apps, and WhatsApp chatbot for seamless engagement.",
+    highlights: [
+      "Tenant and owner self-service portals with real-time dashboards",
+      "Native mobile apps for iOS and Android platforms",
+      "WhatsApp chatbot for instant support and payment confirmations",
+      "Automated notifications and communication workflows",
+    ],
     ctaPrimary: "Explore tenant experience",
     ctaPrimaryHref: "/features/tenant-experience",
     ctaSecondary: "Request a demo",
@@ -50,6 +75,12 @@ const heroSlides = [
     id: 5,
     title: "Trusted by serious property teams, estates, and banks.",
     description: "500+ properties under management. 100,000+ transactions annually. 20–30% increase in collections.",
+    highlights: [
+      "500+ properties under management across Kenya",
+      "100,000+ rent transactions processed annually",
+      "20–30% increase in on-time collections for our customers",
+      "Trusted by banks, SACCOS, and major property management companies",
+    ],
     ctaPrimary: "View case studies",
     ctaPrimaryHref: "/resources",
     ctaSecondary: "Request a demo",
@@ -112,6 +143,29 @@ export function HeroCarousel() {
               {currentSlideData.description}
             </p>
 
+            {/* Key Features - Always Visible */}
+            <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-6 md:p-8 mb-8 border border-slate-200 dark:border-slate-800 max-w-3xl mx-auto">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-50 mb-4 text-left">
+                Key Features
+              </h3>
+              <ul className="space-y-3 text-left">
+                {currentSlideData.highlights.map((item, idx) => (
+                  <motion.li
+                    key={idx}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 + idx * 0.05 }}
+                    className="flex items-start space-x-3"
+                  >
+                    <CheckCircleIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                    <span className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                      {item}
+                    </span>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
               <Button 
@@ -134,7 +188,7 @@ export function HeroCarousel() {
             </div>
 
             {/* Trust indicator */}
-            <p className="text-sm text-slate-500 dark:text-slate-400">
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-8">
               Built in Kenya. Trusted by property teams, estates, and banks.
             </p>
           </motion.div>
