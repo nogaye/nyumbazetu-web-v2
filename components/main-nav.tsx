@@ -70,7 +70,9 @@ export function MainNav() {
               <div key={item.label} className="relative group">
                 <Link
                   href={item.href}
-                  className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-[#b98036] transition-colors duration-200"
+                  className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-[#b98036] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b98036] focus-visible:ring-offset-2 rounded-md px-2 py-1"
+                  aria-haspopup={item.children ? "true" : undefined}
+                  aria-expanded={item.children ? "false" : undefined}
                 >
                   {item.label}
                 </Link>

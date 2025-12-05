@@ -85,11 +85,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <a href="#main-content" className="skip-to-main">
+          Skip to main content
+        </a>
         <StructuredData />
         <ThemeProvider>
           <ErrorBoundary>
             <MainNav />
-            <main className="min-h-screen" id="main-content">
+            <main className="min-h-screen" id="main-content" role="main">
               {children}
             </main>
             <SiteFooter />

@@ -135,7 +135,7 @@ export function HeroCarousel() {
       <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900"></div>
       
       {/* Carousel Container */}
-      <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-24 md:py-32 lg:py-40">
+      <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-24 lg:py-32">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
@@ -175,10 +175,21 @@ export function HeroCarousel() {
               </ul>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-6">
-                <Button size="lg" className="bg-[#b98036] hover:bg-[#a06f2d]" asChild>
+                <Button 
+                  size="lg" 
+                  className="bg-[#b98036] hover:bg-[#a06f2d] focus-visible:ring-[#b98036]" 
+                  asChild
+                  aria-label={`${currentSlideData.ctaPrimary} - ${currentSlideData.title}`}
+                >
                   <Link href={currentSlideData.ctaPrimaryHref}>{currentSlideData.ctaPrimary}</Link>
                 </Button>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10" asChild>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-white text-white hover:bg-white/10 focus-visible:ring-white" 
+                  asChild
+                  aria-label={`${currentSlideData.ctaSecondary} - ${currentSlideData.title}`}
+                >
                   <Link href={currentSlideData.ctaSecondaryHref}>{currentSlideData.ctaSecondary}</Link>
                 </Button>
               </div>
@@ -285,7 +296,7 @@ export function HeroCarousel() {
       </Button>
 
       {/* Dots Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+      <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2" role="tablist" aria-label="Carousel slides">
         {heroSlides.map((_, index) => (
           <Button
             key={index}
@@ -294,12 +305,14 @@ export function HeroCarousel() {
             size="icon"
             onClick={() => goToSlide(index)}
             onMouseEnter={() => setIsAutoPlaying(false)}
-            className={`h-2 rounded-full p-0 transition-all ${
+            className={`h-2.5 md:h-2 rounded-full p-0 transition-all min-h-[20px] min-w-[20px] ${
               index === currentSlide
                 ? "w-8 bg-[#b98036] hover:bg-[#a06f2d]"
                 : "w-2 bg-slate-400 dark:bg-white/30 hover:bg-slate-500 dark:hover:bg-white/50"
             }`}
             aria-label={`Go to slide ${index + 1}`}
+            aria-selected={index === currentSlide}
+            role="tab"
           />
         ))}
       </div>

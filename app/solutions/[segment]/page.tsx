@@ -170,7 +170,7 @@ export default function SolutionPage({ params }: { params: { segment: string } }
 
   return (
     <>
-      <Section className="bg-gradient-to-br from-slate-50 to-white pt-24">
+      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
         <SectionHeader
           title={segment.title}
           description={segment.description}
