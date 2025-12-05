@@ -5,9 +5,103 @@ import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [formData, setFormData] = useState({
+    name: "",
+    company: "",
+    role: "",
+    portfolio: "",
+    phone: "",
+    email: "",
+    message: "",
+    source: "",
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+    
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone is required";
+    } else if (!/^[\d\s\-\+\(\)]+$/.test(formData.phone)) {
+      newErrors.phone = "Please enter a valid phone number";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+    
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+    
+    try {
+      // TODO: Replace with actual API endpoint
+      // const response = await fetch("/api/contact", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(formData),
+      // });
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // if (!response.ok) throw new Error("Submission failed");
+      
+      setSubmitStatus("success");
+      setFormData({
+        name: "",
+        company: "",
+        role: "",
+        portfolio: "",
+        phone: "",
+        email: "",
+        message: "",
+        source: "",
+      });
+      
+      // Reset success message after 5 seconds
+      setTimeout(() => setSubmitStatus("idle"), 5000);
+    } catch (error) {
+      setSubmitStatus("error");
+      setTimeout(() => setSubmitStatus("idle"), 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <>
       <Section className="bg-gradient-to-br from-slate-50 to-white pt-24">
@@ -50,14 +144,38 @@ export default function ContactPage() {
               <CardTitle>Request a Demo</CardTitle>
             </CardHeader>
             <CardContent>
+              {submitStatus === "success" && (
+                <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg flex items-start gap-3">
+                  <CheckCircleIcon className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium text-green-800 dark:text-green-200">
+                      Thank you for your message!
+                    </p>
+                    <p className="text-sm text-green-700 dark:text-green-300 mt-1">
+                      We'll get back to you within 24 hours.
+                    </p>
+                  </div>
+                </div>
+              )}
+              
+              {submitStatus === "error" && (
+                <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-start gap-3">
+                  <ExclamationCircleIcon className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium text-red-800 dark:text-red-200">
+                      Something went wrong
+                    </p>
+                    <p className="text-sm text-red-700 dark:text-red-300 mt-1">
+                      Please try again or contact us directly at hello@nyumbazetu.com
+                    </p>
+                  </div>
+                </div>
+              )}
+              
               <form 
                 className="space-y-6" 
-                onSubmit={(e) => { 
-                  e.preventDefault(); 
-                  setIsSubmitting(true);
-                  // Handle form submission here
-                  setTimeout(() => setIsSubmitting(false), 1000);
-                }}
+                onSubmit={handleSubmit}
+                noValidate
               >
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
@@ -67,9 +185,22 @@ export default function ContactPage() {
                     type="text"
                     id="name"
                     name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
+                    aria-invalid={errors.name ? "true" : "false"}
+                    aria-describedby={errors.name ? "name-error" : undefined}
+                    className={`w-full px-4 py-2 border rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent ${
+                      errors.name 
+                        ? "border-red-500 dark:border-red-500" 
+                        : "border-slate-300 dark:border-slate-700"
+                    }`}
                   />
+                  {errors.name && (
+                    <p id="name-error" className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">
+                      {errors.name}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="company" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
@@ -79,6 +210,8 @@ export default function ContactPage() {
                     type="text"
                     id="company"
                     name="company"
+                    value={formData.company}
+                    onChange={handleChange}
                     className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   />
                 </div>
@@ -90,6 +223,8 @@ export default function ContactPage() {
                     type="text"
                     id="role"
                     name="role"
+                    value={formData.role}
+                    onChange={handleChange}
                     className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   />
                 </div>
@@ -100,6 +235,8 @@ export default function ContactPage() {
                   <select
                     id="portfolio"
                     name="portfolio"
+                    value={formData.portfolio}
+                    onChange={handleChange}
                     className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   >
                     <option value="">Select...</option>
@@ -117,9 +254,22 @@ export default function ContactPage() {
                     type="tel"
                     id="phone"
                     name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
+                    aria-invalid={errors.phone ? "true" : "false"}
+                    aria-describedby={errors.phone ? "phone-error" : undefined}
+                    className={`w-full px-4 py-2 border rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent ${
+                      errors.phone 
+                        ? "border-red-500 dark:border-red-500" 
+                        : "border-slate-300 dark:border-slate-700"
+                    }`}
                   />
+                  {errors.phone && (
+                    <p id="phone-error" className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">
+                      {errors.phone}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
@@ -129,9 +279,22 @@ export default function ContactPage() {
                     type="email"
                     id="email"
                     name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
+                    aria-invalid={errors.email ? "true" : "false"}
+                    aria-describedby={errors.email ? "email-error" : undefined}
+                    className={`w-full px-4 py-2 border rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent ${
+                      errors.email 
+                        ? "border-red-500 dark:border-red-500" 
+                        : "border-slate-300 dark:border-slate-700"
+                    }`}
                   />
+                  {errors.email && (
+                    <p id="email-error" className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">
+                      {errors.email}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-slate-900 dark:text-slate-50 mb-2">
@@ -141,6 +304,8 @@ export default function ContactPage() {
                     id="message"
                     name="message"
                     rows={4}
+                    value={formData.message}
+                    onChange={handleChange}
                     className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   />
                 </div>
@@ -151,6 +316,8 @@ export default function ContactPage() {
                   <select
                     id="source"
                     name="source"
+                    value={formData.source}
+                    onChange={handleChange}
                     className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 focus:ring-2 focus:ring-[#b98036] focus:border-transparent"
                   >
                     <option value="">Select...</option>
