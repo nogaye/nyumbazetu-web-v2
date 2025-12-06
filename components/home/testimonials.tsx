@@ -55,13 +55,20 @@ export function Testimonials() {
                   "{testimonial.quote}"
                 </p>
                 <div className="border-t border-white/20 pt-4">
-                  <div className="font-semibold text-white text-base">
-                    {testimonial.author}
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-12 h-12 rounded-full bg-white/20 flex-shrink-0 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full bg-white/30"></div>
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-semibold text-white text-base">
+                        {testimonial.author}
+                      </div>
+                      <div className="text-sm text-white/80 mt-0.5">
+                        {testimonial.role}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-sm text-white/80 mt-1">
-                    {testimonial.role}
-                  </div>
-                  <div className="text-sm text-white/70 mt-1">
+                  <div className="text-sm text-white/70 mt-2">
                     {testimonial.portfolio}
                   </div>
                   <div className="text-sm font-medium text-tertiary mt-3">

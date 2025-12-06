@@ -20,7 +20,7 @@ export function AsSeenOn() {
           <p className="text-sm font-medium text-white/80 uppercase tracking-wider mb-6">
             As Seen On
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center justify-items-center">
             {mediaOutlets.map((outlet, idx) => {
               const MotionComponent = outlet.url !== "#" ? motion.a : motion.div;
               const linkProps = outlet.url !== "#" 
@@ -35,11 +35,15 @@ export function AsSeenOn() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
-                  className="flex items-center justify-center h-12 w-full group"
+                  className="flex items-center justify-center h-16 w-full group"
                 >
-                  <span className="text-white/70 group-hover:text-white transition-colors duration-200 text-sm font-medium">
-                    {outlet.name}
-                  </span>
+                  <div className="w-full h-full bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 flex items-center justify-center p-3 group-hover:bg-white/20 transition-all duration-200">
+                    <div className="w-full h-8 bg-white/20 rounded flex items-center justify-center">
+                      <span className="text-white/60 group-hover:text-white/80 transition-colors duration-200 text-xs font-medium text-center px-2">
+                        {outlet.name}
+                      </span>
+                    </div>
+                  </div>
                 </MotionComponent>
               );
             })}

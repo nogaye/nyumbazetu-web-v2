@@ -27,9 +27,16 @@ export function Integrations() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: idx * 0.1 }}
-            className="h-20 flex items-center justify-center bg-slate-50 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 font-medium text-sm hover:border-primary dark:hover:border-primary hover:shadow-sm transition-all duration-200"
+            className="h-24 flex items-center justify-center bg-slate-50 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-primary dark:hover:border-primary hover:shadow-sm transition-all duration-200 p-4"
           >
-            {integration}
+            <div className="w-full h-full flex flex-col items-center justify-center gap-2">
+              <div className="w-16 h-16 bg-slate-200 dark:bg-slate-800 rounded flex items-center justify-center">
+                <div className="w-12 h-12 bg-slate-300 dark:bg-slate-700 rounded"></div>
+              </div>
+              <span className="text-slate-600 dark:text-slate-400 font-medium text-xs text-center">
+                {integration}
+              </span>
+            </div>
           </motion.div>
         ))}
       </div>

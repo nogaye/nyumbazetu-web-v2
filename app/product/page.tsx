@@ -27,22 +27,32 @@ export default function ProductPage() {
             <div className="md:col-span-2 space-y-4">
               <h3 className="text-xl font-semibold mb-6">Connected Ecosystem</h3>
               {["Tenants & Owners", "Property Managers", "Finance Teams", "Vendors & Contractors"].map((item) => (
-                <div key={item} className="bg-white/10 rounded-lg p-4 backdrop-blur">
-                  {item}
+                <div key={item} className="bg-white/10 rounded-lg p-4 backdrop-blur flex items-center gap-3">
+                  <div className="w-10 h-10 rounded bg-white/20 flex-shrink-0 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded bg-white/30"></div>
+                  </div>
+                  <span>{item}</span>
                 </div>
               ))}
             </div>
             <div className="md:col-span-1 flex items-center justify-center">
               <div className="text-center">
-                <div className="text-3xl font-bold mb-2">→</div>
-                <div className="text-sm text-slate-400">Nyumba Zetu Core</div>
+                <div className="w-20 h-20 mx-auto mb-3 bg-white/10 rounded-lg flex items-center justify-center backdrop-blur">
+                  <div className="w-16 h-16 bg-white/20 rounded flex items-center justify-center">
+                    <span className="text-2xl font-bold">→</span>
+                  </div>
+                </div>
+                <div className="text-sm text-white/80">Nyumba Zetu Core</div>
               </div>
             </div>
             <div className="md:col-span-2 space-y-4">
               <h3 className="text-xl font-semibold mb-6">Integrations</h3>
               {["M-Pesa & Banks", "QuickBooks", "KRA eTIMS", "Email/SMS"].map((item) => (
-                <div key={item} className="bg-white/10 rounded-lg p-4 backdrop-blur">
-                  {item}
+                <div key={item} className="bg-white/10 rounded-lg p-4 backdrop-blur flex items-center gap-3">
+                  <div className="w-10 h-10 rounded bg-white/20 flex-shrink-0 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded bg-white/30"></div>
+                  </div>
+                  <span>{item}</span>
                 </div>
               ))}
             </div>

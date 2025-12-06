@@ -53,9 +53,13 @@ export function MetricsStrip() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 + idx * 0.1 }}
-                className="h-12 flex items-center justify-center text-white/70 text-sm font-medium"
+                className="h-16 w-full flex items-center justify-center"
               >
-                {logo}
+                <div className="w-full h-full bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 flex items-center justify-center">
+                  <div className="w-24 h-12 bg-white/20 rounded flex items-center justify-center">
+                    <span className="text-white/60 text-xs font-medium">{logo}</span>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
