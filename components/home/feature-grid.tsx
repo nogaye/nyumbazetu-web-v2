@@ -16,6 +16,8 @@ import {
   ChatBubbleLeftRightIcon,
   BuildingOfficeIcon,
   PaintBrushIcon,
+  CalendarDaysIcon,
+  LinkIcon,
 } from "@heroicons/react/24/outline";
 
 const features = [
@@ -129,6 +131,28 @@ const features = [
     icon: PaintBrushIcon,
     href: "/features/white-labeling",
   },
+  {
+    title: "Calendar & Event Scheduling",
+    description: "Automated scheduling for invoice generation, reminders, penalties, and recurring tasks.",
+    bullets: [
+      "Schedule invoice generation",
+      "Automated payment reminders",
+      "Penalty calculation automation",
+    ],
+    icon: CalendarDaysIcon,
+    href: "/features/calendar-scheduling",
+  },
+  {
+    title: "Webhooks & API Events",
+    description: "Real-time event notifications and integrations to connect with your existing systems.",
+    bullets: [
+      "Real-time event notifications",
+      "API integrations and workflows",
+      "Custom automation triggers",
+    ],
+    icon: LinkIcon,
+    href: "/features/webhooks",
+  },
 ];
 
 export function FeatureGrid() {
@@ -153,7 +177,7 @@ export function FeatureGrid() {
                 <div className="mb-4 aspect-video bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center">
                   <div className="text-center">
                     <feature.icon className="h-8 w-8 text-primary mx-auto mb-2" />
-                    <p className="text-slate-500 dark:text-slate-400 text-xs">Feature Screenshot</p>
+                    <p className="text-slate-600 dark:text-slate-400 text-xs">Feature Screenshot</p>
                   </div>
                 </div>
                 <CardTitle className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-2">

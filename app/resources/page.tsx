@@ -84,7 +84,7 @@ export default function ResourcesPage() {
                 <CardDescription>{resource.description}</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-sm text-slate-500 mb-4">
+                <div className="text-sm text-slate-600 dark:text-slate-400 mb-4">
                   {new Date(resource.date).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",

@@ -26,8 +26,8 @@ export function ProductVideo() {
               <div className="w-20 h-20 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm border-2 border-white/30">
                 <PlayIcon className="h-10 w-10 text-white ml-1" />
               </div>
-              <p className="text-white/80 text-sm font-medium mb-2">3-Minute Platform Overview</p>
-              <p className="text-white/60 text-xs">Video placeholder - Dashboard walkthrough and key features</p>
+              <p className="text-white text-sm font-medium mb-2">3-Minute Platform Overview</p>
+              <p className="text-white text-xs">Video placeholder - Dashboard walkthrough and key features</p>
             </div>
           </div>
           

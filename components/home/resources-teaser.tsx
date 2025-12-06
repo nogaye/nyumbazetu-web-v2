@@ -33,7 +33,7 @@ export function ResourcesTeaser() {
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight tracking-tight">
           Property management insights for Kenyan landlords and property managers.
         </h2>
-        <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+        <p className="text-lg md:text-xl text-white leading-relaxed">
           Learn from industry experts and real-world case studies.
         </p>
       </div>
@@ -56,7 +56,7 @@ export function ResourcesTeaser() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
-                <p className="text-white/90 leading-relaxed mb-4">
+                <p className="text-white leading-relaxed mb-4">
                   {resource.description}
                 </p>
               </CardContent>

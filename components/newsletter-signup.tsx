@@ -118,7 +118,7 @@ export function NewsletterSignup() {
           </Alert>
         )}
       </form>
-      <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 text-center">
+      <p className="text-xs text-slate-600 dark:text-slate-400 mt-2 text-center">
         We'll never share your email. Unsubscribe at any time.
       </p>
     </div>

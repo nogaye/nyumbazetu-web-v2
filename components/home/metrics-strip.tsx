@@ -34,7 +34,7 @@ export function MetricsStrip() {
                 <div className="text-4xl font-bold text-white mb-2">
                   {metric.value}
                 </div>
-                <div className="text-sm text-white/80 leading-relaxed">
+                <div className="text-sm text-white leading-relaxed">
                   {metric.label}
                 </div>
               </Card>
@@ -44,7 +44,7 @@ export function MetricsStrip() {
 
         {/* Client Logos */}
         <div className="text-center">
-          <p className="text-sm text-white/80 mb-6">Trusted by leading property teams in Kenya</p>
+          <p className="text-sm text-white mb-6">Trusted by leading property teams in Kenya</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
             {logos.map((logo, idx) => (
               <motion.div
@@ -57,7 +57,7 @@ export function MetricsStrip() {
               >
                 <div className="w-full h-full bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 flex items-center justify-center">
                   <div className="w-24 h-12 bg-white/20 rounded flex items-center justify-center">
-                    <span className="text-white/60 text-xs font-medium">{logo}</span>
+                    <span className="text-white text-xs font-medium">{logo}</span>
                   </div>
                 </div>
               </motion.div>

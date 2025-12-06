@@ -195,6 +195,68 @@ const features: Record<string, {
       },
     ],
   },
+  "calendar-scheduling": {
+    title: "Calendar & Event Scheduling for Property Management",
+    description: "Automated scheduling system for invoice generation, payment reminders, penalty calculations, and recurring property management tasks.",
+    what: "Nyumba Zetu's Calendar & Event Scheduling feature provides a powerful automation engine that lets you schedule when the system should generate invoices, send payment reminders, calculate penalties, and execute other recurring property management tasks. Set up rules once, and the system handles everything automatically according to your schedule.",
+    how: "Configure scheduling rules for any property management task. Schedule invoice generation for specific dates (e.g., 1st of every month for rent, 15th for service charges). Set up automated reminder sequences (e.g., send reminder 3 days before due date, another on due date, and a final reminder 3 days after). Configure penalty calculations to automatically apply late fees based on your rules (e.g., 5% penalty after 7 days, additional 2% after 14 days). Schedule recurring tasks like maintenance inspections, lease renewals, and reporting. The calendar view shows all scheduled events, and you can modify or pause schedules at any time. All scheduled events are logged with timestamps for audit purposes.",
+    why: "Property management involves many repetitive, time-sensitive tasks. Without automation, property managers spend hours each month manually generating invoices, sending reminders, and calculating penalties. Calendar & Event Scheduling eliminates this manual work, ensures consistency, and ensures nothing is forgotten. For property teams managing hundreds of units, this automation is essential for operational efficiency.",
+    faqs: [
+      {
+        q: "Can I schedule different invoice dates for different properties?",
+        a: "Yes, you can configure unique scheduling rules for each property, unit, or tenant. For example, commercial properties might have different rent due dates than residential units.",
+      },
+      {
+        q: "How do penalty calculations work with scheduling?",
+        a: "You can set up penalty rules that automatically calculate and apply late fees based on how many days past due a payment is. The system checks daily and applies penalties according to your configured schedule.",
+      },
+      {
+        q: "Can I schedule recurring maintenance tasks?",
+        a: "Yes, you can schedule recurring maintenance inspections, asset audits, and other property management tasks. The system will create work orders or reminders automatically.",
+      },
+      {
+        q: "What happens if I need to pause a scheduled event?",
+        a: "You can pause, modify, or delete any scheduled event at any time. The system maintains a history of all scheduled events and their execution status.",
+      },
+      {
+        q: "Can I schedule bulk operations?",
+        a: "Yes, you can schedule bulk invoice generation, bulk reminders, and other operations that apply to multiple tenants or properties at once.",
+      },
+    ],
+  },
+  webhooks: {
+    title: "Webhooks & API Events for Property Management Integration",
+    description: "Real-time event notifications and webhook integrations to connect Nyumba Zetu with your existing systems and workflows.",
+    what: "Nyumba Zetu's Webhooks feature allows you to receive real-time notifications when events occur in the system. When an invoice is generated, a payment is received, a maintenance request is submitted, or any other event happens, the system can automatically send a webhook to your specified URL, trigger an email, call another API, or execute custom workflows.",
+    how: "Configure webhooks for any system event: invoice generation, payment received, payment overdue, maintenance request created, tenant added, lease renewed, and many more. Set up webhook endpoints (URLs) where you want to receive notifications. When an event occurs, Nyumba Zetu sends a POST request to your endpoint with event details in JSON format. You can use these webhooks to update external systems, trigger custom workflows, send notifications to third-party services, or integrate with your existing tools. For example, when a payment is received, you could automatically update your CRM, send a Slack notification, or trigger a custom accounting workflow. Webhooks include authentication tokens for security, retry logic for failed deliveries, and full event history for debugging. You can also configure webhooks to call other APIs, send emails, or trigger SMS notifications.",
+    why: "Modern property management requires integration with multiple systems: CRMs, accounting software, communication tools, and custom workflows. Webhooks provide a flexible, real-time way to connect Nyumba Zetu with your existing infrastructure. Instead of manually exporting data or polling for updates, webhooks push events to your systems as they happen, enabling true automation and real-time synchronization.",
+    faqs: [
+      {
+        q: "What events can trigger webhooks?",
+        a: "Virtually any event in the system can trigger a webhook: invoice generation, payment received, payment overdue, maintenance request created/completed, tenant added/updated, lease created/renewed, service charge calculated, penalty applied, and many more.",
+      },
+      {
+        q: "How secure are webhooks?",
+        a: "Webhooks use authentication tokens and can be configured with SSL/TLS. Each webhook request includes a signature that you can verify to ensure it's coming from Nyumba Zetu.",
+      },
+      {
+        q: "What happens if my webhook endpoint is down?",
+        a: "The system includes retry logic with exponential backoff. Failed webhook deliveries are retried multiple times, and you can view the delivery status and history in the webhook dashboard.",
+      },
+      {
+        q: "Can I use webhooks to call other APIs?",
+        a: "Yes, you can configure webhooks to call external APIs, send emails, trigger SMS notifications, or execute any HTTP-based workflow. The webhook payload includes all relevant event data in JSON format.",
+      },
+      {
+        q: "Can I filter which events trigger webhooks?",
+        a: "Yes, you can configure webhooks to only trigger for specific events, properties, tenants, or based on custom conditions. For example, only send webhooks for payments over a certain amount.",
+      },
+      {
+        q: "How do I test webhooks?",
+        a: "The system includes a webhook testing tool that lets you trigger test events and verify your endpoint is receiving data correctly. You can also view webhook delivery logs and response codes.",
+      },
+    ],
+  },
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -242,7 +304,7 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
       </Section>
 
       <Section>
-        <div className="max-w-4xl mx-auto space-y-12">
+        <div className="max-w-4xl mx-auto space-y-8">
           <div>
             <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4">What It Is</h2>
             <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">{feature.what}</p>
@@ -260,12 +322,12 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
         </div>
       </Section>
 
-      <Section className="bg-slate-50">
+      <Section className="bg-slate-50 dark:bg-slate-900">
         <SectionHeader
           title="Frequently Asked Questions"
           description="Common questions about this feature."
         />
-        <div className="max-w-3xl mx-auto space-y-6">
+        <div className="max-w-3xl mx-auto space-y-4">
           {feature.faqs.map((faq, idx) => (
             <Card key={idx}>
               <CardHeader>

@@ -121,6 +121,28 @@ const features = [
       "Customized email templates",
     ],
   },
+  {
+    slug: "calendar-scheduling",
+    title: "Calendar & Event Scheduling",
+    description: "Automated scheduling system for invoice generation, payment reminders, penalty calculations, and recurring tasks.",
+    highlights: [
+      "Schedule invoice generation dates",
+      "Automated payment reminder sequences",
+      "Penalty calculation automation",
+      "Recurring task scheduling",
+    ],
+  },
+  {
+    slug: "webhooks",
+    title: "Webhooks & API Events",
+    description: "Real-time event notifications and webhook integrations to connect Nyumba Zetu with your existing systems.",
+    highlights: [
+      "Real-time event notifications",
+      "Webhook endpoint configuration",
+      "API integration triggers",
+      "Custom workflow automation",
+    ],
+  },
 ];
 
 export default function FeaturesPage() {
@@ -171,7 +193,7 @@ export default function FeaturesPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             See all features in action
           </h2>
-          <p className="text-lg text-white/90 mb-8 leading-relaxed">
+          <p className="text-lg text-white mb-8 leading-relaxed">
             Schedule a demo to explore how these features work together to transform your property operations.
           </p>
           <Button size="lg" className="bg-primary hover:bg-primary-600 text-primary-foreground" asChild>

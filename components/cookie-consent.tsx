@@ -73,7 +73,7 @@ export function CookieConsent() {
                 </Button>
                 <button
                   onClick={handleDecline}
-                  className="p-2 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
+                  className="p-2 text-slate-600 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
                   aria-label="Close cookie consent"
                 >
                   <XMarkIcon className="h-5 w-5" />

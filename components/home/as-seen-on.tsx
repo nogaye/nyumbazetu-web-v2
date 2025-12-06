@@ -17,7 +17,7 @@ export function AsSeenOn() {
     <Section className="bg-secondary py-12 border-b border-secondary/20">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="text-center mb-8">
-          <p className="text-sm font-medium text-white/80 uppercase tracking-wider mb-6">
+          <p className="text-sm font-medium text-white uppercase tracking-wider mb-6">
             As Seen On
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center justify-items-center">
@@ -39,7 +39,7 @@ export function AsSeenOn() {
                 >
                   <div className="w-full h-full bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 flex items-center justify-center p-3 group-hover:bg-white/20 transition-all duration-200">
                     <div className="w-full h-8 bg-white/20 rounded flex items-center justify-center">
-                      <span className="text-white/60 group-hover:text-white/80 transition-colors duration-200 text-xs font-medium text-center px-2">
+                      <span className="text-white group-hover:text-white transition-colors duration-200 text-xs font-medium text-center px-2">
                         {outlet.name}
                       </span>
                     </div>

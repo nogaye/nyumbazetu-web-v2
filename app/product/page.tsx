@@ -59,7 +59,7 @@ export default function ProductPage() {
                     <span className="text-2xl font-bold">→</span>
                   </div>
                 </div>
-                <div className="text-sm text-white/80">Nyumba Zetu Core</div>
+                <div className="text-sm text-white">Nyumba Zetu Core</div>
               </div>
             </div>
             <div className="md:col-span-2 space-y-4">
@@ -83,11 +83,11 @@ export default function ProductPage() {
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight tracking-tight">
           Core Platform Modules
         </h2>
-        <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+        <p className="text-lg md:text-xl text-white leading-relaxed">
           Everything you need to run modern property operations.
         </p>
       </div>
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
           {[
             {
               title: "Collections & Payments",
@@ -127,7 +127,7 @@ export default function ProductPage() {
                 <CardTitle className="text-white">{module.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-white/90 leading-relaxed">{module.description}</p>
+                <p className="text-white leading-relaxed">{module.description}</p>
               </CardContent>
             </Card>
           ))}
@@ -173,7 +173,7 @@ export default function ProductPage() {
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight tracking-tight">
           Implementation & Onboarding
         </h2>
-        <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+        <p className="text-lg md:text-xl text-white leading-relaxed">
           Get up and running quickly with our dedicated onboarding team.
         </p>
       </div>
@@ -190,7 +190,7 @@ export default function ProductPage() {
                 ].map((step, idx) => (
                   <li key={idx} className="flex items-start space-x-3">
                     <span className="font-bold text-primary">{idx + 1}.</span>
-                    <span className="text-white/90">{step}</span>
+                    <span className="text-white">{step}</span>
                   </li>
                 ))}
               </ol>

@@ -18,6 +18,8 @@ const footerLinks = {
     { label: "Communication Hub", href: "/features/communications" },
     { label: "CRM", href: "/features/crm" },
     { label: "White Labeling", href: "/features/white-labeling" },
+    { label: "Calendar & Event Scheduling", href: "/features/calendar-scheduling" },
+    { label: "Webhooks & API Events", href: "/features/webhooks" },
   ],
   solutions: [
     { label: "Landlords & Agents", href: "/solutions/landlords" },

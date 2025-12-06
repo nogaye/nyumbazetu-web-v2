@@ -337,7 +337,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
           </div>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-12 mb-12">
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-8 mb-12">
           <Card className="border-red-200 dark:border-red-900/50 bg-red-50/50 dark:bg-red-900/10">
             <CardHeader>
               <CardTitle className="text-2xl text-slate-900 dark:text-slate-50">Their World Today</CardTitle>
@@ -373,7 +373,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
       </Section>
 
       <Section className="bg-slate-50 dark:bg-slate-900">
-        <div className="max-w-4xl mx-auto space-y-12">
+        <div className="max-w-4xl mx-auto space-y-8">
           <div>
             <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4">What It Is</h2>
             <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">{segment.what}</p>
@@ -413,7 +413,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
           description="How organizations in this segment use Nyumba Zetu."
         />
         <div className="max-w-3xl mx-auto">
-          <ul className="space-y-4">
+          <ul className="space-y-3">
             {segment.useCases.map((useCase, idx) => (
               <li key={idx} className="flex items-start space-x-3">
                 <span className="text-primary mt-1">✓</span>
@@ -429,7 +429,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
           title="Frequently Asked Questions"
           description="Common questions about this solution."
         />
-        <div className="max-w-3xl mx-auto space-y-6">
+        <div className="max-w-3xl mx-auto space-y-4">
           {segment.faqs.map((faq, idx) => (
             <Card key={idx}>
               <CardHeader>

@@ -29,6 +29,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/features/communications',
     '/features/crm',
     '/features/white-labeling',
+    '/features/calendar-scheduling',
+    '/features/webhooks',
   ]
 
   return routes.map((route) => ({

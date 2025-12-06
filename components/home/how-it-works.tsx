@@ -37,11 +37,11 @@ export function HowItWorks() {
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight tracking-tight">
           From spreadsheets to a modern property operations stack.
         </h2>
-        <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+        <p className="text-lg md:text-xl text-white leading-relaxed">
           Get up and running in days, not months. Our team handles onboarding and training.
         </p>
       </div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
         {steps.map((step, idx) => (
           <motion.div
             key={idx}
@@ -55,7 +55,7 @@ export function HowItWorks() {
             <h3 className="text-xl font-bold text-white mb-3">
               {step.title}
             </h3>
-            <p className="text-white/90 leading-relaxed">
+            <p className="text-white leading-relaxed">
               {step.description}
             </p>
             {idx < steps.length - 1 && (

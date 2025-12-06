@@ -103,7 +103,7 @@ export default function PricingPage() {
                       {plan.period}
                     </div>
                   )}
-                  <div className="text-sm text-slate-500 dark:text-slate-500 mt-2">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 mt-2">
                     {plan.units}
                   </div>
                 </div>
@@ -141,7 +141,7 @@ export default function PricingPage() {
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight tracking-tight">
           Frequently Asked Questions
         </h2>
-        <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+        <p className="text-lg md:text-xl text-white leading-relaxed">
           Common questions about pricing and plans.
         </p>
       </div>
@@ -171,7 +171,7 @@ export default function PricingPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-white/90 leading-relaxed">
+                <p className="text-white leading-relaxed">
                   {faq.a}
                 </p>
               </CardContent>

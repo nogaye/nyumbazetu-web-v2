@@ -42,6 +42,8 @@ const navItems = [
       { label: "Communication Hub", href: "/features/communications", description: "Email, SMS, and in-app messaging" },
       { label: "CRM", href: "/features/crm", description: "Customer relationship management for tenants and owners" },
       { label: "White Labeling", href: "/features/white-labeling", description: "Fully customizable white-label solution" },
+      { label: "Calendar & Event Scheduling", href: "/features/calendar-scheduling", description: "Automated scheduling for invoices, reminders, and penalties" },
+      { label: "Webhooks & API Events", href: "/features/webhooks", description: "Real-time event notifications and system integrations" },
     ],
   },
         { label: "Pricing", href: "/pricing" },

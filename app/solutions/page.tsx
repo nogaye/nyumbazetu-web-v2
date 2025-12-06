@@ -127,7 +127,7 @@ export default function SolutionsPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Not sure which solution fits your needs?
           </h2>
-          <p className="text-lg text-white/90 mb-8 leading-relaxed">
+          <p className="text-lg text-white mb-8 leading-relaxed">
             Our team can help you find the right solution for your property management requirements.
           </p>
           <Button size="lg" className="bg-primary hover:bg-primary-600 text-primary-foreground" asChild>

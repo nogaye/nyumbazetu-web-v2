@@ -55,7 +55,7 @@ export function Differentiators() {
             <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:shadow-md transition-all duration-200 hover:-translate-y-1">
               <CardHeader className="pb-4">
                 <item.icon className="h-10 w-10 text-primary mb-4" />
-                <CardTitle className="text-slate-900 dark:text-slate-50 text-2xl font-semibold mb-2">
+                <CardTitle className="text-slate-900 dark:text-slate-50 text-2xl font-semibold mb-3">
                   {item.title}
                 </CardTitle>
               </CardHeader>

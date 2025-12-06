@@ -381,7 +381,7 @@ export default function ComparePage() {
 
       {/* Key Differentiators */}
       <Section>
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8 mb-8">
           <Card className="border-2 border-primary bg-primary/5 dark:bg-primary/10">
             <CardHeader>
               <CardTitle className="text-xl text-slate-900 dark:text-slate-50">
@@ -487,7 +487,7 @@ export default function ComparePage() {
           title="Why choose Nyumba Zetu over generic solutions?"
           description="Generic software requires extensive customization. Nyumba Zetu works out of the box for Kenyan property management."
         />
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
           <Card>
             <CardHeader>
               <CardTitle className="text-xl text-slate-900 dark:text-slate-50">
@@ -495,10 +495,10 @@ export default function ComparePage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-slate-700 dark:text-slate-300 mb-4">
+              <p className="text-slate-700 dark:text-slate-300 mb-4 leading-relaxed">
                 Generic solutions like Odoo and Zoho require extensive customization to handle M-Pesa, local bank integrations, service charges, and Kenyan workflows. Nyumba Zetu includes these features from day one.
               </p>
-              <ul className="space-y-2 text-slate-600 dark:text-slate-400">
+              <ul className="space-y-2.5 text-slate-700 dark:text-slate-300">
                 <li className="flex items-start gap-2">
                   <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>M-Pesa integration works immediately</span>
@@ -525,10 +525,10 @@ export default function ComparePage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-slate-700 dark:text-slate-300 mb-4">
+              <p className="text-slate-700 dark:text-slate-300 mb-4 leading-relaxed">
                 International solutions lack local market knowledge. Nyumba Zetu's team understands Kenyan property management, regulations, and workflows.
               </p>
-              <ul className="space-y-2 text-slate-600 dark:text-slate-400">
+              <ul className="space-y-2.5 text-slate-700 dark:text-slate-300">
                 <li className="flex items-start gap-2">
                   <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>Kenyan support team available locally</span>
@@ -551,10 +551,10 @@ export default function ComparePage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-slate-700 dark:text-slate-300 mb-4">
+              <p className="text-slate-700 dark:text-slate-300 mb-4 leading-relaxed">
                 QuickBooks is accounting software with property add-ons. Odoo and Zoho are generic ERPs. Nyumba Zetu is built specifically for property management with accounting at its core.
               </p>
-              <ul className="space-y-2 text-slate-600 dark:text-slate-400">
+              <ul className="space-y-2.5 text-slate-700 dark:text-slate-300">
                 <li className="flex items-start gap-2">
                   <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>Property workflows are primary, not afterthoughts</span>
@@ -577,10 +577,10 @@ export default function ComparePage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-slate-700 dark:text-slate-300 mb-4">
+              <p className="text-slate-700 dark:text-slate-300 mb-4 leading-relaxed">
                 While some local solutions are basic tools, Nyumba Zetu provides enterprise-grade technology with modern user experience, mobile apps, and WhatsApp integration.
               </p>
-              <ul className="space-y-2 text-slate-600 dark:text-slate-400">
+              <ul className="space-y-2.5 text-slate-700 dark:text-slate-300">
                 <li className="flex items-start gap-2">
                   <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>Native mobile apps for iOS and Android</span>

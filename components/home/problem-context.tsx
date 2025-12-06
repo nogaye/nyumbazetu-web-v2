@@ -11,14 +11,14 @@ import {
 export function ProblemContext() {
   return (
     <Section className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-950">
-      <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+      <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
         {/* Left - Current Problems */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
         >
-          <Card className="p-8 h-full border-red-200 dark:border-red-900/50 bg-white dark:bg-slate-900 hover:shadow-md transition-all duration-200">
+          <Card className="p-6 md:p-8 h-full border-red-200 dark:border-red-900/50 bg-white dark:bg-slate-900 hover:shadow-md transition-all duration-200">
             {/* Problem Illustration Placeholder */}
             <div className="mb-6 aspect-video bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-900/50 flex items-center justify-center">
               <div className="text-center">
@@ -55,7 +55,7 @@ export function ProblemContext() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
         >
-          <Card className="p-8 h-full border-tertiary dark:border-tertiary/50 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800/50 hover:shadow-md transition-all duration-200">
+          <Card className="p-6 md:p-8 h-full border-tertiary dark:border-tertiary/50 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800/50 hover:shadow-md transition-all duration-200">
             {/* Solution Dashboard Screenshot Placeholder */}
             <div className="mb-6 aspect-video bg-tertiary/10 dark:bg-tertiary/20 rounded-lg border border-tertiary/30 dark:border-tertiary/50 flex items-center justify-center">
               <div className="text-center">

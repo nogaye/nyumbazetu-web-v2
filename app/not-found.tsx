@@ -32,7 +32,7 @@ export default function NotFound() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800">
-          <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+          <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
             Popular pages:
           </p>
           <div className="flex flex-wrap gap-4 justify-center">

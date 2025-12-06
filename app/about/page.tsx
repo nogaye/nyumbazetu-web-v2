@@ -20,13 +20,13 @@ export default function AboutPage() {
       <Section>
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Team/Office Photo Placeholder */}
-          <div className="aspect-video bg-slate-200 dark:bg-slate-800 rounded-xl border border-slate-300 dark:border-slate-700 flex items-center justify-center mb-8">
+          <div className="aspect-video bg-slate-200 dark:bg-slate-800 rounded-xl border border-slate-300 dark:border-slate-700 flex items-center justify-center mb-6">
             <div className="text-center">
               <div className="w-24 h-24 mx-auto mb-4 bg-slate-300 dark:bg-slate-700 rounded-lg flex items-center justify-center">
                 <div className="w-16 h-16 bg-slate-400 dark:bg-slate-600 rounded"></div>
               </div>
-              <p className="text-slate-600 dark:text-slate-400 font-medium mb-1">Team Photo / Office Image</p>
-              <p className="text-slate-500 dark:text-slate-500 text-sm">Nyumba Zetu team or Nairobi office</p>
+              <p className="text-slate-700 dark:text-slate-300 font-medium mb-1">Team Photo / Office Image</p>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">Nyumba Zetu team or Nairobi office</p>
             </div>
           </div>
           <div className="prose prose-lg max-w-none">
@@ -46,14 +46,14 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section className="bg-slate-50">
+      <Section className="bg-slate-50 dark:bg-slate-900">
         <SectionHeader
           title="Our Story"
           description="🇰🇪 Proudly built in Kenya, for Kenya."
         />
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="max-w-4xl mx-auto">
           <Card>
-            <CardContent className="p-8">
+            <CardContent className="p-6 md:p-8">
               <p className="text-lg text-slate-700 dark:text-slate-300 mb-4 leading-relaxed">
                 Nyumba Zetu was founded by a team of property professionals and technologists who
                 experienced firsthand the challenges of managing property portfolios in Kenya.
@@ -110,14 +110,14 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section className="bg-slate-50">
+      <Section className="bg-slate-50 dark:bg-slate-900">
         <SectionHeader
           title="Partnerships"
           description="Working with leading institutions in Kenya."
         />
         <div className="max-w-4xl mx-auto">
           <Card>
-            <CardContent className="p-8">
+            <CardContent className="p-6 md:p-8">
               <p className="text-lg text-slate-700 dark:text-slate-300 mb-4 leading-relaxed">
                 Nyumba Zetu partners with banks, SACCOS, property management companies, and
                 real estate developers to provide enterprise-grade property management solutions.

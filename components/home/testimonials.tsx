@@ -36,7 +36,7 @@ export function Testimonials() {
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight tracking-tight">
           What our customers see in the first 6–12 months.
         </h2>
-        <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+        <p className="text-lg md:text-xl text-white leading-relaxed">
           Real results from property teams across Kenya.
         </p>
       </div>
@@ -51,7 +51,7 @@ export function Testimonials() {
           >
             <Card className="h-full hover:shadow-md transition-all duration-200 bg-white/10 backdrop-blur-sm border-white/20">
               <CardContent className="p-6 md:p-8">
-                <p className="text-white/90 mb-6 italic leading-relaxed text-base">
+                <p className="text-white mb-6 italic leading-relaxed text-base">
                   "{testimonial.quote}"
                 </p>
                 <div className="border-t border-white/20 pt-4">
@@ -63,12 +63,12 @@ export function Testimonials() {
                       <div className="font-semibold text-white text-base">
                         {testimonial.author}
                       </div>
-                      <div className="text-sm text-white/80 mt-0.5">
+                      <div className="text-sm text-white mt-0.5">
                         {testimonial.role}
                       </div>
                     </div>
                   </div>
-                  <div className="text-sm text-white/70 mt-2">
+                  <div className="text-sm text-white mt-2">
                     {testimonial.portfolio}
                   </div>
                   <div className="text-sm font-medium text-tertiary mt-3">
@@ -94,16 +94,16 @@ export function Testimonials() {
                 Before Nyumba Zetu
               </h3>
               <ul className="space-y-3">
-                <li className="text-white/90 leading-relaxed">
+                <li className="text-white leading-relaxed">
                   • Manual spreadsheet tracking across 3 files
                 </li>
-                <li className="text-white/90 leading-relaxed">
+                <li className="text-white leading-relaxed">
                   • WhatsApp chaos for payment confirmations
                 </li>
-                <li className="text-white/90 leading-relaxed">
+                <li className="text-white leading-relaxed">
                   • 2-3 days to reconcile M-Pesa payments
                 </li>
-                <li className="text-white/90 leading-relaxed">
+                <li className="text-white leading-relaxed">
                   • No real-time visibility for property owners
                 </li>
               </ul>
@@ -121,16 +121,16 @@ export function Testimonials() {
                 After Nyumba Zetu
               </h3>
               <ul className="space-y-3">
-                <li className="text-white/90 leading-relaxed">
+                <li className="text-white leading-relaxed">
                   • Single platform for all operations
                 </li>
-                <li className="text-white/90 leading-relaxed">
+                <li className="text-white leading-relaxed">
                   • Automated invoicing and payment tracking
                 </li>
-                <li className="text-white/90 leading-relaxed">
+                <li className="text-white leading-relaxed">
                   • Real-time M-Pesa reconciliation
                 </li>
-                <li className="text-white/90 leading-relaxed">
+                <li className="text-white leading-relaxed">
                   • Owner portals with live dashboards
                 </li>
               </ul>

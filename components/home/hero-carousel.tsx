@@ -143,8 +143,8 @@ export function HeroCarousel() {
       <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900"></div>
       
       {/* Carousel Container */}
-      <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-20 md:py-28 lg:py-36">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-24 lg:py-32">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Column - Content */}
           <div className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
             <AnimatePresence mode="wait">
@@ -161,7 +161,7 @@ export function HeroCarousel() {
             </h1>
             
             {/* Description */}
-            <p className="text-lg md:text-xl lg:text-2xl text-slate-600 dark:text-slate-300 mb-10 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl lg:text-2xl text-slate-700 dark:text-slate-200 mb-8 leading-relaxed max-w-3xl mx-auto">
               {currentSlideData.description}
             </p>
 
@@ -180,7 +180,7 @@ export function HeroCarousel() {
                     className="flex items-start space-x-3"
                   >
                     <CheckCircleIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                    <span className="text-slate-800 dark:text-slate-200 leading-relaxed">
                       {item}
                     </span>
                   </motion.li>
@@ -189,7 +189,7 @@ export function HeroCarousel() {
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-8">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-6">
               <Button 
                 size="lg"
                 className="bg-primary hover:bg-primary-600 text-primary-foreground focus-visible:ring-primary rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200 border-0" 
@@ -236,7 +236,7 @@ export function HeroCarousel() {
             </div>
 
             {/* Trust indicator */}
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-8">
+            <p className="text-sm text-slate-600 dark:text-slate-400 mt-6">
               🇰🇪 Proudly built in Kenya. Trusted by property teams, estates, and banks.
             </p>
               </motion.div>
@@ -257,7 +257,7 @@ export function HeroCarousel() {
                   <div className="w-16 h-16 bg-slate-500 dark:bg-slate-500 rounded"></div>
                 </div>
                 <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Dashboard Screenshot</p>
-                <p className="text-slate-500 dark:text-slate-500 text-xs mt-1">Platform interface preview</p>
+                <p className="text-slate-600 dark:text-slate-400 text-xs mt-1">Platform interface preview</p>
               </div>
             </div>
           </div>
