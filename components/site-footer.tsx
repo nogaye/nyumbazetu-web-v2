@@ -311,7 +311,7 @@ export function SiteFooter() {
           <p className="text-sm text-slate-400 text-center md:text-left">
             © {new Date().getFullYear()} Nyumba Zetu. All rights reserved.
           </p>
-          <div className="flex flex-wrap justify-center gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-6">
             {footerLinks.legal.map((link) => (
               <Link
                 key={link.href}
@@ -322,6 +322,21 @@ export function SiteFooter() {
                 <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
               </Link>
             ))}
+            
+            {/* System Status */}
+            <div className="flex items-center gap-3">
+              <Link 
+                href="/status" 
+                className="flex items-center gap-2 text-sm text-slate-400 hover:text-primary transition-colors duration-200 group"
+                title="View system status"
+              >
+                <div className="relative">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                  <div className="absolute inset-0 w-2 h-2 bg-green-500 rounded-full animate-ping opacity-75" />
+                </div>
+                <span className="text-xs group-hover:underline">All Systems Operational</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
