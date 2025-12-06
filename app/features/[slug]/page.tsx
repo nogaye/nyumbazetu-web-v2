@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { LoadingSkeleton } from "@/components/loading-skeleton";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
+import { FeatureViewTracker } from "@/components/feature-view-tracker";
 
 const features: Record<string, {
   title: string;
@@ -173,6 +174,7 @@ export default function FeaturePage({ params }: { params: { slug: string } }) {
 
   return (
     <>
+      <FeatureViewTracker featureSlug={params.slug} />
       <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
         <SectionHeader
           title={feature.title}

@@ -1,4 +1,10 @@
 import Link from "next/link";
+import { 
+  EnvelopeIcon,
+  ChatBubbleLeftRightIcon,
+  PhotoIcon,
+  ShareIcon
+} from "@heroicons/react/24/outline";
 
 const footerLinks = {
   product: [
@@ -51,6 +57,44 @@ export function SiteFooter() {
             </p>
             <div className="mt-4 flex items-center space-x-1">
               <div className="h-3 w-12 bg-gradient-to-r from-[#006600] via-[#FF0000] to-[#000000] rounded-sm"></div>
+            </div>
+            <div className="mt-6 flex items-center gap-4">
+              <a
+                href="https://twitter.com/nyumbazetu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-400 hover:text-[#b98036] transition-colors"
+                aria-label="Follow us on Twitter"
+              >
+                <ShareIcon className="h-5 w-5" />
+              </a>
+              <a
+                href="https://linkedin.com/company/nyumbazetu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-400 hover:text-[#b98036] transition-colors"
+                aria-label="Follow us on LinkedIn"
+              >
+                <EnvelopeIcon className="h-5 w-5" />
+              </a>
+              <a
+                href="https://facebook.com/nyumbazetu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-400 hover:text-[#b98036] transition-colors"
+                aria-label="Follow us on Facebook"
+              >
+                <ChatBubbleLeftRightIcon className="h-5 w-5" />
+              </a>
+              <a
+                href="https://instagram.com/nyumbazetu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-400 hover:text-[#b98036] transition-colors"
+                aria-label="Follow us on Instagram"
+              >
+                <PhotoIcon className="h-5 w-5" />
+              </a>
             </div>
           </div>
 

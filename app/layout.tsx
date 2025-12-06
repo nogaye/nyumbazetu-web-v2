@@ -7,6 +7,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { StructuredData } from "@/components/structured-data";
+import { AnalyticsProvider } from "@/components/analytics-provider";
+import { CookieConsent } from "@/components/cookie-consent";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -90,14 +92,17 @@ export default function RootLayout({
         </a>
         <StructuredData />
         <ThemeProvider>
-          <ErrorBoundary>
-            <MainNav />
-            <main className="min-h-screen" id="main-content" role="main">
-              {children}
-            </main>
-            <SiteFooter />
-            <ScrollToTop />
-          </ErrorBoundary>
+          <AnalyticsProvider>
+            <ErrorBoundary>
+              <MainNav />
+              <main className="min-h-screen" id="main-content" role="main">
+                {children}
+              </main>
+              <SiteFooter />
+              <ScrollToTop />
+              <CookieConsent />
+            </ErrorBoundary>
+          </AnalyticsProvider>
         </ThemeProvider>
       </body>
     </html>

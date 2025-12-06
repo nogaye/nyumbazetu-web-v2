@@ -17,6 +17,7 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
 import { CheckCircleIcon, ExclamationCircleIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { trackFormSubmit } from "@/lib/analytics";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -120,6 +121,7 @@ export default function ContactPage() {
       setTimeout(() => setSubmitStatus("idle"), 5000);
     } catch (error) {
       setSubmitStatus("error");
+      trackFormSubmit("contact", false);
       setTimeout(() => setSubmitStatus("idle"), 5000);
     } finally {
       setIsSubmitting(false);

@@ -1,7 +1,10 @@
+"use client";
+
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { trackButtonClick } from "@/lib/analytics";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b98036] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 min-h-[44px] min-w-[44px]",
@@ -36,12 +39,32 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, onClick, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
+    
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      // Track button clicks for analytics (only for non-asChild buttons)
+      if (!asChild && typeof window !== 'undefined') {
+        try {
+          const label = typeof props.children === 'string' 
+            ? props.children 
+            : props['aria-label'] || 'Button';
+          const location = window.location.pathname;
+          const href = (props as any).href || (e.currentTarget as unknown as HTMLAnchorElement)?.href;
+          trackButtonClick(label, location, href);
+        } catch (err) {
+          // Silently fail analytics tracking
+        }
+      }
+      
+      onClick?.(e);
+    };
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }), "transition-all duration-200 hover:scale-105 active:scale-95")}
         ref={ref}
+        onClick={handleClick}
         {...props}
       />
     );
