@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { TwitterIcon, LinkedInIcon, FacebookIcon, InstagramIcon } from "@/components/social-icons";
+import { useEffect, useState } from "react";
 
 const footerLinks = {
   product: [
@@ -57,10 +60,54 @@ const footerLinks = {
   ],
 };
 
+// Generate random stars
+function generateStars(count: number) {
+  return Array.from({ length: count }, (_, i) => ({
+    id: i,
+    top: Math.random() * 100,
+    left: Math.random() * 100,
+    delay: Math.random() * 3,
+    duration: 2 + Math.random() * 2,
+  }));
+}
+
 export function SiteFooter() {
+  const [stars, setStars] = useState<Array<{
+    id: number;
+    top: number;
+    left: number;
+    delay: number;
+    duration: number;
+  }>>([]);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    setStars(generateStars(50));
+  }, []);
+
   return (
-    <footer className="border-t border-secondary/20 bg-secondary">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-20">
+    <footer className="relative border-t border-slate-800 bg-slate-950 overflow-hidden">
+      {/* Twinkling Stars Background */}
+      {mounted && (
+        <div className="absolute inset-0 pointer-events-none">
+          {stars.map((star) => (
+            <div
+              key={star.id}
+              className="absolute w-0.5 h-0.5 bg-white rounded-full"
+              style={{
+                top: `${star.top}%`,
+                left: `${star.left}%`,
+                animation: `twinkle ${star.duration}s ease-in-out infinite`,
+                animationDelay: `${star.delay}s`,
+                opacity: 0.15,
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-20">
         {/* All Footer Items in One Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-8 lg:gap-10 mb-12">
           {/* Brand Column */}
@@ -233,8 +280,8 @@ export function SiteFooter() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-slate-300 text-center md:text-left">
+        <div className="relative border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-slate-400 text-center md:text-left">
             © {new Date().getFullYear()} Nyumba Zetu. All rights reserved.
           </p>
           <div className="flex flex-wrap justify-center gap-6">
@@ -242,7 +289,7 @@ export function SiteFooter() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm text-slate-300 hover:text-primary transition-colors duration-200"
+                className="text-sm text-slate-400 hover:text-primary transition-colors duration-200"
               >
                 {link.label}
               </Link>
