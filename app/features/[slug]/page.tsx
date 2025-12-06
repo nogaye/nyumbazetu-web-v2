@@ -155,8 +155,9 @@ const features: Record<string, {
   },
 };
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const feature = features[params.slug];
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const feature = features[slug];
   if (!feature) return { title: "Feature Not Found" };
   
   return {
@@ -165,8 +166,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default function FeaturePage({ params }: { params: { slug: string } }) {
-  const feature = features[params.slug];
+export default async function FeaturePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const feature = features[slug];
   
   if (!feature) {
     notFound();
@@ -174,7 +176,7 @@ export default function FeaturePage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <FeatureViewTracker featureSlug={params.slug} />
+      <FeatureViewTracker featureSlug={slug} />
       <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
         <SectionHeader
           title={feature.title}

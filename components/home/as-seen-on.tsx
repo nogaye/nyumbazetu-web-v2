@@ -21,23 +21,28 @@ export function AsSeenOn() {
             As Seen On
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
-            {mediaOutlets.map((outlet, idx) => (
-              <motion.a
-                key={idx}
-                href={outlet.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="flex items-center justify-center h-12 w-full group"
-              >
-                <span className="text-slate-400 dark:text-slate-500 group-hover:text-[#344767] dark:group-hover:text-[#b98036] transition-colors duration-200 text-sm font-medium">
-                  {outlet.name}
-                </span>
-              </motion.a>
-            ))}
+            {mediaOutlets.map((outlet, idx) => {
+              const MotionComponent = outlet.url !== "#" ? motion.a : motion.div;
+              const linkProps = outlet.url !== "#" 
+                ? { href: outlet.url, target: "_blank", rel: "noopener noreferrer" }
+                : {};
+              
+              return (
+                <MotionComponent
+                  key={outlet.name}
+                  {...linkProps}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="flex items-center justify-center h-12 w-full group"
+                >
+                  <span className="text-slate-400 dark:text-slate-500 group-hover:text-[#344767] dark:group-hover:text-[#b98036] transition-colors duration-200 text-sm font-medium">
+                    {outlet.name}
+                  </span>
+                </MotionComponent>
+              );
+            })}
           </div>
         </div>
       </div>
