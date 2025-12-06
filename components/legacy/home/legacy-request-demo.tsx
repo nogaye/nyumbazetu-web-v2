@@ -8,11 +8,11 @@ interface LegacyRequestDemoProps {
 export function LegacyRequestDemo({ dark = true }: LegacyRequestDemoProps) {
   return (
     <Section
-      className={`py-5 position-relative overflow-hidden ${
+      className={`py-5 relative overflow-hidden ${
         dark ? "bg-slate-900 dark:bg-slate-950" : ""
       }`}
     >
-      <div className="container mx-auto px-4 position-relative">
+      <div className="container mx-auto px-4 relative">
         <div className="flex flex-col md:flex-row items-center gap-6">
           <div className="w-full lg:w-2/3 md:w-2/3 mx-auto text-left">
             <h5
@@ -24,8 +24,8 @@ export function LegacyRequestDemo({ dark = true }: LegacyRequestDemoProps) {
             </h5>
           </div>
           <div className="w-full lg:w-1/3 mx-auto text-center">
-            <Button size="lg" className="w-full md:w-auto">
-              Request a Demo
+            <Button size="lg" className="w-full md:w-auto" asChild>
+              <a href="/contact">Request a Demo</a>
             </Button>
           </div>
         </div>

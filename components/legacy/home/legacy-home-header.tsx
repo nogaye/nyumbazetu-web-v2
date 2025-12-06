@@ -71,20 +71,20 @@ export function LegacyHomeHeader() {
               Property Management Systems
             </h2>
 
-            <p className="text-lg md:pe-5 md:me-5 mt-4 font-bold text-dark dark:text-slate-300 hidden md:block">
+            <p className="text-lg md:pe-5 md:me-5 mt-4 font-bold text-slate-700 dark:text-slate-300 hidden md:block">
               Simple. Transparent. Convenient
             </p>
 
-            <p className="md:pe-5 md:me-5 text-dark dark:text-slate-300 block md:hidden mb-4">
+            <p className="md:pe-5 md:me-5 text-slate-700 dark:text-slate-300 block md:hidden mb-4">
               Join the <span className="font-bold">{currentText}</span> revolution that&apos;s transforming real estate efficiency.
             </p>
 
-            <p className="md:pe-5 md:me-5 text-dark dark:text-slate-300 hidden md:block mb-4">
-              Join the <span className="font-weight-bold" ref={typedElementRef}>{currentText}</span> revolution that&apos;s transforming real estate efficiency.
+            <p className="md:pe-5 md:me-5 text-slate-700 dark:text-slate-300 hidden md:block mb-4">
+              Join the <span className="font-bold" ref={typedElementRef}>{currentText}</span> revolution that&apos;s transforming real estate efficiency.
             </p>
 
-            <Button size="lg" className="mt-4">
-              Request a demo
+            <Button size="lg" className="mt-4" asChild>
+              <a href="/contact">Request a demo</a>
             </Button>
           </div>
           <div className="w-full md:w-1/3 text-center md:text-right mt-4 md:mt-0">
@@ -93,8 +93,9 @@ export function LegacyHomeHeader() {
               alt="Make landlords cool again"
               width={250}
               height={250}
-              className="rounded-full shadow-xl"
+              className="rounded-full shadow-xl mx-auto"
               style={{ height: "250px", width: "250px", objectFit: "cover" }}
+              priority
             />
           </div>
         </div>

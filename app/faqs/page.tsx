@@ -206,7 +206,7 @@ export default function FAQsPage() {
 
       <Section>
         <div className="max-w-4xl mx-auto">
-          <h4 className="my-4 ps-3 text-xl font-semibold text-slate-900 dark:text-slate-50">
+          <h4 className="my-4 pl-3 text-xl font-semibold text-slate-900 dark:text-slate-50">
             Basics
           </h4>
 
@@ -231,7 +231,7 @@ export default function FAQsPage() {
                   </button>
                   {isOpen && (
                     <CardContent className="pt-0 pb-4 px-4">
-                      <p className="text-dark dark:text-slate-300 leading-relaxed">
+                      <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
                         {item.description}
                       </p>
                     </CardContent>

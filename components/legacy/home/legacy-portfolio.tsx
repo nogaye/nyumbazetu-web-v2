@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 
 export function LegacyPortfolio() {
   return (
-    <Section className="bg-slate-900 dark:bg-slate-950 py-5 position-relative overflow-hidden">
-      <div className="container mx-auto px-4 position-relative">
+    <Section className="bg-slate-900 dark:bg-slate-950 py-5 relative overflow-hidden">
+      <div className="container mx-auto px-4 relative">
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="w-full lg:w-1/2 text-center">
             <span className="badge bg-primary text-white mb-2 px-3 py-1 rounded-full">

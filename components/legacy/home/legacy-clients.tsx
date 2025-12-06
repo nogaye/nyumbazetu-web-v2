@@ -186,7 +186,7 @@ export function LegacyClients() {
         <h3 className="mb-3 text-4xl md:text-5xl font-bold text-slate-900 dark:text-slate-50">
           Some Of Our Happy 😊 Clients
         </h3>
-        <p className="text-lg text-dark dark:text-slate-300 mb-5 px-4 md:px-5">
+        <p className="text-lg text-slate-700 dark:text-slate-300 mb-5 px-4 md:px-5">
           Join the community of successful clients using{" "}
           <strong className="text-primary">Nyumba Zetu</strong>. From bustling
           commercial centers in Nairobi to serene residential complexes in
@@ -195,23 +195,29 @@ export function LegacyClients() {
         </p>
 
         {/* Carousel Wrapper */}
-        <div className="carousel-container position-relative mb-5">
+        <div className="carousel-container relative mb-5">
           {/* Arrow Controls */}
           <Button
             variant="outline"
             size="icon"
-            className="carousel-arrow left absolute left-0 top-1/2 -translate-y-1/2 z-10"
+            className="carousel-arrow left absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800"
             onClick={prevSlide}
+            aria-label="Previous slide"
           >
-            ←
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
           </Button>
           <Button
             variant="outline"
             size="icon"
-            className="carousel-arrow right absolute right-0 top-1/2 -translate-y-1/2 z-10"
+            className="carousel-arrow right absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800"
             onClick={nextSlide}
+            aria-label="Next slide"
           >
-            →
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </Button>
 
           <div
@@ -233,12 +239,13 @@ export function LegacyClients() {
                     width={300}
                     height={200}
                     className="w-full h-full object-contain"
+                    sizes="(max-width: 768px) 100vw, 300px"
                   />
                 </div>
-                <p className="font-semibold mt-3 mb-1 text-dark dark:text-slate-50">
+                <p className="font-semibold mt-3 mb-1 text-slate-900 dark:text-slate-50">
                   {client.name}
                 </p>
-                <small className="text-muted dark:text-slate-400">
+                <small className="text-slate-600 dark:text-slate-400">
                   {client.location}
                 </small>
               </div>
@@ -262,10 +269,10 @@ export function LegacyClients() {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <p className="font-semibold mt-2 mb-1 text-dark dark:text-slate-50 text-sm">
+              <p className="font-semibold mt-2 mb-1 text-slate-900 dark:text-slate-50 text-sm">
                 {client.name}
               </p>
-              <small className="text-muted dark:text-slate-400 text-xs">
+              <small className="text-slate-600 dark:text-slate-400 text-xs">
                 {client.location}
               </small>
             </div>

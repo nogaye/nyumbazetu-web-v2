@@ -19,16 +19,15 @@ export default function EventsPage() {
         />
         <div className="relative z-10">
           <div className="container mx-auto px-4">
-            <div className="row">
-              <div className="col-lg-8 text-left">
+            <div className="flex">
+              <div className="w-full lg:w-2/3 text-left">
                 <h1 className="text-white text-4xl md:text-5xl font-bold mb-4">
                   Events & Gallery
                 </h1>
-                <p className="lead text-white text-left pe-5 mt-4 text-lg">
+                <p className="text-lg text-white text-left md:pe-5 mt-4">
                   We are always looking for new real-estate related events. If you have an event you would like us to participate please contact us.
                 </p>
-                <br />
-                <div className="buttons">
+                <div className="mt-6">
                   <Button size="lg" variant="outline" className="bg-white text-slate-900 hover:bg-slate-100" asChild>
                     <a href="/contact">Contact Us</a>
                   </Button>

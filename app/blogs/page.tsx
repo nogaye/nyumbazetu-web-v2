@@ -59,53 +59,52 @@ export default function BlogsPage() {
             <div className="space-y-8">
               {blogs.map((item) => (
                 <Card key={item.id} className="overflow-hidden">
-                  <div className="row">
-                    <div className="col-md-4">
-                      <div className="card-image position-relative border-radius-lg overflow-hidden">
-                        {item.imageUrl && (
-                          <Image
-                            className="img border-radius-lg w-full h-full object-cover"
-                            src={item.imageUrl}
-                            alt={item.title}
-                            width={400}
-                            height={300}
-                          />
-                        )}
+                  <div className="flex flex-col md:flex-row gap-4">
+                    {item.imageUrl && (
+                      <div className="w-full md:w-1/3 relative rounded-lg overflow-hidden">
+                        <Image
+                          className="w-full h-full object-cover"
+                          src={item.imageUrl}
+                          alt={item.title}
+                          width={400}
+                          height={300}
+                          sizes="(max-width: 768px) 100vw, 400px"
+                        />
                       </div>
-                    </div>
-                    <div className="col-md-7 my-auto ms-md-3 mt-md-auto mt-4 p-4">
+                    )}
+                    <div className={`flex-1 ${item.imageUrl ? "md:w-2/3" : "w-full"} p-4 md:p-6`}>
                       <h3 className="text-2xl font-semibold mb-2">
                         <Link
                           href={item.url || `/blogs/${item.slug || item.id}`}
-                          className="text-dark dark:text-slate-50 hover:underline"
+                          className="text-slate-900 dark:text-slate-50 hover:underline"
                         >
                           {item.title}
                         </Link>
                       </h3>
                       {item.summary && (
                         <p
-                          className="text-dark dark:text-slate-300 mb-4"
+                          className="text-slate-700 dark:text-slate-300 mb-4"
                           dangerouslySetInnerHTML={{ __html: item.summary }}
                         />
                       )}
-                      <div className="author mt-3 flex items-center">
+                      <div className="author mt-3 flex items-center gap-2">
                         {typeof item.author === "object" && item.author?.imageUrl && (
                           <Image
                             src={item.author.imageUrl}
                             alt={item.author.name || "Author"}
-                            className="avatar avatar-md shadow rounded-circle me-2"
+                            className="rounded-full shadow-md"
                             width={40}
                             height={40}
                           />
                         )}
-                        <div className="name ps-2">
-                          <span className="text-slate-700 dark:text-slate-300">
+                        <div className="name">
+                          <span className="text-slate-700 dark:text-slate-300 font-medium">
                             {typeof item.author === "object"
                               ? item.author?.name
                               : item.author || "Nyumba Zetu"}
                           </span>
                           <div className="stats">
-                            <small className="text-slate-500 dark:text-slate-400">
+                            <small className="text-slate-500 dark:text-slate-400 block">
                               {item.timeAgo || "Recently"}
                             </small>
                           </div>

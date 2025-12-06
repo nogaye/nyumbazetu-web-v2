@@ -4,15 +4,15 @@ import Link from "next/link";
 
 export function LegacyMobileApp() {
   return (
-    <Section className="border-radius-lg">
-      <div className="container mx-auto px-4 position-relative">
+    <Section className="rounded-lg">
+      <div className="container mx-auto px-4 relative">
         <div className="flex flex-col md:flex-row items-center gap-6">
           {/* Text Content */}
           <div className="w-full lg:w-1/2 md:w-2/3">
             <h2 className="mt-4 text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-50">
               Download Our App
             </h2>
-            <p className="lead text-lg text-slate-600 dark:text-slate-400">
+            <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">
               Experience the convenience of effortlessly managing your bills and conducting payments right from the palm of your hand.
             </p>
           </div>
@@ -21,7 +21,9 @@ export function LegacyMobileApp() {
           <div className="w-full lg:w-1/2 md:w-1/3 flex justify-start lg:justify-end mt-4 md:mt-0">
             <Link
               href="https://apps.apple.com/us/app/nyumba-zetu/id6456750559"
-              className="bg-gradient-dark border-radius-md py-1 px-1 d-inline-block"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-lg bg-slate-900 dark:bg-slate-800 p-1 hover:opacity-90 transition-opacity"
             >
               <Image
                 className="w-full"
@@ -30,6 +32,7 @@ export function LegacyMobileApp() {
                 width={160}
                 height={50}
                 style={{ maxWidth: "160px" }}
+                sizes="160px"
               />
             </Link>
           </div>

@@ -4,6 +4,17 @@ import { Section } from "@/components/section";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import {
+  DocumentTextIcon,
+  LifebuoyIcon,
+  LockClosedIcon,
+  ShieldCheckIcon,
+  CurrencyDollarIcon,
+  XCircleIcon,
+  ExclamationTriangleIcon,
+  ScaleIcon,
+  DocumentDuplicateIcon,
+} from "@heroicons/react/24/outline";
 
 export default function TermsPage() {
   const [activeSection, setActiveSection] = useState("terms");
@@ -16,44 +27,49 @@ export default function TermsPage() {
     }
   };
 
+  const navItems = [
+    { id: "terms", label: "General Terms", icon: DocumentTextIcon },
+    { id: "support", label: "Support", icon: LifebuoyIcon },
+    { id: "restrictions", label: "Restrictions", icon: LockClosedIcon },
+    { id: "confidentiality", label: "Confidentiality", icon: ShieldCheckIcon },
+    { id: "fees", label: "Fees", icon: CurrencyDollarIcon },
+    { id: "duration", label: "Termination", icon: XCircleIcon },
+    { id: "disclaimer", label: "Disclaimer", icon: ExclamationTriangleIcon },
+    { id: "limitation", label: "Limitation", icon: ScaleIcon },
+    { id: "miscellaneous", label: "Miscellaneous", icon: DocumentDuplicateIcon },
+  ];
+
   return (
     <>
       <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
         <div className="max-w-7xl mx-auto">
-          <div className="row">
-            <div className="col-lg-3 mb-lg-0 mb-3">
-              <Card className="bg-white dark:bg-slate-800 border-radius-lg p-3 position-sticky top-4">
+          <div className="flex flex-col lg:flex-row gap-6">
+            <div className="w-full lg:w-1/4 mb-4 lg:mb-0">
+              <Card className="bg-white dark:bg-slate-800 rounded-lg p-3 sticky top-4">
                 <nav className="flex flex-col space-y-2">
-                  {[
-                    { id: "terms", label: "General Terms", icon: "📚" },
-                    { id: "support", label: "Support", icon: "📦" },
-                    { id: "restrictions", label: "Restrictions", icon: "📦" },
-                    { id: "confidentiality", label: "Confidentiality", icon: "📦" },
-                    { id: "fees", label: "Fees", icon: "📦" },
-                    { id: "duration", label: "Termination", icon: "📦" },
-                    { id: "disclaimer", label: "Disclaimer", icon: "📦" },
-                    { id: "limitation", label: "Limitation", icon: "📦" },
-                    { id: "miscellaneous", label: "Miscellaneous", icon: "📦" },
-                  ].map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollToSection(item.id)}
-                      className={`text-left p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors ${
-                        activeSection === item.id
-                          ? "bg-primary text-white dark:bg-primary"
-                          : "text-dark dark:text-slate-300"
-                      }`}
-                    >
-                      <span className="mr-2">{item.icon}</span>
-                      {item.label}
-                    </button>
-                  ))}
+                  {navItems.map((item) => {
+                    const IconComponent = item.icon;
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => scrollToSection(item.id)}
+                        className={`text-left p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors flex items-center gap-2 ${
+                          activeSection === item.id
+                            ? "bg-primary text-white dark:bg-primary"
+                            : "text-slate-700 dark:text-slate-300"
+                        }`}
+                      >
+                        <IconComponent className="h-4 w-4" />
+                        {item.label}
+                      </button>
+                    );
+                  })}
                 </nav>
               </Card>
             </div>
-            <div className="col-lg-9">
+            <div className="w-full lg:w-3/4">
               <Card className="mb-5">
-                <CardHeader className="bg-gradient-primary p-5 position-relative">
+                <CardHeader className="bg-gradient-to-r from-primary to-primary/80 p-5 relative">
                   <h3 className="text-white mb-0 text-2xl font-bold">Terms & conditions</h3>
                   <p className="text-white opacity-80 mb-0">Last modified: July 23 2023</p>
                 </CardHeader>

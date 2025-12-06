@@ -13,7 +13,7 @@ export default function PrivacyPage() {
       <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
         <div className="max-w-4xl mx-auto">
           <Card>
-            <CardHeader className="bg-gradient-primary p-5 position-relative">
+            <CardHeader className="bg-gradient-to-r from-primary to-primary/80 p-5 relative">
               <h3 className="text-white mb-0 text-2xl font-bold">Privacy & Policy</h3>
               <p className="text-white opacity-80 mb-0">Last modified: July 23 2023</p>
             </CardHeader>

@@ -91,8 +91,8 @@ export function LegacyTestimonials() {
   }, [testimonials.length]);
 
   return (
-    <Section className="bg-slate-900 dark:bg-slate-950 py-5 position-relative overflow-hidden">
-      <div className="container mx-auto px-4 position-relative">
+    <Section className="bg-slate-900 dark:bg-slate-950 py-5 relative overflow-hidden">
+      <div className="container mx-auto px-4 relative">
         <div className="flex">
           <div className="w-full md:w-2/3 mx-auto text-center">
             <h2 className="text-white mb-3 text-3xl font-bold">
@@ -109,7 +109,7 @@ export function LegacyTestimonials() {
                 </span>
               ))}
             </div>
-            <hr className="text-white horizontal text-center opacity-20" />
+            <hr className="border-t border-white/20 my-4" />
           </div>
         </div>
 
@@ -127,7 +127,7 @@ export function LegacyTestimonials() {
                   <h5 className="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-2">
                     {item.title}
                   </h5>
-                  <p className="mt-2 text-dark dark:text-slate-300 text-start text-sm leading-relaxed">
+                  <p className="mt-2 text-slate-700 dark:text-slate-300 text-start text-sm leading-relaxed">
                     {item.description}
                   </p>
                 </CardContent>

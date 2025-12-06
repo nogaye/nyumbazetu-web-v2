@@ -11,23 +11,23 @@ export function LegacyReferral() {
 
   return (
     <>
-      <Section className="py-5 bg-slate-900 dark:bg-slate-950 position-relative overflow-hidden">
-        <div className="container mx-auto px-4 position-relative">
+      <Section className="py-5 bg-slate-900 dark:bg-slate-950 relative overflow-hidden">
+        <div className="container mx-auto px-4 relative">
           <div className="flex">
             <div className="w-full lg:w-2/3 md:w-2/3 mx-auto text-center">
               <h2 className="text-white text-2xl md:text-3xl font-bold mb-4">
                 Refer & Earn Up to $200
               </h2>
 
-              <h3 className="text-white h6 text-lg">
+              <h3 className="text-white text-lg">
                 Refer someone and you could earn up to $200 when they sign up.
                 <span className="text-sm text-white opacity-80"> *Terms apply.</span>
               </h3>
 
               <div className="flex mt-3">
                 <div className="mx-auto">
-                  <Button size="lg" onClick={() => setSubmitted(true)}>
-                    Refer & Earn
+                  <Button size="lg" onClick={() => setSubmitted(true)} asChild>
+                    <a href="/contact">Refer & Earn</a>
                   </Button>
                 </div>
               </div>

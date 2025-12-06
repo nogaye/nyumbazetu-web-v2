@@ -105,7 +105,7 @@ export function LegacyPartners() {
             <h3 className="font-bold text-4xl md:text-5xl mb-3 text-slate-900 dark:text-slate-50">
               Banking Partners
             </h3>
-            <p className="lead text-lg text-slate-600 dark:text-slate-400">
+            <p className="text-lg text-slate-600 dark:text-slate-400">
               Experience smooth, secure transactions and automatic payment reconciliation through our trusted network of local banks and mobile payment platforms.
             </p>
           </div>
@@ -121,12 +121,13 @@ export function LegacyPartners() {
                 className="text-decoration-none"
               >
                 <Image
-                  className="w-full shadow-lg rounded-3xl p-3 bg-white dark:bg-slate-800"
+                  className="w-full shadow-lg rounded-3xl p-3 bg-white dark:bg-slate-800 object-contain"
                   src={defaultPartner.image}
                   alt={defaultPartner.name}
                   width={200}
                   height={180}
-                  style={{ maxHeight: "180px", objectFit: "contain" }}
+                  style={{ maxHeight: "180px" }}
+                  sizes="(max-width: 768px) 100vw, 200px"
                 />
               </Link>
             </div>
@@ -146,12 +147,13 @@ export function LegacyPartners() {
                 className="text-decoration-none"
               >
                 <Image
-                  className="w-full shadow-sm rounded-2xl bg-white dark:bg-slate-800 p-2"
+                  className="w-full shadow-sm rounded-2xl bg-white dark:bg-slate-800 p-2 object-contain"
                   src={item.image}
                   alt={item.name}
                   width={80}
                   height={80}
-                  style={{ height: "80px", objectFit: "contain" }}
+                  style={{ height: "80px" }}
+                  sizes="80px"
                 />
               </Link>
             </div>

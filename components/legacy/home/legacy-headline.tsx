@@ -10,7 +10,7 @@ export function LegacyHeadline() {
               Kenya&apos;s Leading Property Management Software for Landlords & Agents
             </h1>
 
-            <p className="text-white lead text-lg">
+            <p className="text-white text-lg leading-relaxed">
               Nyumba Zetu © is a cloud based software built for developers, landlords and property managers to streamline every aspect of property management, from listings, invoicing, and bill payments to maintenance, expenses, and reporting.
             </p>
           </div>

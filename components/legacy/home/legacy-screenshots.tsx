@@ -51,11 +51,12 @@ export function LegacyScreenshots() {
         </h3>
         <div className="relative">
           <Image
-            className="w-full opacity-80 shadow-2xl rounded-2xl p-4 bg-white dark:bg-slate-800"
+            className="w-full opacity-90 shadow-2xl rounded-2xl p-4 bg-white dark:bg-slate-800"
             src={screenshots[current].src}
             alt={screenshots[current].alt}
             width={1200}
             height={600}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
             priority
           />
           <div className="flex justify-center gap-2 mt-4">
@@ -86,11 +87,12 @@ export function LegacyScreenshots() {
         </h3>
         <div>
           <Image
-            className="w-full opacity-80 shadow-2xl rounded-2xl p-4 bg-white dark:bg-slate-800"
+            className="w-full opacity-90 shadow-2xl rounded-2xl p-4 bg-white dark:bg-slate-800"
             src="/legacy/images/screenshots/grid.png"
             alt="Grid view"
             width={1200}
             height={600}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
           />
         </div>
       </div>

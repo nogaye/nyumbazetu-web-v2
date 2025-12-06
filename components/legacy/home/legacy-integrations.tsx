@@ -20,15 +20,16 @@ export function LegacyIntegrations() {
                 alt="QuickBooks Integration"
                 width={350}
                 height={350}
-                className="rounded-lg shadow-lg"
+                className="rounded-lg shadow-lg object-contain"
                 style={{ maxWidth: "350px" }}
+                sizes="(max-width: 768px) 100vw, 350px"
               />
             </div>
             <div className="w-full md:w-2/3">
-              <p className="text-dark dark:text-slate-300 mb-3 text-lg">
+              <p className="text-slate-700 dark:text-slate-300 mb-3 text-lg">
                 While QuickBooks is excellent for general accounting, it lacks domain-specific features tailored to property management. Our system bridges that gap—built with both accounting rigor and real-estate workflows in mind.
               </p>
-              <p className="text-dark dark:text-slate-300 text-lg">
+              <p className="text-slate-700 dark:text-slate-300 text-lg">
                 Enjoy the best of both: continue using QuickBooks for your financials while syncing seamlessly with our platform to handle leases, payments, invoices, and reconciliations with precision.
               </p>
             </div>
@@ -42,7 +43,7 @@ export function LegacyIntegrations() {
           <h2 className="text-center text-white mb-3 text-3xl font-bold">
             WhatsApp ChatBot
           </h2>
-          <h3 className="text-center text-white h5 font-light mb-5">
+          <h3 className="text-center text-white text-lg font-light mb-5">
             Streamline Communications with Our AI-Powered Chatbot
           </h3>
           <div className="flex flex-col md:flex-row items-center gap-6">
@@ -52,8 +53,9 @@ export function LegacyIntegrations() {
                 alt="WhatsApp ChatBot"
                 width={350}
                 height={350}
-                className="rounded-lg shadow-lg"
+                className="rounded-lg shadow-lg object-contain"
                 style={{ maxWidth: "350px" }}
+                sizes="(max-width: 768px) 100vw, 350px"
               />
             </div>
             <div className="w-full md:w-2/3">
@@ -84,15 +86,16 @@ export function LegacyIntegrations() {
                 alt="ETIMS Integration"
                 width={350}
                 height={350}
-                className="rounded-lg shadow-lg"
+                className="rounded-lg shadow-lg object-contain"
                 style={{ maxWidth: "350px" }}
+                sizes="(max-width: 768px) 100vw, 350px"
               />
             </div>
             <div className="w-full md:w-2/3">
-              <p className="mb-3 text-dark dark:text-slate-300 text-lg">
+              <p className="mb-3 text-slate-700 dark:text-slate-300 text-lg">
                 Stay compliant with KRA&apos;s Electronic Tax Invoice Management System (ETIMS) without changing your workflow. Our platform automates invoice generation and e-invoice transmission to the KRA in real time.
               </p>
-              <p className="text-dark dark:text-slate-300 text-lg">
+              <p className="text-slate-700 dark:text-slate-300 text-lg">
                 From rent invoices to service charges, every taxable transaction can be automatically synced with ETIMS, ensuring your tax obligations are met with minimal manual effort — and zero risk of non-compliance.
               </p>
             </div>

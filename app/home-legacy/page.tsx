@@ -23,13 +23,17 @@ export default function HomeLegacyPage() {
   return (
     <>
       <LegacyHomeHeader />
-      <hr className="container mx-auto horizontal light w-50 my-5" />
+      <div className="container mx-auto px-4">
+        <hr className="border-t border-slate-200 dark:border-slate-800 w-1/2 mx-auto my-8" />
+      </div>
       <LegacyTransactions />
       <LegacyHeadline />
       <LegacyAwards />
       <LegacyPortfolio />
       <LegacyFeatures />
-      <hr className="container mx-auto horizontal light w-50 my-5" />
+      <div className="container mx-auto px-4">
+        <hr className="border-t border-slate-200 dark:border-slate-800 w-1/2 mx-auto my-8" />
+      </div>
       <LegacyScreenshots />
       <LegacyIntegrations />
       <LegacyStats />

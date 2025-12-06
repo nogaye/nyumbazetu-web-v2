@@ -54,7 +54,7 @@ export function LegacyTransactions() {
             <h3 className="mt-3 text-2xl font-semibold text-slate-900 dark:text-slate-50">
               In monthly transactions
             </h3>
-            <p className="text-dark dark:text-slate-300 mt-2">
+            <p className="text-slate-700 dark:text-slate-300 mt-2">
               Experience unmatched efficiency with our payments processing & property management solution
             </p>
           </div>

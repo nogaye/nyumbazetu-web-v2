@@ -19,13 +19,13 @@ export default function CareersPage() {
         />
         <div className="relative z-10">
           <div className="container mx-auto px-4">
-            <div className="row justify-content-center">
-              <div className="col-lg-6 text-center mt-5 mx-auto">
+            <div className="flex justify-center">
+              <div className="w-full lg:w-2/3 text-center mt-5 mx-auto">
                 <h4 className="text-primary text-lg font-semibold mb-4">Join Our Team</h4>
                 <h1 className="text-white text-4xl md:text-5xl font-bold mb-6">
                   Empower Your Career with Opportunities and Innovation
                 </h1>
-                <p className="lead mt-5 text-white text-lg">
+                <p className="text-lg mt-5 text-white">
                   Send your resume to{" "}
                   <a
                     className="text-white hover:underline font-medium"
