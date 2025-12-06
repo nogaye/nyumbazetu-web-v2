@@ -52,6 +52,7 @@ const footerLinks = {
   legal: [
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
+    { label: "Data Protection (ODPC)", href: "/compliance/odpc" },
   ],
   awards: [
     { label: "Best Property Tech Solution 2024", href: "/awards" },
