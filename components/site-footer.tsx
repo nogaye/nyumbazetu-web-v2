@@ -6,6 +6,7 @@ const footerLinks = {
     { label: "Overview", href: "/product" },
     { label: "Features", href: "/features" },
     { label: "Integrations", href: "/product#integrations" },
+    { label: "Compare", href: "/compare" },
   ],
   features: [
     { label: "Rent & Service Charge Collections", href: "/features/collections" },
@@ -36,12 +37,11 @@ const footerLinks = {
     { label: "Webinars", href: "/resources" },
     { label: "Newsletters", href: "/newsletters" },
     { label: "FAQs", href: "/faqs" },
-    { label: "Partnerships", href: "/partnerships" },
   ],
   company: [
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
-    { label: "Compare", href: "/compare" },
+    { label: "Partnerships", href: "/partnerships" },
     { label: "Careers", href: "/careers" },
     { label: "Press", href: "/press" },
     { label: "Partner", href: "/partner" },
