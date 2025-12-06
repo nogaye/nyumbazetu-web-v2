@@ -153,6 +153,48 @@ const features: Record<string, {
       },
     ],
   },
+  crm: {
+    title: "CRM for Property Management",
+    description: "Customer relationship management for tenants, owners, vendors, and prospects with full interaction history and lead tracking.",
+    what: "Nyumba Zetu's CRM module provides comprehensive customer relationship management for property operations. Track all interactions with tenants, property owners, vendors, and prospects. Manage leads, follow-ups, and maintain complete communication history—all integrated with your property management workflows.",
+    how: "Create contact records for tenants, owners, vendors, and prospects. Log all interactions including calls, emails, meetings, and property viewings. Set up automated follow-up reminders and track lead conversion. The CRM integrates seamlessly with property management workflows, so tenant information, lease history, and payment records are all accessible from the contact profile. Generate reports on tenant satisfaction, owner engagement, and vendor performance.",
+    why: "Property management is fundamentally about relationships. Without proper CRM, important interactions are forgotten, follow-ups are missed, and opportunities are lost. Nyumba Zetu's CRM ensures every interaction is tracked and nothing falls through the cracks.",
+    faqs: [
+      {
+        q: "Can I track prospects and leads?",
+        a: "Yes, the CRM includes lead management with conversion tracking, follow-up reminders, and pipeline management.",
+      },
+      {
+        q: "How does it integrate with property management?",
+        a: "The CRM is fully integrated with property management workflows. Tenant records automatically include lease history, payment records, and maintenance requests.",
+      },
+      {
+        q: "Can I track vendor relationships?",
+        a: "Yes, vendor contacts include performance history, work order tracking, and payment records.",
+      },
+    ],
+  },
+  "white-labeling": {
+    title: "White Label Property Management Platform",
+    description: "Fully customizable white-label solution for property management companies, banks, and enterprises to brand the platform as their own.",
+    what: "Nyumba Zetu's white-label solution allows property management companies, banks, and enterprises to rebrand the entire platform with their own logo, colors, domain, and branding. The platform can be completely customized to match your brand identity while maintaining all the powerful property management features.",
+    how: "Customize the platform with your logo, brand colors, and domain name. Replace Nyumba Zetu branding throughout the interface including tenant portals, mobile apps, email templates, and reports. Configure custom email domains and SSL certificates. The platform can be deployed under your own domain with full white-label branding. All features remain fully functional while presenting your brand to tenants, owners, and stakeholders.",
+    why: "For property management companies and enterprises, presenting a branded platform builds trust and reinforces your brand identity. White-labeling allows you to offer enterprise-grade property management technology under your own brand, without the cost and complexity of building it from scratch.",
+    faqs: [
+      {
+        q: "What can be customized in the white-label version?",
+        a: "Logo, brand colors, domain name, email templates, tenant portals, mobile apps, and all user-facing interfaces can be fully customized.",
+      },
+      {
+        q: "Can I use my own domain?",
+        a: "Yes, white-label deployments can use your own domain with custom SSL certificates.",
+      },
+      {
+        q: "Are all features available in the white-label version?",
+        a: "Yes, all Nyumba Zetu features are available in the white-label version. Only the branding changes.",
+      },
+    ],
+  },
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {

@@ -14,6 +14,8 @@ import {
   DocumentTextIcon,
   HomeIcon,
   ChatBubbleLeftRightIcon,
+  BuildingOfficeIcon,
+  PaintBrushIcon,
 } from "@heroicons/react/24/outline";
 
 const features = [
@@ -104,6 +106,28 @@ const features = [
     ],
     icon: ChatBubbleLeftRightIcon,
     href: "/features/communications",
+  },
+  {
+    title: "CRM",
+    description: "Customer relationship management for tenants, owners, vendors, and prospects.",
+    bullets: [
+      "Contact and interaction tracking",
+      "Lead management and conversion",
+      "Complete communication history",
+    ],
+    icon: BuildingOfficeIcon,
+    href: "/features/crm",
+  },
+  {
+    title: "White Labeling",
+    description: "Fully customizable white-label solution to brand the platform as your own.",
+    bullets: [
+      "Custom branding and domain",
+      "Logo and color customization",
+      "Enterprise deployment options",
+    ],
+    icon: PaintBrushIcon,
+    href: "/features/white-labeling",
   },
 ];
 

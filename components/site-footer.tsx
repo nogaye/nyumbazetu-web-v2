@@ -16,6 +16,8 @@ const footerLinks = {
     { label: "KRA eTIMS & Compliance", href: "/features/etims" },
     { label: "TPS & Rent-to-Own", href: "/features/tps" },
     { label: "Communication Hub", href: "/features/communications" },
+    { label: "CRM", href: "/features/crm" },
+    { label: "White Labeling", href: "/features/white-labeling" },
   ],
   solutions: [
     { label: "Landlords & Agents", href: "/solutions/landlords" },

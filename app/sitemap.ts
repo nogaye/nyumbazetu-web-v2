@@ -25,6 +25,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/features/etims',
     '/features/tps',
     '/features/communications',
+    '/features/crm',
+    '/features/white-labeling',
   ]
 
   return routes.map((route) => ({

@@ -40,6 +40,8 @@ const navItems = [
       { label: "KRA eTIMS & Compliance", href: "/features/etims", description: "eTIMS-ready invoicing and tax compliance" },
       { label: "TPS & Rent-to-Own", href: "/features/tps", description: "Tenant Purchase Scheme tracking" },
       { label: "Communication Hub", href: "/features/communications", description: "Email, SMS, and in-app messaging" },
+      { label: "CRM", href: "/features/crm", description: "Customer relationship management for tenants and owners" },
+      { label: "White Labeling", href: "/features/white-labeling", description: "Fully customizable white-label solution" },
     ],
   },
         { label: "Pricing", href: "/pricing" },
