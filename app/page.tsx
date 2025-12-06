@@ -4,6 +4,7 @@ import { NewsletterSignup } from "@/components/newsletter-signup";
 import { Section } from "@/components/section";
 
 // Lazy load below-the-fold components for better performance
+const AsSeenOn = dynamic(() => import("@/components/home/as-seen-on").then(mod => ({ default: mod.AsSeenOn })), { ssr: true });
 const MetricsStrip = dynamic(() => import("@/components/home/metrics-strip").then(mod => ({ default: mod.MetricsStrip })), { ssr: true });
 const ProblemContext = dynamic(() => import("@/components/home/problem-context").then(mod => ({ default: mod.ProblemContext })), { ssr: true });
 const FeatureGrid = dynamic(() => import("@/components/home/feature-grid").then(mod => ({ default: mod.FeatureGrid })), { ssr: true });
@@ -24,6 +25,7 @@ export default function Home() {
   return (
     <>
       <HeroCarousel />
+      <AsSeenOn />
       <MetricsStrip />
       <ProblemContext />
       <FeatureGrid />
