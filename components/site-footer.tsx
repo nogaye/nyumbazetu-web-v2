@@ -67,11 +67,9 @@ export function SiteFooter() {
               Property management infrastructure for modern Kenyan real estate.
             </p>
             <p className="text-xs text-slate-300 mb-4">
-              Built in Kenya for African real estate.
+              🇰🇪 Proudly built in Kenya for African real estate.
             </p>
-            <div className="mb-4 flex items-center space-x-1">
-              <div className="h-3 w-12 bg-gradient-to-r from-[#006600] via-[#FF0000] to-[#000000] rounded-sm"></div>
-            </div>
+           
             <div className="flex items-center gap-4">
               <a
                 href="https://twitter.com/nyumbazetu"

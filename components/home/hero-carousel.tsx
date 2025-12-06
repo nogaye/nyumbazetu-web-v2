@@ -235,7 +235,7 @@ export function HeroCarousel() {
 
             {/* Trust indicator */}
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-8">
-              Built in Kenya. Trusted by property teams, estates, and banks.
+              🇰🇪 Proudly built in Kenya. Trusted by property teams, estates, and banks.
             </p>
           </motion.div>
         </AnimatePresence>

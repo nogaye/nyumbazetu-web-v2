@@ -195,7 +195,7 @@ export function HeroCarousel2() {
               </div>
 
               <p className="text-sm text-slate-600 dark:text-slate-400">
-                Built in Kenya. Trusted by serious property teams, estates, and banks.
+                🇰🇪 Proudly built in Kenya. Trusted by serious property teams, estates, and banks.
               </p>
             </div>
 

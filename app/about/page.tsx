@@ -39,7 +39,7 @@ export default function AboutPage() {
       <Section className="bg-slate-50">
         <SectionHeader
           title="Our Story"
-          description="Built in Kenya, for Kenya."
+          description="🇰🇪 Proudly built in Kenya, for Kenya."
         />
         <div className="max-w-4xl mx-auto space-y-6">
           <Card>
