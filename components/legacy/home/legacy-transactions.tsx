@@ -52,25 +52,25 @@ export function LegacyTransactions() {
   const stats = [
     {
       icon: CurrencyDollarIcon,
-      value: completed ? "KES 500M+" : formatCurrency(currentCount),
+      value: completed ? "KES 1B+" : formatCurrency(currentCount),
       label: "In Monthly Transactions",
       description: "Experience unmatched efficiency with our payments processing & property management solution",
     },
     {
       icon: UserGroupIcon,
-      value: "12k+",
+      value: "50k+",
       label: "Active Tenants",
       description: "Growing community of satisfied tenants",
     },
     {
       icon: BuildingOfficeIcon,
-      value: "200+",
+      value: "500+",
       label: "Properties Managed",
       description: "Trusted by property managers across Kenya",
     },
     {
       icon: DocumentTextIcon,
-      value: "300k+",
+      value: "1M+",
       label: "Invoices Delivered",
       description: "Automated invoicing and payment tracking",
     },

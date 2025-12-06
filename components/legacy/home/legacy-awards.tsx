@@ -48,7 +48,7 @@ export function LegacyAwards() {
                 </div>
 
                 <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">
-                  Awarded Real Estate Technology Company of the Year 2022-2023 & 2024!
+                  Awarded Real Estate Technology Company of the Year 2022-2023, 2024 & 2025!
                 </h3>
                 
                 <p className="text-lg text-slate-600 dark:text-slate-400 italic mb-6 leading-relaxed">
