@@ -15,6 +15,7 @@ export function LegacyStats() {
                 className="w-full rounded-lg object-contain"
                 style={{ maxWidth: "350px" }}
                 sizes="(max-width: 768px) 100vw, 350px"
+                loading="lazy"
               />
           </div>
           <div className="w-full md:w-3/5 lg:w-2/3">

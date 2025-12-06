@@ -23,6 +23,7 @@ export function LegacyIntegrations() {
                 className="rounded-lg shadow-lg object-contain"
                 style={{ maxWidth: "350px" }}
                 sizes="(max-width: 768px) 100vw, 350px"
+                loading="lazy"
               />
             </div>
             <div className="w-full md:w-2/3">
@@ -56,6 +57,7 @@ export function LegacyIntegrations() {
                 className="rounded-lg shadow-lg object-contain"
                 style={{ maxWidth: "350px" }}
                 sizes="(max-width: 768px) 100vw, 350px"
+                loading="lazy"
               />
             </div>
             <div className="w-full md:w-2/3">
@@ -89,6 +91,7 @@ export function LegacyIntegrations() {
                 className="rounded-lg shadow-lg object-contain"
                 style={{ maxWidth: "350px" }}
                 sizes="(max-width: 768px) 100vw, 350px"
+                loading="lazy"
               />
             </div>
             <div className="w-full md:w-2/3">

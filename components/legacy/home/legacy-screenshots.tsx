@@ -1,9 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Section } from "@/components/section";
+import { SectionHeader } from "@/components/section-header";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 export function LegacyScreenshots() {
   const [current, setCurrent] = useState(0);
@@ -43,57 +46,90 @@ export function LegacyScreenshots() {
   return (
     <Section>
       <div className="container mx-auto px-4">
-        <h2 className="text-center text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">
-          Comprehensive Management Dashboard
-        </h2>
-        <h3 className="text-center mt-2 text-lg text-slate-600 dark:text-slate-400 mb-8">
-          A centralized hub for real-time insights and performance tracking
-        </h3>
-        <div className="relative">
-          <Image
-            className="w-full opacity-90 shadow-2xl rounded-2xl p-4 bg-white dark:bg-slate-800"
-            src={screenshots[current].src}
-            alt={screenshots[current].alt}
-            width={1200}
-            height={600}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-            priority
-          />
-          <div className="flex justify-center gap-2 mt-4">
-            <Button variant="outline" size="sm" onClick={prev}>
-              Previous
+        <SectionHeader
+          title="Comprehensive Management Dashboard"
+          description="A centralized hub for real-time insights and performance tracking"
+        />
+
+        <div className="relative max-w-6xl mx-auto">
+          <motion.div
+            key={current}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-4 md:p-6 border-2 border-slate-200 dark:border-slate-700">
+              <Image
+                className="w-full rounded-lg"
+                src={screenshots[current].src}
+                alt={screenshots[current].alt}
+                width={1200}
+                height={600}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+                priority={current === 0}
+                loading={current === 0 ? "eager" : "lazy"}
+              />
+              {screenshots[current].caption && (
+                <p className="text-center text-slate-600 dark:text-slate-400 mt-4 text-sm">
+                  {screenshots[current].caption}
+                </p>
+              )}
+            </div>
+          </motion.div>
+          <div className="flex justify-center items-center gap-3 mt-6">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={prev}
+              className="rounded-full"
+              aria-label="Previous screenshot"
+            >
+              <ChevronLeftIcon className="h-5 w-5" />
             </Button>
-            {screenshots.map((_, index) => (
-              <Button
-                key={index}
-                variant={current === index ? "default" : "outline"}
-                size="sm"
-                onClick={() => goTo(index)}
-              >
-                {index + 1}
-              </Button>
-            ))}
-            <Button variant="outline" size="sm" onClick={next}>
-              Next
+            <div className="flex gap-2">
+              {screenshots.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goTo(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    current === index
+                      ? "w-8 bg-primary"
+                      : "w-2 bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500"
+                  }`}
+                  aria-label={`Go to screenshot ${index + 1}`}
+                />
+              ))}
+            </div>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={next}
+              className="rounded-full"
+              aria-label="Next screenshot"
+            >
+              <ChevronRightIcon className="h-5 w-5" />
             </Button>
           </div>
         </div>
 
-        <h2 className="text-center mt-8 text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">
-          Powerful Grids
-        </h2>
-        <h3 className="text-center mt-2 text-lg text-slate-600 dark:text-slate-400 mb-8">
-          Everything you like in excel but supercharged with automation and real-time updates
-        </h3>
-        <div>
-          <Image
-            className="w-full opacity-90 shadow-2xl rounded-2xl p-4 bg-white dark:bg-slate-800"
-            src="/legacy/images/screenshots/grid.png"
-            alt="Grid view"
-            width={1200}
-            height={600}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+        <div className="mt-16">
+          <SectionHeader
+            title="Powerful Grids"
+            description="Everything you like in excel but supercharged with automation and real-time updates"
           />
+          <div className="max-w-6xl mx-auto">
+            <div className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-4 md:p-6 border-2 border-slate-200 dark:border-slate-700">
+              <Image
+                className="w-full rounded-lg"
+                src="/legacy/images/screenshots/grid.png"
+                alt="Grid view"
+                width={1200}
+                height={600}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+                loading="lazy"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </Section>

@@ -1,9 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Section } from "@/components/section";
-import Image from "next/image";
+import { SectionHeader } from "@/components/section-header";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 interface IClient {
   id?: number;
@@ -15,7 +19,9 @@ interface IClient {
 
 export function LegacyClients() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const itemWidth = 300;
+  const itemsPerView = 3; // Show 3 items at a time on desktop
+  const itemWidth = 320; // Increased width for better spacing
+  const gap = 24; // Gap between items
 
   const clients: IClient[] = [
     {
@@ -154,129 +160,164 @@ export function LegacyClients() {
     },
   ];
 
-  const combinedClients = [...mainClients, ...mainClients];
+  const maxIndex = Math.max(0, mainClients.length - itemsPerView);
 
   useEffect(() => {
-    const totalItems = mainClients.length;
     const scrollInterval = setInterval(() => {
       setCurrentIndex((prev) => {
-        if (prev === totalItems - 1) {
+        if (prev >= maxIndex) {
           return 0;
         }
         return prev + 1;
       });
-    }, 2500);
+    }, 3000);
 
     return () => clearInterval(scrollInterval);
-  }, [mainClients.length]);
+  }, [maxIndex]);
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % mainClients.length);
+    setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
   };
 
   const prevSlide = () => {
-    setCurrentIndex(
-      (prev) => (prev - 1 + mainClients.length) % mainClients.length
-    );
+    setCurrentIndex((prev) => Math.max(prev - 1, 0));
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(Math.min(index, maxIndex));
   };
 
   return (
-    <Section className="bg-slate-50 dark:bg-slate-900 py-5 client-section">
-      <div className="container mx-auto px-4 text-center">
-        <h3 className="mb-3 text-4xl md:text-5xl font-bold text-slate-900 dark:text-slate-50">
-          Some Of Our Happy 😊 Clients
-        </h3>
-        <p className="text-lg text-slate-700 dark:text-slate-300 mb-5 px-4 md:px-5">
-          Join the community of successful clients using{" "}
-          <strong className="text-primary">Nyumba Zetu</strong>. From bustling
-          commercial centers in Nairobi to serene residential complexes in
-          Lavington, our software has been the backbone of successful property
-          management strategies.
-        </p>
+    <Section className="bg-slate-50 dark:bg-slate-900">
+      <div className="container mx-auto px-4">
+        <SectionHeader
+          title="Some Of Our Happy Clients"
+          description="Join the community of successful clients using Nyumba Zetu. From bustling commercial centers in Nairobi to serene residential complexes in Lavington, our software has been the backbone of successful property management strategies."
+        />
 
-        {/* Carousel Wrapper */}
-        <div className="carousel-container relative mb-5">
-          {/* Arrow Controls */}
+        {/* Main Carousel */}
+        <div className="relative mt-12">
+          {/* Navigation Buttons */}
           <Button
             variant="outline"
             size="icon"
-            className="carousel-arrow left absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800"
             onClick={prevSlide}
+            disabled={currentIndex === 0}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl border-2 hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Previous slide"
           >
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
+            <ChevronLeftIcon className="h-5 w-5" />
           </Button>
           <Button
             variant="outline"
             size="icon"
-            className="carousel-arrow right absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800"
             onClick={nextSlide}
+            disabled={currentIndex >= maxIndex}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl border-2 hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Next slide"
           >
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+            <ChevronRightIcon className="h-5 w-5" />
           </Button>
 
-          <div
-            className="carousel-track flex transition-transform duration-500 ease-in-out"
-            style={{
-              transform: `translateX(-${currentIndex * itemWidth}px)`,
-            }}
-          >
-            {combinedClients.map((client, index) => (
-              <div
+          {/* Carousel Container */}
+          <div className="overflow-hidden px-12">
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{
+                transform: `translateX(-${currentIndex * (itemWidth + gap)}px)`,
+                gap: `${gap}px`,
+              }}
+            >
+              {mainClients.map((client, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  className="flex-shrink-0"
+                  style={{ width: `${itemWidth}px` }}
+                >
+                  <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 hover:border-primary/20">
+                    <CardContent className="p-6">
+                      <div className="aspect-video bg-slate-50 dark:bg-slate-800 rounded-lg mb-4 flex items-center justify-center p-4">
+                        <Image
+                          src={`/legacy/images/clients/${client.imageUrl}`}
+                          alt={client.name || ""}
+                          width={280}
+                          height={180}
+                          className="w-full h-full object-contain"
+                          sizes="(max-width: 768px) 100vw, 280px"
+                          loading="lazy"
+                        />
+                      </div>
+                      <h4 className="font-semibold text-lg text-slate-900 dark:text-slate-50 mb-1">
+                        {client.name}
+                      </h4>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                        {client.location}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Dots Indicator */}
+          <div className="flex justify-center gap-2 mt-6">
+            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+              <button
                 key={index}
-                className="client-card-large mx-2 flex-shrink-0"
-                style={{ width: `${itemWidth}px` }}
-              >
-                <div className="image-wrapper-large gradient-hover rounded-lg overflow-hidden shadow-md">
-                  <Image
-                    src={`/legacy/images/clients/${client.imageUrl}`}
-                    alt={client.name || ""}
-                    width={300}
-                    height={200}
-                    className="w-full h-full object-contain"
-                    sizes="(max-width: 768px) 100vw, 300px"
-                  />
-                </div>
-                <p className="font-semibold mt-3 mb-1 text-slate-900 dark:text-slate-50">
-                  {client.name}
-                </p>
-                <small className="text-slate-600 dark:text-slate-400">
-                  {client.location}
-                </small>
-              </div>
+                onClick={() => goToSlide(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  currentIndex === index
+                    ? "w-8 bg-primary"
+                    : "w-2 bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
             ))}
           </div>
         </div>
 
-        {/* Small clients */}
-        <div className="flex overflow-auto justify-center gap-4 px-3 flex-wrap">
-          {clients.map((client, index) => (
-            <div
-              key={index}
-              className="client-card-small text-center flex-shrink-0"
-            >
-              <div className="image-wrapper-small gradient-hover rounded-lg overflow-hidden shadow-sm p-2 bg-white dark:bg-slate-800">
-                <Image
-                  src={`/legacy/images/clients/${client.imageUrl}`}
-                  alt={client.name || ""}
-                  width={120}
-                  height={80}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <p className="font-semibold mt-2 mb-1 text-slate-900 dark:text-slate-50 text-sm">
-                {client.name}
-              </p>
-              <small className="text-slate-600 dark:text-slate-400 text-xs">
-                {client.location}
-              </small>
-            </div>
-          ))}
+        {/* Small Clients Grid */}
+        <div className="mt-16">
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-6 text-center">
+            More Trusted Clients
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {clients.map((client, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
+              >
+                <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                  <CardContent className="p-4">
+                    <div className="aspect-square bg-slate-50 dark:bg-slate-800 rounded-lg mb-3 flex items-center justify-center p-3">
+                      <Image
+                        src={`/legacy/images/clients/${client.imageUrl}`}
+                        alt={client.name || ""}
+                        width={120}
+                        height={120}
+                        className="w-full h-full object-contain"
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 120px"
+                        loading="lazy"
+                      />
+                    </div>
+                    <h5 className="font-semibold text-sm text-slate-900 dark:text-slate-50 mb-1 text-center">
+                      {client.name}
+                    </h5>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 text-center">
+                      {client.location}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </Section>

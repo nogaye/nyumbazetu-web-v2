@@ -28,6 +28,7 @@ export function LegacyAwards() {
                 width={500}
                 height={500}
                 sizes="(max-width: 768px) 100vw, 500px"
+                loading="lazy"
               />
             </div>
           </motion.div>
@@ -63,6 +64,8 @@ export function LegacyAwards() {
                         width={60}
                         height={60}
                         className="object-contain"
+                        sizes="60px"
+                        loading="lazy"
                       />
                     </div>
                   </div>
