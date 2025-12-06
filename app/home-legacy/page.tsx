@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { LegacyHomeHeader } from "@/components/legacy/home/legacy-home-header";
 import { LegacyTransactions } from "@/components/legacy/home/legacy-transactions";
 import { LegacyHeadline } from "@/components/legacy/home/legacy-headline";
@@ -14,35 +15,63 @@ import { LegacyClients } from "@/components/legacy/home/legacy-clients";
 import { LegacyReferral } from "@/components/legacy/home/legacy-referral";
 import { LegacyMobileApp } from "@/components/legacy/home/legacy-mobile-app";
 
+// Lazy load below-the-fold components for better performance
+const LegacyScreenshotsLazy = dynamic(
+  () => import("@/components/legacy/home/legacy-screenshots").then((mod) => ({ default: mod.LegacyScreenshots })),
+  { ssr: true }
+);
+const LegacyIntegrationsLazy = dynamic(
+  () => import("@/components/legacy/home/legacy-integrations").then((mod) => ({ default: mod.LegacyIntegrations })),
+  { ssr: true }
+);
+const LegacyStatsLazy = dynamic(
+  () => import("@/components/legacy/home/legacy-stats").then((mod) => ({ default: mod.LegacyStats })),
+  { ssr: true }
+);
+const LegacyTestimonialsLazy = dynamic(
+  () => import("@/components/legacy/home/legacy-testimonials").then((mod) => ({ default: mod.LegacyTestimonials })),
+  { ssr: true }
+);
+const LegacyPartnersLazy = dynamic(
+  () => import("@/components/legacy/home/legacy-partners").then((mod) => ({ default: mod.LegacyPartners })),
+  { ssr: true }
+);
+const LegacyClientsLazy = dynamic(
+  () => import("@/components/legacy/home/legacy-clients").then((mod) => ({ default: mod.LegacyClients })),
+  { ssr: true }
+);
+const LegacyReferralLazy = dynamic(
+  () => import("@/components/legacy/home/legacy-referral").then((mod) => ({ default: mod.LegacyReferral })),
+  { ssr: true }
+);
+const LegacyMobileAppLazy = dynamic(
+  () => import("@/components/legacy/home/legacy-mobile-app").then((mod) => ({ default: mod.LegacyMobileApp })),
+  { ssr: true }
+);
+
 export const metadata = {
-  title: "Legacy Home | Nyumba Zetu",
-  description: "Legacy home page from Angular application",
+  title: "Home | Nyumba Zetu - Property Management for Kenya",
+  description: "Nyumba Zetu is Kenya's leading property management software for landlords, property managers, and real estate professionals. Streamline your property operations with our comprehensive platform.",
 };
 
 export default function HomeLegacyPage() {
   return (
     <>
       <LegacyHomeHeader />
-      <div className="container mx-auto px-4">
-        <hr className="border-t border-slate-200 dark:border-slate-800 w-1/2 mx-auto my-8" />
-      </div>
       <LegacyTransactions />
       <LegacyHeadline />
       <LegacyAwards />
       <LegacyPortfolio />
       <LegacyFeatures />
-      <div className="container mx-auto px-4">
-        <hr className="border-t border-slate-200 dark:border-slate-800 w-1/2 mx-auto my-8" />
-      </div>
-      <LegacyScreenshots />
-      <LegacyIntegrations />
-      <LegacyStats />
-      <LegacyTestimonials />
-      <LegacyPartners />
+      <LegacyScreenshotsLazy />
+      <LegacyIntegrationsLazy />
+      <LegacyStatsLazy />
+      <LegacyTestimonialsLazy />
+      <LegacyPartnersLazy />
       <LegacyRequestDemo />
-      <LegacyClients />
-      <LegacyReferral />
-      <LegacyMobileApp />
+      <LegacyClientsLazy />
+      <LegacyReferralLazy />
+      <LegacyMobileAppLazy />
     </>
   );
 }

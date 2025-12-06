@@ -1,4 +1,9 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Section } from "@/components/section";
+import { SectionHeader } from "@/components/section-header";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import {
   EnvelopeIcon,
   CreditCardIcon,
@@ -88,25 +93,38 @@ export function LegacyFeatures() {
   return (
     <Section>
       <div className="container mx-auto px-4">
-        <h2 className="text-center text-3xl font-bold text-slate-900 dark:text-slate-50 mb-8">
-          More Than Just Features — Solutions
-        </h2>
+        <SectionHeader
+          title="More Than Just Features — Complete Solutions"
+          description="Everything you need to manage properties efficiently, from invoicing to reporting, all in one integrated platform"
+        />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
-          {items.map((item) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+          {items.map((item, idx) => {
             const IconComponent = item.icon;
             return (
-              <div key={item.id} className="mt-4 lg:mt-0">
-                <div className="rounded-full text-center mb-3 bg-primary w-16 h-16 flex items-center justify-center mx-auto">
-                  <IconComponent className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.05 }}
+              >
+                <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 hover:border-primary/20">
+                  <CardHeader className="pb-4">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary/80 mb-4">
+                      <IconComponent className="h-8 w-8 text-white" />
+                    </div>
+                    <CardTitle className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-2">
+                      {item.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <CardDescription className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                      {item.description}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </motion.div>
             );
           })}
         </div>
