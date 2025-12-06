@@ -41,6 +41,11 @@ const footerLinks = {
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
   ],
+  awards: [
+    { label: "Best Property Tech Solution 2024", href: "/awards" },
+    { label: "Innovation in Real Estate", href: "/awards" },
+    { label: "Excellence in Fintech", href: "/awards" },
+  ],
 };
 
 export function SiteFooter() {
@@ -48,9 +53,9 @@ export function SiteFooter() {
     <footer className="border-t border-[#344767]/20 bg-[#344767]">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-20">
         {/* All Footer Items in One Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-8 lg:gap-10 mb-12">
           {/* Brand Column */}
-          <div>
+          <div className="sm:col-span-2 lg:col-span-2">
             <Link href="/" className="block mb-4">
               <div className="text-2xl font-bold text-white">
                 Nyumba Zetu
@@ -170,6 +175,44 @@ export function SiteFooter() {
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-slate-200 hover:text-[#b98036] transition-colors duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Resources Column */}
+          <div>
+            <h3 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">
+              Resources
+            </h3>
+            <ul className="space-y-3">
+              {footerLinks.resources.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-slate-200 hover:text-[#b98036] transition-colors duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Awards Column */}
+          <div>
+            <h3 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">
+              Awards
+            </h3>
+            <ul className="space-y-3">
+              {footerLinks.awards.map((link) => (
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="text-sm text-slate-200 hover:text-[#b98036] transition-colors duration-200"
