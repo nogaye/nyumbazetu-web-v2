@@ -32,11 +32,15 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <Section>
-      <SectionHeader
-        title="From spreadsheets to a modern property operations stack."
-        description="Get up and running in days, not months. Our team handles onboarding and training."
-      />
+    <Section className="bg-secondary">
+      <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight tracking-tight">
+          From spreadsheets to a modern property operations stack.
+        </h2>
+        <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+          Get up and running in days, not months. Our team handles onboarding and training.
+        </p>
+      </div>
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
         {steps.map((step, idx) => (
           <motion.div
@@ -47,16 +51,16 @@ export function HowItWorks() {
             transition={{ delay: idx * 0.1 }}
             className="relative"
           >
-            <div className="text-6xl font-bold text-slate-100 dark:text-slate-800 mb-4">{step.number}</div>
-            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-50 mb-3">
+            <div className="text-6xl font-bold text-white/20 mb-4">{step.number}</div>
+            <h3 className="text-xl font-bold text-white mb-3">
               {step.title}
             </h3>
-            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-white/90 leading-relaxed">
               {step.description}
             </p>
             {idx < steps.length - 1 && (
               <div className="hidden lg:block absolute top-12 -right-4">
-                <ArrowRightIcon className="h-6 w-6 text-slate-300" />
+                <ArrowRightIcon className="h-6 w-6 text-white/40" />
               </div>
             )}
           </motion.div>

@@ -31,11 +31,15 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <Section className="bg-slate-50 dark:bg-slate-900">
-      <SectionHeader
-        title="What our customers see in the first 6–12 months."
-        description="Real results from property teams across Kenya."
-      />
+    <Section className="bg-secondary">
+      <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight tracking-tight">
+          What our customers see in the first 6–12 months.
+        </h2>
+        <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+          Real results from property teams across Kenya.
+        </p>
+      </div>
       <div className="grid md:grid-cols-3 gap-6 lg:gap-8 mb-12">
         {testimonials.map((testimonial, idx) => (
           <motion.div
@@ -45,19 +49,19 @@ export function Testimonials() {
             viewport={{ once: true }}
             transition={{ delay: idx * 0.1 }}
           >
-            <Card className="h-full hover:shadow-md transition-all duration-200">
+            <Card className="h-full hover:shadow-md transition-all duration-200 bg-white/10 backdrop-blur-sm border-white/20">
               <CardContent className="p-6 md:p-8">
-                <p className="text-slate-700 dark:text-slate-300 mb-6 italic leading-relaxed text-base">
+                <p className="text-white/90 mb-6 italic leading-relaxed text-base">
                   "{testimonial.quote}"
                 </p>
-                <div className="border-t border-slate-200 dark:border-slate-800 pt-4">
-                  <div className="font-semibold text-slate-900 dark:text-slate-50 text-base">
+                <div className="border-t border-white/20 pt-4">
+                  <div className="font-semibold text-white text-base">
                     {testimonial.author}
                   </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                  <div className="text-sm text-white/80 mt-1">
                     {testimonial.role}
                   </div>
-                  <div className="text-sm text-slate-500 dark:text-slate-500 mt-1">
+                  <div className="text-sm text-white/70 mt-1">
                     {testimonial.portfolio}
                   </div>
                   <div className="text-sm font-medium text-tertiary mt-3">
@@ -77,22 +81,22 @@ export function Testimonials() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
         >
-          <Card className="border-red-200 dark:border-red-900/50 bg-red-50/50 dark:bg-red-950/20 hover:shadow-md transition-all duration-200">
+          <Card className="border-white/20 bg-white/10 backdrop-blur-sm hover:shadow-md transition-all duration-200">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-6">
+              <h3 className="text-2xl font-bold text-white mb-6">
                 Before Nyumba Zetu
               </h3>
               <ul className="space-y-3">
-                <li className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                <li className="text-white/90 leading-relaxed">
                   • Manual spreadsheet tracking across 3 files
                 </li>
-                <li className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                <li className="text-white/90 leading-relaxed">
                   • WhatsApp chaos for payment confirmations
                 </li>
-                <li className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                <li className="text-white/90 leading-relaxed">
                   • 2-3 days to reconcile M-Pesa payments
                 </li>
-                <li className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                <li className="text-white/90 leading-relaxed">
                   • No real-time visibility for property owners
                 </li>
               </ul>
@@ -104,22 +108,22 @@ export function Testimonials() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
         >
-          <Card className="border-tertiary dark:border-tertiary/50 bg-tertiary/10 dark:bg-tertiary/10 hover:shadow-md transition-all duration-200">
+          <Card className="border-tertiary/50 bg-tertiary/20 backdrop-blur-sm hover:shadow-md transition-all duration-200">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-6">
+              <h3 className="text-2xl font-bold text-white mb-6">
                 After Nyumba Zetu
               </h3>
               <ul className="space-y-3">
-                <li className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                <li className="text-white/90 leading-relaxed">
                   • Single platform for all operations
                 </li>
-                <li className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                <li className="text-white/90 leading-relaxed">
                   • Automated invoicing and payment tracking
                 </li>
-                <li className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                <li className="text-white/90 leading-relaxed">
                   • Real-time M-Pesa reconciliation
                 </li>
-                <li className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                <li className="text-white/90 leading-relaxed">
                   • Owner portals with live dashboards
                 </li>
               </ul>

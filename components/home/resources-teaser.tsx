@@ -28,11 +28,15 @@ const resources = [
 
 export function ResourcesTeaser() {
   return (
-    <Section className="bg-slate-50 dark:bg-slate-900">
-      <SectionHeader
-        title="Property management insights for Kenyan landlords and property managers."
-        description="Learn from industry experts and real-world case studies."
-      />
+    <Section className="bg-secondary">
+      <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight tracking-tight">
+          Property management insights for Kenyan landlords and property managers.
+        </h2>
+        <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+          Learn from industry experts and real-world case studies.
+        </p>
+      </div>
       <div className="grid md:grid-cols-3 gap-6 lg:gap-8 mb-8">
         {resources.map((resource, idx) => (
           <motion.div
@@ -42,17 +46,17 @@ export function ResourcesTeaser() {
             viewport={{ once: true }}
             transition={{ delay: idx * 0.1 }}
           >
-            <Card className="h-full hover:shadow-md transition-all duration-200 hover:-translate-y-1">
+            <Card className="h-full hover:shadow-md transition-all duration-200 hover:-translate-y-1 bg-white/10 backdrop-blur-sm border-white/20">
               <CardHeader className="pb-4">
                 <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-3">
                   {resource.type}
                 </div>
-                <CardTitle className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-2">
+                <CardTitle className="text-xl font-semibold text-white mb-2">
                   {resource.title}
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                <p className="text-white/90 leading-relaxed mb-4">
                   {resource.description}
                 </p>
               </CardContent>
@@ -61,7 +65,7 @@ export function ResourcesTeaser() {
         ))}
       </div>
       <div className="text-center">
-        <Button size="lg" variant="outline" asChild>
+        <Button size="lg" variant="outline" className="border-white/30 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 hover:border-white/50" asChild>
           <Link href="/resources" className="flex items-center gap-2">
             View all resources
             <ArrowRightIcon className="h-4 w-4" />

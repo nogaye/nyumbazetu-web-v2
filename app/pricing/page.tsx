@@ -136,11 +136,15 @@ export default function PricingPage() {
       </Section>
 
       {/* FAQ */}
-      <Section className="bg-slate-50">
-        <SectionHeader
-          title="Frequently Asked Questions"
-          description="Common questions about pricing and plans."
-        />
+      <Section className="bg-secondary">
+      <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight tracking-tight">
+          Frequently Asked Questions
+        </h2>
+        <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+          Common questions about pricing and plans.
+        </p>
+      </div>
         <div className="max-w-3xl mx-auto space-y-6">
           {[
             {
@@ -160,14 +164,14 @@ export default function PricingPage() {
               a: "Yes, we offer a 14-day free trial for all plans. No credit card required.",
             },
           ].map((faq, idx) => (
-            <Card key={idx} className="hover:shadow-md transition-all duration-200">
+            <Card key={idx} className="hover:shadow-md transition-all duration-200 bg-white/10 backdrop-blur-sm border-white/20">
               <CardHeader>
-                <CardTitle className="text-lg font-semibold text-slate-900 dark:text-slate-50">
+                <CardTitle className="text-lg font-semibold text-white">
                   {faq.q}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                <p className="text-white/90 leading-relaxed">
                   {faq.a}
                 </p>
               </CardContent>

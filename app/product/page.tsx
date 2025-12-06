@@ -22,7 +22,7 @@ export default function ProductPage() {
 
       {/* Platform Diagram */}
       <Section>
-        <div className="bg-slate-900 dark:bg-slate-800 rounded-2xl p-8 md:p-12 text-white">
+        <div className="bg-secondary rounded-2xl p-8 md:p-12 text-white">
           <div className="grid md:grid-cols-5 gap-6">
             <div className="md:col-span-2 space-y-4">
               <h3 className="text-xl font-semibold mb-6">Connected Ecosystem</h3>
@@ -51,11 +51,15 @@ export default function ProductPage() {
       </Section>
 
       {/* Modules */}
-      <Section className="bg-slate-50 dark:bg-slate-900">
-        <SectionHeader
-          title="Core Platform Modules"
-          description="Everything you need to run modern property operations."
-        />
+      <Section className="bg-secondary">
+      <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight tracking-tight">
+          Core Platform Modules
+        </h2>
+        <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+          Everything you need to run modern property operations.
+        </p>
+      </div>
         <div className="grid md:grid-cols-2 gap-6">
           {[
             {
@@ -91,12 +95,12 @@ export default function ProductPage() {
               description: "Centralized email, SMS, and in-app messaging for tenants, owners, and teams.",
             },
           ].map((module, idx) => (
-            <Card key={idx}>
+            <Card key={idx} className="bg-white/10 backdrop-blur-sm border-white/20">
               <CardHeader>
-                <CardTitle className="text-slate-900 dark:text-slate-50">{module.title}</CardTitle>
+                <CardTitle className="text-white">{module.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{module.description}</p>
+                <p className="text-white/90 leading-relaxed">{module.description}</p>
               </CardContent>
             </Card>
           ))}
@@ -137,13 +141,17 @@ export default function ProductPage() {
       </Section>
 
       {/* Implementation */}
-      <Section className="bg-slate-50">
-        <SectionHeader
-          title="Implementation & Onboarding"
-          description="Get up and running quickly with our dedicated onboarding team."
-        />
+      <Section className="bg-secondary">
+      <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight tracking-tight">
+          Implementation & Onboarding
+        </h2>
+        <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+          Get up and running quickly with our dedicated onboarding team.
+        </p>
+      </div>
         <div className="max-w-3xl mx-auto space-y-6">
-          <Card>
+          <Card className="bg-white/10 backdrop-blur-sm border-white/20">
             <CardContent className="p-8">
               <ol className="space-y-4">
                 {[
@@ -155,7 +163,7 @@ export default function ProductPage() {
                 ].map((step, idx) => (
                   <li key={idx} className="flex items-start space-x-3">
                     <span className="font-bold text-primary">{idx + 1}.</span>
-                    <span className="text-slate-700">{step}</span>
+                    <span className="text-white/90">{step}</span>
                   </li>
                 ))}
               </ol>
