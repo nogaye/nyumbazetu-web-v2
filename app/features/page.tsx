@@ -155,7 +155,7 @@ export default function FeaturesPage() {
         />
       </Section>
 
-      <Section className="py-12 md:py-16">
+      <Section>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {features.map((feature) => (
             <Card key={feature.slug} className="h-full hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
@@ -188,7 +188,7 @@ export default function FeaturesPage() {
         </div>
       </Section>
 
-      <Section className="bg-secondary py-12 md:py-16">
+      <Section className="bg-secondary">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             See all features in action
