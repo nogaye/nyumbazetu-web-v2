@@ -208,7 +208,43 @@ const comparisonFeatures = [
         otherLocal: "Partial",
       },
       {
+        name: "Local Kenyan bank integrations (Equity, KCB, Co-op, etc.)",
+        nyumbaZetu: true,
+        odoo: false,
+        zoho: false,
+        quickbooks: false,
+        doorloop: false,
+        otherLocal: "Partial",
+      },
+      {
+        name: "Bank API integrations for real-time reconciliation",
+        nyumbaZetu: true,
+        odoo: false,
+        zoho: false,
+        quickbooks: false,
+        doorloop: false,
+        otherLocal: false,
+      },
+      {
+        name: "Bank statement import & parsing",
+        nyumbaZetu: true,
+        odoo: true,
+        zoho: true,
+        quickbooks: true,
+        doorloop: true,
+        otherLocal: false,
+      },
+      {
         name: "Bank transfer reconciliation",
+        nyumbaZetu: true,
+        odoo: true,
+        zoho: true,
+        quickbooks: true,
+        doorloop: true,
+        otherLocal: false,
+      },
+      {
+        name: "Multi-bank account management",
         nyumbaZetu: true,
         odoo: true,
         zoho: true,
@@ -354,7 +390,7 @@ export default function ComparePage() {
             </CardHeader>
             <CardContent>
               <p className="text-slate-700 dark:text-slate-300">
-                Native M-Pesa, KRA eTIMS, service charge, and committee workflows—not adapted from generic software.
+                Native M-Pesa, local bank integrations, KRA eTIMS, service charge, and committee workflows—not adapted from generic software.
               </p>
             </CardContent>
           </Card>
@@ -460,12 +496,16 @@ export default function ComparePage() {
             </CardHeader>
             <CardContent>
               <p className="text-slate-700 dark:text-slate-300 mb-4">
-                Generic solutions like Odoo and Zoho require extensive customization to handle M-Pesa, service charges, and Kenyan workflows. Nyumba Zetu includes these features from day one.
+                Generic solutions like Odoo and Zoho require extensive customization to handle M-Pesa, local bank integrations, service charges, and Kenyan workflows. Nyumba Zetu includes these features from day one.
               </p>
               <ul className="space-y-2 text-slate-600 dark:text-slate-400">
                 <li className="flex items-start gap-2">
                   <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
                   <span>M-Pesa integration works immediately</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                  <span>Local bank integrations (Equity, KCB, Co-op, etc.)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
