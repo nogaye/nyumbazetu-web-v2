@@ -49,7 +49,9 @@ const navItems = [
         { label: "Pricing", href: "/pricing" },
         { label: "Compare", href: "/compare" },
         { label: "Resources", href: "/resources" },
+        { label: "Blogs", href: "/blogs" },
         { label: "About", href: "/about" },
+        { label: "Contact", href: "/contact" },
 ];
 
 export function MainNav() {

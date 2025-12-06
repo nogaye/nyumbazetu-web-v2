@@ -31,6 +31,15 @@ export default function AboutPage() {
           </div>
           <div className="prose prose-lg max-w-none">
             <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4 tracking-tight">
+              About Nyumba Zetu
+            </h2>
+            <p className="text-lg text-slate-700 dark:text-slate-300 mb-6 leading-relaxed">
+              Property management is a complex and multifaceted process that requires a great deal of time and effort. From managing tenants and collecting rent to maintaining the property and handling repairs, property managers and landlords have a lot on their plate. Fortunately, property management software can help streamline these processes, making them more efficient and effective.
+            </p>
+            <p className="text-lg text-slate-700 dark:text-slate-300 mb-6 leading-relaxed">
+              At Nyumba Zetu, we offer a comprehensive property management solution that simplifies the entire process. Our software is designed to help landlords and property managers manage their properties with ease and efficiency.
+            </p>
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4 tracking-tight mt-8">
               Our Mission
             </h2>
             <p className="text-lg text-slate-700 dark:text-slate-300 mb-6 leading-relaxed">

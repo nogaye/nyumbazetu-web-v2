@@ -146,15 +146,27 @@ export default function ContactPage() {
             </p>
             <div className="space-y-4">
               <div>
-                <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Email</h3>
-                <a href="mailto:hello@nyumbazetu.com" className="text-primary hover:underline">
-                  hello@nyumbazetu.com
-                </a>
+                <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Find us at the office</h3>
+                <p className="text-slate-600 dark:text-slate-400">
+                  Zetu Innovations<br />
+                  90 JGO, James Gichuru Road,<br />
+                  Nairobi, Kenya
+                </p>
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Phone</h3>
-                <a href="tel:+254700000000" className="text-primary hover:underline">
-                  +254 700 000 000
+                <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Give us a ring</h3>
+                <p className="text-slate-600 dark:text-slate-400">
+                  <a href="tel:+254741382063" className="text-primary hover:underline">+254 741 382063</a>
+                  <br />
+                  <a href="tel:+16143904422" className="text-primary hover:underline">+1 614 390 4422</a>
+                  <br />
+                  Mon - Fri, 8:00 - 20:00
+                </p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Email us</h3>
+                <a href="mailto:admin@nyumbazetu.com" className="text-primary hover:underline">
+                  admin@nyumbazetu.com
                 </a>
               </div>
               <div>

@@ -30,16 +30,22 @@ const footerLinks = {
     { label: "Diaspora", href: "/solutions/diaspora" },
   ],
   resources: [
-    { label: "Blog", href: "/resources" },
+    { label: "Blog", href: "/blogs" },
     { label: "Guides", href: "/resources" },
     { label: "Case Studies", href: "/resources" },
     { label: "Webinars", href: "/resources" },
+    { label: "Newsletters", href: "/newsletters" },
+    { label: "FAQs", href: "/faqs" },
   ],
   company: [
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
     { label: "Pricing", href: "/pricing" },
     { label: "Compare", href: "/compare" },
+    { label: "Careers", href: "/careers" },
+    { label: "Press", href: "/press" },
+    { label: "Partner", href: "/partner" },
+    { label: "Events", href: "/events" },
   ],
   legal: [
     { label: "Privacy Policy", href: "/privacy" },
