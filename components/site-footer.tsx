@@ -9,7 +9,7 @@ const footerLinks = {
     { label: "Overview", href: "/product" },
     { label: "Features", href: "/features" },
     { label: "Integrations", href: "/product#integrations" },
-    { label: "Compare", href: "/compare" },
+    { label: "Compare Solutions", href: "/compare" },
   ],
   features: [
     { label: "Rent & Service Charge Collections", href: "/features/collections" },

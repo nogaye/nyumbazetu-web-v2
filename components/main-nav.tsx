@@ -24,7 +24,8 @@ import {
   BanknotesIcon,
   GlobeAltIcon,
   Squares2X2Icon,
-  PuzzlePieceIcon
+  PuzzlePieceIcon,
+  SquaresPlusIcon
 } from "@heroicons/react/24/outline";
 import { Sheet, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -38,6 +39,7 @@ const navItems = [
       { label: "Overview", href: "/product", icon: Squares2X2Icon },
       { label: "Features", href: "/features", icon: BoltIcon },
       { label: "Integrations", href: "/product#integrations", icon: PuzzlePieceIcon },
+      { label: "Compare Solutions", href: "/compare", icon: SquaresPlusIcon },
     ],
   },
   {
