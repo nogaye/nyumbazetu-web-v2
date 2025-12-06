@@ -7,158 +7,15 @@ import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-
-interface IClient {
-  id?: number;
-  name?: string;
-  location?: string;
-  imageUrl?: string;
-  website?: string;
-}
+import Link from "next/link";
+import { ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { mainClients } from "@/lib/clients-data";
 
 export function LegacyClients() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerView = 3; // Show 3 items at a time on desktop
   const itemWidth = 320; // Increased width for better spacing
   const gap = 24; // Gap between items
-
-  const clients: IClient[] = [
-    {
-      imageUrl: "aqua_viva.png",
-      name: "Aqua Viva",
-      location: "Nairobi",
-    },
-    {
-      imageUrl: "asmin_court.png",
-      name: "Asmin Court",
-      location: "Nairobi",
-    },
-    {
-      imageUrl: "baobab_plaza.png",
-      name: "Baobab Plaza",
-      location: "Nairobi",
-    },
-    {
-      imageUrl: "city_house.png",
-      name: "City House",
-      location: "Mombasa",
-    },
-    {
-      imageUrl: "cowrie_shells.png",
-      name: "Cowrie Shells",
-      location: "Mombasa",
-    },
-    {
-      imageUrl: "latana_galu_beach.png",
-      name: "Latana Galu Beach",
-      location: "Mombasa",
-    },
-    {
-      imageUrl: "links_plaza.png",
-      name: "Links Plaza",
-      location: "Nairobi",
-    },
-    {
-      imageUrl: "micd_building.png",
-      name: "MICD Building",
-      location: "Nairobi",
-    },
-    {
-      imageUrl: "mwewe_apartments.png",
-      name: "Mwewe Apartments",
-      location: "Mombasa",
-    },
-    {
-      imageUrl: "pearl_residence.png",
-      name: "Pearl Residence",
-      location: "Mombasa",
-    },
-    {
-      imageUrl: "rose_apartment.png",
-      name: "Rose Apartment",
-      location: "Nairobi",
-    },
-    {
-      imageUrl: "royal_beach_apartments.png",
-      name: "Royal Beach Apartments",
-      location: "Mombasa",
-    },
-    {
-      imageUrl: "serena_apartments.png",
-      name: "Serena Apartments",
-      location: "Nairobi",
-    },
-    {
-      imageUrl: "silver_harbour.png",
-      name: "Silver Harbour",
-      location: "Mombasa",
-    },
-    {
-      imageUrl: "silverstone_apartments.png",
-      name: "Silverstone Apartments",
-      location: "Nairobi",
-    },
-    {
-      imageUrl: "sohail_residency.png",
-      name: "Sohail Residency",
-      location: "Mombasa",
-    },
-    { imageUrl: "the_shaza.png", name: "The Shaza", location: "Nairobi" },
-    {
-      imageUrl: "valley_view_office_park.png",
-      name: "Valley View Office Park",
-      location: "Nairobi",
-    },
-    {
-      imageUrl: "water_club_nyali.png",
-      name: "Water Club Nyali",
-      location: "Mombasa",
-    },
-  ];
-
-  const mainClients = [
-    {
-      imageUrl: "main/urban_oasis.png",
-      name: "Urban Oasis Apartments",
-      location: "Lavington, Nairobi",
-    },
-    {
-      imageUrl: "main/360_degrees.png",
-      name: "360 Degrees",
-      location: "Syokimau, Nairobi",
-    },
-    {
-      imageUrl: "main/buxton.png",
-      name: "Buxton Point",
-      location: "Mombasa",
-    },
-    {
-      imageUrl: "main/epic_properties.png",
-      name: "Epic Properties",
-      location: "Nairobi",
-    },
-    {
-      imageUrl: "main/fourways.png",
-      name: "Fourways Junction",
-      location: "Kiambu",
-    },
-    {
-      imageUrl: "main/perrywest.png",
-      name: "Perry West",
-      location: "Kilimani, Nairobi",
-    },
-    {
-      imageUrl: "main/riverside.png",
-      name: "River Side Apartments",
-      location: "Nairobi",
-    },
-    {
-      imageUrl: "main/roseville.png",
-      name: "Roseville Apartments",
-      location: "Nairobi",
-    },
-  ];
 
   const maxIndex = Math.max(0, mainClients.length - itemsPerView);
 
@@ -280,44 +137,14 @@ export function LegacyClients() {
           </div>
         </div>
 
-        {/* Small Clients Grid */}
-        <div className="mt-16">
-          <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-6 text-center">
-            More Trusted Clients
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {clients.map((client, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-              >
-                <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                  <CardContent className="p-4">
-                    <div className="aspect-square bg-slate-50 dark:bg-slate-800 rounded-lg mb-3 flex items-center justify-center p-3">
-                      <Image
-                        src={`/legacy/images/clients/${client.imageUrl}`}
-                        alt={client.name || ""}
-                        width={120}
-                        height={120}
-                        className="w-full h-full object-contain"
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 120px"
-                        loading="lazy"
-                      />
-                    </div>
-                    <h5 className="font-semibold text-sm text-slate-900 dark:text-slate-50 mb-1 text-center">
-                      {client.name}
-                    </h5>
-                    <p className="text-xs text-slate-600 dark:text-slate-400 text-center">
-                      {client.location}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+        {/* View All Clients Button */}
+        <div className="mt-12 text-center">
+          <Button size="lg" variant="outline" asChild>
+            <Link href="/clients" className="group">
+              View All Clients
+              <ArrowRightIcon className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </Button>
         </div>
       </div>
     </Section>

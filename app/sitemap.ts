@@ -46,6 +46,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/partnerships/boma-yangu',
     '/partnerships/hfc',
     '/partnerships/aiesec',
+    '/clients',
   ]
 
   return routes.map((route) => ({
