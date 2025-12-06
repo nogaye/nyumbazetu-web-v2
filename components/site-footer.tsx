@@ -45,21 +45,21 @@ const footerLinks = {
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+    <footer className="border-t border-[#344767]/20 bg-[#344767]">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-20">
         {/* All Footer Items in One Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-12">
           {/* Brand Column */}
           <div>
             <Link href="/" className="block mb-4">
-              <div className="text-2xl font-bold text-[#344767] dark:text-slate-50">
+              <div className="text-2xl font-bold text-white">
                 Nyumba Zetu
               </div>
             </Link>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mb-2 leading-relaxed">
+            <p className="text-sm text-slate-200 mb-2 leading-relaxed">
               Property management infrastructure for modern Kenyan real estate.
             </p>
-            <p className="text-xs text-slate-500 dark:text-slate-500 mb-4">
+            <p className="text-xs text-slate-300 mb-4">
               Built in Kenya for African real estate.
             </p>
             <div className="mb-4 flex items-center space-x-1">
@@ -70,7 +70,7 @@ export function SiteFooter() {
                 href="https://twitter.com/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-[#b98036] dark:hover:text-[#b98036] transition-colors duration-200"
+                className="text-slate-300 hover:text-[#b98036] transition-colors duration-200"
                 aria-label="Follow us on Twitter"
               >
                 <TwitterIcon className="h-5 w-5" />
@@ -79,7 +79,7 @@ export function SiteFooter() {
                 href="https://linkedin.com/company/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-[#b98036] dark:hover:text-[#b98036] transition-colors duration-200"
+                className="text-slate-300 hover:text-[#b98036] transition-colors duration-200"
                 aria-label="Follow us on LinkedIn"
               >
                 <LinkedInIcon className="h-5 w-5" />
@@ -88,7 +88,7 @@ export function SiteFooter() {
                 href="https://facebook.com/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-[#b98036] dark:hover:text-[#b98036] transition-colors duration-200"
+                className="text-slate-300 hover:text-[#b98036] transition-colors duration-200"
                 aria-label="Follow us on Facebook"
               >
                 <FacebookIcon className="h-5 w-5" />
@@ -97,7 +97,7 @@ export function SiteFooter() {
                 href="https://instagram.com/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-[#b98036] dark:hover:text-[#b98036] transition-colors duration-200"
+                className="text-slate-300 hover:text-[#b98036] transition-colors duration-200"
                 aria-label="Follow us on Instagram"
               >
                 <InstagramIcon className="h-5 w-5" />
@@ -107,7 +107,7 @@ export function SiteFooter() {
 
           {/* Product Column */}
           <div>
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-50 mb-4 uppercase tracking-wider">
+            <h3 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">
               Product
             </h3>
             <ul className="space-y-3">
@@ -115,7 +115,7 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-600 dark:text-slate-400 hover:text-[#b98036] dark:hover:text-[#b98036] transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-[#b98036] transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -126,7 +126,7 @@ export function SiteFooter() {
 
           {/* Features Column - All features in one column */}
           <div>
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-50 mb-4 uppercase tracking-wider">
+            <h3 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">
               Features
             </h3>
             <ul className="space-y-3">
@@ -134,7 +134,7 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-600 dark:text-slate-400 hover:text-[#b98036] dark:hover:text-[#b98036] transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-[#b98036] transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -145,7 +145,7 @@ export function SiteFooter() {
 
           {/* Solutions Column */}
           <div>
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-50 mb-4 uppercase tracking-wider">
+            <h3 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">
               Solutions
             </h3>
             <ul className="space-y-3">
@@ -153,7 +153,7 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-600 dark:text-slate-400 hover:text-[#b98036] dark:hover:text-[#b98036] transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-[#b98036] transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -164,7 +164,7 @@ export function SiteFooter() {
 
           {/* Company Column */}
           <div>
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-50 mb-4 uppercase tracking-wider">
+            <h3 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">
               Company
             </h3>
             <ul className="space-y-3">
@@ -172,7 +172,7 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-600 dark:text-slate-400 hover:text-[#b98036] dark:hover:text-[#b98036] transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-[#b98036] transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -183,8 +183,8 @@ export function SiteFooter() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-slate-200 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-slate-500 dark:text-slate-500 text-center md:text-left">
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-slate-300 text-center md:text-left">
             © {new Date().getFullYear()} Nyumba Zetu. All rights reserved.
           </p>
           <div className="flex flex-wrap justify-center gap-6">
@@ -192,7 +192,7 @@ export function SiteFooter() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm text-slate-500 dark:text-slate-400 hover:text-[#b98036] dark:hover:text-[#b98036] transition-colors duration-200"
+                className="text-sm text-slate-300 hover:text-[#b98036] transition-colors duration-200"
               >
                 {link.label}
               </Link>
