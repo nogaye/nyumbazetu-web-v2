@@ -27,7 +27,7 @@ export function Hero() {
               Property management infrastructure for modern Kenyan real estate.
             </h1>
             
-            <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-[#b98036]">
+            <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-primary">
               Forget everything you know about property management systems.
             </h2>
             
@@ -49,14 +49,14 @@ export function Hero() {
                   transition={{ delay: 0.3 + idx * 0.1 }}
                   className="flex items-start space-x-3"
                 >
-                  <CheckCircleIcon className="h-6 w-6 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                  <CheckCircleIcon className="h-6 w-6 text-tertiary flex-shrink-0 mt-0.5" />
                   <span className="text-slate-300">{item}</span>
                 </motion.li>
               ))}
             </ul>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
-              <Button size="lg" className="bg-[#b98036] hover:bg-[#a06f2d]" asChild>
+              <Button size="lg" className="bg-primary hover:bg-primary-600 text-primary-foreground" asChild>
                 <Link href="/contact">Request a demo</Link>
               </Button>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10" asChild>
@@ -93,7 +93,7 @@ export function Hero() {
                       transition={{ delay: 0.4 + idx * 0.1 }}
                       className="bg-white/10 rounded-lg p-4 border border-white/20"
                     >
-                      <IconComponent className="h-5 w-5 text-[#b98036] mb-2" />
+                      <IconComponent className="h-5 w-5 text-primary mb-2" />
                       <div className="text-2xl font-bold text-white">{kpi.value}</div>
                       <div className="text-xs text-slate-400">{kpi.label}</div>
                     </motion.div>
@@ -111,7 +111,7 @@ export function Hero() {
                       initial={{ height: 0 }}
                       animate={{ height: `${height}%` }}
                       transition={{ delay: 0.6 + idx * 0.05, duration: 0.5 }}
-                      className="flex-1 bg-gradient-to-t from-[#b98036] to-[#e27d60] rounded-t"
+                      className="flex-1 bg-gradient-to-t from-primary to-primary-400 rounded-t"
                     />
                   ))}
                 </div>
@@ -130,7 +130,7 @@ export function Hero() {
                       className="flex justify-between text-sm text-slate-300"
                     >
                       <span>{item}</span>
-                      <span className="text-[#36b9a0]">KES 25,000</span>
+                      <span className="text-tertiary">KES 25,000</span>
                     </motion.div>
                   ))}
                 </div>

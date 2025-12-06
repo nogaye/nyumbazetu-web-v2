@@ -22,7 +22,7 @@ export function FinalCTA() {
           Talk to our team and see how Nyumba Zetu can transform your collections, accounting, and tenant experience.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="lg" className="bg-[#b98036] hover:bg-[#a06f2d]" asChild>
+          <Button size="lg" className="bg-primary hover:bg-primary-600 text-primary-foreground" asChild>
             <Link href="/contact" className="flex items-center gap-2">
               Request a demo
               <CalendarDaysIcon className="h-4 w-4" />

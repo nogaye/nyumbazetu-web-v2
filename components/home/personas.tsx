@@ -100,7 +100,7 @@ export function Personas() {
                 <ul className="space-y-2.5 mb-6">
                   {persona.bullets.map((bullet, bulletIdx) => (
                     <li key={bulletIdx} className="text-sm text-slate-700 dark:text-slate-300 flex items-start leading-relaxed">
-                      <span className="text-[#36b9a0] mr-2.5 flex-shrink-0 mt-0.5">•</span>
+                      <span className="text-tertiary mr-2.5 flex-shrink-0 mt-0.5">•</span>
                       <span>{bullet}</span>
                     </li>
                   ))}

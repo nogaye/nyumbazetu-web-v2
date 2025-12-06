@@ -49,7 +49,7 @@ export function CookieConsent() {
                   We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. By clicking "Accept All", you consent to our use of cookies.{" "}
                   <a
                     href="/privacy"
-                    className="text-[#b98036] hover:underline font-medium"
+                    className="text-primary hover:underline font-medium"
                   >
                     Learn more
                   </a>

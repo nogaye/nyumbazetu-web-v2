@@ -60,7 +60,7 @@ export function Testimonials() {
                   <div className="text-sm text-slate-500 dark:text-slate-500 mt-1">
                     {testimonial.portfolio}
                   </div>
-                  <div className="text-sm font-medium text-[#36b9a0] mt-3">
+                  <div className="text-sm font-medium text-tertiary mt-3">
                     {testimonial.metric}
                   </div>
                 </div>
@@ -104,7 +104,7 @@ export function Testimonials() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
         >
-          <Card className="border-[#36b9a0] dark:border-[#36b9a0]/50 bg-[#36b9a0]/10 dark:bg-[#36b9a0]/10 hover:shadow-md transition-all duration-200">
+          <Card className="border-tertiary dark:border-tertiary/50 bg-tertiary/10 dark:bg-tertiary/10 hover:shadow-md transition-all duration-200">
             <CardContent className="p-8">
               <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-6">
                 After Nyumba Zetu

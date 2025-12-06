@@ -19,7 +19,7 @@ export function SectionHeader({
   return (
     <div className={cn("text-center max-w-3xl mx-auto mb-12 md:mb-16", className)}>
       {eyebrow && (
-        <p className="text-sm font-semibold text-[#b98036] uppercase tracking-wider mb-4">
+        <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">
           {eyebrow}
         </p>
       )}

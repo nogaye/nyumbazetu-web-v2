@@ -177,7 +177,7 @@ export function HeroCarousel() {
                     transition={{ delay: 0.2 + idx * 0.05 }}
                     className="flex items-start space-x-3"
                   >
-                    <CheckCircleIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                    <CheckCircleIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                     <span className="text-slate-700 dark:text-slate-300 leading-relaxed">
                       {item}
                     </span>
@@ -190,7 +190,7 @@ export function HeroCarousel() {
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-8">
               <Button 
                 size="lg"
-                className="bg-[#b98036] hover:bg-[#a06f2d] text-white focus-visible:ring-[#b98036] rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200 border-0" 
+                className="bg-primary hover:bg-primary-600 text-primary-foreground focus-visible:ring-primary rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200 border-0" 
                 asChild
                 aria-label={`${currentSlideData.ctaPrimary} - ${currentSlideData.title}`}
               >
@@ -248,7 +248,7 @@ export function HeroCarousel() {
         size="icon"
         onClick={prevSlide}
         onMouseEnter={() => setIsAutoPlaying(false)}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white dark:bg-slate-900 hover:bg-white dark:hover:bg-slate-800 backdrop-blur-sm border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:text-[#b98036] dark:hover:text-[#b98036] hover:border-[#b98036] dark:hover:border-[#b98036] shadow-lg hover:shadow-xl transition-all duration-200 h-12 w-12 min-h-[48px] min-w-[48px]"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white dark:bg-slate-900 hover:bg-white dark:hover:bg-slate-800 backdrop-blur-sm border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary hover:border-primary dark:hover:border-primary shadow-lg hover:shadow-xl transition-all duration-200 h-12 w-12 min-h-[48px] min-w-[48px]"
         aria-label="Previous slide"
       >
         <ChevronLeftIcon className="h-6 w-6" />
@@ -259,7 +259,7 @@ export function HeroCarousel() {
         size="icon"
         onClick={nextSlide}
         onMouseEnter={() => setIsAutoPlaying(false)}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white dark:bg-slate-900 hover:bg-white dark:hover:bg-slate-800 backdrop-blur-sm border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:text-[#b98036] dark:hover:text-[#b98036] hover:border-[#b98036] dark:hover:border-[#b98036] shadow-lg hover:shadow-xl transition-all duration-200 h-12 w-12 min-h-[48px] min-w-[48px]"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white dark:bg-slate-900 hover:bg-white dark:hover:bg-slate-800 backdrop-blur-sm border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary hover:border-primary dark:hover:border-primary shadow-lg hover:shadow-xl transition-all duration-200 h-12 w-12 min-h-[48px] min-w-[48px]"
         aria-label="Next slide"
       >
         <ChevronRightIcon className="h-6 w-6" />
@@ -275,7 +275,7 @@ export function HeroCarousel() {
             onMouseEnter={() => setIsAutoPlaying(false)}
             className={`h-1.5 rounded-full transition-all duration-200 ${
               index === currentSlide
-                ? "w-8 bg-[#b98036]"
+                ? "w-8 bg-primary"
                 : "w-1.5 bg-slate-300/60 dark:bg-slate-600/60 hover:bg-slate-400 dark:hover:bg-slate-500"
             }`}
             aria-label={`Go to slide ${index + 1}`}

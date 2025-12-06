@@ -44,7 +44,7 @@ export function ResourcesTeaser() {
           >
             <Card className="h-full hover:shadow-md transition-all duration-200 hover:-translate-y-1">
               <CardHeader className="pb-4">
-                <div className="text-xs font-semibold text-[#b98036] uppercase tracking-wider mb-3">
+                <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-3">
                   {resource.type}
                 </div>
                 <CardTitle className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-2">

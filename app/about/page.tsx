@@ -114,7 +114,7 @@ export default function AboutPage() {
               </p>
               <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
                 If you're interested in partnering with us, please{" "}
-                <a href="/contact" className="text-[#b98036] hover:underline font-medium">
+                <a href="/contact" className="text-primary hover:underline font-medium">
                   get in touch
                 </a>
                 .

@@ -7,16 +7,16 @@ import { cn } from "@/lib/utils";
 import { trackButtonClick } from "@/lib/analytics";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b98036] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 min-h-[44px] min-w-[44px]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 min-h-[44px] min-w-[44px]",
   {
     variants: {
       variant: {
-        default: "bg-[#b98036] text-white hover:bg-[#a06f2d] shadow-sm dark:shadow-slate-900/50",
+        default: "bg-primary text-primary-foreground hover:bg-primary-600 shadow-sm dark:shadow-slate-900/50",
         outline:
           "border border-slate-300 dark:border-slate-700 bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-slate-50",
         ghost: "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-slate-50",
-        link: "text-[#b98036] dark:text-[#b98036] underline-offset-4 hover:underline",
-        secondary: "bg-[#e27d60] text-white hover:bg-[#d46a4d]",
+        link: "text-primary dark:text-primary underline-offset-4 hover:underline",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary-600",
       },
       size: {
         default: "h-11 px-6 min-h-[44px]",

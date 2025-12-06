@@ -31,7 +31,7 @@ export function MetricsStrip() {
               transition={{ delay: idx * 0.1 }}
             >
               <Card className="text-center p-6 border-slate-200 dark:border-slate-800 hover:shadow-md transition-all duration-200">
-                <div className="text-4xl font-bold text-[#344767] dark:text-[#b98036] mb-2">
+                <div className="text-4xl font-bold text-secondary dark:text-primary mb-2">
                   {metric.value}
                 </div>
                 <div className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">

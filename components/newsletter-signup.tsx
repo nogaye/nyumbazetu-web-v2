@@ -110,9 +110,9 @@ export function NewsletterSignup() {
         )}
 
         {status === "success" && (
-          <Alert className="bg-[#36b9a0]/10 border-[#36b9a0] text-[#36b9a0] dark:bg-[#36b9a0]/20 dark:border-[#36b9a0] dark:text-[#36b9a0]">
+          <Alert className="bg-tertiary/10 border-tertiary text-tertiary dark:bg-tertiary/20 dark:border-tertiary dark:text-tertiary">
             <CheckCircleIcon className="h-4 w-4" />
-            <AlertDescription className="text-[#36b9a0] dark:text-[#36b9a0]">
+            <AlertDescription className="text-tertiary dark:text-tertiary">
               Thank you! You've been subscribed to our newsletter.
             </AlertDescription>
           </Alert>

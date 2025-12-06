@@ -52,7 +52,7 @@ const footerLinks = {
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-[#344767]/20 bg-[#344767]">
+    <footer className="border-t border-secondary/20 bg-secondary">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-20">
         {/* All Footer Items in One Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-8 lg:gap-10 mb-12">
@@ -77,7 +77,7 @@ export function SiteFooter() {
                 href="https://twitter.com/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-300 hover:text-[#b98036] transition-colors duration-200"
+                className="text-slate-300 hover:text-primary transition-colors duration-200"
                 aria-label="Follow us on Twitter"
               >
                 <TwitterIcon className="h-5 w-5" />
@@ -86,7 +86,7 @@ export function SiteFooter() {
                 href="https://linkedin.com/company/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-300 hover:text-[#b98036] transition-colors duration-200"
+                className="text-slate-300 hover:text-primary transition-colors duration-200"
                 aria-label="Follow us on LinkedIn"
               >
                 <LinkedInIcon className="h-5 w-5" />
@@ -95,7 +95,7 @@ export function SiteFooter() {
                 href="https://facebook.com/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-300 hover:text-[#b98036] transition-colors duration-200"
+                className="text-slate-300 hover:text-primary transition-colors duration-200"
                 aria-label="Follow us on Facebook"
               >
                 <FacebookIcon className="h-5 w-5" />
@@ -104,7 +104,7 @@ export function SiteFooter() {
                 href="https://instagram.com/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-300 hover:text-[#b98036] transition-colors duration-200"
+                className="text-slate-300 hover:text-primary transition-colors duration-200"
                 aria-label="Follow us on Instagram"
               >
                 <InstagramIcon className="h-5 w-5" />
@@ -122,7 +122,7 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-200 hover:text-[#b98036] transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-primary transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -141,7 +141,7 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-200 hover:text-[#b98036] transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-primary transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -160,7 +160,7 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-200 hover:text-[#b98036] transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-primary transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -179,7 +179,7 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-200 hover:text-[#b98036] transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-primary transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -198,7 +198,7 @@ export function SiteFooter() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-200 hover:text-[#b98036] transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-primary transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -217,7 +217,7 @@ export function SiteFooter() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-200 hover:text-[#b98036] transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-primary transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -237,7 +237,7 @@ export function SiteFooter() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm text-slate-300 hover:text-[#b98036] transition-colors duration-200"
+                className="text-sm text-slate-300 hover:text-primary transition-colors duration-200"
               >
                 {link.label}
               </Link>

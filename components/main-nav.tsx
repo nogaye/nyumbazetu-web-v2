@@ -62,7 +62,7 @@ export function MainNav() {
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-2" aria-label="Nyumba Zetu Home">
-            <div className="text-2xl font-bold text-[#344767] dark:text-slate-50">
+            <div className="text-2xl font-bold text-secondary dark:text-slate-50">
               Nyumba Zetu
             </div>
           </Link>
@@ -73,7 +73,7 @@ export function MainNav() {
               <div key={item.label} className="relative group">
                 <Link
                   href={item.href}
-                  className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-[#b98036] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b98036] focus-visible:ring-offset-2 rounded-md px-2 py-1"
+                  className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-primary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md px-2 py-1"
                   aria-haspopup={item.children ? "true" : undefined}
                   aria-expanded={item.children ? "false" : undefined}
                 >
@@ -88,7 +88,7 @@ export function MainNav() {
                           href={child.href}
                           className="block px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 group/item transform hover:translate-x-1"
                         >
-                          <div className="font-medium text-slate-900 dark:text-slate-50 group-hover/item:text-[#b98036] transition-colors duration-200">
+                          <div className="font-medium text-slate-900 dark:text-slate-50 group-hover/item:text-primary transition-colors duration-200">
                             {child.label}
                           </div>
                           {"description" in child && child.description && (

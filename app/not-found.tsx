@@ -7,7 +7,7 @@ export default function NotFound() {
     <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
       <div className="max-w-md w-full text-center">
         <div className="mb-8">
-          <h1 className="text-9xl font-bold text-[#b98036] mb-4">404</h1>
+          <h1 className="text-9xl font-bold text-primary mb-4">404</h1>
           <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-2">
             Page not found
           </h2>
@@ -36,16 +36,16 @@ export default function NotFound() {
             Popular pages:
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/product" className="text-sm text-[#b98036] hover:underline">
+            <Link href="/product" className="text-sm text-primary hover:underline">
               Product
             </Link>
-            <Link href="/features" className="text-sm text-[#b98036] hover:underline">
+            <Link href="/features" className="text-sm text-primary hover:underline">
               Features
             </Link>
-            <Link href="/solutions" className="text-sm text-[#b98036] hover:underline">
+            <Link href="/solutions" className="text-sm text-primary hover:underline">
               Solutions
             </Link>
-            <Link href="/pricing" className="text-sm text-[#b98036] hover:underline">
+            <Link href="/pricing" className="text-sm text-primary hover:underline">
               Pricing
             </Link>
           </div>

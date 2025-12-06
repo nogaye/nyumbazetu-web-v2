@@ -341,7 +341,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
             </CardContent>
           </Card>
 
-          <Card className="border-[#36b9a0] dark:border-[#36b9a0]/50 bg-[#36b9a0]/10 dark:bg-[#36b9a0]/5">
+          <Card className="border-tertiary dark:border-tertiary/50 bg-tertiary/10 dark:bg-tertiary/5">
             <CardHeader>
               <CardTitle className="text-2xl text-slate-900 dark:text-slate-50">How Nyumba Zetu Helps</CardTitle>
             </CardHeader>
@@ -349,7 +349,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
               <ul className="space-y-3">
                 {segment.solutions.map((solution, idx) => (
                   <li key={idx} className="text-slate-700 dark:text-slate-300 flex items-start">
-                    <span className="text-[#36b9a0] mr-2">•</span>
+                    <span className="text-tertiary mr-2">•</span>
                     {solution}
                   </li>
                 ))}
@@ -403,7 +403,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
           <ul className="space-y-4">
             {segment.useCases.map((useCase, idx) => (
               <li key={idx} className="flex items-start space-x-3">
-                <span className="text-[#b98036] mt-1">✓</span>
+                <span className="text-primary mt-1">✓</span>
                 <span className="text-slate-700 dark:text-slate-300 text-lg">{useCase}</span>
               </li>
             ))}

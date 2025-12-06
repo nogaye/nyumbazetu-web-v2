@@ -151,7 +151,7 @@ export function HeroCarousel2() {
                 {currentSlideData.title}
               </h1>
               
-              <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-[#b98036] dark:text-[#b98036]">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-primary dark:text-primary">
                 {currentSlideData.subtitle}
               </h2>
               
@@ -168,7 +168,7 @@ export function HeroCarousel2() {
                     transition={{ delay: 0.2 + idx * 0.1 }}
                     className="flex items-start space-x-3"
                   >
-                    <CheckCircleIcon className="h-6 w-6 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                    <CheckCircleIcon className="h-6 w-6 text-tertiary flex-shrink-0 mt-0.5" />
                     <span className="text-slate-700 dark:text-slate-300 leading-relaxed">{item}</span>
                   </motion.li>
                 ))}
@@ -177,7 +177,7 @@ export function HeroCarousel2() {
               <div className="flex flex-col sm:flex-row gap-4 mb-6">
                 <Button 
                   size="lg" 
-                  className="bg-[#b98036] hover:bg-[#a06f2d] focus-visible:ring-[#b98036]" 
+                  className="bg-primary hover:bg-primary-600 focus-visible:ring-primary text-primary-foreground" 
                   asChild
                   aria-label={`${currentSlideData.ctaPrimary} - ${currentSlideData.title}`}
                 >
@@ -223,7 +223,7 @@ export function HeroCarousel2() {
                         transition={{ delay: 0.4 + idx * 0.1 }}
                         className="bg-slate-50 dark:bg-white/10 rounded-lg p-4 border border-slate-200 dark:border-white/20"
                       >
-                        <IconComponent className="h-5 w-5 text-[#b98036] mb-2" />
+                        <IconComponent className="h-5 w-5 text-primary mb-2" />
                         <div className="text-2xl font-bold text-slate-900 dark:text-white">{kpi.value}</div>
                         <div className="text-xs text-slate-600 dark:text-slate-400">{kpi.label}</div>
                       </motion.div>
@@ -241,7 +241,7 @@ export function HeroCarousel2() {
                         initial={{ height: 0 }}
                         animate={{ height: `${height}%` }}
                         transition={{ delay: 0.6 + idx * 0.05, duration: 0.5 }}
-                        className="flex-1 bg-gradient-to-t from-[#b98036] to-[#e27d60] rounded-t"
+                        className="flex-1 bg-gradient-to-t from-primary to-primary-400 rounded-t"
                       />
                     ))}
                   </div>
@@ -260,7 +260,7 @@ export function HeroCarousel2() {
                       className="flex justify-between text-sm text-slate-700 dark:text-slate-300"
                     >
                       <span>{item}</span>
-                      <span className="text-[#36b9a0]">KES 25,000</span>
+                      <span className="text-tertiary">KES 25,000</span>
                     </motion.div>
                   ))}
                 </div>
@@ -307,7 +307,7 @@ export function HeroCarousel2() {
             onMouseEnter={() => setIsAutoPlaying(false)}
             className={`h-2.5 md:h-2 rounded-full p-0 transition-all min-h-[20px] min-w-[20px] ${
               index === currentSlide
-                ? "w-8 bg-[#b98036] hover:bg-[#a06f2d]"
+                ? "w-8 bg-primary hover:bg-primary-600"
                 : "w-2 bg-slate-400 dark:bg-white/30 hover:bg-slate-500 dark:hover:bg-white/50"
             }`}
             aria-label={`Go to slide ${index + 1}`}

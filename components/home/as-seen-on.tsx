@@ -37,7 +37,7 @@ export function AsSeenOn() {
                   transition={{ delay: idx * 0.1 }}
                   className="flex items-center justify-center h-12 w-full group"
                 >
-                  <span className="text-slate-400 dark:text-slate-500 group-hover:text-[#344767] dark:group-hover:text-[#b98036] transition-colors duration-200 text-sm font-medium">
+                  <span className="text-slate-400 dark:text-slate-500 group-hover:text-secondary dark:group-hover:text-primary transition-colors duration-200 text-sm font-medium">
                     {outlet.name}
                   </span>
                 </MotionComponent>

@@ -80,10 +80,10 @@ export default function PricingPage() {
           {plans.map((plan, idx) => (
             <Card
               key={idx}
-              className={`${plan.popular ? "border-2 border-[#b98036] relative" : ""} hover:shadow-md transition-all duration-200`}
+              className={`${plan.popular ? "border-2 border-primary relative" : ""} hover:shadow-md transition-all duration-200`}
             >
               {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#b98036] text-white px-4 py-1 rounded-full text-sm font-semibold">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">
                   Most Popular
                 </div>
               )}
@@ -112,7 +112,7 @@ export default function PricingPage() {
                 <ul className="space-y-3">
                   {plan.features.map((feature, featureIdx) => (
                     <li key={featureIdx} className="flex items-start space-x-2.5">
-                      <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                      <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                       <span className="text-slate-700 dark:text-slate-300 leading-relaxed">
                         {feature}
                       </span>

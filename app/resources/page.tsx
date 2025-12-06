@@ -77,7 +77,7 @@ export default function ResourcesPage() {
           {resources.map((resource, idx) => (
             <Card key={idx} className="h-full hover:shadow-lg transition-shadow">
               <CardHeader>
-                <div className="text-xs font-semibold text-[#b98036] uppercase tracking-wider mb-2">
+                <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
                   {resource.type}
                 </div>
                 <CardTitle className="text-xl">{resource.title}</CardTitle>
@@ -93,7 +93,7 @@ export default function ResourcesPage() {
                 </div>
                 <Link
                   href="#"
-                  className="text-sm font-medium text-[#b98036] hover:underline inline-flex items-center"
+                  className="text-sm font-medium text-primary hover:underline inline-flex items-center"
                 >
                   Read more →
                 </Link>

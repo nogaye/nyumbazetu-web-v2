@@ -154,7 +154,7 @@ export default function ProductPage() {
                   "Go-live support and ongoing optimization",
                 ].map((step, idx) => (
                   <li key={idx} className="flex items-start space-x-3">
-                    <span className="font-bold text-[#b98036]">{idx + 1}.</span>
+                    <span className="font-bold text-primary">{idx + 1}.</span>
                     <span className="text-slate-700">{step}</span>
                   </li>
                 ))}

@@ -351,7 +351,7 @@ function ComparisonCell({ value }: { value: boolean | string }) {
   if (value === true) {
     return (
       <td className="px-4 py-3 text-center">
-        <CheckIcon className="h-5 w-5 text-[#36b9a0] mx-auto" />
+        <CheckIcon className="h-5 w-5 text-tertiary mx-auto" />
       </td>
     );
   }
@@ -382,7 +382,7 @@ export default function ComparePage() {
       {/* Key Differentiators */}
       <Section>
         <div className="grid md:grid-cols-3 gap-6 mb-12">
-          <Card className="border-2 border-[#b98036] bg-[#b98036]/5 dark:bg-[#b98036]/10">
+          <Card className="border-2 border-primary bg-primary/5 dark:bg-primary/10">
             <CardHeader>
               <CardTitle className="text-xl text-slate-900 dark:text-slate-50">
                 Built for Kenya
@@ -435,7 +435,7 @@ export default function ComparePage() {
                     key={competitor.name}
                     className={`px-4 py-4 text-center text-sm font-semibold min-w-[140px] ${
                       competitor.isNyumbaZetu
-                        ? "bg-[#b98036]/10 dark:bg-[#b98036]/20 text-[#b98036] dark:text-[#b98036]"
+                        ? "bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary"
                         : "text-slate-900 dark:text-slate-50"
                     }`}
                   >
@@ -500,19 +500,19 @@ export default function ComparePage() {
               </p>
               <ul className="space-y-2 text-slate-600 dark:text-slate-400">
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                  <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>M-Pesa integration works immediately</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                  <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>Local bank integrations (Equity, KCB, Co-op, etc.)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                  <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>KRA eTIMS compliance built-in</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                  <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>Service charge workflows ready to use</span>
                 </li>
               </ul>
@@ -530,15 +530,15 @@ export default function ComparePage() {
               </p>
               <ul className="space-y-2 text-slate-600 dark:text-slate-400">
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                  <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>Kenyan support team available locally</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                  <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>Training in local context and workflows</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                  <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>Understanding of Kenyan regulations</span>
                 </li>
               </ul>
@@ -556,15 +556,15 @@ export default function ComparePage() {
               </p>
               <ul className="space-y-2 text-slate-600 dark:text-slate-400">
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                  <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>Property workflows are primary, not afterthoughts</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                  <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>Accounting integrated seamlessly</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                  <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>No need to connect multiple systems</span>
                 </li>
               </ul>
@@ -582,15 +582,15 @@ export default function ComparePage() {
               </p>
               <ul className="space-y-2 text-slate-600 dark:text-slate-400">
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                  <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>Native mobile apps for iOS and Android</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                  <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>WhatsApp chatbot for instant support</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="h-5 w-5 text-[#36b9a0] flex-shrink-0 mt-0.5" />
+                  <CheckIcon className="h-5 w-5 text-tertiary flex-shrink-0 mt-0.5" />
                   <span>Modern, intuitive user interface</span>
                 </li>
               </ul>
