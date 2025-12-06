@@ -91,16 +91,32 @@ export default function PartnershipsPage() {
       </Section>
 
       <Section className="bg-slate-50 dark:bg-slate-900">
-        <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">
-            Interested in Partnering with Us?
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 mb-8">
-            We're always looking for strategic partnerships that can help transform property management in Kenya. Get in touch to explore partnership opportunities.
-          </p>
-          <Button size="lg" asChild>
-            <Link href="/contact">Contact Us</Link>
-          </Button>
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">
+              Partner with Us
+            </h2>
+            <p className="text-lg text-slate-600 dark:text-slate-400 mb-8">
+              We're always looking for strategic partnerships that can help transform property management in Kenya. Get in touch to explore partnership opportunities.
+            </p>
+          </div>
+          
+          <Card className="mb-8">
+            <CardContent className="p-6 md:p-8">
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-4">
+                Who We Partner With
+              </h3>
+              <p className="text-lg text-slate-700 dark:text-slate-300 mb-4 leading-relaxed">
+                Nyumba Zetu partners with banks, SACCOS, property management companies, and real estate developers to provide enterprise-grade property management solutions.
+              </p>
+              <p className="text-lg text-slate-700 dark:text-slate-300 mb-6 leading-relaxed">
+                If you&apos;re interested in partnering with us, please get in touch.
+              </p>
+              <Button size="lg" asChild>
+                <Link href="/contact">Contact Us</Link>
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </Section>
     </>
