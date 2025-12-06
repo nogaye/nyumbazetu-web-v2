@@ -1,5 +1,7 @@
 import dynamic from "next/dynamic";
 import { HeroCarousel } from "@/components/home/hero-carousel";
+import { NewsletterSignup } from "@/components/newsletter-signup";
+import { Section } from "@/components/section";
 
 // Lazy load below-the-fold components for better performance
 const MetricsStrip = dynamic(() => import("@/components/home/metrics-strip").then(mod => ({ default: mod.MetricsStrip })), { ssr: true });
@@ -32,6 +34,19 @@ export default function Home() {
       <Integrations />
       <ResourcesTeaser />
       <FinalCTA />
+      
+      {/* Newsletter Signup */}
+      <Section className="bg-slate-50 dark:bg-slate-900">
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">
+            Stay updated with property management insights
+          </h2>
+          <p className="text-lg text-slate-600 dark:text-slate-400 mb-8">
+            Get the latest guides, case studies, and industry news delivered to your inbox.
+          </p>
+          <NewsletterSignup />
+        </div>
+      </Section>
     </>
   );
 }

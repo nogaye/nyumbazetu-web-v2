@@ -1,10 +1,6 @@
 import Link from "next/link";
-import { 
-  EnvelopeIcon,
-  ChatBubbleLeftRightIcon,
-  PhotoIcon,
-  ShareIcon
-} from "@heroicons/react/24/outline";
+import { TwitterIcon, LinkedInIcon, FacebookIcon, InstagramIcon } from "@/components/social-icons";
+import { NewsletterSignup } from "@/components/newsletter-signup";
 
 const footerLinks = {
   product: [
@@ -63,37 +59,37 @@ export function SiteFooter() {
                 href="https://twitter.com/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-[#b98036] transition-colors"
+                className="text-slate-400 hover:text-[#b98036] dark:hover:text-[#b98036] transition-colors duration-200"
                 aria-label="Follow us on Twitter"
               >
-                <ShareIcon className="h-5 w-5" />
+                <TwitterIcon className="h-5 w-5" />
               </a>
               <a
                 href="https://linkedin.com/company/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-[#b98036] transition-colors"
+                className="text-slate-400 hover:text-[#b98036] dark:hover:text-[#b98036] transition-colors duration-200"
                 aria-label="Follow us on LinkedIn"
               >
-                <EnvelopeIcon className="h-5 w-5" />
+                <LinkedInIcon className="h-5 w-5" />
               </a>
               <a
                 href="https://facebook.com/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-[#b98036] transition-colors"
+                className="text-slate-400 hover:text-[#b98036] dark:hover:text-[#b98036] transition-colors duration-200"
                 aria-label="Follow us on Facebook"
               >
-                <ChatBubbleLeftRightIcon className="h-5 w-5" />
+                <FacebookIcon className="h-5 w-5" />
               </a>
               <a
                 href="https://instagram.com/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-[#b98036] transition-colors"
+                className="text-slate-400 hover:text-[#b98036] dark:hover:text-[#b98036] transition-colors duration-200"
                 aria-label="Follow us on Instagram"
               >
-                <PhotoIcon className="h-5 w-5" />
+                <InstagramIcon className="h-5 w-5" />
               </a>
             </div>
           </div>
@@ -160,6 +156,19 @@ export function SiteFooter() {
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+
+        {/* Newsletter Signup Section */}
+        <div className="border-t border-slate-200 dark:border-slate-800 pt-8 mb-8">
+          <div className="text-center max-w-2xl mx-auto">
+            <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-2">
+              Stay updated with property management insights
+            </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
+              Get the latest guides, case studies, and industry news delivered to your inbox.
+            </p>
+            <NewsletterSignup />
           </div>
         </div>
 

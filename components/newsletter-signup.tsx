@@ -112,7 +112,7 @@ export function NewsletterSignup() {
         {status === "success" && (
           <Alert className="bg-[#36b9a0]/10 border-[#36b9a0] text-[#36b9a0] dark:bg-[#36b9a0]/20 dark:border-[#36b9a0] dark:text-[#36b9a0]">
             <CheckCircleIcon className="h-4 w-4" />
-            <AlertDescription>
+            <AlertDescription className="text-[#36b9a0] dark:text-[#36b9a0]">
               Thank you! You've been subscribed to our newsletter.
             </AlertDescription>
           </Alert>
