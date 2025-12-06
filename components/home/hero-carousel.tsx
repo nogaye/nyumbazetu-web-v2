@@ -248,10 +248,10 @@ export function HeroCarousel() {
         size="icon"
         onClick={prevSlide}
         onMouseEnter={() => setIsAutoPlaying(false)}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white/90 dark:bg-slate-900/90 hover:bg-white dark:hover:bg-slate-800 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 shadow-sm hover:shadow-md transition-all duration-200 h-10 w-10"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white dark:bg-slate-900 hover:bg-white dark:hover:bg-slate-800 backdrop-blur-sm border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:text-[#b98036] dark:hover:text-[#b98036] hover:border-[#b98036] dark:hover:border-[#b98036] shadow-lg hover:shadow-xl transition-all duration-200 h-12 w-12 min-h-[48px] min-w-[48px]"
         aria-label="Previous slide"
       >
-        <ChevronLeftIcon className="h-4 w-4" />
+        <ChevronLeftIcon className="h-6 w-6" />
       </Button>
       <Button
         type="button"
@@ -259,10 +259,10 @@ export function HeroCarousel() {
         size="icon"
         onClick={nextSlide}
         onMouseEnter={() => setIsAutoPlaying(false)}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white/90 dark:bg-slate-900/90 hover:bg-white dark:hover:bg-slate-800 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 shadow-sm hover:shadow-md transition-all duration-200 h-10 w-10"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white dark:bg-slate-900 hover:bg-white dark:hover:bg-slate-800 backdrop-blur-sm border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:text-[#b98036] dark:hover:text-[#b98036] hover:border-[#b98036] dark:hover:border-[#b98036] shadow-lg hover:shadow-xl transition-all duration-200 h-12 w-12 min-h-[48px] min-w-[48px]"
         aria-label="Next slide"
       >
-        <ChevronRightIcon className="h-4 w-4" />
+        <ChevronRightIcon className="h-6 w-6" />
       </Button>
 
       {/* Dots Indicator */}
