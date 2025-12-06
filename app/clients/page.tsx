@@ -10,17 +10,61 @@ import { mainClients, allClients, IClient } from "@/lib/clients-data";
 function ClientsPage() {
   const allClientsList = [...mainClients, ...allClients];
 
-  // Group clients by location
-  const clientsByLocation = allClientsList.reduce((acc, client) => {
-    const location = client.location || "Other";
-    if (!acc[location]) {
-      acc[location] = [];
+  // Normalize location for grouping
+  const normalizeLocation = (location: string): string => {
+    if (!location) return "Other";
+    
+    // Syokimau is in Machakos, not Nairobi
+    if (location.toLowerCase().includes("syokimau")) {
+      return "Machakos";
     }
-    acc[location].push(client);
+    
+    // Extract main city from locations like "Kilimani, Nairobi" or "Lavington, Nairobi"
+    if (location.includes(",")) {
+      const parts = location.split(",").map(p => p.trim());
+      const city = parts[parts.length - 1];
+      
+      // If it ends with "Nairobi", group under "Nairobi"
+      if (city.toLowerCase() === "nairobi") {
+        return "Nairobi";
+      }
+      
+      return city;
+    }
+    
+    return location;
+  };
+
+  // Group clients by normalized location
+  const clientsByLocation = allClientsList.reduce((acc, client) => {
+    const normalizedLocation = normalizeLocation(client.location || "Other");
+    if (!acc[normalizedLocation]) {
+      acc[normalizedLocation] = [];
+    }
+    acc[normalizedLocation].push(client);
     return acc;
   }, {} as Record<string, IClient[]>);
 
-  const locations = Object.keys(clientsByLocation).sort();
+  // Sort locations: Nairobi, Mombasa, Kiambu, Machakos, then others alphabetically
+  const locationOrder = ["Nairobi", "Mombasa", "Kiambu", "Machakos"];
+  const locations = Object.keys(clientsByLocation).sort((a, b) => {
+    const indexA = locationOrder.indexOf(a);
+    const indexB = locationOrder.indexOf(b);
+    
+    // If both are in the predefined order, sort by their index
+    if (indexA !== -1 && indexB !== -1) {
+      return indexA - indexB;
+    }
+    
+    // If only A is in the order, it comes first
+    if (indexA !== -1) return -1;
+    
+    // If only B is in the order, it comes first
+    if (indexB !== -1) return 1;
+    
+    // If neither is in the order, sort alphabetically
+    return a.localeCompare(b);
+  });
 
   return (
     <>
@@ -79,7 +123,7 @@ function ClientsPage() {
           {/* All Clients by Location */}
           <div>
             <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-8 text-center">
-              All Our Clients
+              More of Our Clients
             </h2>
             {locations.map((location, locationIndex) => (
               <div key={location} className="mb-12">
