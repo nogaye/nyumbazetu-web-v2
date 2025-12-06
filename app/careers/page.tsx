@@ -14,31 +14,27 @@ export default function CareersPage() {
     <>
       <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 relative">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-10"
+          className="absolute inset-0 bg-cover bg-center opacity-10 dark:opacity-5"
           style={{ backgroundImage: "url(/legacy/images/events/bg33.jpg)" }}
         />
         <div className="relative z-10">
-          <div className="container mx-auto px-4">
-            <div className="flex justify-center">
-              <div className="w-full lg:w-2/3 text-center mt-5 mx-auto">
-                <h4 className="text-primary text-lg font-semibold mb-4">Join Our Team</h4>
-                <h1 className="text-white text-4xl md:text-5xl font-bold mb-6">
-                  Empower Your Career with Opportunities and Innovation
-                </h1>
-                <p className="text-lg mt-5 text-white">
-                  Send your resume to{" "}
-                  <a
-                    className="text-white hover:underline font-medium"
-                    href="mailto:admin@nyumbazetu.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    admin@nyumbazetu.com
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
+          <SectionHeader
+            eyebrow="Join Our Team"
+            title="Empower Your Career with Opportunities and Innovation"
+            description={
+              <>
+                Send your resume to{" "}
+                <a
+                  className="text-primary hover:underline font-medium"
+                  href="mailto:admin@nyumbazetu.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  admin@nyumbazetu.com
+                </a>
+              </>
+            }
+          />
         </div>
       </Section>
 

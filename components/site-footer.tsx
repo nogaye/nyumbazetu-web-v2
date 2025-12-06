@@ -46,7 +46,7 @@ const footerLinks = {
     { label: "Contact", href: "/contact" },
     { label: "Partnerships", href: "/partnerships" },
     { label: "Careers", href: "/careers" },
-    { label: "Press", href: "/press" },
+    { label: "Media & Press", href: "/press" },
     { label: "Events", href: "/events" },
   ],
   legal: [
