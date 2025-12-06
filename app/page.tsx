@@ -7,6 +7,7 @@ import { Section } from "@/components/section";
 const AsSeenOn = dynamic(() => import("@/components/home/as-seen-on").then(mod => ({ default: mod.AsSeenOn })), { ssr: true });
 const MetricsStrip = dynamic(() => import("@/components/home/metrics-strip").then(mod => ({ default: mod.MetricsStrip })), { ssr: true });
 const ProblemContext = dynamic(() => import("@/components/home/problem-context").then(mod => ({ default: mod.ProblemContext })), { ssr: true });
+const ProductVideo = dynamic(() => import("@/components/home/product-video").then(mod => ({ default: mod.ProductVideo })), { ssr: true });
 const FeatureGrid = dynamic(() => import("@/components/home/feature-grid").then(mod => ({ default: mod.FeatureGrid })), { ssr: true });
 const Differentiators = dynamic(() => import("@/components/home/differentiators").then(mod => ({ default: mod.Differentiators })), { ssr: true });
 const Personas = dynamic(() => import("@/components/home/personas").then(mod => ({ default: mod.Personas })), { ssr: true });
@@ -27,6 +28,7 @@ export default function Home() {
       <HeroCarousel />
       <AsSeenOn />
       <MetricsStrip />
+      <ProductVideo />
       <ProblemContext />
       <FeatureGrid />
       <Differentiators />

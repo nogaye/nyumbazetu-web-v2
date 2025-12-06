@@ -324,6 +324,19 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
       </Section>
 
       <Section>
+        {/* Solution-Specific Screenshot Placeholder */}
+        <div className="max-w-5xl mx-auto mb-12">
+          <div className="aspect-video bg-slate-100 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-center">
+            <div className="text-center">
+              <div className="w-32 h-32 mx-auto mb-4 bg-slate-300 dark:bg-slate-700 rounded-lg flex items-center justify-center">
+                <div className="w-24 h-24 bg-slate-400 dark:bg-slate-600 rounded"></div>
+              </div>
+              <p className="text-slate-700 dark:text-slate-300 font-medium mb-1">Solution-Specific Dashboard Screenshot</p>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">Platform view tailored for {segment.title}</p>
+            </div>
+          </div>
+        </div>
+        
         <div className="grid md:grid-cols-2 gap-12 mb-12">
           <Card className="border-red-200 dark:border-red-900/50 bg-red-50/50 dark:bg-red-900/10">
             <CardHeader>

@@ -19,6 +19,16 @@ export default function AboutPage() {
 
       <Section>
         <div className="max-w-4xl mx-auto space-y-8">
+          {/* Team/Office Photo Placeholder */}
+          <div className="aspect-video bg-slate-200 dark:bg-slate-800 rounded-xl border border-slate-300 dark:border-slate-700 flex items-center justify-center mb-8">
+            <div className="text-center">
+              <div className="w-24 h-24 mx-auto mb-4 bg-slate-300 dark:bg-slate-700 rounded-lg flex items-center justify-center">
+                <div className="w-16 h-16 bg-slate-400 dark:bg-slate-600 rounded"></div>
+              </div>
+              <p className="text-slate-600 dark:text-slate-400 font-medium mb-1">Team Photo / Office Image</p>
+              <p className="text-slate-500 dark:text-slate-500 text-sm">Nyumba Zetu team or Nairobi office</p>
+            </div>
+          </div>
           <div className="prose prose-lg max-w-none">
             <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4 tracking-tight">
               Our Mission

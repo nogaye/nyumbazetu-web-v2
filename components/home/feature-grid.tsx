@@ -149,7 +149,13 @@ export function FeatureGrid() {
           >
             <Card className="h-full hover:shadow-md transition-all duration-200 hover:-translate-y-1">
               <CardHeader className="pb-4">
-                <feature.icon className="h-8 w-8 text-primary mb-4" />
+                {/* Feature Screenshot Placeholder */}
+                <div className="mb-4 aspect-video bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center">
+                  <div className="text-center">
+                    <feature.icon className="h-8 w-8 text-primary mx-auto mb-2" />
+                    <p className="text-slate-500 dark:text-slate-400 text-xs">Feature Screenshot</p>
+                  </div>
+                </div>
                 <CardTitle className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-2">
                   {feature.title}
                 </CardTitle>
