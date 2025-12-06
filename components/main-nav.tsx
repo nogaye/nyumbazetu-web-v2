@@ -143,7 +143,7 @@ export function MainNav() {
             <Button variant="ghost" asChild>
               <Link href="/login">Login</Link>
             </Button>
-            <Button size="lg" asChild>
+            <Button asChild>
               <Link href="/contact" className="flex items-center gap-2">
                 Request a Demo
                 <CalendarDaysIcon className="h-4 w-4" />
