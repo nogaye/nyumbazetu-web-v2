@@ -32,15 +32,15 @@ export function LegacyRequestDemo({ dark = true }: LegacyRequestDemoProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col lg:flex-row items-center justify-between gap-8"
+          className="flex flex-col items-center text-center max-w-4xl mx-auto gap-6"
         >
-          <div className="w-full lg:w-2/3">
+          <div className="w-full">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4">
               <SparklesIcon className="h-4 w-4" />
               <span>The Future of Property Management</span>
             </div>
             <h3
-              className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-4 leading-tight ${
+              className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-6 leading-tight ${
                 dark ? "text-white" : "text-slate-900 dark:text-slate-50"
               }`}
             >
@@ -52,9 +52,9 @@ export function LegacyRequestDemo({ dark = true }: LegacyRequestDemoProps) {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="w-full lg:w-auto flex-shrink-0"
+            className="w-full sm:w-auto"
           >
-            <Button size="lg" className="w-full lg:w-auto text-lg px-8 group" asChild>
+            <Button size="lg" className="w-full sm:w-auto text-lg px-8 group" asChild>
               <a href="/contact">
                 Request a Demo
                 <ArrowRightIcon className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
