@@ -140,11 +140,44 @@ body {
 /* Twinkling stars animation */
 @keyframes twinkle {
   0%, 100% {
-    opacity: 0.1;
+    opacity: 0.15;
     transform: scale(1);
   }
   50% {
-    opacity: 0.25;
+    opacity: 0.35;
     transform: scale(1.2);
+  }
+}
+
+/* Gradient shift animation */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 20s ease infinite;
+}
+
+/* Floating particles animation */
+@keyframes float-up {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(20px);
+    opacity: 0;
   }
 }

@@ -88,6 +88,9 @@ export function SiteFooter() {
 
   return (
     <footer className="relative border-t border-slate-800 bg-slate-950 overflow-hidden">
+      {/* Animated Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 opacity-50 animate-gradient-shift pointer-events-none" />
+      
       {/* Twinkling Stars Background */}
       {mounted && (
         <div className="absolute inset-0 pointer-events-none">
@@ -100,7 +103,25 @@ export function SiteFooter() {
                 left: `${star.left}%`,
                 animation: `twinkle ${star.duration}s ease-in-out infinite`,
                 animationDelay: `${star.delay}s`,
-                opacity: 0.15,
+                opacity: 0.2,
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Floating Particles */}
+      {mounted && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div
+              key={`particle-${i}`}
+              className="absolute w-1 h-1 bg-primary/20 rounded-full blur-sm"
+              style={{
+                left: `${10 + i * 12}%`,
+                bottom: '-10px',
+                animation: `float-up ${15 + i * 2}s linear infinite`,
+                animationDelay: `${i * 2}s`,
               }}
             />
           ))}
@@ -129,7 +150,7 @@ export function SiteFooter() {
                 href="https://twitter.com/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-300 hover:text-primary transition-colors duration-200"
+                className="text-slate-300 hover:text-primary transition-all duration-200 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
                 aria-label="Follow us on Twitter"
               >
                 <TwitterIcon className="h-5 w-5" />
@@ -138,7 +159,7 @@ export function SiteFooter() {
                 href="https://linkedin.com/company/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-300 hover:text-primary transition-colors duration-200"
+                className="text-slate-300 hover:text-primary transition-all duration-200 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
                 aria-label="Follow us on LinkedIn"
               >
                 <LinkedInIcon className="h-5 w-5" />
@@ -147,7 +168,7 @@ export function SiteFooter() {
                 href="https://facebook.com/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-300 hover:text-primary transition-colors duration-200"
+                className="text-slate-300 hover:text-primary transition-all duration-200 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
                 aria-label="Follow us on Facebook"
               >
                 <FacebookIcon className="h-5 w-5" />
@@ -156,7 +177,7 @@ export function SiteFooter() {
                 href="https://instagram.com/nyumbazetu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-300 hover:text-primary transition-colors duration-200"
+                className="text-slate-300 hover:text-primary transition-all duration-200 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
                 aria-label="Follow us on Instagram"
               >
                 <InstagramIcon className="h-5 w-5" />
@@ -174,9 +195,10 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-200 hover:text-primary transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-primary transition-all duration-200 relative group"
                   >
-                    {link.label}
+                    <span className="relative z-10">{link.label}</span>
+                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
                   </Link>
                 </li>
               ))}
@@ -193,9 +215,10 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-200 hover:text-primary transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-primary transition-all duration-200 relative group"
                   >
-                    {link.label}
+                    <span className="relative z-10">{link.label}</span>
+                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
                   </Link>
                 </li>
               ))}
@@ -212,9 +235,10 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-200 hover:text-primary transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-primary transition-all duration-200 relative group"
                   >
-                    {link.label}
+                    <span className="relative z-10">{link.label}</span>
+                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
                   </Link>
                 </li>
               ))}
@@ -231,9 +255,10 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-200 hover:text-primary transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-primary transition-all duration-200 relative group"
                   >
-                    {link.label}
+                    <span className="relative z-10">{link.label}</span>
+                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
                   </Link>
                 </li>
               ))}
@@ -250,9 +275,10 @@ export function SiteFooter() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-200 hover:text-primary transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-primary transition-all duration-200 relative group"
                   >
-                    {link.label}
+                    <span className="relative z-10">{link.label}</span>
+                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
                   </Link>
                 </li>
               ))}
@@ -269,9 +295,10 @@ export function SiteFooter() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-200 hover:text-primary transition-colors duration-200"
+                    className="text-sm text-slate-200 hover:text-primary transition-all duration-200 relative group"
                   >
-                    {link.label}
+                    <span className="relative z-10">{link.label}</span>
+                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
                   </Link>
                 </li>
               ))}
@@ -289,9 +316,10 @@ export function SiteFooter() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm text-slate-400 hover:text-primary transition-colors duration-200"
+                className="text-sm text-slate-400 hover:text-primary transition-all duration-200 relative group"
               >
-                {link.label}
+                <span className="relative z-10">{link.label}</span>
+                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
               </Link>
             ))}
           </div>
