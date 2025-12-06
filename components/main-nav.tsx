@@ -14,6 +14,8 @@ const navItems = [
     href: "/product",
     children: [
       { label: "Overview", href: "/product" },
+      { label: "Features", href: "/features" },
+      { label: "Integrations", href: "/product#integrations" },
     ],
   },
   {
@@ -46,13 +48,7 @@ const navItems = [
       { label: "Webhooks & API Events", href: "/features/webhooks", description: "Real-time event notifications and system integrations" },
     ],
   },
-        { label: "Pricing", href: "/pricing" },
-        { label: "Compare", href: "/compare" },
-        { label: "Resources", href: "/resources" },
-        { label: "Blogs", href: "/blogs" },
-        { label: "Partnerships", href: "/partnerships" },
-        { label: "About", href: "/about" },
-        { label: "Contact", href: "/contact" },
+  { label: "Pricing", href: "/pricing" },
 ];
 
 export function MainNav() {
