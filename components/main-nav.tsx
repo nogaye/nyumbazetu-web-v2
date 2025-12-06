@@ -22,7 +22,9 @@ import {
   UsersIcon,
   BuildingOffice2Icon,
   BanknotesIcon,
-  GlobeAltIcon
+  GlobeAltIcon,
+  Squares2X2Icon,
+  PuzzlePieceIcon
 } from "@heroicons/react/24/outline";
 import { Sheet, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -33,9 +35,9 @@ const navItems = [
     label: "Product",
     href: "/product",
     children: [
-      { label: "Overview", href: "/product" },
-      { label: "Features", href: "/features" },
-      { label: "Integrations", href: "/product#integrations" },
+      { label: "Overview", href: "/product", icon: Squares2X2Icon },
+      { label: "Features", href: "/features", icon: BoltIcon },
+      { label: "Integrations", href: "/product#integrations", icon: PuzzlePieceIcon },
     ],
   },
   {
