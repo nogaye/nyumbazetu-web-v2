@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/resources',
     '/about',
     '/contact',
+    '/compare',
     '/solutions/landlords',
     '/solutions/managers',
     '/solutions/committees',

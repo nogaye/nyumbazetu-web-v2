@@ -20,11 +20,12 @@ const footerLinks = {
     { label: "Case Studies", href: "/resources" },
     { label: "Webinars", href: "/resources" },
   ],
-  company: [
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
-    { label: "Pricing", href: "/pricing" },
-  ],
+        company: [
+          { label: "About", href: "/about" },
+          { label: "Contact", href: "/contact" },
+          { label: "Pricing", href: "/pricing" },
+          { label: "Compare", href: "/compare" },
+        ],
   legal: [
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },

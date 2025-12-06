@@ -42,9 +42,10 @@ const navItems = [
       { label: "Communication Hub", href: "/features/communications", description: "Email, SMS, and in-app messaging" },
     ],
   },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Resources", href: "/resources" },
-  { label: "About", href: "/about" },
+        { label: "Pricing", href: "/pricing" },
+        { label: "Compare", href: "/compare" },
+        { label: "Resources", href: "/resources" },
+        { label: "About", href: "/about" },
 ];
 
 export function MainNav() {
