@@ -42,6 +42,7 @@ const footerLinks = {
     { label: "Contact", href: "/contact" },
     { label: "Pricing", href: "/pricing" },
     { label: "Compare", href: "/compare" },
+    { label: "Partnerships", href: "/partnerships" },
     { label: "Careers", href: "/careers" },
     { label: "Press", href: "/press" },
     { label: "Partner", href: "/partner" },

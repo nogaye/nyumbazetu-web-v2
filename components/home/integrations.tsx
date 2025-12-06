@@ -8,6 +8,7 @@ const integrations = [
   "QuickBooks",
   "M-Pesa",
   "NCBA Bank",
+  "Boma Yangu",
   "KRA eTIMS",
   "Email/SMS",
 ];
@@ -19,7 +20,7 @@ export function Integrations() {
         title="Plug into the tools that already run your business."
         description="Nyumba Zetu becomes the operational and financial source of truth, while your bank, M-Pesa channels, and accounting tools stay connected."
       />
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-6 lg:gap-8 items-center">
+      <div className="grid grid-cols-2 md:grid-cols-6 gap-6 lg:gap-8 items-center">
         {integrations.map((integration, idx) => (
           <motion.div
             key={idx}

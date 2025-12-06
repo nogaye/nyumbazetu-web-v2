@@ -50,6 +50,7 @@ const navItems = [
         { label: "Compare", href: "/compare" },
         { label: "Resources", href: "/resources" },
         { label: "Blogs", href: "/blogs" },
+        { label: "Partnerships", href: "/partnerships" },
         { label: "About", href: "/about" },
         { label: "Contact", href: "/contact" },
 ];

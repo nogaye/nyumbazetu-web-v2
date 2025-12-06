@@ -42,6 +42,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/features/white-labeling',
     '/features/calendar-scheduling',
     '/features/webhooks',
+    '/partnerships',
+    '/partnerships/ncba',
+    '/partnerships/boma-yangu',
+    '/partnerships/hfc',
+    '/partnerships/aiesec',
   ]
 
   return routes.map((route) => ({

@@ -122,9 +122,9 @@ const features: Record<string, {
   tps: {
     title: "TPS & Rent-to-Own Management",
     description: "Tenant Purchase Scheme and rent-to-own tracking with installment management and ownership transfer workflows.",
-    what: "Nyumba Zetu supports Tenant Purchase Schemes (TPS) and rent-to-own arrangements common in Kenyan real estate. Track installment payments, calculate ownership percentages, manage transfer processes, and maintain complete records of the ownership journey.",
-    how: "Set up TPS or rent-to-own agreements with initial purchase price, installment amounts, and payment schedules. The system tracks each payment, calculates the tenant's ownership percentage, and manages the transfer process when the final payment is made. All transactions are recorded in the accounting system, and tenants can view their progress through the tenant portal.",
-    why: "TPS and rent-to-own are popular in Kenya, but managing them manually is complex and error-prone. Nyumba Zetu automates the tracking, calculations, and documentation needed for these arrangements.",
+    what: "Nyumba Zetu supports Tenant Purchase Schemes (TPS) and rent-to-own arrangements common in Kenyan real estate. Track installment payments, calculate ownership percentages, manage transfer processes, and maintain complete records of the ownership journey. Our TPS platform integrates with Boma Yangu for affordable housing programs and collaborates with HFC (Housing Finance) to deliver comprehensive property finance solutions.",
+    how: "Set up TPS or rent-to-own agreements with initial purchase price, installment amounts, and payment schedules. The system tracks each payment, calculates the tenant's ownership percentage, and manages the transfer process when the final payment is made. All transactions are recorded in the accounting system, and tenants can view their progress through the tenant portal. Integration with Boma Yangu enables seamless management of affordable housing projects, while collaboration with HFC provides integrated property finance and management solutions.",
+    why: "TPS and rent-to-own are popular in Kenya, but managing them manually is complex and error-prone. Nyumba Zetu automates the tracking, calculations, and documentation needed for these arrangements. Our partnerships with Boma Yangu and HFC ensure that TPS solutions are comprehensive, compliant, and integrated with Kenya's affordable housing and property finance ecosystem.",
     faqs: [
       {
         q: "How does ownership percentage calculation work?",
@@ -133,6 +133,14 @@ const features: Record<string, {
       {
         q: "Can tenants see their TPS progress?",
         a: "Yes, tenants can view their TPS progress, remaining balance, and ownership percentage through the tenant portal.",
+      },
+      {
+        q: "Does Nyumba Zetu integrate with Boma Yangu?",
+        a: "Yes, Boma Yangu is integrated with Nyumba Zetu as part of our TPS platform, providing comprehensive property management solutions for affordable housing projects.",
+      },
+      {
+        q: "How does the HFC partnership work?",
+        a: "We collaborate with HFC (Housing Finance) on TPS implementations, combining their property finance expertise with our property management technology to deliver integrated solutions.",
       },
     ],
   },

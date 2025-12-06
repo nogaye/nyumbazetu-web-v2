@@ -14,6 +14,7 @@ const Personas = dynamic(() => import("@/components/home/personas").then(mod => 
 const HowItWorks = dynamic(() => import("@/components/home/how-it-works").then(mod => ({ default: mod.HowItWorks })), { ssr: true });
 const Testimonials = dynamic(() => import("@/components/home/testimonials").then(mod => ({ default: mod.Testimonials })), { ssr: true });
 const Integrations = dynamic(() => import("@/components/home/integrations").then(mod => ({ default: mod.Integrations })), { ssr: true });
+const Partnerships = dynamic(() => import("@/components/home/partnerships").then(mod => ({ default: mod.Partnerships })), { ssr: true });
 const ResourcesTeaser = dynamic(() => import("@/components/home/resources-teaser").then(mod => ({ default: mod.ResourcesTeaser })), { ssr: true });
 const FinalCTA = dynamic(() => import("@/components/home/final-cta").then(mod => ({ default: mod.FinalCTA })), { ssr: true });
 
@@ -36,6 +37,7 @@ export default function Home() {
       <HowItWorks />
       <Testimonials />
       <Integrations />
+      <Partnerships />
       <ResourcesTeaser />
       <FinalCTA />
       
