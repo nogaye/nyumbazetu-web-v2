@@ -2,7 +2,7 @@
 
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,8 +16,20 @@ import {
 } from "@/components/ui/select";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
-import { CheckCircleIcon, ExclamationCircleIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { 
+  CheckCircleIcon, 
+  ExclamationCircleIcon, 
+  PaperAirplaneIcon,
+  UserIcon,
+  BuildingOfficeIcon,
+  BriefcaseIcon,
+  PhoneIcon,
+  EnvelopeIcon,
+  ChatBubbleLeftRightIcon,
+  InformationCircleIcon
+} from "@heroicons/react/24/outline";
 import { trackFormSubmit } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -137,52 +149,104 @@ export default function ContactPage() {
       </Section>
 
       <Section>
-        <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-6">Get in Touch</h2>
-            <p className="text-lg text-slate-700 dark:text-slate-300 mb-8">
-              Fill out the form and our team will get back to you within 24 hours. We'll schedule
-              a demo tailored to your portfolio and answer any questions you have.
-            </p>
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Find us at the office</h3>
-                <p className="text-slate-600 dark:text-slate-400">
-                  Zetu Innovations<br />
-                  90 JGO, James Gichuru Road,<br />
-                  Nairobi, Kenya
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Give us a ring</h3>
-                <p className="text-slate-600 dark:text-slate-400">
-                  <a href="tel:+254741382063" className="text-primary hover:underline">+254 741 382063</a>
-                  <br />
-                  <a href="tel:+16143904422" className="text-primary hover:underline">+1 614 390 4422</a>
-                  <br />
-                  Mon - Fri, 8:00 - 20:00
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Email us</h3>
-                <a href="mailto:admin@nyumbazetu.com" className="text-primary hover:underline">
-                  admin@nyumbazetu.com
-                </a>
-              </div>
-              <div>
-                <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Response Time</h3>
-                <p className="text-slate-600 dark:text-slate-400">We typically respond within 24 hours during business days.</p>
-              </div>
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">Get in Touch</h2>
+              <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+                Fill out the form and our team will get back to you within 24 hours. We'll schedule
+                a demo tailored to your portfolio and answer any questions you have.
+              </p>
+            </div>
+            
+            <div className="space-y-6">
+              <Card className="border-slate-200 dark:border-slate-800">
+                <CardContent className="pt-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20">
+                      <BuildingOfficeIcon className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Find us at the office</h3>
+                      <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Zetu Innovations<br />
+                        90 JGO, James Gichuru Road,<br />
+                        Nairobi, Kenya
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="border-slate-200 dark:border-slate-800">
+                <CardContent className="pt-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20">
+                      <PhoneIcon className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Give us a ring</h3>
+                      <p className="text-slate-600 dark:text-slate-400 space-y-1">
+                        <a href="tel:+254741382063" className="block text-primary hover:underline transition-colors">
+                          +254 741 382063
+                        </a>
+                        <a href="tel:+16143904422" className="block text-primary hover:underline transition-colors">
+                          +1 614 390 4422
+                        </a>
+                        <span className="block text-sm mt-2">Mon - Fri, 8:00 - 17:00</span>
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="border-slate-200 dark:border-slate-800">
+                <CardContent className="pt-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20">
+                      <EnvelopeIcon className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Email us</h3>
+                      <a 
+                        href="mailto:admin@nyumbazetu.com" 
+                        className="text-primary hover:underline transition-colors block"
+                      >
+                        admin@nyumbazetu.com
+                      </a>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+                <CardContent className="pt-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20">
+                      <InformationCircleIcon className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Response Time</h3>
+                      <p className="text-slate-600 dark:text-slate-400">
+                        We typically respond within 24 hours during business days.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Request a Demo</CardTitle>
+          <Card className="shadow-lg">
+            <CardHeader className="space-y-2 pb-4">
+              <CardTitle className="text-2xl font-bold">Request a Demo</CardTitle>
+              <CardDescription>
+                Fill out the form below and we'll get back to you within 24 hours.
+              </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-6">
               {submitStatus === "success" && (
-                <Alert className="mb-6 border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20">
+                <Alert className="border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20">
                   <CheckCircleIcon className="h-5 w-5 text-green-600 dark:text-green-400" />
                   <AlertTitle className="text-green-800 dark:text-green-200">
                     Thank you for your message!
@@ -194,7 +258,7 @@ export default function ContactPage() {
               )}
               
               {submitStatus === "error" && (
-                <Alert variant="destructive" className="mb-6">
+                <Alert variant="destructive">
                   <ExclamationCircleIcon className="h-5 w-5" />
                   <AlertTitle>Something went wrong</AlertTitle>
                   <AlertDescription>
@@ -208,138 +272,238 @@ export default function ContactPage() {
                 onSubmit={handleSubmit}
                 noValidate
               >
-                <div className="space-y-2">
-                  <Label htmlFor="name">
-                    Name *
-                  </Label>
-                  <Input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    aria-invalid={errors.name ? "true" : "false"}
-                    aria-describedby={errors.name ? "name-error" : undefined}
-                    className={errors.name ? "border-red-500 dark:border-red-500" : ""}
-                  />
-                  {errors.name && (
-                    <p id="name-error" className="text-sm text-red-600 dark:text-red-400" role="alert">
-                      {errors.name}
-                    </p>
-                  )}
+                {/* Personal Information Section */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-slate-700">
+                    <UserIcon className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+                    <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
+                      Personal Information
+                    </h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2 md:col-span-2">
+                      <Label htmlFor="name" className="flex items-center gap-2">
+                        <UserIcon className="h-4 w-4 text-slate-500" />
+                        Full Name *
+                      </Label>
+                      <Input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        placeholder="John Doe"
+                        aria-invalid={errors.name ? "true" : "false"}
+                        aria-describedby={errors.name ? "name-error" : undefined}
+                        className={cn(
+                          errors.name && "border-red-500 dark:border-red-500 focus-visible:ring-red-500"
+                        )}
+                      />
+                      {errors.name && (
+                        <p id="name-error" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1" role="alert">
+                          <ExclamationCircleIcon className="h-4 w-4" />
+                          {errors.name}
+                        </p>
+                      )}
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="flex items-center gap-2">
+                        <EnvelopeIcon className="h-4 w-4 text-slate-500" />
+                        Email Address *
+                      </Label>
+                      <Input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        placeholder="john@example.com"
+                        aria-invalid={errors.email ? "true" : "false"}
+                        aria-describedby={errors.email ? "email-error" : undefined}
+                        className={cn(
+                          errors.email && "border-red-500 dark:border-red-500 focus-visible:ring-red-500"
+                        )}
+                      />
+                      {errors.email && (
+                        <p id="email-error" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1" role="alert">
+                          <ExclamationCircleIcon className="h-4 w-4" />
+                          {errors.email}
+                        </p>
+                      )}
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="phone" className="flex items-center gap-2">
+                        <PhoneIcon className="h-4 w-4 text-slate-500" />
+                        Phone Number *
+                      </Label>
+                      <Input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        placeholder="+254 700 000 000"
+                        aria-invalid={errors.phone ? "true" : "false"}
+                        aria-describedby={errors.phone ? "phone-error" : undefined}
+                        className={cn(
+                          errors.phone && "border-red-500 dark:border-red-500 focus-visible:ring-red-500"
+                        )}
+                      />
+                      {errors.phone && (
+                        <p id="phone-error" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1" role="alert">
+                          <ExclamationCircleIcon className="h-4 w-4" />
+                          {errors.phone}
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="company">Company</Label>
-                  <Input
-                    type="text"
-                    id="company"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                  />
+
+                {/* Company Information Section */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-slate-700">
+                    <BuildingOfficeIcon className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+                    <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
+                      Company Information
+                    </h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2 md:col-span-2">
+                      <Label htmlFor="company" className="flex items-center gap-2">
+                        <BuildingOfficeIcon className="h-4 w-4 text-slate-500" />
+                        Company Name
+                      </Label>
+                      <Input
+                        type="text"
+                        id="company"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleChange}
+                        placeholder="Your Company Ltd"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="role" className="flex items-center gap-2">
+                        <BriefcaseIcon className="h-4 w-4 text-slate-500" />
+                        Your Role
+                      </Label>
+                      <Input
+                        type="text"
+                        id="role"
+                        name="role"
+                        value={formData.role}
+                        onChange={handleChange}
+                        placeholder="Property Manager"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="portfolio" className="flex items-center gap-2">
+                        <InformationCircleIcon className="h-4 w-4 text-slate-500" />
+                        Portfolio Size
+                      </Label>
+                      <Select
+                        value={formData.portfolio}
+                        onValueChange={(value) => handleSelectChange("portfolio", value)}
+                      >
+                        <SelectTrigger id="portfolio">
+                          <SelectValue placeholder="Select portfolio size..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1-10">1-10 units</SelectItem>
+                          <SelectItem value="11-50">11-50 units</SelectItem>
+                          <SelectItem value="51-100">51-100 units</SelectItem>
+                          <SelectItem value="100+">100+ units</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="role">Role</Label>
-                  <Input
-                    type="text"
-                    id="role"
-                    name="role"
-                    value={formData.role}
-                    onChange={handleChange}
-                  />
+
+                {/* Additional Information Section */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-slate-700">
+                    <ChatBubbleLeftRightIcon className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+                    <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
+                      Additional Information
+                    </h3>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="message" className="flex items-center gap-2">
+                        <ChatBubbleLeftRightIcon className="h-4 w-4 text-slate-500" />
+                        Message
+                      </Label>
+                      <Textarea
+                        id="message"
+                        name="message"
+                        rows={5}
+                        value={formData.message}
+                        onChange={handleChange}
+                        placeholder="Tell us about your property management needs..."
+                        className="resize-none"
+                      />
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        Optional: Share any specific questions or requirements
+                      </p>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="source" className="flex items-center gap-2">
+                        <InformationCircleIcon className="h-4 w-4 text-slate-500" />
+                        How did you hear about us?
+                      </Label>
+                      <Select
+                        value={formData.source}
+                        onValueChange={(value) => handleSelectChange("source", value)}
+                      >
+                        <SelectTrigger id="source">
+                          <SelectValue placeholder="Select an option..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="search">Search Engine</SelectItem>
+                          <SelectItem value="referral">Referral</SelectItem>
+                          <SelectItem value="social">Social Media</SelectItem>
+                          <SelectItem value="event">Event/Conference</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="portfolio">Portfolio Size</Label>
-                  <Select
-                    value={formData.portfolio}
-                    onValueChange={(value) => handleSelectChange("portfolio", value)}
+
+                <div className="pt-4">
+                  <Button 
+                    type="submit" 
+                    size="lg" 
+                    className="w-full flex items-center justify-center gap-2 h-12 text-base font-semibold" 
+                    disabled={isSubmitting}
                   >
-                    <SelectTrigger id="portfolio">
-                      <SelectValue placeholder="Select..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1-10">1-10 units</SelectItem>
-                      <SelectItem value="11-50">11-50 units</SelectItem>
-                      <SelectItem value="51-100">51-100 units</SelectItem>
-                      <SelectItem value="100+">100+ units</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    {isSubmitting ? (
+                      <>
+                        <span className="animate-spin">⏳</span>
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        Send Message
+                        <PaperAirplaneIcon className="h-5 w-5" />
+                      </>
+                    )}
+                  </Button>
+                  <p className="text-xs text-center text-slate-500 dark:text-slate-400 mt-3">
+                    * Required fields
+                  </p>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone">
-                    Phone *
-                  </Label>
-                  <Input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    aria-invalid={errors.phone ? "true" : "false"}
-                    aria-describedby={errors.phone ? "phone-error" : undefined}
-                    className={errors.phone ? "border-red-500 dark:border-red-500" : ""}
-                  />
-                  {errors.phone && (
-                    <p id="phone-error" className="text-sm text-red-600 dark:text-red-400" role="alert">
-                      {errors.phone}
-                    </p>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">
-                    Email *
-                  </Label>
-                  <Input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    aria-invalid={errors.email ? "true" : "false"}
-                    aria-describedby={errors.email ? "email-error" : undefined}
-                    className={errors.email ? "border-red-500 dark:border-red-500" : ""}
-                  />
-                  {errors.email && (
-                    <p id="email-error" className="text-sm text-red-600 dark:text-red-400" role="alert">
-                      {errors.email}
-                    </p>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message</Label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    rows={4}
-                    value={formData.message}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="source">How did you hear about us?</Label>
-                  <Select
-                    value={formData.source}
-                    onValueChange={(value) => handleSelectChange("source", value)}
-                  >
-                    <SelectTrigger id="source">
-                      <SelectValue placeholder="Select..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="search">Search Engine</SelectItem>
-                      <SelectItem value="referral">Referral</SelectItem>
-                      <SelectItem value="social">Social Media</SelectItem>
-                      <SelectItem value="event">Event/Conference</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <Button type="submit" size="lg" className="w-full flex items-center justify-center gap-2" disabled={isSubmitting}>
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                  {!isSubmitting && <PaperAirplaneIcon className="h-4 w-4" />}
-                </Button>
               </form>
             </CardContent>
           </Card>
