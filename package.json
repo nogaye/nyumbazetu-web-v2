@@ -6,10 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "test:api": "node scripts/test-property-inquiry.js",
-    "check:env": "node scripts/check-env.js",
-    "type-check": "tsc --noEmit"
+    "lint": "eslint"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
