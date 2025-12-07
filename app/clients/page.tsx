@@ -245,10 +245,10 @@ function ClientsPage() {
           {/* All Clients by Location */}
           <div>
             <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-8 text-center">
-              More estates ...
+              By Location
             </h2>
             <p className="text-center text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
-              Leading property estates and residential complexes using Nyumba Zetu
+              Leading property estates and residential complexes using Nyumba Zetu by location
             </p>
             {locations.map((location, locationIndex) => (
               <div key={location} className="mb-12">
