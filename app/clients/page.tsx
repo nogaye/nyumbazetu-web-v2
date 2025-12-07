@@ -141,7 +141,7 @@ function ClientsPage() {
                     size="icon"
                     onClick={prevPmSlide}
                     disabled={pmCurrentIndex === 0}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
                     aria-label="Previous slide"
                   >
                     <ChevronLeftIcon className="h-4 w-4" />
@@ -151,7 +151,7 @@ function ClientsPage() {
                     size="icon"
                     onClick={nextPmSlide}
                     disabled={pmCurrentIndex >= maxPmIndex}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
                     aria-label="Next slide"
                   >
                     <ChevronRightIcon className="h-4 w-4" />
