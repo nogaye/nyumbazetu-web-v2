@@ -20,12 +20,9 @@ import {
   CheckCircleIcon, 
   ExclamationCircleIcon, 
   PaperAirplaneIcon,
-  UserIcon,
   BuildingOfficeIcon,
-  BriefcaseIcon,
   PhoneIcon,
   EnvelopeIcon,
-  ChatBubbleLeftRightIcon,
   InformationCircleIcon
 } from "@heroicons/react/24/outline";
 import { trackFormSubmit } from "@/lib/analytics";
@@ -274,8 +271,7 @@ export default function ContactPage() {
               >
                 {/* Personal Information Section */}
                 <div className="space-y-4">
-                  <div className="flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-slate-700">
-                    <UserIcon className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+                  <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
                     <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
                       Personal Information
                     </h3>
@@ -283,8 +279,7 @@ export default function ContactPage() {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2 md:col-span-2">
-                      <Label htmlFor="name" className="flex items-center gap-2">
-                        <UserIcon className="h-4 w-4 text-slate-500" />
+                      <Label htmlFor="name">
                         Full Name *
                       </Label>
                       <Input
@@ -310,8 +305,7 @@ export default function ContactPage() {
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="email" className="flex items-center gap-2">
-                        <EnvelopeIcon className="h-4 w-4 text-slate-500" />
+                      <Label htmlFor="email">
                         Email Address *
                       </Label>
                       <Input
@@ -337,8 +331,7 @@ export default function ContactPage() {
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="phone" className="flex items-center gap-2">
-                        <PhoneIcon className="h-4 w-4 text-slate-500" />
+                      <Label htmlFor="phone">
                         Phone Number *
                       </Label>
                       <Input
@@ -367,8 +360,7 @@ export default function ContactPage() {
 
                 {/* Company Information Section */}
                 <div className="space-y-4">
-                  <div className="flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-slate-700">
-                    <BuildingOfficeIcon className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+                  <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
                     <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
                       Company Information
                     </h3>
@@ -376,8 +368,7 @@ export default function ContactPage() {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2 md:col-span-2">
-                      <Label htmlFor="company" className="flex items-center gap-2">
-                        <BuildingOfficeIcon className="h-4 w-4 text-slate-500" />
+                      <Label htmlFor="company">
                         Company Name
                       </Label>
                       <Input
@@ -391,8 +382,7 @@ export default function ContactPage() {
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="role" className="flex items-center gap-2">
-                        <BriefcaseIcon className="h-4 w-4 text-slate-500" />
+                      <Label htmlFor="role">
                         Your Role
                       </Label>
                       <Input
@@ -406,8 +396,7 @@ export default function ContactPage() {
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="portfolio" className="flex items-center gap-2">
-                        <InformationCircleIcon className="h-4 w-4 text-slate-500" />
+                      <Label htmlFor="portfolio">
                         Portfolio Size
                       </Label>
                       <Select
@@ -430,8 +419,7 @@ export default function ContactPage() {
 
                 {/* Additional Information Section */}
                 <div className="space-y-4">
-                  <div className="flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-slate-700">
-                    <ChatBubbleLeftRightIcon className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+                  <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
                     <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
                       Additional Information
                     </h3>
@@ -439,8 +427,7 @@ export default function ContactPage() {
                   
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="message" className="flex items-center gap-2">
-                        <ChatBubbleLeftRightIcon className="h-4 w-4 text-slate-500" />
+                      <Label htmlFor="message">
                         Message
                       </Label>
                       <Textarea
@@ -458,8 +445,7 @@ export default function ContactPage() {
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="source" className="flex items-center gap-2">
-                        <InformationCircleIcon className="h-4 w-4 text-slate-500" />
+                      <Label htmlFor="source">
                         How did you hear about us?
                       </Label>
                       <Select
@@ -489,10 +475,7 @@ export default function ContactPage() {
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
-                      <>
-                        <span className="animate-spin">⏳</span>
-                        Sending...
-                      </>
+                      "Sending..."
                     ) : (
                       <>
                         Send Message
