@@ -24,8 +24,10 @@ import { Property, PropertyType } from "@/lib/listings/types";
 import {
   ExclamationCircleIcon,
   CheckCircleIcon,
+  PaperAirplaneIcon,
 } from "@heroicons/react/24/outline";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { cn } from "@/lib/utils";
 
 interface PropertyFormModalProps {
   isOpen: boolean;
@@ -189,301 +191,382 @@ export function PropertyFormModal({
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent className="overflow-y-auto w-full sm:max-w-2xl">
         <SheetClose onClick={onClose} />
-        <SheetHeader>
-          <SheetTitle>
-            {property ? "Edit Property" : "Add New Property"}
-          </SheetTitle>
-          <SheetDescription>
-            {property
-              ? "Update property information"
-              : "Create a new property listing"}
-          </SheetDescription>
-        </SheetHeader>
+        <div className="p-6">
+          <SheetHeader className="space-y-2 pb-4 border-b border-slate-200 dark:border-slate-800">
+            <SheetTitle className="text-2xl font-bold">
+              {property ? "Edit Property" : "Add New Property"}
+            </SheetTitle>
+            <SheetDescription className="text-base">
+              {property
+                ? "Update property information below"
+                : "Fill in the details to create a new property listing"}
+            </SheetDescription>
+          </SheetHeader>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-6">
-          {submitStatus === "success" && (
-            <Alert className="border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20">
-              <CheckCircleIcon className="h-5 w-5 text-green-600 dark:text-green-400" />
-              <AlertTitle className="text-green-800 dark:text-green-200">
-                Property saved successfully!
-              </AlertTitle>
-            </Alert>
-          )}
+          <form onSubmit={handleSubmit} className="mt-6 space-y-6" noValidate>
+            {submitStatus === "success" && (
+              <Alert className="border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20">
+                <CheckCircleIcon className="h-5 w-5 text-green-600 dark:text-green-400" />
+                <AlertTitle className="text-green-800 dark:text-green-200">
+                  Property saved successfully!
+                </AlertTitle>
+                <AlertDescription className="text-green-700 dark:text-green-300">
+                  The property has been {property ? "updated" : "created"} successfully.
+                </AlertDescription>
+              </Alert>
+            )}
 
-          {submitStatus === "error" && errors.submit && (
-            <Alert variant="destructive">
-              <ExclamationCircleIcon className="h-5 w-5" />
-              <AlertTitle>Error</AlertTitle>
-              <AlertDescription>{errors.submit}</AlertDescription>
-            </Alert>
-          )}
+            {submitStatus === "error" && errors.submit && (
+              <Alert variant="destructive">
+                <ExclamationCircleIcon className="h-5 w-5" />
+                <AlertTitle>Something went wrong</AlertTitle>
+                <AlertDescription>
+                  {errors.submit}
+                </AlertDescription>
+              </Alert>
+            )}
 
-          {/* Basic Information */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide border-b border-slate-200 dark:border-slate-700 pb-2">
-              Basic Information
-            </h3>
+            {/* Basic Information Section */}
+            <div className="space-y-4">
+              <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
+                  Basic Information
+                </h3>
+              </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="title">Title *</Label>
-              <Input
-                id="title"
-                value={formData.title}
-                onChange={(e) =>
-                  setFormData({ ...formData, title: e.target.value })
-                }
-                placeholder="2BR Apartment - Kilimani"
-                className={errors.title ? "border-red-500" : ""}
-              />
-              {errors.title && (
-                <p className="text-sm text-red-600 dark:text-red-400">
-                  {errors.title}
-                </p>
-              )}
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="title">
+                    Title *
+                  </Label>
+                  <Input
+                    id="title"
+                    value={formData.title}
+                    onChange={(e) =>
+                      setFormData({ ...formData, title: e.target.value })
+                    }
+                    placeholder="2BR Apartment - Kilimani"
+                    aria-invalid={errors.title ? "true" : "false"}
+                    aria-describedby={errors.title ? "title-error" : undefined}
+                    className={cn(
+                      errors.title && "border-red-500 dark:border-red-500 focus-visible:ring-red-500"
+                    )}
+                  />
+                  {errors.title && (
+                    <p id="title-error" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1" role="alert">
+                      <ExclamationCircleIcon className="h-4 w-4" />
+                      {errors.title}
+                    </p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="slug">
+                    Slug *
+                  </Label>
+                  <Input
+                    id="slug"
+                    value={formData.slug}
+                    onChange={(e) =>
+                      setFormData({ ...formData, slug: e.target.value })
+                    }
+                    placeholder="2br-apartment-kilimani"
+                    aria-invalid={errors.slug ? "true" : "false"}
+                    aria-describedby={errors.slug ? "slug-error" : undefined}
+                    className={cn(
+                      errors.slug && "border-red-500 dark:border-red-500 focus-visible:ring-red-500"
+                    )}
+                  />
+                  {errors.slug && (
+                    <p id="slug-error" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1" role="alert">
+                      <ExclamationCircleIcon className="h-4 w-4" />
+                      {errors.slug}
+                    </p>
+                  )}
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    URL-friendly identifier (auto-generated from title)
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="description">
+                    Description
+                  </Label>
+                  <Textarea
+                    id="description"
+                    value={formData.description}
+                    onChange={(e) =>
+                      setFormData({ ...formData, description: e.target.value })
+                    }
+                    rows={4}
+                    placeholder="Describe the property, its features, and amenities..."
+                    className="resize-none"
+                  />
+                </div>
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="slug">Slug *</Label>
-              <Input
-                id="slug"
-                value={formData.slug}
-                onChange={(e) =>
-                  setFormData({ ...formData, slug: e.target.value })
-                }
-                placeholder="2br-apartment-kilimani"
-                className={errors.slug ? "border-red-500" : ""}
-              />
-              {errors.slug && (
-                <p className="text-sm text-red-600 dark:text-red-400">
-                  {errors.slug}
-                </p>
-              )}
-              <p className="text-xs text-slate-500">
-                URL-friendly identifier (auto-generated from title)
+            {/* Location Section */}
+            <div className="space-y-4">
+              <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
+                  Location
+                </h3>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="city">
+                    City *
+                  </Label>
+                  <Input
+                    id="city"
+                    value={formData.city}
+                    onChange={(e) =>
+                      setFormData({ ...formData, city: e.target.value })
+                    }
+                    placeholder="Nairobi"
+                    aria-invalid={errors.city ? "true" : "false"}
+                    aria-describedby={errors.city ? "city-error" : undefined}
+                    className={cn(
+                      errors.city && "border-red-500 dark:border-red-500 focus-visible:ring-red-500"
+                    )}
+                  />
+                  {errors.city && (
+                    <p id="city-error" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1" role="alert">
+                      <ExclamationCircleIcon className="h-4 w-4" />
+                      {errors.city}
+                    </p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="area">
+                    Area *
+                  </Label>
+                  <Input
+                    id="area"
+                    value={formData.area}
+                    onChange={(e) =>
+                      setFormData({ ...formData, area: e.target.value })
+                    }
+                    placeholder="Kilimani"
+                    aria-invalid={errors.area ? "true" : "false"}
+                    aria-describedby={errors.area ? "area-error" : undefined}
+                    className={cn(
+                      errors.area && "border-red-500 dark:border-red-500 focus-visible:ring-red-500"
+                    )}
+                  />
+                  {errors.area && (
+                    <p id="area-error" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1" role="alert">
+                      <ExclamationCircleIcon className="h-4 w-4" />
+                      {errors.area}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Property Details Section */}
+            <div className="space-y-4">
+              <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
+                  Property Details
+                </h3>
+              </div>
+
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="property_type">
+                    Property Type *
+                  </Label>
+                  <Select
+                    value={formData.property_type}
+                    onValueChange={(value) =>
+                      setFormData({
+                        ...formData,
+                        property_type: value as PropertyType,
+                      })
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select property type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {PROPERTY_TYPES.map((type) => (
+                        <SelectItem key={type.value} value={type.value}>
+                          {type.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-3">
+                  <div className="space-y-2">
+                    <Label htmlFor="bedrooms">
+                      Bedrooms *
+                    </Label>
+                    <Input
+                      id="bedrooms"
+                      type="number"
+                      min="0"
+                      value={formData.bedrooms}
+                      onChange={(e) =>
+                        setFormData({ ...formData, bedrooms: e.target.value })
+                      }
+                      placeholder="0"
+                      aria-invalid={errors.bedrooms ? "true" : "false"}
+                      aria-describedby={errors.bedrooms ? "bedrooms-error" : undefined}
+                      className={cn(
+                        errors.bedrooms && "border-red-500 dark:border-red-500 focus-visible:ring-red-500"
+                      )}
+                    />
+                    {errors.bedrooms && (
+                      <p id="bedrooms-error" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1" role="alert">
+                        <ExclamationCircleIcon className="h-4 w-4" />
+                        {errors.bedrooms}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="bathrooms">
+                      Bathrooms *
+                    </Label>
+                    <Input
+                      id="bathrooms"
+                      type="number"
+                      min="0"
+                      value={formData.bathrooms}
+                      onChange={(e) =>
+                        setFormData({ ...formData, bathrooms: e.target.value })
+                      }
+                      placeholder="0"
+                      aria-invalid={errors.bathrooms ? "true" : "false"}
+                      aria-describedby={errors.bathrooms ? "bathrooms-error" : undefined}
+                      className={cn(
+                        errors.bathrooms && "border-red-500 dark:border-red-500 focus-visible:ring-red-500"
+                      )}
+                    />
+                    {errors.bathrooms && (
+                      <p id="bathrooms-error" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1" role="alert">
+                        <ExclamationCircleIcon className="h-4 w-4" />
+                        {errors.bathrooms}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="size_sqm">
+                      Size (m²)
+                    </Label>
+                    <Input
+                      id="size_sqm"
+                      type="number"
+                      min="0"
+                      value={formData.size_sqm}
+                      onChange={(e) =>
+                        setFormData({ ...formData, size_sqm: e.target.value })
+                      }
+                      placeholder="Optional"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="monthly_rent">
+                    Monthly Rent (KES) *
+                  </Label>
+                  <Input
+                    id="monthly_rent"
+                    type="number"
+                    min="0"
+                    value={formData.monthly_rent}
+                    onChange={(e) =>
+                      setFormData({ ...formData, monthly_rent: e.target.value })
+                    }
+                    placeholder="85000"
+                    aria-invalid={errors.monthly_rent ? "true" : "false"}
+                    aria-describedby={errors.monthly_rent ? "monthly_rent-error" : undefined}
+                    className={cn(
+                      errors.monthly_rent && "border-red-500 dark:border-red-500 focus-visible:ring-red-500"
+                    )}
+                  />
+                  {errors.monthly_rent && (
+                    <p id="monthly_rent-error" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1" role="alert">
+                      <ExclamationCircleIcon className="h-4 w-4" />
+                      {errors.monthly_rent}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Options Section */}
+            <div className="space-y-4">
+              <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
+                  Options & Status
+                </h3>
+              </div>
+
+              <div className="space-y-3">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={formData.is_verified}
+                    onChange={(e) =>
+                      setFormData({ ...formData, is_verified: e.target.checked })
+                    }
+                    className="rounded border-slate-300 text-primary focus:ring-primary"
+                  />
+                  <span className="text-sm text-slate-700 dark:text-slate-300">
+                    Verified Property
+                  </span>
+                </label>
+
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={formData.is_tps_available}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        is_tps_available: e.target.checked,
+                      })
+                    }
+                    className="rounded border-slate-300 text-primary focus:ring-primary"
+                  />
+                  <span className="text-sm text-slate-700 dark:text-slate-300">
+                    TPS Available (Rent-to-Own)
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <div className="pt-4 space-y-3">
+              <Button
+                type="submit"
+                size="lg"
+                className="w-full flex items-center justify-center gap-2 h-12 text-base font-semibold"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  "Saving..."
+                ) : (
+                  <>
+                    {property ? "Update Property" : "Create Property"}
+                    <PaperAirplaneIcon className="h-5 w-5" />
+                  </>
+                )}
+              </Button>
+              <p className="text-xs text-center text-slate-500 dark:text-slate-400">
+                * Required fields
               </p>
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
-                value={formData.description}
-                onChange={(e) =>
-                  setFormData({ ...formData, description: e.target.value })
-                }
-                rows={4}
-                placeholder="Property description..."
-              />
-            </div>
-          </div>
-
-          {/* Location */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide border-b border-slate-200 dark:border-slate-700 pb-2">
-              Location
-            </h3>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="city">City *</Label>
-                <Input
-                  id="city"
-                  value={formData.city}
-                  onChange={(e) =>
-                    setFormData({ ...formData, city: e.target.value })
-                  }
-                  placeholder="Nairobi"
-                  className={errors.city ? "border-red-500" : ""}
-                />
-                {errors.city && (
-                  <p className="text-sm text-red-600 dark:text-red-400">
-                    {errors.city}
-                  </p>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="area">Area *</Label>
-                <Input
-                  id="area"
-                  value={formData.area}
-                  onChange={(e) =>
-                    setFormData({ ...formData, area: e.target.value })
-                  }
-                  placeholder="Kilimani"
-                  className={errors.area ? "border-red-500" : ""}
-                />
-                {errors.area && (
-                  <p className="text-sm text-red-600 dark:text-red-400">
-                    {errors.area}
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Property Details */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide border-b border-slate-200 dark:border-slate-700 pb-2">
-              Property Details
-            </h3>
-
-            <div className="space-y-2">
-              <Label htmlFor="property_type">Property Type *</Label>
-              <Select
-                value={formData.property_type}
-                onValueChange={(value) =>
-                  setFormData({
-                    ...formData,
-                    property_type: value as PropertyType,
-                  })
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {PROPERTY_TYPES.map((type) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-3">
-              <div className="space-y-2">
-                <Label htmlFor="bedrooms">Bedrooms *</Label>
-                <Input
-                  id="bedrooms"
-                  type="number"
-                  min="0"
-                  value={formData.bedrooms}
-                  onChange={(e) =>
-                    setFormData({ ...formData, bedrooms: e.target.value })
-                  }
-                  className={errors.bedrooms ? "border-red-500" : ""}
-                />
-                {errors.bedrooms && (
-                  <p className="text-sm text-red-600 dark:text-red-400">
-                    {errors.bedrooms}
-                  </p>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="bathrooms">Bathrooms *</Label>
-                <Input
-                  id="bathrooms"
-                  type="number"
-                  min="0"
-                  value={formData.bathrooms}
-                  onChange={(e) =>
-                    setFormData({ ...formData, bathrooms: e.target.value })
-                  }
-                  className={errors.bathrooms ? "border-red-500" : ""}
-                />
-                {errors.bathrooms && (
-                  <p className="text-sm text-red-600 dark:text-red-400">
-                    {errors.bathrooms}
-                  </p>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="size_sqm">Size (m²)</Label>
-                <Input
-                  id="size_sqm"
-                  type="number"
-                  min="0"
-                  value={formData.size_sqm}
-                  onChange={(e) =>
-                    setFormData({ ...formData, size_sqm: e.target.value })
-                  }
-                  placeholder="Optional"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="monthly_rent">Monthly Rent (KES) *</Label>
-              <Input
-                id="monthly_rent"
-                type="number"
-                min="0"
-                value={formData.monthly_rent}
-                onChange={(e) =>
-                  setFormData({ ...formData, monthly_rent: e.target.value })
-                }
-                className={errors.monthly_rent ? "border-red-500" : ""}
-              />
-              {errors.monthly_rent && (
-                <p className="text-sm text-red-600 dark:text-red-400">
-                  {errors.monthly_rent}
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* Options */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide border-b border-slate-200 dark:border-slate-700 pb-2">
-              Options
-            </h3>
-
-            <div className="space-y-3">
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={formData.is_verified}
-                  onChange={(e) =>
-                    setFormData({ ...formData, is_verified: e.target.checked })
-                  }
-                  className="rounded border-slate-300 text-primary focus:ring-primary"
-                />
-                <span className="text-sm text-slate-700 dark:text-slate-300">
-                  Verified Property
-                </span>
-              </label>
-
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={formData.is_tps_available}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      is_tps_available: e.target.checked,
-                    })
-                  }
-                  className="rounded border-slate-300 text-primary focus:ring-primary"
-                />
-                <span className="text-sm text-slate-700 dark:text-slate-300">
-                  TPS Available (Rent-to-Own)
-                </span>
-              </label>
-            </div>
-          </div>
-
-          {/* Actions */}
-          <div className="flex gap-2 pt-4 border-t border-slate-200 dark:border-slate-800">
-            <Button
-              type="submit"
-              className="flex-1"
-              disabled={isSubmitting}
-            >
-              {isSubmitting
-                ? "Saving..."
-                : property
-                ? "Update Property"
-                : "Create Property"}
-            </Button>
-            <Button type="button" variant="outline" onClick={onClose}>
-              Cancel
-            </Button>
-          </div>
-        </form>
+          </form>
+        </div>
       </SheetContent>
     </Sheet>
   );
