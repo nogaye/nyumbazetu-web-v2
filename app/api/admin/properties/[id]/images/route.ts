@@ -225,6 +225,9 @@ export async function GET(
 
     // Get public URLs for all images
     const imagesWithUrls = (data || []).map((img: any) => {
+      if (!supabaseAdmin) {
+        return { ...img, url: "" };
+      }
       const { data: urlData } = supabaseAdmin.storage
         .from("property-images")
         .getPublicUrl(img.storage_path);
