@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { getPlaceholderImageUrl } from "@/lib/listings/mock-data";
 
@@ -39,6 +39,12 @@ export function PropertyImage({
 }: PropertyImageProps) {
   const [imageSrc, setImageSrc] = useState(src);
   const [hasError, setHasError] = useState(false);
+
+  // Update image source when src prop changes
+  useEffect(() => {
+    setImageSrc(src);
+    setHasError(false); // Reset error state when src changes
+  }, [src]);
 
   // Extract property ID from Supabase Storage URL or path for fallback
   const getPropertyIdFromUrl = (url: string): string => {
