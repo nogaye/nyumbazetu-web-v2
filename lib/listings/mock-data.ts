@@ -301,3 +301,11 @@ export function getBlurDataURL(): string {
   // Minimal 1x1 transparent pixel as base64
   return "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNmMWY1ZjkiLz48L3N2Zz4=";
 }
+
+/**
+ * Get a single property by slug
+ * TODO: Replace with real Supabase query
+ */
+export function getPropertyBySlug(slug: string): Property | null {
+  return allMockProperties.find((p) => p.slug === slug) || null;
+}
