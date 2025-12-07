@@ -37,6 +37,8 @@ export function LegacyClients() {
   const [estatesCurrentIndex, setEstatesCurrentIndex] = useState(estatesStartIndex);
   const [estatesIsTransitioning, setEstatesIsTransitioning] = useState(false);
   const estatesCarouselRef = useRef<HTMLDivElement>(null);
+  const estatesPositionRef = useRef<number>(estatesStartIndex * (320 + 24));
+  const estatesScrollPausedRef = useRef<boolean>(false);
   const estatesItemsPerView = 3; // Show 3 items at a time on desktop
   const estatesItemWidth = 320; // Increased width for better spacing
   const estatesGap = 24; // Gap between items
@@ -83,16 +85,50 @@ export function LegacyClients() {
     setPmCurrentIndex((prev) => prev - 1);
   };
 
-  // Auto-scroll Property Estates Carousel
+  // Continuous smooth scroll for Property Estates Carousel
   useEffect(() => {
-    const scrollInterval = setInterval(() => {
-      setEstatesCurrentIndex((prev) => prev + 1);
-    }, 3000);
+    if (!estatesCarouselRef.current) return;
 
-    return () => clearInterval(scrollInterval);
-  }, []);
+    let animationFrameId: number;
+    const scrollSpeed = 0.3; // pixels per frame (adjust for speed)
+    const itemWidthWithGap = estatesItemWidth + estatesGap;
+    const totalItems = mainClients.length;
+    const maxPosition = totalItems * 2 * itemWidthWithGap;
 
-  // Handle infinite loop for Estates carousel
+    const animate = () => {
+      if (!estatesScrollPausedRef.current) {
+        // Continuously scroll
+        estatesPositionRef.current += scrollSpeed;
+        
+        // Check if we've scrolled past the end of the second set
+        if (estatesPositionRef.current >= maxPosition) {
+          // Reset to middle set position seamlessly
+          estatesPositionRef.current = estatesStartIndex * itemWidthWithGap;
+        }
+      }
+
+      // Update the transform
+      if (estatesCarouselRef.current) {
+        const carouselInner = estatesCarouselRef.current.querySelector('.flex') as HTMLElement;
+        if (carouselInner) {
+          carouselInner.style.transform = `translateX(-${estatesPositionRef.current}px)`;
+          carouselInner.style.transition = 'none'; // No transition for smooth continuous scroll
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [estatesStartIndex, estatesItemWidth, estatesGap, mainClients.length]);
+
+  // Handle infinite loop for Estates carousel (for manual navigation)
   useEffect(() => {
     if (!estatesCarouselRef.current || estatesIsTransitioning) return;
 
@@ -118,11 +154,43 @@ export function LegacyClients() {
   }, [estatesCurrentIndex, estatesStartIndex, mainClients.length, estatesIsTransitioning]);
 
   const nextEstatesSlide = () => {
-    setEstatesCurrentIndex((prev) => prev + 1);
+    const itemWidthWithGap = estatesItemWidth + estatesGap;
+    const totalItems = mainClients.length;
+    const maxPosition = totalItems * 2 * itemWidthWithGap;
+    
+    estatesPositionRef.current += itemWidthWithGap;
+    
+    // Handle loop
+    if (estatesPositionRef.current >= maxPosition) {
+      estatesPositionRef.current = estatesStartIndex * itemWidthWithGap;
+    }
+    
+    estatesScrollPausedRef.current = true;
+    
+    // Resume auto-scroll after a delay
+    setTimeout(() => {
+      estatesScrollPausedRef.current = false;
+    }, 2000);
   };
 
   const prevEstatesSlide = () => {
-    setEstatesCurrentIndex((prev) => prev - 1);
+    const itemWidthWithGap = estatesItemWidth + estatesGap;
+    const totalItems = mainClients.length;
+    const minPosition = 0;
+    
+    estatesPositionRef.current -= itemWidthWithGap;
+    
+    // Handle loop
+    if (estatesPositionRef.current < minPosition) {
+      estatesPositionRef.current = (estatesStartIndex + totalItems - 1) * itemWidthWithGap;
+    }
+    
+    estatesScrollPausedRef.current = true;
+    
+    // Resume auto-scroll after a delay
+    setTimeout(() => {
+      estatesScrollPausedRef.current = false;
+    }, 2000);
   };
 
   const goToEstatesSlide = (index: number) => {
@@ -253,9 +321,7 @@ export function LegacyClients() {
               <div
                 className="flex"
                 style={{
-                  transform: `translateX(-${estatesCurrentIndex * (estatesItemWidth + estatesGap)}px)`,
                   gap: `${estatesGap}px`,
-                  transition: estatesIsTransitioning ? 'none' : 'transform 0.5s ease-in-out',
                 }}
               >
                 {estatesInfiniteItems.map((client, index) => (
