@@ -3,9 +3,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { Property } from "@/lib/listings/types";
 
 // TODO: Replace with real Supabase query to fetch listing by slug
-async function getListing(slug: string) {
+async function getListing(slug: string): Promise<Property | null> {
   // This is a placeholder - implement real data fetching
   return null;
 }

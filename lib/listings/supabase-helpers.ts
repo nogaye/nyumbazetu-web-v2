@@ -133,7 +133,7 @@ export function parseFilters(searchParams: {
     filters.propertyType = searchParams.propertyType as any;
   }
 
-  if (searchParams.tps === "true" || searchParams.tps === true) {
+  if (searchParams.tps === "true" || searchParams.tps === "1") {
     filters.tps = true;
   }
 
