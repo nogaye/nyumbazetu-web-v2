@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { mainClients } from "@/lib/clients-data";
+import { featuredPropertyManagementClients } from "@/lib/property-management-clients";
 
 export function LegacyClients() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,7 +18,9 @@ export function LegacyClients() {
   const itemWidth = 320; // Increased width for better spacing
   const gap = 24; // Gap between items
 
-  const maxIndex = Math.max(0, mainClients.length - itemsPerView);
+  // Combine property management clients with main clients for carousel
+  const allFeaturedClients = [...featuredPropertyManagementClients, ...mainClients];
+  const maxIndex = Math.max(0, allFeaturedClients.length - itemsPerView);
 
   useEffect(() => {
     const scrollInterval = setInterval(() => {
@@ -42,6 +45,12 @@ export function LegacyClients() {
 
   const goToSlide = (index: number) => {
     setCurrentIndex(Math.min(index, maxIndex));
+  };
+
+  // Helper function to check if URL is external
+  const isExternalUrl = (url?: string) => {
+    if (!url) return false;
+    return url.startsWith("http://") || url.startsWith("https://");
   };
 
   return (
@@ -85,38 +94,62 @@ export function LegacyClients() {
                 gap: `${gap}px`,
               }}
             >
-              {mainClients.map((client, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  className="flex-shrink-0"
-                  style={{ width: `${itemWidth}px` }}
-                >
-                  <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 hover:border-primary/20">
-                    <CardContent className="p-6">
-                      <div className="aspect-video bg-slate-50 dark:bg-slate-800 rounded-lg mb-4 flex items-center justify-center p-4">
-                        <Image
-                          src={`/legacy/images/clients/${client.imageUrl}`}
-                          alt={client.name || ""}
-                          width={280}
-                          height={180}
-                          className="w-full h-full object-contain"
-                          sizes="(max-width: 768px) 100vw, 280px"
-                          loading="lazy"
-                        />
-                      </div>
-                      <h4 className="font-semibold text-lg text-slate-900 dark:text-slate-50 mb-1">
-                        {client.name}
-                      </h4>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">
-                        {client.location}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+              {allFeaturedClients.map((client, index) => {
+                const imageSrc = isExternalUrl(client.imageUrl)
+                  ? client.imageUrl!
+                  : client.imageUrl
+                  ? `/legacy/images/clients/${client.imageUrl}`
+                  : null;
+
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    className="flex-shrink-0"
+                    style={{ width: `${itemWidth}px` }}
+                  >
+                    <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 hover:border-primary/20">
+                      <CardContent className="p-6">
+                        {imageSrc ? (
+                          <div className="aspect-video bg-slate-50 dark:bg-slate-800 rounded-lg mb-4 flex items-center justify-center p-4">
+                            <Image
+                              src={imageSrc}
+                              alt={client.name || ""}
+                              width={280}
+                              height={180}
+                              className="w-full h-full object-contain"
+                              sizes="(max-width: 768px) 100vw, 280px"
+                              loading="lazy"
+                              unoptimized={isExternalUrl(client.imageUrl)}
+                            />
+                          </div>
+                        ) : (
+                          // No image - show placeholder
+                          <div className="aspect-video bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg mb-4 flex items-center justify-center p-4">
+                            <div className="text-center">
+                              <div className="w-16 h-16 mx-auto mb-2 bg-primary/20 rounded-lg flex items-center justify-center">
+                                <span className="text-2xl font-bold text-primary">
+                                  {client.name?.charAt(0) || "?"}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        <h4 className="font-semibold text-lg text-slate-900 dark:text-slate-50 mb-1 text-center">
+                          {client.name}
+                        </h4>
+                        {client.location && (
+                          <p className="text-sm text-slate-600 dark:text-slate-400 text-center">
+                            {client.location}
+                          </p>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 
