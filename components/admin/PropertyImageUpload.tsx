@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
@@ -43,6 +43,7 @@ export function PropertyImageUpload({
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({});
   const [error, setError] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Fetch existing images when propertyId changes
   useEffect(() => {
@@ -326,6 +327,7 @@ export function PropertyImageUpload({
           onDrop={handleDrop}
         >
           <input
+            ref={fileInputRef}
             type="file"
             id="image-upload"
             accept="image/jpeg,image/jpg,image/png,image/webp"
@@ -355,7 +357,16 @@ export function PropertyImageUpload({
               </p>
             </div>
             {!uploading && images.length < MAX_IMAGES && (
-              <Button type="button" variant="outline" size="sm">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  fileInputRef.current?.click();
+                }}
+              >
                 Select Images
               </Button>
             )}
