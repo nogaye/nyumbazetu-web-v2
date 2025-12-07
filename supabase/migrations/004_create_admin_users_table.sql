@@ -41,3 +41,4 @@ CREATE TRIGGER update_admin_users_updated_at
   FOR EACH ROW
   EXECUTE FUNCTION update_admin_users_updated_at();
 
+
