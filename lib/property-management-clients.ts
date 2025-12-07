@@ -117,6 +117,7 @@ export const propertyManagementClients: IPropertyManagementClient[] = [
   // Companies without logos (will be displayed with text only)
   {
     name: "New Court Management Company",
+    imageUrl: "https://app.nyumbazetu.com/assets/images/branches/urban_oasis_no_bg.png",
   },
   {
     name: "Redrose Gardens Limited",

@@ -10,22 +10,31 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { mainClients } from "@/lib/clients-data";
-import { featuredPropertyManagementClients } from "@/lib/property-management-clients";
+import { propertyManagementClients } from "@/lib/property-management-clients";
 
 export function LegacyClients() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const itemsPerView = 3; // Show 3 items at a time on desktop
-  const itemWidth = 320; // Increased width for better spacing
-  const gap = 24; // Gap between items
+  // Property Management Companies Carousel State
+  const propertyManagementClientsWithLogos = propertyManagementClients.filter(
+    (client) => client.imageUrl
+  );
+  const [pmCurrentIndex, setPmCurrentIndex] = useState(0);
+  const pmItemsPerView = 6; // Show 6 logos at a time on desktop
+  const pmItemWidth = 150; // Width for each logo
+  const pmGap = 16; // Gap between items
+  const maxPmIndex = Math.max(0, propertyManagementClientsWithLogos.length - pmItemsPerView);
 
-  // Combine property management clients with main clients for carousel
-  const allFeaturedClients = [...featuredPropertyManagementClients, ...mainClients];
-  const maxIndex = Math.max(0, allFeaturedClients.length - itemsPerView);
+  // Property Estates Carousel State
+  const [estatesCurrentIndex, setEstatesCurrentIndex] = useState(0);
+  const estatesItemsPerView = 3; // Show 3 items at a time on desktop
+  const estatesItemWidth = 320; // Increased width for better spacing
+  const estatesGap = 24; // Gap between items
+  const maxEstatesIndex = Math.max(0, mainClients.length - estatesItemsPerView);
 
+  // Auto-scroll Property Management Companies Carousel
   useEffect(() => {
     const scrollInterval = setInterval(() => {
-      setCurrentIndex((prev) => {
-        if (prev >= maxIndex) {
+      setPmCurrentIndex((prev) => {
+        if (prev >= maxPmIndex) {
           return 0;
         }
         return prev + 1;
@@ -33,18 +42,40 @@ export function LegacyClients() {
     }, 3000);
 
     return () => clearInterval(scrollInterval);
-  }, [maxIndex]);
+  }, [maxPmIndex]);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
+  const nextPmSlide = () => {
+    setPmCurrentIndex((prev) => Math.min(prev + 1, maxPmIndex));
   };
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => Math.max(prev - 1, 0));
+  const prevPmSlide = () => {
+    setPmCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
-  const goToSlide = (index: number) => {
-    setCurrentIndex(Math.min(index, maxIndex));
+  // Auto-scroll Property Estates Carousel
+  useEffect(() => {
+    const scrollInterval = setInterval(() => {
+      setEstatesCurrentIndex((prev) => {
+        if (prev >= maxEstatesIndex) {
+          return 0;
+        }
+        return prev + 1;
+      });
+    }, 3000);
+
+    return () => clearInterval(scrollInterval);
+  }, [maxEstatesIndex]);
+
+  const nextEstatesSlide = () => {
+    setEstatesCurrentIndex((prev) => Math.min(prev + 1, maxEstatesIndex));
+  };
+
+  const prevEstatesSlide = () => {
+    setEstatesCurrentIndex((prev) => Math.max(prev - 1, 0));
+  };
+
+  const goToEstatesSlide = (index: number) => {
+    setEstatesCurrentIndex(Math.min(index, maxEstatesIndex));
   };
 
   // Helper function to check if URL is external
@@ -61,82 +92,145 @@ export function LegacyClients() {
           description="Join the community of successful clients using Nyumba Zetu. From bustling commercial centers in Nairobi to serene residential complexes in Lavington, our software has been the backbone of successful property management strategies."
         />
 
-        {/* Main Carousel */}
-        <div className="relative mt-12">
-          {/* Navigation Buttons */}
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={prevSlide}
-            disabled={currentIndex === 0}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl border-2 hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
-            aria-label="Previous slide"
-          >
-            <ChevronLeftIcon className="h-5 w-5" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={nextSlide}
-            disabled={currentIndex >= maxIndex}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl border-2 hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
-            aria-label="Next slide"
-          >
-            <ChevronRightIcon className="h-5 w-5" />
-          </Button>
+        {/* Property Management Companies Carousel */}
+        <div className="mt-12 mb-16">
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4 text-center">
+            Property Management Companies
+          </h3>
+          <p className="text-center text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
+            Leading property management companies using Nyumba Zetu
+          </p>
+          
+          <div className="relative">
+            {/* Navigation Buttons */}
+            {propertyManagementClientsWithLogos.length > pmItemsPerView && (
+              <>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={prevPmSlide}
+                  disabled={pmCurrentIndex === 0}
+                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl border-2 hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label="Previous slide"
+                >
+                  <ChevronLeftIcon className="h-5 w-5" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={nextPmSlide}
+                  disabled={pmCurrentIndex >= maxPmIndex}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl border-2 hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label="Next slide"
+                >
+                  <ChevronRightIcon className="h-5 w-5" />
+                </Button>
+              </>
+            )}
 
-          {/* Carousel Container */}
-          <div className="overflow-hidden px-12">
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{
-                transform: `translateX(-${currentIndex * (itemWidth + gap)}px)`,
-                gap: `${gap}px`,
-              }}
+            {/* Carousel Container */}
+            <div className="overflow-hidden px-12">
+              <div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{
+                  transform: `translateX(-${pmCurrentIndex * (pmItemWidth + pmGap)}px)`,
+                  gap: `${pmGap}px`,
+                }}
+              >
+                {propertyManagementClientsWithLogos.map((client, index) => {
+                  const imageSrc = isExternalUrl(client.imageUrl)
+                    ? client.imageUrl!
+                    : `/legacy/images/clients/${client.imageUrl}`;
+
+                  return (
+                    <div
+                      key={index}
+                      className="flex-shrink-0 flex items-center justify-center"
+                      style={{ width: `${pmItemWidth}px` }}
+                    >
+                      <div className="w-full h-24 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center p-4 border border-slate-200 dark:border-slate-700 hover:border-primary/30 transition-all duration-300">
+                        <Image
+                          src={imageSrc}
+                          alt={client.name || ""}
+                          width={120}
+                          height={48}
+                          className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                          sizes="(max-width: 640px) 150px, 150px"
+                          loading="lazy"
+                          unoptimized={isExternalUrl(client.imageUrl)}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Property Estates Carousel */}
+        <div className="mb-12">
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4 text-center">
+            Property Estates
+          </h3>
+          <p className="text-center text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
+            Leading property estates and residential complexes using Nyumba Zetu
+          </p>
+          
+          <div className="relative">
+            {/* Navigation Buttons */}
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={prevEstatesSlide}
+              disabled={estatesCurrentIndex === 0}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl border-2 hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Previous slide"
             >
-              {allFeaturedClients.map((client, index) => {
-                const imageSrc = isExternalUrl(client.imageUrl)
-                  ? client.imageUrl!
-                  : client.imageUrl
-                  ? `/legacy/images/clients/${client.imageUrl}`
-                  : null;
+              <ChevronLeftIcon className="h-5 w-5" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={nextEstatesSlide}
+              disabled={estatesCurrentIndex >= maxEstatesIndex}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl border-2 hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Next slide"
+            >
+              <ChevronRightIcon className="h-5 w-5" />
+            </Button>
 
-                return (
+            {/* Carousel Container */}
+            <div className="overflow-hidden px-12">
+              <div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{
+                  transform: `translateX(-${estatesCurrentIndex * (estatesItemWidth + estatesGap)}px)`,
+                  gap: `${estatesGap}px`,
+                }}
+              >
+                {mainClients.map((client, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     className="flex-shrink-0"
-                    style={{ width: `${itemWidth}px` }}
+                    style={{ width: `${estatesItemWidth}px` }}
                   >
                     <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 hover:border-primary/20">
                       <CardContent className="p-6">
-                        {imageSrc ? (
-                          <div className="aspect-video bg-slate-50 dark:bg-slate-800 rounded-lg mb-4 flex items-center justify-center p-4">
-                            <Image
-                              src={imageSrc}
-                              alt={client.name || ""}
-                              width={280}
-                              height={180}
-                              className="w-full h-full object-contain"
-                              sizes="(max-width: 768px) 100vw, 280px"
-                              loading="lazy"
-                              unoptimized={isExternalUrl(client.imageUrl)}
-                            />
-                          </div>
-                        ) : (
-                          // No image - show placeholder
-                          <div className="aspect-video bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg mb-4 flex items-center justify-center p-4">
-                            <div className="text-center">
-                              <div className="w-16 h-16 mx-auto mb-2 bg-primary/20 rounded-lg flex items-center justify-center">
-                                <span className="text-2xl font-bold text-primary">
-                                  {client.name?.charAt(0) || "?"}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        )}
+                        <div className="aspect-video bg-slate-50 dark:bg-slate-800 rounded-lg mb-4 flex items-center justify-center p-4">
+                          <Image
+                            src={`/legacy/images/clients/${client.imageUrl}`}
+                            alt={client.name || ""}
+                            width={280}
+                            height={180}
+                            className="w-full h-full object-contain"
+                            sizes="(max-width: 768px) 100vw, 280px"
+                            loading="lazy"
+                          />
+                        </div>
                         <h4 className="font-semibold text-lg text-slate-900 dark:text-slate-50 mb-1 text-center">
                           {client.name}
                         </h4>
@@ -148,25 +242,25 @@ export function LegacyClients() {
                       </CardContent>
                     </Card>
                   </motion.div>
-                );
-              })}
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Dots Indicator */}
-          <div className="flex justify-center gap-2 mt-6">
-            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  currentIndex === index
-                    ? "w-8 bg-primary"
-                    : "w-2 bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
+            {/* Dots Indicator */}
+            <div className="flex justify-center gap-2 mt-6">
+              {Array.from({ length: maxEstatesIndex + 1 }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToEstatesSlide(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    estatesCurrentIndex === index
+                      ? "w-8 bg-primary"
+                      : "w-2 bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500"
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
