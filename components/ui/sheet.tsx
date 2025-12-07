@@ -28,12 +28,10 @@ const Sheet = ({ open, onOpenChange, children }: SheetProps) => {
   return (
     <>
       <div
-        className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+        className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm"
         onClick={() => onOpenChange(false)}
       />
-      <div className="fixed inset-y-0 right-0 z-50 w-full max-w-sm border-l border-slate-200 bg-white shadow-xl overflow-y-auto">
-        {children}
-      </div>
+      {children}
     </>
   );
 };
@@ -60,11 +58,20 @@ const SheetClose = ({ onClick }: { onClick: () => void }) => (
   </Button>
 );
 
-const SheetContent = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("fixed inset-y-0 right-0 z-50 w-full max-w-lg border-l border-slate-200 bg-white shadow-xl overflow-y-auto dark:border-slate-800 dark:bg-slate-900", className)} {...props}>
-    {children}
-  </div>
+const SheetContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, children, ...props }, ref) => (
+    <div 
+      ref={ref}
+      className={cn("fixed top-0 right-0 bottom-0 z-[100] w-full max-w-lg border-l border-slate-200 bg-white shadow-xl overflow-y-auto dark:border-slate-800 dark:bg-slate-900", className)} 
+      {...props}
+    >
+      <div className="pt-16">
+        {children}
+      </div>
+    </div>
+  )
 );
+SheetContent.displayName = "SheetContent";
 
 const SheetDescription = ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
   <p className={cn("text-sm text-slate-600 dark:text-slate-400", className)} {...props} />

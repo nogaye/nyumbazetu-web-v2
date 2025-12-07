@@ -122,8 +122,9 @@ export function ContactOwnerButton({
         Contact Owner
       </Button>
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetContent className="overflow-y-auto p-6">
-          <SheetHeader className="space-y-2 pb-4 border-b border-slate-200 dark:border-slate-800">
+        <SheetContent className="overflow-y-auto">
+          <div className="p-6">
+            <SheetHeader className="space-y-2 pb-4 border-b border-slate-200 dark:border-slate-800">
             <SheetTitle className="text-2xl font-bold">Contact Property Owner</SheetTitle>
             <SheetDescription className="text-base">
               Send a message about: <strong className="text-slate-900 dark:text-slate-50">{propertyTitle}</strong>
@@ -333,6 +334,7 @@ export function ContactOwnerButton({
               </div>
             </div>
           </form>
+          </div>
         </SheetContent>
       </Sheet>
     </>
