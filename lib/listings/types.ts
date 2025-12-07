@@ -46,6 +46,13 @@ export interface ListingWithCoverImage extends Property {
   blur_data_url?: string;
 }
 
+export type SortOption = 
+  | "recommended"
+  | "price-low"
+  | "price-high"
+  | "newest"
+  | "oldest";
+
 export interface ListingFilters {
   city?: string;
   area?: string;
@@ -55,6 +62,8 @@ export interface ListingFilters {
   propertyType?: PropertyType;
   tps?: boolean;
   page?: number;
+  sort?: SortOption;
+  search?: string;
 }
 
 export interface ListingsResponse {

@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { ListingsFilterBar } from "@/components/listings/ListingsFilterBar";
+import { ListingsSortAndSearch } from "@/components/listings/ListingsSortAndSearch";
 import { ListingCard } from "@/components/listings/ListingCard";
 import { ListingCardSkeleton } from "@/components/listings/ListingCardSkeleton";
 import { Button } from "@/components/ui/button";
@@ -64,8 +65,8 @@ async function ListingsContent({
       {/* Main Content */}
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Results Header */}
-        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
+        <div className="mb-6">
+          <div className="mb-4">
             <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-50">
               {total === 0 ? (
                 "No homes found"
@@ -85,22 +86,12 @@ async function ListingsContent({
             )}
           </div>
 
-          {/* Sort Dropdown (stub for future) */}
-          {total > 0 && (
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-slate-600 dark:text-slate-400">Sort:</span>
-              <select
-                className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary dark:border-slate-700 dark:bg-slate-900 dark:text-slate-50"
-                defaultValue="recommended"
-                aria-label="Sort listings"
-              >
-                <option value="recommended">Recommended</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-                <option value="newest">Newest First</option>
-              </select>
-            </div>
-          )}
+          {/* Sort and Search Controls */}
+          <ListingsSortAndSearch
+            currentSort={filters.sort || "recommended"}
+            currentSearch={filters.search || ""}
+            total={total}
+          />
         </div>
 
         {/* Empty State */}

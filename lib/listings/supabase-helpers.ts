@@ -5,7 +5,7 @@
  * If Supabase is not configured, it automatically falls back to mock data.
  */
 
-import { ListingFilters, ListingWithCoverImage, ListingsResponse, Property } from "./types";
+import { ListingFilters, ListingWithCoverImage, ListingsResponse, Property, SortOption } from "./types";
 import { getMockProperties, getPlaceholderImageUrl, getBlurDataURL, getPropertyBySlug } from "./mock-data";
 import { supabaseServer } from "@/lib/supabase/server";
 
@@ -98,8 +98,29 @@ async function fetchListingsFromSupabase(
     .select(`
       *,
       property_images!left(storage_path, is_cover, position)
-    `, { count: 'exact' })
-    .order('created_at', { ascending: false });
+    `, { count: 'exact' });
+
+  // Apply sorting
+  const sortOption = filters.sort || 'recommended';
+  switch (sortOption) {
+    case 'price-low':
+      query = query.order('monthly_rent', { ascending: true });
+      break;
+    case 'price-high':
+      query = query.order('monthly_rent', { ascending: false });
+      break;
+    case 'newest':
+      query = query.order('created_at', { ascending: false });
+      break;
+    case 'oldest':
+      query = query.order('created_at', { ascending: true });
+      break;
+    case 'recommended':
+    default:
+      // Recommended: verified first, then by creation date
+      query = query.order('is_verified', { ascending: false }).order('created_at', { ascending: false });
+      break;
+  }
 
   // Apply filters
   if (filters.city) {
@@ -132,6 +153,11 @@ async function fetchListingsFromSupabase(
 
   if (filters.tps === true) {
     query = query.eq('is_tps_available', true);
+  }
+
+  // Apply search filter (searches in title and description)
+  if (filters.search) {
+    query = query.or(`title.ilike.%${filters.search}%,description.ilike.%${filters.search}%`);
   }
 
   // Apply pagination
@@ -180,7 +206,39 @@ async function fetchListingsFromMock(
   await new Promise((resolve) => setTimeout(resolve, 300));
 
   const page = filters.page || 1;
-  const mockProperties = getMockProperties(filters);
+  let mockProperties = getMockProperties(filters);
+
+  // Apply search filter if provided
+  if (filters.search) {
+    const searchLower = filters.search.toLowerCase();
+    mockProperties = mockProperties.filter(
+      (p) =>
+        p.title.toLowerCase().includes(searchLower) ||
+        p.description.toLowerCase().includes(searchLower)
+    );
+  }
+
+  // Apply sorting
+  const sortOption = filters.sort || 'recommended';
+  mockProperties = [...mockProperties].sort((a, b) => {
+    switch (sortOption) {
+      case 'price-low':
+        return a.monthly_rent - b.monthly_rent;
+      case 'price-high':
+        return b.monthly_rent - a.monthly_rent;
+      case 'newest':
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      case 'oldest':
+        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+      case 'recommended':
+      default:
+        // Verified first, then by creation date
+        if (a.is_verified !== b.is_verified) {
+          return a.is_verified ? -1 : 1;
+        }
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    }
+  });
 
   // Get cover images for each property
   const listings: ListingWithCoverImage[] = mockProperties.map((property) => {
@@ -332,6 +390,17 @@ export function parseFilters(searchParams: {
     }
   }
 
+  if (searchParams.sort && typeof searchParams.sort === "string") {
+    const validSorts: SortOption[] = ["recommended", "price-low", "price-high", "newest", "oldest"];
+    if (validSorts.includes(searchParams.sort as SortOption)) {
+      filters.sort = searchParams.sort as SortOption;
+    }
+  }
+
+  if (searchParams.search && typeof searchParams.search === "string") {
+    filters.search = searchParams.search;
+  }
+
   return filters;
 }
 
@@ -371,6 +440,14 @@ export function buildSearchParams(filters: ListingFilters): URLSearchParams {
 
   if (filters.page && filters.page > 1) {
     params.set("page", filters.page.toString());
+  }
+
+  if (filters.sort && filters.sort !== "recommended") {
+    params.set("sort", filters.sort);
+  }
+
+  if (filters.search) {
+    params.set("search", filters.search);
   }
 
   return params;
