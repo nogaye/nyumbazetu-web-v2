@@ -1,16 +1,53 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { mainClients, allClients, IClient } from "@/lib/clients-data";
 import { propertyManagementClients } from "@/lib/property-management-clients";
 
 function ClientsPage() {
   // Combine all client types
   const allClientsList = [...mainClients, ...allClients];
+  
+  // Filter property management clients to only those with logos
+  const propertyManagementClientsWithLogos = propertyManagementClients.filter(
+    (client) => client.imageUrl
+  );
+  
+  // Carousel state for property management companies
+  const [pmCurrentIndex, setPmCurrentIndex] = useState(0);
+  const itemsPerView = 6; // Show 6 logos at a time on desktop
+  const itemWidth = 150; // Width for each logo
+  const gap = 16; // Gap between items
+  const maxPmIndex = Math.max(0, propertyManagementClientsWithLogos.length - itemsPerView);
+  
+  // Auto-scroll carousel
+  useEffect(() => {
+    const scrollInterval = setInterval(() => {
+      setPmCurrentIndex((prev) => {
+        if (prev >= maxPmIndex) {
+          return 0;
+        }
+        return prev + 1;
+      });
+    }, 3000);
+
+    return () => clearInterval(scrollInterval);
+  }, [maxPmIndex]);
+  
+  const nextPmSlide = () => {
+    setPmCurrentIndex((prev) => Math.min(prev + 1, maxPmIndex));
+  };
+
+  const prevPmSlide = () => {
+    setPmCurrentIndex((prev) => Math.max(prev - 1, 0));
+  };
   
   // Helper function to check if URL is external
   const isExternalUrl = (url?: string) => {
@@ -85,69 +122,80 @@ function ClientsPage() {
 
       <Section>
         <div className="container mx-auto px-4">
-          {/* Featured Property Management Companies */}
+          {/* Property Management Companies Carousel */}
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4 text-center">
               Property Management Companies
             </h2>
             <p className="text-center text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
-              Leading property management companies and estates using Nyumba Zetu
+              Leading property management companies using Nyumba Zetu
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-              {propertyManagementClients.map((client, index) => {
-                const imageSrc = isExternalUrl(client.imageUrl)
-                  ? client.imageUrl!
-                  : client.imageUrl
-                  ? `/legacy/images/clients/${client.imageUrl}`
-                  : null;
-
-                return (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
+            
+            {/* Carousel */}
+            <div className="relative">
+              {/* Navigation Buttons */}
+              {propertyManagementClientsWithLogos.length > itemsPerView && (
+                <>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={prevPmSlide}
+                    disabled={pmCurrentIndex === 0}
+                    className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl border-2 hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                    aria-label="Previous slide"
                   >
-                    <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                      <CardContent className="p-4">
-                        {imageSrc ? (
-                          <div className="aspect-square bg-slate-50 dark:bg-slate-800 rounded-lg mb-3 flex items-center justify-center p-3">
-                            <Image
-                              src={imageSrc}
-                              alt={client.name || ""}
-                              width={120}
-                              height={120}
-                              className="w-full h-full object-contain"
-                              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 120px"
-                              loading="lazy"
-                              unoptimized={isExternalUrl(client.imageUrl)}
-                            />
-                          </div>
-                        ) : (
-                          <div className="aspect-square bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg mb-3 flex items-center justify-center p-3">
-                            <div className="text-center">
-                              <div className="w-12 h-12 mx-auto bg-primary/20 rounded-lg flex items-center justify-center mb-2">
-                                <span className="text-lg font-bold text-primary">
-                                  {client.name?.charAt(0) || "?"}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                        <h5 className="font-semibold text-sm text-slate-900 dark:text-slate-50 mb-1 text-center line-clamp-2">
-                          {client.name}
-                        </h5>
-                        {client.location && (
-                          <p className="text-xs text-slate-600 dark:text-slate-400 text-center">
-                            {client.location}
-                          </p>
-                        )}
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                );
-              })}
+                    <ChevronLeftIcon className="h-5 w-5" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={nextPmSlide}
+                    disabled={pmCurrentIndex >= maxPmIndex}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl border-2 hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                    aria-label="Next slide"
+                  >
+                    <ChevronRightIcon className="h-5 w-5" />
+                  </Button>
+                </>
+              )}
+
+              {/* Carousel Container */}
+              <div className="overflow-hidden px-12">
+                <div
+                  className="flex transition-transform duration-500 ease-in-out"
+                  style={{
+                    transform: `translateX(-${pmCurrentIndex * (itemWidth + gap)}px)`,
+                    gap: `${gap}px`,
+                  }}
+                >
+                  {propertyManagementClientsWithLogos.map((client, index) => {
+                    const imageSrc = isExternalUrl(client.imageUrl)
+                      ? client.imageUrl!
+                      : `/legacy/images/clients/${client.imageUrl}`;
+
+                    return (
+                      <div
+                        key={index}
+                        className="flex-shrink-0 flex items-center justify-center"
+                        style={{ width: `${itemWidth}px` }}
+                      >
+                        <div className="w-full h-24 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center p-4 border border-slate-200 dark:border-slate-700 hover:border-primary/30 transition-all duration-300">
+                          <Image
+                            src={imageSrc}
+                            alt={client.name || ""}
+                            width={120}
+                            height={48}
+                            className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                            sizes="(max-width: 640px) 150px, 150px"
+                            loading="lazy"
+                            unoptimized={isExternalUrl(client.imageUrl)}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
 
