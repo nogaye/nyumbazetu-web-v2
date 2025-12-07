@@ -9,15 +9,75 @@ import {
   XMarkIcon,
   CheckIcon,
   PhotoIcon,
+  ScissorsIcon,
 } from "@heroicons/react/24/outline";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+
+// Crop Overlay Component
+function CropOverlay({
+  crop,
+  canvas,
+}: {
+  crop: CropArea | null;
+  canvas: HTMLCanvasElement;
+}) {
+  if (!crop) return null;
+
+  const rect = canvas.getBoundingClientRect();
+  const containerRect = canvas.parentElement?.getBoundingClientRect();
+  if (!containerRect) return null;
+
+  // Calculate position relative to container
+  const canvasX = rect.left - containerRect.left;
+  const canvasY = rect.top - containerRect.top;
+
+  const overlayStyle: React.CSSProperties = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    pointerEvents: "none",
+  };
+
+  const cropStyle: React.CSSProperties = {
+    position: "absolute",
+    left: `${canvasX + crop.x}px`,
+    top: `${canvasY + crop.y}px`,
+    width: `${crop.width}px`,
+    height: `${crop.height}px`,
+    border: "2px solid #3b82f6",
+    boxShadow: "0 0 0 9999px rgba(0, 0, 0, 0.5)",
+    pointerEvents: "none",
+    zIndex: 10,
+  };
+
+  return (
+    <div style={overlayStyle}>
+      <div style={cropStyle}>
+        {/* Corner handles */}
+        <div className="absolute -top-1 -left-1 w-3 h-3 bg-blue-500 rounded-full border-2 border-white" />
+        <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full border-2 border-white" />
+        <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-blue-500 rounded-full border-2 border-white" />
+        <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-blue-500 rounded-full border-2 border-white" />
+      </div>
+    </div>
+  );
+}
 
 interface ImageEditorProps {
   files: File[];
   isOpen: boolean;
   onClose: () => void;
   onSave: (editedFiles: File[]) => void;
+}
+
+interface CropArea {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 
 interface EditedImage {
@@ -27,13 +87,50 @@ interface EditedImage {
   brightness: number;
   contrast: number;
   saturation: number;
+  crop: CropArea | null;
+  originalWidth: number;
+  originalHeight: number;
 }
 
 export function ImageEditor({ files, isOpen, onClose, onSave }: ImageEditorProps) {
   const [editedImages, setEditedImages] = useState<EditedImage[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isCropping, setIsCropping] = useState(false);
+  const [cropMode, setCropMode] = useState<"free" | "16:9" | "4:3" | "1:1">("16:9");
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const imageRef = useRef<HTMLImageElement | null>(null);
+
+  // Calculate best default crop (16:9 landscape for property photos)
+  const calculateDefaultCrop = (imgWidth: number, imgHeight: number): CropArea => {
+    const targetAspect = 16 / 9; // Best for property listings
+    const imageAspect = imgWidth / imgHeight;
+
+    let cropWidth: number, cropHeight: number;
+
+    if (imageAspect > targetAspect) {
+      // Image is wider than target - fit height
+      cropHeight = imgHeight;
+      cropWidth = cropHeight * targetAspect;
+    } else {
+      // Image is taller than target - fit width
+      cropWidth = imgWidth;
+      cropHeight = cropWidth / targetAspect;
+    }
+
+    // Center the crop
+    const x = (imgWidth - cropWidth) / 2;
+    const y = (imgHeight - cropHeight) / 2;
+
+    return {
+      x: Math.max(0, x),
+      y: Math.max(0, y),
+      width: Math.min(cropWidth, imgWidth),
+      height: Math.min(cropHeight, imgHeight),
+    };
+  };
 
   // Initialize edited images when files change
   useEffect(() => {
@@ -42,6 +139,17 @@ export function ImageEditor({ files, isOpen, onClose, onSave }: ImageEditorProps
         const edited: EditedImage[] = await Promise.all(
           files.map(async (file) => {
             const preview = URL.createObjectURL(file);
+            
+            // Load image to get dimensions
+            const img = new Image();
+            await new Promise((resolve, reject) => {
+              img.onload = resolve;
+              img.onerror = reject;
+              img.src = preview;
+            });
+
+            const defaultCrop = calculateDefaultCrop(img.width, img.height);
+
             return {
               file,
               preview,
@@ -49,11 +157,15 @@ export function ImageEditor({ files, isOpen, onClose, onSave }: ImageEditorProps
               brightness: 100,
               contrast: 100,
               saturation: 100,
+              crop: defaultCrop,
+              originalWidth: img.width,
+              originalHeight: img.height,
             };
           })
         );
         setEditedImages(edited);
         setCurrentIndex(0);
+        setIsCropping(true); // Start in crop mode
       };
       loadImages();
     }
@@ -69,6 +181,17 @@ export function ImageEditor({ files, isOpen, onClose, onSave }: ImageEditorProps
   }, []);
 
   const currentImage = editedImages[currentIndex];
+
+  // Get canvas scale for display
+  const getCanvasScale = (imgWidth: number, imgHeight: number): number => {
+    if (!containerRef.current) return 1;
+    const container = containerRef.current;
+    const maxWidth = container.clientWidth - 32; // padding
+    const maxHeight = 400;
+    const scaleX = maxWidth / imgWidth;
+    const scaleY = maxHeight / imgHeight;
+    return Math.min(1, scaleX, scaleY);
+  };
 
   // Draw image on canvas with all edits applied
   const drawImage = async () => {
@@ -87,24 +210,20 @@ export function ImageEditor({ files, isOpen, onClose, onSave }: ImageEditorProps
       img.src = currentImage.preview;
     });
 
-    // Calculate display size (max 800px width for preview)
-    const maxWidth = 800;
-    const scale = Math.min(1, maxWidth / img.width);
-    const displayWidth = img.width * scale;
-    const displayHeight = img.height * scale;
-
-    // For rotation, we need a larger canvas to accommodate the rotated image
+    // Apply rotation first to get final dimensions
     const rotationRad = (currentImage.rotation * Math.PI) / 180;
     const cos = Math.abs(Math.cos(rotationRad));
     const sin = Math.abs(Math.sin(rotationRad));
     const rotatedWidth = img.width * cos + img.height * sin;
     const rotatedHeight = img.width * sin + img.height * cos;
-    
-    const rotatedDisplayWidth = rotatedWidth * scale;
-    const rotatedDisplayHeight = rotatedHeight * scale;
 
-    canvas.width = rotatedDisplayWidth;
-    canvas.height = rotatedDisplayHeight;
+    // Calculate scale for display
+    const scale = getCanvasScale(rotatedWidth, rotatedHeight);
+    const displayWidth = rotatedWidth * scale;
+    const displayHeight = rotatedHeight * scale;
+
+    canvas.width = displayWidth;
+    canvas.height = displayHeight;
 
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -166,12 +285,100 @@ export function ImageEditor({ files, isOpen, onClose, onSave }: ImageEditorProps
   };
 
   const reset = () => {
+    if (!currentImage) return;
+    const defaultCrop = calculateDefaultCrop(currentImage.originalWidth, currentImage.originalHeight);
     updateImage({
       rotation: 0,
       brightness: 100,
       contrast: 100,
       saturation: 100,
+      crop: defaultCrop,
     });
+  };
+
+  // Update crop based on aspect ratio preset
+  const setCropAspectRatio = (ratio: "free" | "16:9" | "4:3" | "1:1") => {
+    if (!currentImage) return;
+    setCropMode(ratio);
+
+    if (ratio === "free") {
+      // Keep current crop or set to full image
+      if (!currentImage.crop) {
+        updateImage({
+          crop: {
+            x: 0,
+            y: 0,
+            width: currentImage.originalWidth,
+            height: currentImage.originalHeight,
+          },
+        });
+      }
+      return;
+    }
+
+    const [w, h] = ratio.split(":").map(Number);
+    const targetAspect = w / h;
+    const imageAspect = currentImage.originalWidth / currentImage.originalHeight;
+
+    let cropWidth: number, cropHeight: number;
+
+    if (imageAspect > targetAspect) {
+      // Image is wider - fit height
+      cropHeight = currentImage.originalHeight;
+      cropWidth = cropHeight * targetAspect;
+    } else {
+      // Image is taller - fit width
+      cropWidth = currentImage.originalWidth;
+      cropHeight = cropWidth / targetAspect;
+    }
+
+    const x = (currentImage.originalWidth - cropWidth) / 2;
+    const y = (currentImage.originalHeight - cropHeight) / 2;
+
+    updateImage({
+      crop: {
+        x: Math.max(0, x),
+        y: Math.max(0, y),
+        width: Math.min(cropWidth, currentImage.originalWidth),
+        height: Math.min(cropHeight, currentImage.originalHeight),
+      },
+    });
+  };
+
+  // Get crop area in canvas coordinates
+  const getCanvasCropArea = (): CropArea | null => {
+    if (!currentImage || !currentImage.crop || !canvasRef.current) return null;
+
+    const canvas = canvasRef.current;
+    
+    // Account for rotation to get display dimensions
+    const rotationRad = (currentImage.rotation * Math.PI) / 180;
+    const cos = Math.abs(Math.cos(rotationRad));
+    const sin = Math.abs(Math.sin(rotationRad));
+    const rotatedWidth = currentImage.originalWidth * cos + currentImage.originalHeight * sin;
+    const rotatedHeight = currentImage.originalWidth * sin + currentImage.originalHeight * cos;
+
+    const displayScale = getCanvasScale(rotatedWidth, rotatedHeight);
+    
+    // Calculate how the original image maps to the canvas
+    // The canvas shows the rotated image, so we need to map crop coordinates
+    const canvasWidth = rotatedWidth * displayScale;
+    const canvasHeight = rotatedHeight * displayScale;
+    
+    // For now, show crop on original image coordinates (before rotation)
+    // This is a simplified version - in a full implementation, you'd transform coordinates
+    const cropScale = displayScale;
+    
+    // Center the crop area on canvas
+    const offsetX = (canvas.width - canvasWidth) / 2;
+    const offsetY = (canvas.height - canvasHeight) / 2;
+
+    return {
+      x: offsetX + (currentImage.crop.x * cropScale),
+      y: offsetY + (currentImage.crop.y * cropScale),
+      width: currentImage.crop.width * cropScale,
+      height: currentImage.crop.height * cropScale,
+    };
   };
 
   const handleSave = async () => {
@@ -192,15 +399,29 @@ export function ImageEditor({ files, isOpen, onClose, onSave }: ImageEditorProps
         img.src = edited.preview;
       });
 
-      canvas.width = img.width;
-      canvas.height = img.height;
+      // Apply crop first (before rotation)
+      let sourceX = 0;
+      let sourceY = 0;
+      let sourceWidth = img.width;
+      let sourceHeight = img.height;
+
+      if (edited.crop) {
+        sourceX = edited.crop.x;
+        sourceY = edited.crop.y;
+        sourceWidth = edited.crop.width;
+        sourceHeight = edited.crop.height;
+      }
+
+      // Set canvas to cropped size
+      canvas.width = sourceWidth;
+      canvas.height = sourceHeight;
 
       // Apply rotation
       ctx.save();
       ctx.translate(canvas.width / 2, canvas.height / 2);
       ctx.rotate((edited.rotation * Math.PI) / 180);
       ctx.translate(-canvas.width / 2, -canvas.height / 2);
-      ctx.drawImage(img, 0, 0);
+      ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, sourceWidth, sourceHeight);
       ctx.restore();
 
       // Apply filters
@@ -267,11 +488,21 @@ export function ImageEditor({ files, isOpen, onClose, onSave }: ImageEditorProps
 
         <div className="p-6 space-y-6">
           {/* Image Preview */}
-          <div className="relative bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden min-h-[300px] flex items-center justify-center p-4">
+          <div 
+            ref={containerRef}
+            className="relative bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden min-h-[300px] flex items-center justify-center p-4"
+          >
             <canvas
               ref={canvasRef}
               className="max-w-full max-h-[400px] object-contain"
             />
+            {/* Crop Overlay */}
+            {isCropping && currentImage.crop && canvasRef.current && (
+              <CropOverlay
+                crop={getCanvasCropArea()}
+                canvas={canvasRef.current}
+              />
+            )}
           </div>
 
           {/* Navigation */}
@@ -296,6 +527,55 @@ export function ImageEditor({ files, isOpen, onClose, onSave }: ImageEditorProps
               </Button>
             </div>
           )}
+
+          {/* Crop Controls */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                <ScissorsIcon className="h-4 w-4" />
+                Crop
+              </h3>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setIsCropping(!isCropping)}
+              >
+                {isCropping ? "Hide Crop" : "Show Crop"}
+              </Button>
+            </div>
+            {isCropping && (
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  variant={cropMode === "16:9" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setCropAspectRatio("16:9")}
+                >
+                  16:9
+                </Button>
+                <Button
+                  variant={cropMode === "4:3" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setCropAspectRatio("4:3")}
+                >
+                  4:3
+                </Button>
+                <Button
+                  variant={cropMode === "1:1" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setCropAspectRatio("1:1")}
+                >
+                  1:1
+                </Button>
+                <Button
+                  variant={cropMode === "free" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setCropAspectRatio("free")}
+                >
+                  Free
+                </Button>
+              </div>
+            )}
+          </div>
 
           {/* Rotation Controls */}
           <div className="space-y-3">
