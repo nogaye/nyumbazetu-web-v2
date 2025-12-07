@@ -137,24 +137,24 @@ function ClientsPage() {
               {propertyManagementClientsWithLogos.length > itemsPerView && (
                 <>
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="icon"
                     onClick={prevPmSlide}
                     disabled={pmCurrentIndex === 0}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl border-2 hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="absolute left-2 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
                     aria-label="Previous slide"
                   >
-                    <ChevronLeftIcon className="h-5 w-5" />
+                    <ChevronLeftIcon className="h-4 w-4" />
                   </Button>
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="icon"
                     onClick={nextPmSlide}
                     disabled={pmCurrentIndex >= maxPmIndex}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl border-2 hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
                     aria-label="Next slide"
                   >
-                    <ChevronRightIcon className="h-5 w-5" />
+                    <ChevronRightIcon className="h-4 w-4" />
                   </Button>
                 </>
               )}
