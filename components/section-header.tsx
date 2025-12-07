@@ -32,7 +32,17 @@ export function SectionHeader({
         {title}
       </h2>
       {description && (
-        <p className={cn("text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed", className?.includes("text-white") && "text-white")}>
+        <p className={cn(
+          "text-lg md:text-xl leading-relaxed",
+          // Check for specific text color patterns in className
+          className?.includes("text-slate-900 dark:text-white")
+            ? "text-slate-900 dark:text-white"
+            : className?.includes("text-white") && !className?.includes("text-slate-900")
+            ? "text-white"
+            : className?.includes("dark:text-white")
+            ? "text-white dark:text-white"
+            : "text-slate-600 dark:text-slate-300"
+        )}>
           {description}
         </p>
       )}

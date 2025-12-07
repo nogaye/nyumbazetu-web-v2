@@ -51,7 +51,7 @@ export function HowItWorks() {
             transition={{ delay: idx * 0.1 }}
             className="relative"
           >
-            <div className="text-6xl font-bold text-white/20 mb-4">{step.number}</div>
+            <div className="text-6xl font-bold text-white/40 mb-4">{step.number}</div>
             <h3 className="text-xl font-bold text-white mb-3">
               {step.title}
             </h3>
