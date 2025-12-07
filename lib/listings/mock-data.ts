@@ -282,12 +282,14 @@ export function getMockProperties(filters: {
 
 /**
  * Generate a placeholder image URL
- * Using Unsplash placeholder service for now
+ * Using Picsum Photos for placeholder images (reliable, no auth required)
+ * TODO: Replace with actual Supabase Storage URLs once connected
  */
 export function getPlaceholderImageUrl(propertyId: string, width = 800, height = 600): string {
-  // Using Unsplash Source API for placeholder images
-  // TODO: Replace with actual Supabase Storage URLs once connected
-  return `https://source.unsplash.com/${width}x${height}/?apartment,house,kenya&sig=${propertyId}`;
+  // Using Picsum Photos (Lorem Picsum) - reliable placeholder service
+  // The seed ensures consistent images per property ID
+  const seed = propertyId.split("-").pop() || propertyId;
+  return `https://picsum.photos/seed/${seed}/${width}/${height}`;
 }
 
 /**
