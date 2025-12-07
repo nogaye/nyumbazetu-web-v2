@@ -17,6 +17,7 @@ import {
 import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { ImageEditor } from "./ImageEditor";
 
 interface PropertyImage {
   id: string;
@@ -46,6 +47,8 @@ export function PropertyImageUpload({
   const [error, setError] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const [showGuidance, setShowGuidance] = useState(true);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [showEditor, setShowEditor] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Fetch existing images when propertyId changes
@@ -88,15 +91,7 @@ export function PropertyImageUpload({
   };
 
 
-  const handleFiles = useCallback(async (files: FileList | File[]) => {
-    if (!propertyId) {
-      setError("Please save the property first before uploading images");
-      return;
-    }
-
-    const fileArray = Array.from(files);
-
-    // Validate all files first
+  const validateFiles = (fileArray: File[]): string[] => {
     const validationErrors: string[] = [];
     fileArray.forEach((file) => {
       if (!ALLOWED_TYPES.includes(file.type)) {
@@ -106,32 +101,56 @@ export function PropertyImageUpload({
         validationErrors.push(`File ${file.name} exceeds maximum size of ${MAX_FILE_SIZE / 1024 / 1024}MB`);
       }
     });
+    return validationErrors;
+  };
 
+  const handleFiles = useCallback(async (files: FileList | File[]) => {
+    if (!propertyId) {
+      setError("Please save the property first before uploading images");
+      return;
+    }
+
+    const fileArray = Array.from(files);
+
+    // Validate all files first
+    const validationErrors = validateFiles(fileArray);
     if (validationErrors.length > 0) {
       setError(validationErrors.join("; "));
       return;
     }
 
-    // Check total image count (we'll check this after fetching current images)
-    setError(null);
-    setUploading(true);
-
-    const formData = new FormData();
-    fileArray.forEach((file) => {
-      formData.append("images", file);
-    });
-
+    // Check current image count before showing editor
     try {
-      // Check current image count before uploading
       const currentImagesResponse = await fetch(`/api/admin/properties/${propertyId}/images`);
       const currentImagesData = await currentImagesResponse.json();
       const currentImageCount = currentImagesData.success ? (currentImagesData.images?.length || 0) : 0;
 
       if (currentImageCount + fileArray.length > MAX_IMAGES) {
         setError(`Maximum ${MAX_IMAGES} images allowed. You can upload ${MAX_IMAGES - currentImageCount} more.`);
-        setUploading(false);
         return;
       }
+
+      // Show editor for user to edit images before upload
+      setSelectedFiles(fileArray);
+      setShowEditor(true);
+      setError(null);
+    } catch (err) {
+      setError("Network error. Please try again.");
+    }
+  }, [propertyId]);
+
+  const handleEditorSave = async (editedFiles: File[]) => {
+    if (!propertyId) return;
+
+    setShowEditor(false);
+    setError(null);
+    setUploading(true);
+
+    try {
+      const formData = new FormData();
+      editedFiles.forEach((file) => {
+        formData.append("images", file);
+      });
 
       const response = await fetch(`/api/admin/properties/${propertyId}/images`, {
         method: "POST",
@@ -144,6 +163,7 @@ export function PropertyImageUpload({
         // Refresh images list
         await fetchImages();
         setError(null);
+        setSelectedFiles([]);
       } else {
         setError(data.error || "Failed to upload images");
         if (data.errors && data.errors.length > 0) {
@@ -157,7 +177,7 @@ export function PropertyImageUpload({
       setUploading(false);
       setUploadProgress({});
     }
-  }, [propertyId]);
+  };
 
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -416,7 +436,7 @@ export function PropertyImageUpload({
                   : "Click to upload or drag and drop"}
               </p>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                PNG, JPG, WebP up to 10MB each • Landscape orientation recommended
+                PNG, JPG, WebP up to 10MB each • Edit images before uploading
               </p>
             </div>
             {!uploading && images.length < MAX_IMAGES && (
@@ -544,6 +564,17 @@ export function PropertyImageUpload({
           No images uploaded yet. Upload images using the area above.
         </div>
       )}
+
+      {/* Image Editor */}
+      <ImageEditor
+        files={selectedFiles}
+        isOpen={showEditor}
+        onClose={() => {
+          setShowEditor(false);
+          setSelectedFiles([]);
+        }}
+        onSave={handleEditorSave}
+      />
     </div>
   );
 }
