@@ -60,5 +60,30 @@ const SheetClose = ({ onClick }: { onClick: () => void }) => (
   </Button>
 );
 
-export { Sheet, SheetHeader, SheetTitle, SheetClose };
+const SheetContent = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn("fixed inset-y-0 right-0 z-50 w-full max-w-lg border-l border-slate-200 bg-white shadow-xl overflow-y-auto dark:border-slate-800 dark:bg-slate-900", className)} {...props}>
+    {children}
+  </div>
+);
+
+const SheetDescription = ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
+  <p className={cn("text-sm text-slate-600 dark:text-slate-400", className)} {...props} />
+);
+
+const SheetTrigger = React.forwardRef<
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean }
+>(({ asChild, children, ...props }, ref) => {
+  if (asChild && React.isValidElement(children)) {
+    return React.cloneElement(children, { ref, ...props } as any);
+  }
+  return (
+    <button ref={ref} {...props}>
+      {children}
+    </button>
+  );
+});
+SheetTrigger.displayName = "SheetTrigger";
+
+export { Sheet, SheetHeader, SheetTitle, SheetClose, SheetContent, SheetDescription, SheetTrigger };
 

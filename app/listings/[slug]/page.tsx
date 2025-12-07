@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, MapPin, Bed, Bath, Square, CheckCircle2, Heart } from "lucide-react";
+import { ContactOwnerButton } from "@/components/listings/ContactOwnerButton";
 import { fetchPropertyBySlug, fetchPropertyImages } from "@/lib/listings/supabase-helpers";
 import { PropertyImageGallery } from "@/components/listings/PropertyImageGallery";
 import { Property } from "@/lib/listings/types";
@@ -214,9 +215,10 @@ export default async function ListingDetailPage({
 
               {/* Action Buttons */}
               <div className="space-y-3">
-                <Button className="w-full" size="lg">
-                  Contact Owner
-                </Button>
+                <ContactOwnerButton
+                  propertyTitle={listing.title}
+                  propertyId={listing.id}
+                />
                 <Button variant="outline" className="w-full" size="lg">
                   <Heart className="mr-2 h-4 w-4" />
                   Save Listing

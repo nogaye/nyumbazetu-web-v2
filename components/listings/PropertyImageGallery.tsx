@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PropertyImage } from "@/components/listings/PropertyImage";
@@ -28,17 +28,58 @@ export function PropertyImageGallery({
 
   const currentImage = images[currentIndex];
 
-  const goToPrevious = () => {
+  const goToPrevious = useCallback(() => {
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
+  }, [images.length]);
 
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
+  }, []);
 
   const goToImage = (index: number) => {
     setCurrentIndex(index);
   };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Only handle keyboard shortcuts when fullscreen is open
+      if (!isFullscreen) {
+        return;
+      }
+
+      switch (e.key) {
+        case 'ArrowLeft':
+          e.preventDefault();
+          goToPrevious();
+          break;
+        case 'ArrowRight':
+          e.preventDefault();
+          goToNext();
+          break;
+        case 'Escape':
+          e.preventDefault();
+          setIsFullscreen(false);
+          break;
+        case 'Home':
+          e.preventDefault();
+          setCurrentIndex(0);
+          break;
+        case 'End':
+          e.preventDefault();
+          setCurrentIndex(images.length - 1);
+          break;
+      }
+    };
+
+    if (isFullscreen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isFullscreen, images.length, goToPrevious, goToNext]);
 
   return (
     <>
