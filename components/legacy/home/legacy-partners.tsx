@@ -1,6 +1,12 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { Section } from "@/components/section";
+import { SectionHeader } from "@/components/section-header";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 interface Partner {
   id: number;
@@ -93,71 +99,170 @@ export function LegacyPartners() {
     },
   ];
 
-  const defaultPartner = items.find((item) => item.default);
-  const otherPartners = items.filter((item) => !item.default);
+  // Create infinite loop by duplicating items
+  const partnersInfiniteItems = [...items, ...items, ...items];
+  const partnersStartIndex = items.length; // Start in the middle set
+  
+  const partnersCarouselRef = useRef<HTMLDivElement>(null);
+  const partnersPositionRef = useRef<number>(partnersStartIndex * (150 + 16));
+  const partnersScrollPausedRef = useRef<boolean>(false);
+  const partnersItemWidth = 150; // Width for each logo
+  const partnersGap = 16; // Gap between items
+  const partnersItemsPerView = 6; // Show 6 logos at a time on desktop
+
+  // Continuous smooth scroll for Banking Partners Carousel
+  useEffect(() => {
+    if (!partnersCarouselRef.current) return;
+
+    let animationFrameId: number;
+    const scrollSpeed = 0.3; // pixels per frame (adjust for speed)
+    const itemWidthWithGap = partnersItemWidth + partnersGap;
+    const totalItems = items.length;
+    const maxPosition = totalItems * 2 * itemWidthWithGap;
+
+    const animate = () => {
+      if (!partnersScrollPausedRef.current) {
+        // Continuously scroll
+        partnersPositionRef.current += scrollSpeed;
+        
+        // Check if we've scrolled past the end of the second set
+        if (partnersPositionRef.current >= maxPosition) {
+          // Reset to middle set position seamlessly
+          partnersPositionRef.current = partnersStartIndex * itemWidthWithGap;
+        }
+      }
+
+      // Update the transform
+      if (partnersCarouselRef.current) {
+        const carouselInner = partnersCarouselRef.current.querySelector('.flex') as HTMLElement;
+        if (carouselInner) {
+          carouselInner.style.transform = `translateX(-${partnersPositionRef.current}px)`;
+          carouselInner.style.transition = 'none'; // No transition for smooth continuous scroll
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [partnersStartIndex, partnersItemWidth, partnersGap, items.length]);
+
+  const nextPartnersSlide = () => {
+    const itemWidthWithGap = partnersItemWidth + partnersGap;
+    const totalItems = items.length;
+    const maxPosition = totalItems * 2 * itemWidthWithGap;
+    
+    partnersPositionRef.current += itemWidthWithGap;
+    
+    // Handle loop
+    if (partnersPositionRef.current >= maxPosition) {
+      partnersPositionRef.current = partnersStartIndex * itemWidthWithGap;
+    }
+    
+    partnersScrollPausedRef.current = true;
+    
+    // Resume auto-scroll after a delay
+    setTimeout(() => {
+      partnersScrollPausedRef.current = false;
+    }, 2000);
+  };
+
+  const prevPartnersSlide = () => {
+    const itemWidthWithGap = partnersItemWidth + partnersGap;
+    const totalItems = items.length;
+    const minPosition = 0;
+    
+    partnersPositionRef.current -= itemWidthWithGap;
+    
+    // Handle loop
+    if (partnersPositionRef.current < minPosition) {
+      partnersPositionRef.current = (partnersStartIndex + totalItems - 1) * itemWidthWithGap;
+    }
+    
+    partnersScrollPausedRef.current = true;
+    
+    // Resume auto-scroll after a delay
+    setTimeout(() => {
+      partnersScrollPausedRef.current = false;
+    }, 2000);
+  };
 
   return (
-    <Section className="bg-slate-50 dark:bg-slate-900 py-5">
+    <Section className="bg-slate-50 dark:bg-slate-900">
       <div className="container mx-auto px-4">
-        {/* Heading */}
-        <div className="flex mb-5">
-          <div className="w-full lg:w-2/3 mx-auto text-center">
-            <h3 className="font-bold text-4xl md:text-5xl mb-3 text-slate-900 dark:text-slate-50">
-              Banking Partners
-            </h3>
-            <p className="text-lg text-slate-600 dark:text-slate-400">
-              Experience smooth, secure transactions and automatic payment reconciliation through our trusted network of local banks and mobile payment platforms.
-            </p>
-          </div>
-        </div>
+        <SectionHeader
+          title="Banking Partners"
+          description="Experience smooth, secure transactions and automatic payment reconciliation through our trusted network of local banks and mobile payment platforms."
+        />
 
-        {/* Highlighted (Default) Partner */}
-        {defaultPartner && (
-          <div className="flex justify-center mb-5">
-            <div className="w-full md:w-1/2 lg:w-1/3 flex justify-center mb-4">
-              <Link
-                href={defaultPartner.url || "#"}
-                target="_blank"
-                className="text-decoration-none"
+        {/* Banking Partners Carousel */}
+        <div className="mt-12">
+          <div className="relative">
+            {/* Navigation Buttons */}
+            {items.length > partnersItemsPerView && (
+              <>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={prevPartnersSlide}
+                  className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl"
+                  aria-label="Previous slide"
+                >
+                  <ChevronLeftIcon className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={nextPartnersSlide}
+                  className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl"
+                  aria-label="Next slide"
+                >
+                  <ChevronRightIcon className="h-4 w-4" />
+                </Button>
+              </>
+            )}
+
+            {/* Carousel Container */}
+            <div className="overflow-hidden px-12" ref={partnersCarouselRef}>
+              <div
+                className="flex"
+                style={{
+                  gap: `${partnersGap}px`,
+                }}
               >
-                <Image
-                  className="w-full shadow-lg rounded-3xl p-3 bg-white dark:bg-slate-800 object-contain"
-                  src={defaultPartner.image}
-                  alt={defaultPartner.name}
-                  width={200}
-                  height={180}
-                  style={{ maxHeight: "180px" }}
-                  sizes="(max-width: 768px) 100vw, 200px"
-                />
-              </Link>
+                {partnersInfiniteItems.map((item, index) => (
+                  <div
+                    key={`${item.id}-${index}`}
+                    className="flex-shrink-0 flex items-center justify-center"
+                    style={{ width: `${partnersItemWidth}px` }}
+                  >
+                    <Link
+                      href={item.url || "#"}
+                      target={item.url ? "_blank" : undefined}
+                      rel={item.url ? "noopener noreferrer" : undefined}
+                      className="w-full h-24 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center p-4 border border-slate-200 dark:border-slate-700 hover:border-primary/30 transition-all duration-300"
+                    >
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        width={120}
+                        height={48}
+                        className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+                        sizes="(max-width: 640px) 150px, 150px"
+                        loading="lazy"
+                      />
+                    </Link>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        )}
-
-        {/* Other Partners */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 text-center">
-          {otherPartners.map((item) => (
-            <div
-              key={item.id}
-              className="flex justify-center items-center"
-            >
-              <Link
-                href={item.url || "#"}
-                target="_blank"
-                className="text-decoration-none"
-              >
-                <Image
-                  className="w-full shadow-sm rounded-2xl bg-white dark:bg-slate-800 p-2 object-contain"
-                  src={item.image}
-                  alt={item.name}
-                  width={80}
-                  height={80}
-                  style={{ height: "80px" }}
-                  sizes="80px"
-                />
-              </Link>
-            </div>
-          ))}
         </div>
       </div>
     </Section>
