@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PropertyImage } from "@/components/listings/PropertyImage";
 import { cn } from "@/lib/utils";
 
 interface PropertyImageGalleryProps {
@@ -46,7 +46,7 @@ export function PropertyImageGallery({
       <div className="relative mb-4">
         {/* Main Image */}
         <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-slate-200">
-          <Image
+          <PropertyImage
             src={currentImage.url}
             alt={currentImage.alt || propertyTitle}
             fill
@@ -55,6 +55,7 @@ export function PropertyImageGallery({
             blurDataURL={currentImage.blurDataURL}
             priority={currentIndex === 0}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px"
+            objectFit="cover"
           />
 
           {/* Navigation Arrows */}
@@ -127,13 +128,14 @@ export function PropertyImageGallery({
                 )}
                 aria-label={`View image ${index + 1}`}
               >
-                <Image
+                <PropertyImage
                   src={image.url}
                   alt={`${propertyTitle} - Image ${index + 1}`}
                   fill
                   className="object-cover"
                   sizes="80px"
                   loading="lazy"
+                  objectFit="cover"
                 />
               </button>
             ))}
@@ -191,7 +193,7 @@ export function PropertyImageGallery({
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative h-full w-full">
-              <Image
+              <PropertyImage
                 src={currentImage.url}
                 alt={currentImage.alt || propertyTitle}
                 fill
@@ -199,6 +201,7 @@ export function PropertyImageGallery({
                 placeholder={currentImage.blurDataURL ? "blur" : "empty"}
                 blurDataURL={currentImage.blurDataURL}
                 sizes="100vw"
+                objectFit="contain"
               />
             </div>
           </div>

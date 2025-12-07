@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { ListingWithCoverImage } from "@/lib/listings/types";
 import { Button } from "@/components/ui/button";
+import { PropertyImage } from "@/components/listings/PropertyImage";
 import { cn } from "@/lib/utils";
 
 interface ListingCardProps {
@@ -38,15 +38,16 @@ export function ListingCard({ listing }: ListingCardProps) {
       >
         {/* Image Section */}
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
-          <Image
+          <PropertyImage
             src={listing.cover_image_url}
             alt={listing.title}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="transition-transform duration-300 group-hover:scale-105"
             sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             placeholder={listing.blur_data_url ? "blur" : "empty"}
             blurDataURL={listing.blur_data_url}
             loading="lazy"
+            objectFit="cover"
           />
 
           {/* Verified Badge */}

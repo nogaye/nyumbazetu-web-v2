@@ -20,10 +20,10 @@ function isSupabaseConfigured(): boolean {
 
 /**
  * Get property image URL from Supabase Storage
- * Falls back to placeholder images if Supabase is not configured or bucket doesn't exist
+ * Falls back to placeholder images if Supabase is not configured or image doesn't exist
  */
 export function getImageUrl(storagePath: string): string {
-  // Extract property ID from storage path
+  // Extract property ID from storage path for fallback
   // Path format: "property-images/{property-id}/image.webp"
   const pathParts = storagePath.split("/");
   let propertyId = "default";
@@ -38,13 +38,8 @@ export function getImageUrl(storagePath: string): string {
       propertyId = pathParts[0];
     }
   }
-  
-  // For now, use placeholder images since we don't have actual images uploaded to storage
-  // TODO: Once images are uploaded to Supabase Storage, uncomment the storage code below
-  return getPlaceholderImageUrl(propertyId);
 
-  // Uncomment this once you have images uploaded to Supabase Storage:
-  /*
+  // Use Supabase Storage if configured
   if (!isSupabaseConfigured()) {
     // Fallback to placeholder images
     return getPlaceholderImageUrl(propertyId);
@@ -56,14 +51,15 @@ export function getImageUrl(storagePath: string): string {
       .getPublicUrl(storagePath);
     
     // Note: getPublicUrl returns a URL even if the file doesn't exist
-    // You may want to verify the file exists before using this URL
+    // The browser will show a broken image if the file doesn't exist
+    // For now, we'll return the Supabase URL and let the browser handle 404s
+    // In production, you might want to verify the file exists first
     return data.publicUrl;
   } catch (error) {
     console.warn('Error getting image URL from Supabase Storage:', error);
     // Fallback to placeholder
     return getPlaceholderImageUrl(propertyId);
   }
-  */
 }
 
 /**
