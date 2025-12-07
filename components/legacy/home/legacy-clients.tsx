@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
@@ -17,65 +17,116 @@ export function LegacyClients() {
   const propertyManagementClientsWithLogos = propertyManagementClients.filter(
     (client) => client.imageUrl
   );
-  const [pmCurrentIndex, setPmCurrentIndex] = useState(0);
+  
+  // Create infinite loop by duplicating items
+  const pmInfiniteItems = [...propertyManagementClientsWithLogos, ...propertyManagementClientsWithLogos, ...propertyManagementClientsWithLogos];
+  const pmStartIndex = propertyManagementClientsWithLogos.length; // Start in the middle set
+  
+  const [pmCurrentIndex, setPmCurrentIndex] = useState(pmStartIndex);
+  const [pmIsTransitioning, setPmIsTransitioning] = useState(false);
+  const pmCarouselRef = useRef<HTMLDivElement>(null);
   const pmItemsPerView = 6; // Show 6 logos at a time on desktop
   const pmItemWidth = 150; // Width for each logo
   const pmGap = 16; // Gap between items
-  const maxPmIndex = Math.max(0, propertyManagementClientsWithLogos.length - pmItemsPerView);
 
   // Property Estates Carousel State
-  const [estatesCurrentIndex, setEstatesCurrentIndex] = useState(0);
+  // Create infinite loop by duplicating items
+  const estatesInfiniteItems = [...mainClients, ...mainClients, ...mainClients];
+  const estatesStartIndex = mainClients.length; // Start in the middle set
+  
+  const [estatesCurrentIndex, setEstatesCurrentIndex] = useState(estatesStartIndex);
+  const [estatesIsTransitioning, setEstatesIsTransitioning] = useState(false);
+  const estatesCarouselRef = useRef<HTMLDivElement>(null);
   const estatesItemsPerView = 3; // Show 3 items at a time on desktop
   const estatesItemWidth = 320; // Increased width for better spacing
   const estatesGap = 24; // Gap between items
-  const maxEstatesIndex = Math.max(0, mainClients.length - estatesItemsPerView);
 
   // Auto-scroll Property Management Companies Carousel
   useEffect(() => {
     const scrollInterval = setInterval(() => {
-      setPmCurrentIndex((prev) => {
-        if (prev >= maxPmIndex) {
-          return 0;
-        }
-        return prev + 1;
-      });
+      setPmCurrentIndex((prev) => prev + 1);
     }, 3000);
 
     return () => clearInterval(scrollInterval);
-  }, [maxPmIndex]);
+  }, []);
+
+  // Handle infinite loop for PM carousel
+  useEffect(() => {
+    if (!pmCarouselRef.current || pmIsTransitioning) return;
+
+    const totalItems = propertyManagementClientsWithLogos.length;
+    const maxIndex = totalItems * 2; // End of second set
+    const minIndex = 0; // Start of first set
+
+    if (pmCurrentIndex >= maxIndex) {
+      setPmIsTransitioning(true);
+      // Jump to middle set without animation
+      setTimeout(() => {
+        setPmCurrentIndex(pmStartIndex);
+        setPmIsTransitioning(false);
+      }, 50);
+    } else if (pmCurrentIndex < minIndex) {
+      setPmIsTransitioning(true);
+      // Jump to middle set without animation
+      setTimeout(() => {
+        setPmCurrentIndex(pmStartIndex + totalItems - 1);
+        setPmIsTransitioning(false);
+      }, 50);
+    }
+  }, [pmCurrentIndex, pmStartIndex, propertyManagementClientsWithLogos.length, pmIsTransitioning]);
 
   const nextPmSlide = () => {
-    setPmCurrentIndex((prev) => Math.min(prev + 1, maxPmIndex));
+    setPmCurrentIndex((prev) => prev + 1);
   };
 
   const prevPmSlide = () => {
-    setPmCurrentIndex((prev) => Math.max(prev - 1, 0));
+    setPmCurrentIndex((prev) => prev - 1);
   };
 
   // Auto-scroll Property Estates Carousel
   useEffect(() => {
     const scrollInterval = setInterval(() => {
-      setEstatesCurrentIndex((prev) => {
-        if (prev >= maxEstatesIndex) {
-          return 0;
-        }
-        return prev + 1;
-      });
+      setEstatesCurrentIndex((prev) => prev + 1);
     }, 3000);
 
     return () => clearInterval(scrollInterval);
-  }, [maxEstatesIndex]);
+  }, []);
+
+  // Handle infinite loop for Estates carousel
+  useEffect(() => {
+    if (!estatesCarouselRef.current || estatesIsTransitioning) return;
+
+    const totalItems = mainClients.length;
+    const maxIndex = totalItems * 2; // End of second set
+    const minIndex = 0; // Start of first set
+
+    if (estatesCurrentIndex >= maxIndex) {
+      setEstatesIsTransitioning(true);
+      // Jump to middle set without animation
+      setTimeout(() => {
+        setEstatesCurrentIndex(estatesStartIndex);
+        setEstatesIsTransitioning(false);
+      }, 50);
+    } else if (estatesCurrentIndex < minIndex) {
+      setEstatesIsTransitioning(true);
+      // Jump to middle set without animation
+      setTimeout(() => {
+        setEstatesCurrentIndex(estatesStartIndex + totalItems - 1);
+        setEstatesIsTransitioning(false);
+      }, 50);
+    }
+  }, [estatesCurrentIndex, estatesStartIndex, mainClients.length, estatesIsTransitioning]);
 
   const nextEstatesSlide = () => {
-    setEstatesCurrentIndex((prev) => Math.min(prev + 1, maxEstatesIndex));
+    setEstatesCurrentIndex((prev) => prev + 1);
   };
 
   const prevEstatesSlide = () => {
-    setEstatesCurrentIndex((prev) => Math.max(prev - 1, 0));
+    setEstatesCurrentIndex((prev) => prev - 1);
   };
 
   const goToEstatesSlide = (index: number) => {
-    setEstatesCurrentIndex(Math.min(index, maxEstatesIndex));
+    setEstatesCurrentIndex(estatesStartIndex + index);
   };
 
   // Helper function to check if URL is external
@@ -109,8 +160,7 @@ export function LegacyClients() {
                   variant="ghost"
                   size="icon"
                   onClick={prevPmSlide}
-                  disabled={pmCurrentIndex === 0}
-                  className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl"
                   aria-label="Previous slide"
                 >
                   <ChevronLeftIcon className="h-4 w-4" />
@@ -119,8 +169,7 @@ export function LegacyClients() {
                   variant="ghost"
                   size="icon"
                   onClick={nextPmSlide}
-                  disabled={pmCurrentIndex >= maxPmIndex}
-                  className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl"
                   aria-label="Next slide"
                 >
                   <ChevronRightIcon className="h-4 w-4" />
@@ -129,15 +178,16 @@ export function LegacyClients() {
             )}
 
             {/* Carousel Container */}
-            <div className="overflow-hidden px-12">
+            <div className="overflow-hidden px-12" ref={pmCarouselRef}>
               <div
-                className="flex transition-transform duration-500 ease-in-out"
+                className="flex"
                 style={{
                   transform: `translateX(-${pmCurrentIndex * (pmItemWidth + pmGap)}px)`,
                   gap: `${pmGap}px`,
+                  transition: pmIsTransitioning ? 'none' : 'transform 0.5s ease-in-out',
                 }}
               >
-                {propertyManagementClientsWithLogos.map((client, index) => {
+                {pmInfiniteItems.map((client, index) => {
                   const imageSrc = isExternalUrl(client.imageUrl)
                     ? client.imageUrl!
                     : `/legacy/images/clients/${client.imageUrl}`;
@@ -183,8 +233,7 @@ export function LegacyClients() {
               variant="ghost"
               size="icon"
               onClick={prevEstatesSlide}
-              disabled={estatesCurrentIndex === 0}
-              className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-9 w-9 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-9 w-9 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl"
               aria-label="Previous slide"
             >
               <ChevronLeftIcon className="h-4 w-4" />
@@ -193,23 +242,23 @@ export function LegacyClients() {
               variant="ghost"
               size="icon"
               onClick={nextEstatesSlide}
-              disabled={estatesCurrentIndex >= maxEstatesIndex}
-              className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-9 w-9 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-9 w-9 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl"
               aria-label="Next slide"
             >
               <ChevronRightIcon className="h-4 w-4" />
             </Button>
 
             {/* Carousel Container */}
-            <div className="overflow-hidden px-12">
+            <div className="overflow-hidden px-12" ref={estatesCarouselRef}>
               <div
-                className="flex transition-transform duration-500 ease-in-out"
+                className="flex"
                 style={{
                   transform: `translateX(-${estatesCurrentIndex * (estatesItemWidth + estatesGap)}px)`,
                   gap: `${estatesGap}px`,
+                  transition: estatesIsTransitioning ? 'none' : 'transform 0.5s ease-in-out',
                 }}
               >
-                {mainClients.map((client, index) => (
+                {estatesInfiniteItems.map((client, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -248,18 +297,21 @@ export function LegacyClients() {
 
             {/* Dots Indicator */}
             <div className="flex justify-center gap-2 mt-6">
-              {Array.from({ length: maxEstatesIndex + 1 }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToEstatesSlide(index)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    estatesCurrentIndex === index
-                      ? "w-8 bg-primary"
-                      : "w-2 bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500"
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
+              {mainClients.map((_, index) => {
+                const displayIndex = ((estatesCurrentIndex - estatesStartIndex) % mainClients.length + mainClients.length) % mainClients.length;
+                return (
+                  <button
+                    key={index}
+                    onClick={() => goToEstatesSlide(index)}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      displayIndex === index
+                        ? "w-8 bg-primary"
+                        : "w-2 bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500"
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>

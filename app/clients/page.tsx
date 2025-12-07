@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
@@ -20,33 +20,58 @@ function ClientsPage() {
     (client) => client.imageUrl
   );
   
+  // Create infinite loop by duplicating items
+  const pmInfiniteItems = [...propertyManagementClientsWithLogos, ...propertyManagementClientsWithLogos, ...propertyManagementClientsWithLogos];
+  const pmStartIndex = propertyManagementClientsWithLogos.length; // Start in the middle set
+  
   // Carousel state for property management companies
-  const [pmCurrentIndex, setPmCurrentIndex] = useState(0);
+  const [pmCurrentIndex, setPmCurrentIndex] = useState(pmStartIndex);
+  const [pmIsTransitioning, setPmIsTransitioning] = useState(false);
+  const pmCarouselRef = useRef<HTMLDivElement>(null);
   const itemsPerView = 6; // Show 6 logos at a time on desktop
   const itemWidth = 150; // Width for each logo
   const gap = 16; // Gap between items
-  const maxPmIndex = Math.max(0, propertyManagementClientsWithLogos.length - itemsPerView);
   
   // Auto-scroll carousel
   useEffect(() => {
     const scrollInterval = setInterval(() => {
-      setPmCurrentIndex((prev) => {
-        if (prev >= maxPmIndex) {
-          return 0;
-        }
-        return prev + 1;
-      });
+      setPmCurrentIndex((prev) => prev + 1);
     }, 3000);
 
     return () => clearInterval(scrollInterval);
-  }, [maxPmIndex]);
+  }, []);
+
+  // Handle infinite loop for PM carousel
+  useEffect(() => {
+    if (!pmCarouselRef.current || pmIsTransitioning) return;
+
+    const totalItems = propertyManagementClientsWithLogos.length;
+    const maxIndex = totalItems * 2; // End of second set
+    const minIndex = 0; // Start of first set
+
+    if (pmCurrentIndex >= maxIndex) {
+      setPmIsTransitioning(true);
+      // Jump to middle set without animation
+      setTimeout(() => {
+        setPmCurrentIndex(pmStartIndex);
+        setPmIsTransitioning(false);
+      }, 50);
+    } else if (pmCurrentIndex < minIndex) {
+      setPmIsTransitioning(true);
+      // Jump to middle set without animation
+      setTimeout(() => {
+        setPmCurrentIndex(pmStartIndex + totalItems - 1);
+        setPmIsTransitioning(false);
+      }, 50);
+    }
+  }, [pmCurrentIndex, pmStartIndex, propertyManagementClientsWithLogos.length, pmIsTransitioning]);
   
   const nextPmSlide = () => {
-    setPmCurrentIndex((prev) => Math.min(prev + 1, maxPmIndex));
+    setPmCurrentIndex((prev) => prev + 1);
   };
 
   const prevPmSlide = () => {
-    setPmCurrentIndex((prev) => Math.max(prev - 1, 0));
+    setPmCurrentIndex((prev) => prev - 1);
   };
   
   // Helper function to check if URL is external
@@ -140,8 +165,7 @@ function ClientsPage() {
                     variant="ghost"
                     size="icon"
                     onClick={prevPmSlide}
-                    disabled={pmCurrentIndex === 0}
-                    className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl"
                     aria-label="Previous slide"
                   >
                     <ChevronLeftIcon className="h-4 w-4" />
@@ -150,8 +174,7 @@ function ClientsPage() {
                     variant="ghost"
                     size="icon"
                     onClick={nextPmSlide}
-                    disabled={pmCurrentIndex >= maxPmIndex}
-                    className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 hover:scale-110 transition-all duration-200 opacity-60 hover:opacity-100 hover:shadow-xl"
                     aria-label="Next slide"
                   >
                     <ChevronRightIcon className="h-4 w-4" />
@@ -160,15 +183,16 @@ function ClientsPage() {
               )}
 
               {/* Carousel Container */}
-              <div className="overflow-hidden px-12">
+              <div className="overflow-hidden px-12" ref={pmCarouselRef}>
                 <div
-                  className="flex transition-transform duration-500 ease-in-out"
+                  className="flex"
                   style={{
                     transform: `translateX(-${pmCurrentIndex * (itemWidth + gap)}px)`,
                     gap: `${gap}px`,
+                    transition: pmIsTransitioning ? 'none' : 'transform 0.5s ease-in-out',
                   }}
                 >
-                  {propertyManagementClientsWithLogos.map((client, index) => {
+                  {pmInfiniteItems.map((client, index) => {
                     const imageSrc = isExternalUrl(client.imageUrl)
                       ? client.imageUrl!
                       : `/legacy/images/clients/${client.imageUrl}`;
