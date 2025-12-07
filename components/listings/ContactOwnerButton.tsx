@@ -13,6 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
+import { trackFormSubmit } from "@/lib/analytics";
 import {
   EnvelopeIcon,
   PhoneIcon,
@@ -26,11 +27,13 @@ import { cn } from "@/lib/utils";
 interface ContactOwnerButtonProps {
   propertyTitle: string;
   propertyId: string;
+  propertySlug?: string;
 }
 
 export function ContactOwnerButton({
   propertyTitle,
   propertyId,
+  propertySlug,
 }: ContactOwnerButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -88,17 +91,34 @@ export function ContactOwnerButton({
     setSubmitStatus("idle");
 
     try {
-      // TODO: Implement actual contact form submission
-      // This could integrate with:
-      // - Supabase Edge Function
-      // - Email service (SendGrid, Resend, etc.)
-      // - Your backend API
+      // Submit to API
+      const response = await fetch("/api/property-inquiry", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          propertyId,
+          propertySlug: propertySlug || propertyTitle.toLowerCase().replace(/\s+/g, "-"),
+          propertyTitle,
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone?.trim() || null,
+          message: formData.message.trim(),
+        }),
+      });
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to submit inquiry");
+      }
 
       setSubmitStatus("success");
       setFormData({ name: "", email: "", phone: "", message: "" });
+      
+      // Track successful submission
+      trackFormSubmit("property_inquiry", true);
       
       // Reset success message after 5 seconds
       setTimeout(() => setSubmitStatus("idle"), 5000);
@@ -109,7 +129,12 @@ export function ContactOwnerButton({
         setSubmitStatus("idle");
       }, 2000);
     } catch (error) {
+      console.error("Error submitting inquiry:", error);
       setSubmitStatus("error");
+      
+      // Track failed submission
+      trackFormSubmit("property_inquiry", false);
+      
       setTimeout(() => setSubmitStatus("idle"), 5000);
     } finally {
       setIsSubmitting(false);

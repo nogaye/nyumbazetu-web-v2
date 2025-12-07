@@ -218,6 +218,7 @@ export default async function ListingDetailPage({
                 <ContactOwnerButton
                   propertyTitle={listing.title}
                   propertyId={listing.id}
+                  propertySlug={listing.slug}
                 />
                 <Button variant="outline" className="w-full" size="lg">
                   <Heart className="mr-2 h-4 w-4" />

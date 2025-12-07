@@ -99,6 +99,53 @@ export interface Database {
           created_at?: string;
         };
       };
+      property_inquiries: {
+        Row: {
+          id: string;
+          property_id: string | null;
+          property_slug: string | null;
+          property_title: string | null;
+          name: string;
+          email: string;
+          phone: string | null;
+          message: string;
+          status: 'new' | 'contacted' | 'viewing_scheduled' | 'closed';
+          source: string;
+          metadata: Json | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          property_id?: string | null;
+          property_slug?: string | null;
+          property_title?: string | null;
+          name: string;
+          email: string;
+          phone?: string | null;
+          message: string;
+          status?: 'new' | 'contacted' | 'viewing_scheduled' | 'closed';
+          source?: string;
+          metadata?: Json | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          property_id?: string | null;
+          property_slug?: string | null;
+          property_title?: string | null;
+          name?: string;
+          email?: string;
+          phone?: string | null;
+          message?: string;
+          status?: 'new' | 'contacted' | 'viewing_scheduled' | 'closed';
+          source?: string;
+          metadata?: Json | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
     };
     Views: {
       [_ in never]: never;
