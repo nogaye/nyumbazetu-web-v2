@@ -11,6 +11,8 @@ import {
   ArrowUpIcon,
   ArrowDownIcon,
   TrashIcon,
+  InformationCircleIcon,
+  CheckCircleIcon,
 } from "@heroicons/react/24/outline";
 import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
 import { cn } from "@/lib/utils";
@@ -43,6 +45,7 @@ export function PropertyImageUpload({
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({});
   const [error, setError] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
+  const [showGuidance, setShowGuidance] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Fetch existing images when propertyId changes
@@ -311,6 +314,56 @@ export function PropertyImageUpload({
         </Alert>
       )}
 
+      {/* Image Upload Guidelines */}
+      {showGuidance && propertyId && (
+        <Alert className="border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20">
+          <InformationCircleIcon className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+          <AlertTitle className="text-blue-800 dark:text-blue-200 flex items-center justify-between">
+            <span>Image Upload Guidelines</span>
+            <button
+              onClick={() => setShowGuidance(false)}
+              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200"
+              aria-label="Hide guidelines"
+            >
+              <XMarkIcon className="h-4 w-4" />
+            </button>
+          </AlertTitle>
+          <AlertDescription className="text-blue-700 dark:text-blue-300 space-y-2">
+            <div className="space-y-2 text-sm">
+              <p className="font-medium">For best results, follow these tips:</p>
+              <ul className="list-disc list-inside space-y-1 ml-2">
+                <li>
+                  <strong>Cover Image:</strong> Upload your best exterior or main room photo first - it will be set as the cover image automatically
+                </li>
+                <li>
+                  <strong>Aspect Ratio:</strong> Use landscape orientation (16:9 or 4:3) for best display
+                </li>
+                <li>
+                  <strong>Image Quality:</strong> Upload high-resolution images (at least 1200px wide) for crisp display
+                </li>
+                <li>
+                  <strong>File Format:</strong> WebP or JPEG recommended for optimal quality and file size
+                </li>
+                <li>
+                  <strong>Order Matters:</strong> Upload images in the order you want them displayed (exterior → living room → bedrooms → kitchen → bathroom)
+                </li>
+                <li>
+                  <strong>Lighting:</strong> Use well-lit photos taken during daylight hours
+                </li>
+                <li>
+                  <strong>Composition:</strong> Keep rooms tidy and ensure photos are level and straight
+                </li>
+              </ul>
+              <div className="mt-3 pt-2 border-t border-blue-200 dark:border-blue-700">
+                <p className="text-xs">
+                  <strong>Tip:</strong> You can reorder images after uploading by using the up/down arrows, and set any image as the cover by clicking the star icon.
+                </p>
+              </div>
+            </div>
+          </AlertDescription>
+        </Alert>
+      )}
+
       {/* Upload Area */}
       {propertyId && (
         <div
@@ -353,7 +406,7 @@ export function PropertyImageUpload({
                   : "Click to upload or drag and drop"}
               </p>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                PNG, JPG, WebP up to 10MB each
+                PNG, JPG, WebP up to 10MB each • Landscape orientation recommended
               </p>
             </div>
             {!uploading && images.length < MAX_IMAGES && (
