@@ -233,6 +233,18 @@ export function HeroCarousel() {
                   )}
                 </Link>
               </Button>
+              <Button 
+                size="lg"
+                variant="ghost" 
+                className="text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg font-medium transition-all duration-200" 
+                asChild
+                aria-label="Browse Property Listings"
+              >
+                <Link href="/listings" className="flex items-center gap-2">
+                  Browse Listings
+                  <ArrowRightIcon className="h-4 w-4" />
+                </Link>
+              </Button>
             </div>
 
             {/* Trust indicator */}

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Section } from "@/components/section";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { CalendarDaysIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
+import { CalendarDaysIcon, HomeIcon } from "@heroicons/react/24/outline";
 
 export function FinalCTA() {
   return (
@@ -29,9 +29,9 @@ export function FinalCTA() {
             </Link>
           </Button>
           <Button size="lg" variant="outline" className="border-white/30 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 hover:border-white/50" asChild>
-            <Link href="/contact" className="flex items-center gap-2">
-              Talk to our team
-              <ChatBubbleLeftRightIcon className="h-4 w-4" />
+            <Link href="/listings" className="flex items-center gap-2">
+              Browse Property Listings
+              <HomeIcon className="h-4 w-4" />
             </Link>
           </Button>
         </div>

@@ -72,6 +72,7 @@ const navItems = [
       { label: "Webhooks & API Events", href: "/features/webhooks", description: "Real-time event notifications and system integrations", icon: BoltIcon },
     ],
   },
+  { label: "Listings", href: "/listings" },
   { label: "Pricing", href: "/pricing" },
 ];
 
