@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, MapPin, Bed, Bath, Square, CheckCircle2, Heart } from "lucide-react";
-import { getPropertyBySlug, getPlaceholderImageUrl, getBlurDataURL } from "@/lib/listings/mock-data";
+import { getPropertyBySlug, getPropertyImages } from "@/lib/listings/mock-data";
+import { PropertyImageGallery } from "@/components/listings/PropertyImageGallery";
 import { Property } from "@/lib/listings/types";
 
 // TODO: Replace with real Supabase query to fetch listing by slug
@@ -74,8 +74,7 @@ export default async function ListingDetailPage({
     shop: "Shop",
   };
 
-  const imageUrl = getPlaceholderImageUrl(listing.id, 1200, 800);
-  const blurDataUrl = getBlurDataURL();
+  const propertyImages = getPropertyImages(listing.id);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
@@ -91,25 +90,24 @@ export default async function ListingDetailPage({
         <div className="grid gap-8 lg:grid-cols-3">
           {/* Main Content */}
           <div className="lg:col-span-2">
-            {/* Image */}
-            <div className="relative mb-6 aspect-video w-full overflow-hidden rounded-2xl bg-slate-200">
-              <Image
-                src={imageUrl}
-                alt={listing.title}
-                fill
-                className="object-cover"
-                placeholder="blur"
-                blurDataURL={blurDataUrl}
-                priority
+            {/* Image Gallery */}
+            <div className="mb-6">
+              <PropertyImageGallery
+                images={propertyImages}
+                propertyTitle={listing.title}
               />
+            </div>
+
+            {/* Badges */}
+            <div className="mb-6 flex flex-wrap gap-2">
               {listing.is_verified && (
-                <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1.5 text-sm font-medium text-primary shadow-sm backdrop-blur-sm">
+                <div className="rounded-full bg-primary/10 px-3 py-1.5 text-sm font-medium text-primary">
                   <CheckCircle2 className="mr-1.5 inline h-4 w-4" />
-                  Verified
+                  Verified Property
                 </div>
               )}
               {listing.is_tps_available && (
-                <div className="absolute right-4 top-4 rounded-full bg-primary/90 px-3 py-1.5 text-sm font-medium text-white shadow-sm backdrop-blur-sm">
+                <div className="rounded-full bg-primary px-3 py-1.5 text-sm font-medium text-white">
                   TPS Available
                 </div>
               )}

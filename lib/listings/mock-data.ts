@@ -309,3 +309,29 @@ export function getBlurDataURL(): string {
 export function getPropertyBySlug(slug: string): Property | null {
   return allMockProperties.find((p) => p.slug === slug) || null;
 }
+
+/**
+ * Get all images for a property
+ * TODO: Replace with real Supabase query
+ */
+export function getPropertyImages(propertyId: string): Array<{
+  url: string;
+  alt: string;
+  blurDataURL?: string;
+}> {
+  // Generate 3-8 images per property
+  const imageCount = 3 + Math.floor(Math.random() * 6);
+  const images = [];
+
+  for (let i = 0; i < imageCount; i++) {
+    // Use different image seeds for variety
+    const seed = `${propertyId}-${i}`;
+    images.push({
+      url: getPlaceholderImageUrl(seed, 1200, 800),
+      alt: `Property image ${i + 1}`,
+      blurDataURL: getBlurDataURL(),
+    });
+  }
+
+  return images;
+}
