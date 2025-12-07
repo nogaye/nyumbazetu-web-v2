@@ -28,6 +28,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { cn } from "@/lib/utils";
+import { PropertyImageUpload } from "./PropertyImageUpload";
 
 interface PropertyFormModalProps {
   isOpen: boolean;
@@ -68,6 +69,7 @@ export function PropertyFormModal({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [savedPropertyId, setSavedPropertyId] = useState<string | null>(null);
 
   useEffect(() => {
     if (property) {
@@ -85,6 +87,7 @@ export function PropertyFormModal({
         is_tps_available: property.is_tps_available,
         is_verified: property.is_verified,
       });
+      setSavedPropertyId(property.id);
     } else {
       // Reset form for new property
       setFormData({
@@ -101,6 +104,7 @@ export function PropertyFormModal({
         is_tps_available: false,
         is_verified: false,
       });
+      setSavedPropertyId(null);
     }
     setErrors({});
     setSubmitStatus("idle");
@@ -172,6 +176,10 @@ export function PropertyFormModal({
 
       if (response.ok) {
         setSubmitStatus("success");
+        // Set the property ID for image upload (new or existing)
+        if (data.property?.id) {
+          setSavedPropertyId(data.property.id);
+        }
         setTimeout(() => {
           onClose();
         }, 1500);
@@ -543,6 +551,11 @@ export function PropertyFormModal({
                   </span>
                 </label>
               </div>
+            </div>
+
+            {/* Images Section */}
+            <div className="space-y-4">
+              <PropertyImageUpload propertyId={savedPropertyId || property?.id || null} />
             </div>
 
             <div className="pt-4 space-y-3">
