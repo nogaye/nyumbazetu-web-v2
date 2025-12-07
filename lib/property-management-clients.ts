@@ -26,10 +26,7 @@ export const propertyManagementClients: IPropertyManagementClient[] = [
     name: "Unique Castle",
     imageUrl: "https://app.nyumbazetu.com/assets/images/branches/unique-castle.png",
   },
-  {
-    name: "New Court Company",
-    imageUrl: "https://app.nyumbazetu.com/assets/images/logo/logo_hor.png",
-  },
+ 
   {
     name: "George Padmore Rose Management Limited",
     imageUrl: "https://nyumba-zetu-bucket.s3.amazonaws.com/178893/6a658ce9-1519-4151-86c0-5c6776026b09-george_padmore_logo.jpeg",

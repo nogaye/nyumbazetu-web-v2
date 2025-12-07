@@ -245,8 +245,11 @@ function ClientsPage() {
           {/* All Clients by Location */}
           <div>
             <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-8 text-center">
-              More of Our Clients
+              More estates ...
             </h2>
+            <p className="text-center text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
+              Leading property estates and residential complexes using Nyumba Zetu
+            </p>
             {locations.map((location, locationIndex) => (
               <div key={location} className="mb-12">
                 <h3 className="text-2xl font-semibold text-slate-900 dark:text-slate-50 mb-6 flex items-center gap-2">
