@@ -5,9 +5,14 @@
  * 
  * Usage:
  *   node scripts/test-property-inquiry.js
+ *   NEXT_PUBLIC_BASE_URL=http://localhost:3000 node scripts/test-property-inquiry.js
  * 
  * This script tests the property inquiry submission endpoint
  * and optionally the admin endpoint to view inquiries.
+ * 
+ * Prerequisites:
+ *   1. Start your dev server: npm run dev
+ *   2. Run this script: node scripts/test-property-inquiry.js
  */
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
