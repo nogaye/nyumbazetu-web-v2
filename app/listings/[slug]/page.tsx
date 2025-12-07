@@ -3,13 +3,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, MapPin, Bed, Bath, Square, CheckCircle2, Heart } from "lucide-react";
-import { getPropertyBySlug, getPropertyImages } from "@/lib/listings/mock-data";
+import { fetchPropertyBySlug, fetchPropertyImages } from "@/lib/listings/supabase-helpers";
 import { PropertyImageGallery } from "@/components/listings/PropertyImageGallery";
 import { Property } from "@/lib/listings/types";
 
-// TODO: Replace with real Supabase query to fetch listing by slug
+// Fetch listing by slug (uses Supabase if configured, otherwise mock data)
 async function getListing(slug: string): Promise<Property | null> {
-  return getPropertyBySlug(slug);
+  return fetchPropertyBySlug(slug);
 }
 
 export async function generateMetadata({
@@ -74,7 +74,7 @@ export default async function ListingDetailPage({
     shop: "Shop",
   };
 
-  const propertyImages = getPropertyImages(listing.id);
+  const propertyImages = await fetchPropertyImages(listing.id);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">

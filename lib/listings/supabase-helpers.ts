@@ -1,60 +1,183 @@
 /**
  * Supabase helper utilities for property listings
  * 
- * TODO: Replace mock data with real Supabase queries once database is set up.
- * 
- * To connect to Supabase:
- * 1. Install @supabase/supabase-js: npm install @supabase/supabase-js
- * 2. Create lib/supabase/client.ts with Supabase client initialization
- * 3. Replace getMockListings with real Supabase queries
- * 4. Update getImageUrl to use Supabase Storage public URLs
+ * This module supports both real Supabase queries and mock data fallback.
+ * If Supabase is not configured, it automatically falls back to mock data.
  */
 
-import { ListingFilters, ListingWithCoverImage, ListingsResponse } from "./types";
-import { getMockProperties, getPlaceholderImageUrl, getBlurDataURL } from "./mock-data";
+import { ListingFilters, ListingWithCoverImage, ListingsResponse, Property } from "./types";
+import { getMockProperties, getPlaceholderImageUrl, getBlurDataURL, getPropertyBySlug } from "./mock-data";
+import { supabaseServer } from "@/lib/supabase/server";
 
 const PER_PAGE = 24;
 
 /**
+ * Check if Supabase is configured and available
+ */
+function isSupabaseConfigured(): boolean {
+  return supabaseServer !== null;
+}
+
+/**
  * Get property image URL from Supabase Storage
- * 
- * TODO: Replace with actual Supabase Storage URL generation:
- * 
- * import { createClient } from '@supabase/supabase-js'
- * const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
- * 
- * const { data } = supabase.storage.from('property-images').getPublicUrl(storagePath)
- * return data.publicUrl
+ * Falls back to placeholder images if Supabase is not configured or bucket doesn't exist
  */
 export function getImageUrl(storagePath: string): string {
-  // For now, use placeholder images
-  // TODO: Replace with Supabase Storage public URL
-  const propertyId = storagePath.split("/")[1] || "default";
+  // Extract property ID from storage path
+  // Path format: "property-images/{property-id}/image.webp"
+  const pathParts = storagePath.split("/");
+  let propertyId = "default";
+  
+  // Try to find the property ID (usually the second part after "property-images")
+  if (pathParts.length >= 2) {
+    // If path starts with "property-images", property ID is at index 1
+    if (pathParts[0] === "property-images") {
+      propertyId = pathParts[1];
+    } else {
+      // Otherwise, use the first part as property ID
+      propertyId = pathParts[0];
+    }
+  }
+  
+  // For now, use placeholder images since we don't have actual images uploaded to storage
+  // TODO: Once images are uploaded to Supabase Storage, uncomment the storage code below
   return getPlaceholderImageUrl(propertyId);
+
+  // Uncomment this once you have images uploaded to Supabase Storage:
+  /*
+  if (!isSupabaseConfigured()) {
+    // Fallback to placeholder images
+    return getPlaceholderImageUrl(propertyId);
+  }
+
+  try {
+    const { data } = supabaseServer!.storage
+      .from('property-images')
+      .getPublicUrl(storagePath);
+    
+    // Note: getPublicUrl returns a URL even if the file doesn't exist
+    // You may want to verify the file exists before using this URL
+    return data.publicUrl;
+  } catch (error) {
+    console.warn('Error getting image URL from Supabase Storage:', error);
+    // Fallback to placeholder
+    return getPlaceholderImageUrl(propertyId);
+  }
+  */
 }
 
 /**
  * Fetch listings from Supabase with filters
- * 
- * TODO: Replace with real Supabase query:
- * 
- * const query = supabase
- *   .from('properties')
- *   .select(`
- *     *,
- *     property_images!inner(storage_path, is_cover, position)
- *   `)
- *   .eq('property_images.is_cover', true)
- *   .order('created_at', { ascending: false })
- * 
- * if (filters.city) {
- *   query.ilike('city', `%${filters.city}%`)
- * }
- * // ... apply other filters
- * 
- * const { data, error } = await query
+ * Falls back to mock data if Supabase is not configured
  */
 export async function fetchListings(
+  filters: ListingFilters
+): Promise<ListingsResponse> {
+  // If Supabase is not configured, use mock data
+  if (!isSupabaseConfigured()) {
+    return fetchListingsFromMock(filters);
+  }
+
+  try {
+    return await fetchListingsFromSupabase(filters);
+  } catch (error) {
+    console.error('Error fetching listings from Supabase, falling back to mock data:', error);
+    return fetchListingsFromMock(filters);
+  }
+}
+
+/**
+ * Fetch listings from Supabase (real implementation)
+ */
+async function fetchListingsFromSupabase(
+  filters: ListingFilters
+): Promise<ListingsResponse> {
+  const page = filters.page || 1;
+  const start = (page - 1) * PER_PAGE;
+  const end = start + PER_PAGE - 1;
+
+  // Build the query
+  let query = supabaseServer!
+    .from('properties')
+    .select(`
+      *,
+      property_images!left(storage_path, is_cover, position)
+    `, { count: 'exact' })
+    .order('created_at', { ascending: false });
+
+  // Apply filters
+  if (filters.city) {
+    query = query.ilike('city', `%${filters.city}%`);
+  }
+
+  if (filters.area) {
+    query = query.ilike('area', `%${filters.area}%`);
+  }
+
+  if (filters.minPrice !== undefined) {
+    query = query.gte('monthly_rent', filters.minPrice);
+  }
+
+  if (filters.maxPrice !== undefined) {
+    query = query.lte('monthly_rent', filters.maxPrice);
+  }
+
+  if (filters.bedrooms !== undefined) {
+    if (filters.bedrooms === '3+') {
+      query = query.gte('bedrooms', 3);
+    } else {
+      query = query.eq('bedrooms', filters.bedrooms);
+    }
+  }
+
+  if (filters.propertyType) {
+    query = query.eq('property_type', filters.propertyType);
+  }
+
+  if (filters.tps === true) {
+    query = query.eq('is_tps_available', true);
+  }
+
+  // Apply pagination
+  query = query.range(start, end);
+
+  const { data, error, count } = await query;
+
+  if (error) {
+    throw error;
+  }
+
+  // Transform to ListingWithCoverImage format
+  const listings: ListingWithCoverImage[] = (data || []).map((property: any) => {
+    // Find cover image (is_cover = true or position = 0)
+    const coverImage = property.property_images?.find(
+      (img: any) => img.is_cover || img.position === 0
+    ) || property.property_images?.[0];
+
+    const coverImagePath = coverImage?.storage_path || `property-images/${property.id}/cover.webp`;
+
+    return {
+      ...property,
+      cover_image_url: getImageUrl(coverImagePath),
+      blur_data_url: getBlurDataURL(), // TODO: Generate real blur from image
+    };
+  });
+
+  const total = count || 0;
+
+  return {
+    listings,
+    total,
+    page,
+    perPage: PER_PAGE,
+    totalPages: Math.ceil(total / PER_PAGE),
+  };
+}
+
+/**
+ * Fetch listings from mock data (fallback)
+ */
+async function fetchListingsFromMock(
   filters: ListingFilters
 ): Promise<ListingsResponse> {
   // Simulate network delay
@@ -85,6 +208,75 @@ export async function fetchListings(
     perPage: PER_PAGE,
     totalPages: Math.ceil(listings.length / PER_PAGE),
   };
+}
+
+/**
+ * Fetch a single property by slug
+ * Falls back to mock data if Supabase is not configured
+ */
+export async function fetchPropertyBySlug(slug: string): Promise<Property | null> {
+  if (!isSupabaseConfigured()) {
+    return getPropertyBySlug(slug);
+  }
+
+  try {
+    const { data, error } = await supabaseServer!
+      .from('properties')
+      .select('*')
+      .eq('slug', slug)
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        // No rows returned
+        return null;
+      }
+      throw error;
+    }
+
+    return data as Property;
+  } catch (error) {
+    console.error('Error fetching property from Supabase, falling back to mock data:', error);
+    return getPropertyBySlug(slug);
+  }
+}
+
+/**
+ * Fetch all images for a property
+ * Falls back to mock data if Supabase is not configured
+ */
+export async function fetchPropertyImages(propertyId: string): Promise<Array<{
+  url: string;
+  alt: string;
+  blurDataURL?: string;
+}>> {
+  if (!isSupabaseConfigured()) {
+    // Use mock data function
+    const { getPropertyImages } = await import('./mock-data');
+    return getPropertyImages(propertyId);
+  }
+
+  try {
+    const { data, error } = await supabaseServer!
+      .from('property_images')
+      .select('storage_path, position')
+      .eq('property_id', propertyId)
+      .order('position', { ascending: true });
+
+    if (error) {
+      throw error;
+    }
+
+    return (data || []).map((img: { storage_path: string; position: number }) => ({
+      url: getImageUrl(img.storage_path),
+      alt: `Property image ${img.position + 1}`,
+      blurDataURL: getBlurDataURL(), // TODO: Generate real blur
+    }));
+  } catch (error) {
+    console.error('Error fetching property images from Supabase, falling back to mock data:', error);
+    const { getPropertyImages } = await import('./mock-data');
+    return getPropertyImages(propertyId);
+  }
 }
 
 /**
@@ -187,4 +379,3 @@ export function buildSearchParams(filters: ListingFilters): URLSearchParams {
 
   return params;
 }
-
