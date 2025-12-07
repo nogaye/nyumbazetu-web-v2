@@ -25,6 +25,8 @@ export function LegacyClients() {
   const [pmCurrentIndex, setPmCurrentIndex] = useState(pmStartIndex);
   const [pmIsTransitioning, setPmIsTransitioning] = useState(false);
   const pmCarouselRef = useRef<HTMLDivElement>(null);
+  const pmPositionRef = useRef<number>(pmStartIndex * (150 + 16));
+  const pmScrollPausedRef = useRef<boolean>(false);
   const pmItemsPerView = 6; // Show 6 logos at a time on desktop
   const pmItemWidth = 150; // Width for each logo
   const pmGap = 16; // Gap between items
@@ -43,46 +45,87 @@ export function LegacyClients() {
   const estatesItemWidth = 320; // Increased width for better spacing
   const estatesGap = 24; // Gap between items
 
-  // Auto-scroll Property Management Companies Carousel
+  // Continuous smooth scroll for Property Management Companies Carousel
   useEffect(() => {
-    const scrollInterval = setInterval(() => {
-      setPmCurrentIndex((prev) => prev + 1);
-    }, 3000);
+    if (!pmCarouselRef.current) return;
 
-    return () => clearInterval(scrollInterval);
-  }, []);
-
-  // Handle infinite loop for PM carousel
-  useEffect(() => {
-    if (!pmCarouselRef.current || pmIsTransitioning) return;
-
+    let animationFrameId: number;
+    const scrollSpeed = 0.3; // pixels per frame (adjust for speed)
+    const itemWidthWithGap = pmItemWidth + pmGap;
     const totalItems = propertyManagementClientsWithLogos.length;
-    const maxIndex = totalItems * 2; // End of second set
-    const minIndex = 0; // Start of first set
+    const maxPosition = totalItems * 2 * itemWidthWithGap;
 
-    if (pmCurrentIndex >= maxIndex) {
-      setPmIsTransitioning(true);
-      // Jump to middle set without animation
-      setTimeout(() => {
-        setPmCurrentIndex(pmStartIndex);
-        setPmIsTransitioning(false);
-      }, 50);
-    } else if (pmCurrentIndex < minIndex) {
-      setPmIsTransitioning(true);
-      // Jump to middle set without animation
-      setTimeout(() => {
-        setPmCurrentIndex(pmStartIndex + totalItems - 1);
-        setPmIsTransitioning(false);
-      }, 50);
-    }
-  }, [pmCurrentIndex, pmStartIndex, propertyManagementClientsWithLogos.length, pmIsTransitioning]);
+    const animate = () => {
+      if (!pmScrollPausedRef.current) {
+        // Continuously scroll
+        pmPositionRef.current += scrollSpeed;
+        
+        // Check if we've scrolled past the end of the second set
+        if (pmPositionRef.current >= maxPosition) {
+          // Reset to middle set position seamlessly
+          pmPositionRef.current = pmStartIndex * itemWidthWithGap;
+        }
+      }
+
+      // Update the transform
+      if (pmCarouselRef.current) {
+        const carouselInner = pmCarouselRef.current.querySelector('.flex') as HTMLElement;
+        if (carouselInner) {
+          carouselInner.style.transform = `translateX(-${pmPositionRef.current}px)`;
+          carouselInner.style.transition = 'none'; // No transition for smooth continuous scroll
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [pmStartIndex, pmItemWidth, pmGap, propertyManagementClientsWithLogos.length]);
 
   const nextPmSlide = () => {
-    setPmCurrentIndex((prev) => prev + 1);
+    const itemWidthWithGap = pmItemWidth + pmGap;
+    const totalItems = propertyManagementClientsWithLogos.length;
+    const maxPosition = totalItems * 2 * itemWidthWithGap;
+    
+    pmPositionRef.current += itemWidthWithGap;
+    
+    // Handle loop
+    if (pmPositionRef.current >= maxPosition) {
+      pmPositionRef.current = pmStartIndex * itemWidthWithGap;
+    }
+    
+    pmScrollPausedRef.current = true;
+    
+    // Resume auto-scroll after a delay
+    setTimeout(() => {
+      pmScrollPausedRef.current = false;
+    }, 2000);
   };
 
   const prevPmSlide = () => {
-    setPmCurrentIndex((prev) => prev - 1);
+    const itemWidthWithGap = pmItemWidth + pmGap;
+    const totalItems = propertyManagementClientsWithLogos.length;
+    const minPosition = 0;
+    
+    pmPositionRef.current -= itemWidthWithGap;
+    
+    // Handle loop
+    if (pmPositionRef.current < minPosition) {
+      pmPositionRef.current = (pmStartIndex + totalItems - 1) * itemWidthWithGap;
+    }
+    
+    pmScrollPausedRef.current = true;
+    
+    // Resume auto-scroll after a delay
+    setTimeout(() => {
+      pmScrollPausedRef.current = false;
+    }, 2000);
   };
 
   // Continuous smooth scroll for Property Estates Carousel
@@ -250,9 +293,7 @@ export function LegacyClients() {
               <div
                 className="flex"
                 style={{
-                  transform: `translateX(-${pmCurrentIndex * (pmItemWidth + pmGap)}px)`,
                   gap: `${pmGap}px`,
-                  transition: pmIsTransitioning ? 'none' : 'transform 0.5s ease-in-out',
                 }}
               >
                 {pmInfiniteItems.map((client, index) => {
