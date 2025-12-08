@@ -9,13 +9,6 @@ const metrics = [
   { value: "20–30%", label: "Increase in on-time collections" },
 ];
 
-const logos = [
-  "Bank Partner",
-  "Estate Developer",
-  "Management Co.",
-  "HOA Committee",
-];
-
 export function MetricsStrip() {
   return (
     <section className="bg-secondary py-12 border-b border-secondary/20">
@@ -40,29 +33,6 @@ export function MetricsStrip() {
               </Card>
             </motion.div>
           ))}
-        </div>
-
-        {/* Client Logos */}
-        <div className="text-center">
-          <p className="text-sm text-white mb-6">Trusted by leading property teams in Kenya</p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
-            {logos.map((logo, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + idx * 0.1 }}
-                className="h-16 w-full flex items-center justify-center"
-              >
-                <div className="w-full h-full bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 flex items-center justify-center">
-                  <div className="w-24 h-12 bg-white/20 rounded flex items-center justify-center">
-                    <span className="text-white text-xs font-medium">{logo}</span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </div>
     </section>
