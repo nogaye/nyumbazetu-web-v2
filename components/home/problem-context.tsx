@@ -25,7 +25,7 @@ export function ProblemContext() {
                 <div className="w-16 h-16 mx-auto mb-3 bg-red-200 dark:bg-red-900/50 rounded-lg flex items-center justify-center">
                   <div className="w-12 h-12 bg-red-300 dark:bg-red-800/50 rounded"></div>
                 </div>
-                <p className="text-red-700 dark:text-red-400 text-xs font-medium">Problem Illustration</p>
+                 {/* <p className="text-red-700 dark:text-red-400 text-xs font-medium">Problem Illustration</p> */}
                 <p className="text-red-600 dark:text-red-500 text-xs mt-1">Spreadsheets & manual processes</p>
               </div>
             </div>
@@ -62,7 +62,7 @@ export function ProblemContext() {
                 <div className="w-16 h-16 mx-auto mb-3 bg-tertiary/20 dark:bg-tertiary/30 rounded-lg flex items-center justify-center">
                   <div className="w-12 h-12 bg-tertiary/40 dark:bg-tertiary/50 rounded"></div>
                 </div>
-                <p className="text-tertiary dark:text-tertiary text-xs font-medium">Platform Dashboard</p>
+                {/*  <p className="text-tertiary dark:text-tertiary text-xs font-medium">Platform Dashboard</p> */}
                 <p className="text-tertiary/80 dark:text-tertiary/70 text-xs mt-1">Automated & integrated system</p>
               </div>
             </div>

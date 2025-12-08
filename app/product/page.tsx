@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { PlatformInfrastructureDiagram } from "@/components/product/platform-infrastructure-diagram";
+import { AutomatedWorkflow } from "@/components/product/automated-workflow";
 
 export const metadata = {
   title: "Platform Overview | Nyumba Zetu",
@@ -28,43 +29,18 @@ export default function ProductPage() {
         </div>
       </Section>
 
-      {/* Platform Diagram */}
-      <Section>
-        <div className="bg-secondary rounded-2xl p-8 md:p-12 text-white">
-          <div className="grid md:grid-cols-5 gap-6">
-            <div className="md:col-span-2 space-y-4">
-              <h3 className="text-xl font-semibold mb-6">Connected Ecosystem</h3>
-              {["Tenants & Owners", "Property Managers", "Finance Teams", "Vendors & Contractors"].map((item) => (
-                <div key={item} className="bg-white/10 rounded-lg p-4 backdrop-blur flex items-center gap-3">
-                  <div className="w-10 h-10 rounded bg-white/20 flex-shrink-0 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded bg-white/30"></div>
-                  </div>
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-            <div className="md:col-span-1 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-20 h-20 mx-auto mb-3 bg-white/10 rounded-lg flex items-center justify-center backdrop-blur">
-                  <div className="w-16 h-16 bg-white/20 rounded flex items-center justify-center">
-                    <span className="text-2xl font-bold">→</span>
-                  </div>
-                </div>
-                <div className="text-sm text-white">Nyumba Zetu Core</div>
-              </div>
-            </div>
-            <div className="md:col-span-2 space-y-4">
-              <h3 className="text-xl font-semibold mb-6">Integrations</h3>
-              {["M-Pesa & Banks", "NCBA Bank", "QuickBooks", "Boma Yangu", "eCitizen", "KRA eTIMS", "Email/SMS"].map((item) => (
-                <div key={item} className="bg-white/10 rounded-lg p-4 backdrop-blur flex items-center gap-3">
-                  <div className="w-10 h-10 rounded bg-white/20 flex-shrink-0 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded bg-white/30"></div>
-                  </div>
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+      {/* Automated Workflow */}
+      <Section className="bg-secondary">
+        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight tracking-tight">
+            Fully Automated Invoice-to-Payment Workflow
+          </h2>
+          <p className="text-lg md:text-xl text-white leading-relaxed">
+            From invoice generation to financial reporting—completely automated with zero manual intervention.
+          </p>
+        </div>
+        <div className="max-w-7xl mx-auto">
+          <AutomatedWorkflow />
         </div>
       </Section>
 
