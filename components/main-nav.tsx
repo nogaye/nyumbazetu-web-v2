@@ -32,6 +32,8 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
 
 const navItems = [
+  { label: "Home", href: "/modern" },
+
   {
     label: "Product",
     href: "/product",
