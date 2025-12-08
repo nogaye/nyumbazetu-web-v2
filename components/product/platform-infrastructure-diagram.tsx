@@ -351,11 +351,6 @@ export function PlatformInfrastructureDiagram() {
                       : {}),
                   }}
                 >
-                  {/* Connection count badge */}
-                  <div className="absolute -top-2 -right-2 bg-primary text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-md">
-                    {connectedModules.length}
-                  </div>
-
                   {/* Icon with gradient background */}
                   <div
                     className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br ${module.color} flex items-center justify-center mb-2 sm:mb-3 shadow-md`}
