@@ -17,64 +17,84 @@ interface MediaOutlet {
 
 // Arranged from most popular to least popular
 const mediaOutlets: MediaOutlet[] = [
-  { name: "Daily Nation", logo: "/legacy/media/daily-nation-logo.svg", url: "#" },
+  { 
+    name: "Daily Nation", 
+    logo: "/legacy/media/daily-nation-logo.svg", 
+    url: "https://nation.africa/kenya/business/enterprise/ai-powered-system-for-smes-and-rentals-4773272#google_vignette" 
+  },
   { 
     name: "KTN", 
     logo: "/legacy/media/ktn-logo.jpeg", 
-    url: "#", 
+    url: "https://www.youtube.com/watch?v=AnvB9Br6RvI", 
     textOnly: true,
     textStyle: "text-white text-base font-black tracking-tighter uppercase opacity-90 hover:opacity-100"
   },
   { 
     name: "Tech Africa", 
     logo: "/legacy/media/tech-africa-news.png", 
-    url: "#", 
+    url: "https://techafricanews.com/2025/08/01/ncba-partners-with-zetu-innovations-to-digitise-property-management-in-kenya/", 
     textOnly: true,
     textStyle: "text-white text-xs font-semibold tracking-widest uppercase opacity-85 hover:opacity-100"
   },
-  { name: "Africa Business", logo: "/legacy/media/africa-business-news-logo.png", url: "#" },
+  { 
+    name: "Africa Business", 
+    logo: "/legacy/media/africa-business-news-logo.png", 
+    url: "https://africabusinessnews.co.ke/ncba-zetu-innovations-launch-nyumba-zetu-to-simplify-property-management/" 
+  },
   { 
     name: "TV47", 
     logo: "/legacy/media/tv-47-logo.jpeg", 
-    url: "#", 
+    url: "https://www.youtube.com/watch?v=dayoO5_tcRk", 
     textOnly: true,
     textStyle: "text-white text-lg font-extrabold tracking-tight opacity-95 hover:opacity-100"
   },
-  { name: "Nipashe Biz", logo: "/legacy/media/nipashe-logo.png", url: "#" },
+  { 
+    name: "Nipashe Biz", 
+    logo: "/legacy/media/nipashe-logo.png", 
+    url: "https://nipashebiz.co.ke/ncba-zetu-unveil-nyumba-zetu-platform-to-digitize-property-management/" 
+  },
   { 
     name: "Insider Kenya", 
     logo: "/legacy/media/insider-kenya-logo.webp", 
-    url: "#", 
+    url: "https://insiderkenya.com/tag/zetu-innovations/", 
     textOnly: true,
     textStyle: "text-white text-sm font-bold tracking-normal capitalize opacity-90 hover:opacity-100"
   },
-  { name: "Swala Nyeti", logo: "/legacy/media/swala-nyeti-logo.png", url: "#" },
+  { 
+    name: "Swala Nyeti", 
+    logo: "/legacy/media/swala-nyeti-logo.png", 
+    url: "https://www.swalanyeti.co.ke/business/article/10582/ncba-and-zetu-innovations-collaborate-to-unveil-property-management-system/" 
+  },
   { 
     name: "Serrari Group", 
     logo: "/legacy/media/serrari-logo.webp", 
-    url: "#", 
+    url: "https://serrarigroup.com/ncba-and-zetu-innovations-forge-partnership-in-property-management/", 
     textOnly: true,
     textStyle: "text-white text-xs font-medium tracking-wide uppercase opacity-85 hover:opacity-100"
   },
   { 
     name: "Business Tech", 
     logo: "/legacy/media/business-tech-logo.webp", 
-    url: "#", 
+    url: "https://businesstech.co.ke/ncba-nyumba-zetu-to-support-property-management-in-kenya/", 
     textOnly: true,
     textStyle: "text-white text-sm font-bold tracking-wider uppercase opacity-90 hover:opacity-100"
   },
   { 
     name: "Tech Trends", 
     logo: "/legacy/media/tech-trends-logo.png", 
-    url: "#", 
+    url: "https://techtrendske.co.ke/2025/07/31/ncba-announces-distributor-partnership-with-property-management-platform-zetu/", 
     textOnly: true,
     textStyle: "text-white text-xs font-semibold tracking-normal capitalize opacity-88 hover:opacity-100"
   },
-  { name: "Bizna Kenya", logo: "/legacy/media/bizna-Logo.webp", url: "#" },
+  { 
+    name: "Bizna Kenya", 
+    logo: "/legacy/media/bizna-Logo.webp", 
+    url: "https://biznakenya.com/nyumba-zetu-platform/" 
+  },
   { 
     name: "Aptantech", 
     logo: "/legacy/media/aptan-logo.webp", 
-    url: "#", 
+    url: "https://aptantech.com/2025/08/01/ncba-partners-with-zetu-innovations-in-nyumba-zetu-distribution-deal-to-support-developers-and-property-managers/", 
     textOnly: true,
     textStyle: "text-white text-sm font-extrabold tracking-tight lowercase opacity-90 hover:opacity-100"
   },
