@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,12 +16,14 @@ export default function HFCPartnershipPage() {
       <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-6 mb-8">
-            <div className="w-32 h-32 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center border border-slate-200 dark:border-slate-700 flex-shrink-0">
-              <div className="w-28 h-28 bg-slate-200 dark:bg-slate-700 rounded flex items-center justify-center">
-                <span className="text-sm text-slate-500 dark:text-slate-400 font-medium">
-                  HFC Logo
-                </span>
-              </div>
+            <div className="w-32 h-32 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center border border-slate-200 dark:border-slate-700 flex-shrink-0 p-3">
+              <Image
+                src="/legacy/images/logos/small-logos/hfc-logo.png"
+                alt="HFC (Housing Finance) logo"
+                width={112}
+                height={112}
+                className="object-contain w-full h-full"
+              />
             </div>
             <div>
               <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-50 mb-2">

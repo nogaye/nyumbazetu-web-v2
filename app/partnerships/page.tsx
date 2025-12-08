@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,28 +16,28 @@ const partnerships = [
     name: "NCBA Bank",
     description: "Strategic partnership for property management solutions and collection services. NCBA Bank has partnered with Nyumba Zetu to offer automated rent collection, track payments, manage tenants, and generate reports—all in one place.",
     href: "/partnerships/ncba",
-    logo: "/partnerships/ncba-logo.png",
+    logo: "/legacy/images/logos/small-logos/logo-ncba.jpeg",
     category: "Financial Institution",
   },
   {
     name: "Boma Yangu",
     description: "Integration partner for affordable housing and Tenant Purchase Scheme (TPS) solutions. Boma Yangu is integrated with Nyumba Zetu as part of our TPS platform.",
     href: "/partnerships/boma-yangu",
-    logo: "/partnerships/boma-yangu-logo.png",
+    logo: "/legacy/images/logos/small-logos/boma-yangu-logo.png",
     category: "Government Agency",
   },
   {
     name: "HFC (Housing Finance)",
     description: "Collaboration on TPS and property finance solutions. We are working with HFC on Tenant Purchase Scheme implementations.",
     href: "/partnerships/hfc",
-    logo: "/partnerships/hfc-logo.png",
+    logo: "/legacy/images/logos/small-logos/hfc-logo.png",
     category: "Financial Institution",
   },
   {
     name: "AIESEC",
     description: "Partnership with AIESEC, an international students association, to support talent development and innovation in property management technology.",
     href: "/partnerships/aiesec",
-    logo: "/partnerships/aiesec-logo.png",
+    logo: "/legacy/images/logos/small-logos/aiesec-logo.png",
     category: "International Organization",
   },
 ];
@@ -57,12 +58,22 @@ export default function PartnershipsPage() {
             <Card key={partner.name} className="hover:shadow-lg transition-shadow duration-200">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center border border-slate-200 dark:border-slate-700 flex-shrink-0">
-                    <div className="w-16 h-16 bg-slate-200 dark:bg-slate-700 rounded flex items-center justify-center">
-                      <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                        Logo
-                      </span>
-                    </div>
+                  <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center border border-slate-200 dark:border-slate-700 flex-shrink-0 p-2">
+                    {partner.logo ? (
+                      <Image
+                        src={partner.logo}
+                        alt={`${partner.name} logo`}
+                        width={64}
+                        height={64}
+                        className="object-contain w-full h-full"
+                      />
+                    ) : (
+                      <div className="w-16 h-16 bg-slate-200 dark:bg-slate-700 rounded flex items-center justify-center">
+                        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                          Logo
+                        </span>
+                      </div>
+                    )}
                   </div>
                   <div className="flex-grow">
                     <div className="flex items-center justify-between mb-2">

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,25 +14,25 @@ const partnerships = [
     name: "NCBA Bank",
     description: "Strategic partnership for property management solutions and collection services",
     href: "/partnerships/ncba",
-    logo: "/partnerships/ncba-logo.png", // Placeholder path
+    logo: "/legacy/images/logos/small-logos/logo-ncba.jpeg",
   },
   {
     name: "Boma Yangu",
     description: "Integration partner for affordable housing and TPS solutions",
     href: "/partnerships/boma-yangu",
-    logo: "/partnerships/boma-yangu-logo.png", // Placeholder path
+    logo: "/legacy/images/logos/small-logos/boma-yangu-logo.png",
   },
   {
     name: "HFC (Housing Finance)",
     description: "Collaboration on TPS and property finance solutions",
     href: "/partnerships/hfc",
-    logo: "/partnerships/hfc-logo.png", // Placeholder path
+    logo: "/legacy/images/logos/small-logos/hfc-logo.png",
   },
   {
     name: "AIESEC",
     description: "Partnership with international students association",
     href: "/partnerships/aiesec",
-    logo: "/partnerships/aiesec-logo.png", // Placeholder path
+    logo: "/legacy/images/logos/small-logos/aiesec-logo.png",
   },
 ];
 
@@ -53,12 +54,22 @@ export function Partnerships() {
           >
             <Card className="h-full hover:shadow-lg transition-shadow duration-200">
               <CardContent className="p-6 flex flex-col items-center text-center">
-                <div className="w-24 h-24 bg-slate-100 dark:bg-slate-800 rounded-lg mb-4 flex items-center justify-center border border-slate-200 dark:border-slate-700">
-                  <div className="w-20 h-20 bg-slate-200 dark:bg-slate-700 rounded flex items-center justify-center">
-                    <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                      Logo
-                    </span>
-                  </div>
+                <div className="w-24 h-24 bg-slate-100 dark:bg-slate-800 rounded-lg mb-4 flex items-center justify-center border border-slate-200 dark:border-slate-700 p-2">
+                  {partner.logo ? (
+                    <Image
+                      src={partner.logo}
+                      alt={`${partner.name} logo`}
+                      width={80}
+                      height={80}
+                      className="object-contain w-full h-full"
+                    />
+                  ) : (
+                    <div className="w-20 h-20 bg-slate-200 dark:bg-slate-700 rounded flex items-center justify-center">
+                      <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                        Logo
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-50 mb-2">
                   {partner.name}
