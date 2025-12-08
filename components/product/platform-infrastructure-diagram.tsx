@@ -29,7 +29,7 @@ const modules: Module[] = [
     title: "Collections & Payments",
     description: "Automated rent, service charge, and utility invoicing",
     icon: CurrencyDollarIcon,
-    position: { x: 15, y: 20 },
+    position: { x: 20, y: 15 },
     color: "from-emerald-500 to-teal-600",
     connections: ["accounting", "tenant-experience", "compliance"],
   },
@@ -38,7 +38,7 @@ const modules: Module[] = [
     title: "Accounting & General Ledger",
     description: "Full double-entry accounting system with automated entries",
     icon: DocumentTextIcon,
-    position: { x: 50, y: 20 },
+    position: { x: 50, y: 15 },
     color: "from-blue-500 to-indigo-600",
     connections: ["collections", "maintenance", "tasks", "compliance"],
   },
@@ -47,7 +47,7 @@ const modules: Module[] = [
     title: "Tenant & Owner Experience",
     description: "Self-service portals, mobile apps, and WhatsApp chatbot",
     icon: UserGroupIcon,
-    position: { x: 15, y: 50 },
+    position: { x: 20, y: 45 },
     color: "from-purple-500 to-pink-600",
     connections: ["collections", "maintenance", "communications", "tps"],
   },
@@ -56,7 +56,7 @@ const modules: Module[] = [
     title: "Maintenance & Assets",
     description: "Maintenance request management, work orders, and asset tracking",
     icon: WrenchScrewdriverIcon,
-    position: { x: 50, y: 50 },
+    position: { x: 50, y: 45 },
     color: "from-orange-500 to-red-600",
     connections: ["accounting", "tenant-experience", "tasks", "communications"],
   },
@@ -65,7 +65,7 @@ const modules: Module[] = [
     title: "Tasks & Projects",
     description: "Project management for developments and renovations",
     icon: ClipboardDocumentCheckIcon,
-    position: { x: 85, y: 35 },
+    position: { x: 80, y: 30 },
     color: "from-cyan-500 to-blue-600",
     connections: ["accounting", "maintenance", "communications"],
   },
@@ -74,7 +74,7 @@ const modules: Module[] = [
     title: "KRA eTIMS & Compliance",
     description: "eTIMS-ready invoicing and tax-compliant workflows",
     icon: ShieldCheckIcon,
-    position: { x: 50, y: 80 },
+    position: { x: 50, y: 75 },
     color: "from-amber-500 to-yellow-600",
     connections: ["collections", "accounting"],
   },
@@ -83,7 +83,7 @@ const modules: Module[] = [
     title: "TPS & Rent-to-Own",
     description: "Tenant Purchase Scheme tracking and installment management",
     icon: HomeIcon,
-    position: { x: 15, y: 80 },
+    position: { x: 20, y: 75 },
     color: "from-violet-500 to-purple-600",
     connections: ["collections", "tenant-experience", "accounting"],
   },
@@ -92,7 +92,7 @@ const modules: Module[] = [
     title: "Communications",
     description: "Centralized email, SMS, and in-app messaging",
     icon: ChatBubbleLeftRightIcon,
-    position: { x: 85, y: 80 },
+    position: { x: 80, y: 75 },
     color: "from-rose-500 to-pink-600",
     connections: ["tenant-experience", "maintenance", "tasks"],
   },
@@ -185,8 +185,19 @@ function ModuleCard({
   // Update motion values when position changes (but not during drag)
   useEffect(() => {
     if (!isDragging && containerSize.width > 0 && containerSize.height > 0) {
-      const newX = (position.x / 100) * containerSize.width - (containerSize.width / 2);
-      const newY = (position.y / 100) * containerSize.height - (containerSize.height / 2);
+      // Account for card size (~200px width, ~150px height) when calculating position
+      const cardWidth = 200;
+      const cardHeight = 150;
+      const marginX = cardWidth / 2;
+      const marginY = cardHeight / 2;
+      
+      // Calculate position accounting for card margins
+      const availableWidth = containerSize.width - (marginX * 2);
+      const availableHeight = containerSize.height - (marginY * 2);
+      
+      const newX = marginX + (position.x / 100) * availableWidth - (containerSize.width / 2);
+      const newY = marginY + (position.y / 100) * availableHeight - (containerSize.height / 2);
+      
       x.set(newX);
       y.set(newY);
     }
@@ -206,11 +217,16 @@ function ModuleCard({
       const centerX = (finalX + containerSize.width / 2) / containerSize.width * 100;
       const centerY = (finalY + containerSize.height / 2) / containerSize.height * 100;
       
-      // Constrain to container bounds
-      const minX = 5;
-      const maxX = 95;
-      const minY = 5;
-      const maxY = 95;
+      // Constrain to container bounds (accounting for card size)
+      const cardWidth = 200;
+      const cardHeight = 150;
+      const marginX = (cardWidth / 2 / containerSize.width) * 100;
+      const marginY = (cardHeight / 2 / containerSize.height) * 100;
+      
+      const minX = marginX;
+      const maxX = 100 - marginX;
+      const minY = marginY;
+      const maxY = 100 - marginY;
       
       const constrainedX = Math.max(minX, Math.min(maxX, centerX));
       const constrainedY = Math.max(minY, Math.min(maxY, centerY));
@@ -512,10 +528,10 @@ export function PlatformInfrastructureDiagram() {
 
       {/* Module nodes */}
       <motion.div
-        className="relative w-full h-full"
+        className="absolute inset-0"
         variants={containerVariants}
-        initial="hidden"
-        animate={isVisible ? "visible" : "hidden"}
+        initial="visible"
+        animate="visible"
       >
         {modules.map((module) => {
           const Icon = module.icon;
@@ -534,8 +550,22 @@ export function PlatformInfrastructureDiagram() {
           const position = modulePositions[module.id] || { x: module.position.x, y: module.position.y };
           
           // Convert percentage to pixels for initial position (relative to container center)
-          const initialX = containerSize.width > 0 ? (position.x / 100) * containerSize.width - (containerSize.width / 2) : 0;
-          const initialY = containerSize.height > 0 ? (position.y / 100) * containerSize.height - (containerSize.height / 2) : 0;
+          // Account for card size to prevent truncation
+          const cardWidth = 200;
+          const cardHeight = 150;
+          const marginX = cardWidth / 2;
+          const marginY = cardHeight / 2;
+          
+          let initialX = 0;
+          let initialY = 0;
+          
+          if (containerSize.width > 0 && containerSize.height > 0) {
+            const availableWidth = containerSize.width - (marginX * 2);
+            const availableHeight = containerSize.height - (marginY * 2);
+            
+            initialX = marginX + (position.x / 100) * availableWidth - (containerSize.width / 2);
+            initialY = marginY + (position.y / 100) * availableHeight - (containerSize.height / 2);
+          }
 
           return (
             <ModuleCard
