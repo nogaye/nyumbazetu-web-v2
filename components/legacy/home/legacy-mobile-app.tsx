@@ -4,11 +4,10 @@ import { motion } from "framer-motion";
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { AppStoreBadge, GooglePlayBadge } from "@/components/app-store-badges";
 import Link from "next/link";
 import {
   DevicePhoneMobileIcon,
-  ArrowDownTrayIcon,
   CheckCircleIcon,
 } from "@heroicons/react/24/outline";
 
@@ -63,17 +62,19 @@ export function LegacyMobileApp() {
                   ))}
                 </ul>
 
-                <Button size="lg" className="w-full sm:w-auto" asChild>
+                <div className="flex flex-col gap-3">
                   <Link
                     href="https://apps.apple.com/us/app/nyumba-zetu/id6456750559"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2"
+                    className="inline-block transition-all duration-200 hover:scale-105 hover:opacity-90"
                   >
-                    <ArrowDownTrayIcon className="h-5 w-5" />
-                    Download on App Store
+                    <AppStoreBadge className="h-12 w-auto" />
                   </Link>
-                </Button>
+                  <div className="pointer-events-none">
+                    <GooglePlayBadge className="h-12 w-auto" disabled={true} />
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </motion.div>
