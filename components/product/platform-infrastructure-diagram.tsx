@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import {
   CurrencyDollarIcon,
@@ -141,11 +141,235 @@ const lineVariants: any = {
   },
 };
 
+interface ModuleCardProps {
+  module: Module;
+  Icon: React.ComponentType<{ className?: string }>;
+  position: { x: number; y: number };
+  initialX: number;
+  initialY: number;
+  containerSize: { width: number; height: number };
+  containerRef: React.RefObject<HTMLDivElement | null>;
+  isHighlighted: boolean;
+  isConnected: boolean;
+  isDimmed: boolean;
+  connectedModules: Module[];
+  hoveredModule: string | null;
+  onPositionUpdate: (x: number, y: number) => void;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+  variants: any;
+}
+
+function ModuleCard({
+  module,
+  Icon,
+  position,
+  initialX,
+  initialY,
+  containerSize,
+  containerRef,
+  isHighlighted,
+  isConnected,
+  isDimmed,
+  connectedModules,
+  hoveredModule,
+  onPositionUpdate,
+  onMouseEnter,
+  onMouseLeave,
+  variants,
+}: ModuleCardProps) {
+  const [isDragging, setIsDragging] = useState(false);
+  const x = useMotionValue(initialX);
+  const y = useMotionValue(initialY);
+
+  // Update motion values when position changes (but not during drag)
+  useEffect(() => {
+    if (!isDragging && containerSize.width > 0 && containerSize.height > 0) {
+      const newX = (position.x / 100) * containerSize.width - (containerSize.width / 2);
+      const newY = (position.y / 100) * containerSize.height - (containerSize.height / 2);
+      x.set(newX);
+      y.set(newY);
+    }
+  }, [position, containerSize, isDragging, x, y]);
+
+  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: any) => {
+    setIsDragging(false);
+    
+    if (containerRef.current && containerSize.width > 0 && containerSize.height > 0) {
+      const rect = containerRef.current.getBoundingClientRect();
+      
+      // Get final position from motion values
+      const finalX = x.get();
+      const finalY = y.get();
+      
+      // Convert back to percentage
+      const centerX = (finalX + containerSize.width / 2) / containerSize.width * 100;
+      const centerY = (finalY + containerSize.height / 2) / containerSize.height * 100;
+      
+      // Constrain to container bounds
+      const minX = 5;
+      const maxX = 95;
+      const minY = 5;
+      const maxY = 95;
+      
+      const constrainedX = Math.max(minX, Math.min(maxX, centerX));
+      const constrainedY = Math.max(minY, Math.min(maxY, centerY));
+      
+      // Update position state
+      onPositionUpdate(constrainedX, constrainedY);
+      
+      // Update motion values to match constrained position
+      const constrainedXPixels = (constrainedX / 100) * containerSize.width - (containerSize.width / 2);
+      const constrainedYPixels = (constrainedY / 100) * containerSize.height - (containerSize.height / 2);
+      x.set(constrainedXPixels);
+      y.set(constrainedYPixels);
+    }
+  };
+
+  return (
+    <motion.div
+      className="absolute"
+      style={{
+        left: "50%",
+        top: "50%",
+        x,
+        y,
+      }}
+      variants={variants}
+      drag
+      dragConstraints={containerRef}
+      dragElastic={0}
+      dragMomentum={false}
+      onDragStart={() => setIsDragging(true)}
+      onDragEnd={handleDragEnd}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      whileDrag={{ 
+        scale: 1.15,
+        zIndex: 50,
+        cursor: "grabbing"
+      }}
+    >
+      <motion.div
+        className={`relative group cursor-grab active:cursor-grabbing ${
+          isHighlighted ? "z-10" : "z-0"
+        }`}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        animate={{
+          opacity: isDimmed ? 0.4 : 1,
+          scale: isDimmed ? 0.95 : 1,
+        }}
+        transition={{ duration: 0.2 }}
+      >
+        {/* Module card */}
+        <motion.div
+          className={`bg-white dark:bg-slate-800 rounded-xl p-3 sm:p-4 shadow-lg border-2 transition-all duration-300 ${
+            isHighlighted
+              ? "border-primary shadow-xl scale-110"
+              : isConnected && hoveredModule && hoveredModule !== module.id
+              ? "border-blue-400 dark:border-blue-500"
+              : "border-slate-200 dark:border-slate-700"
+          }`}
+          style={{
+            minWidth: "180px",
+            maxWidth: "200px",
+            ...(isHighlighted
+              ? {
+                  boxShadow: "0 20px 25px -5px rgba(185, 128, 54, 0.2), 0 10px 10px -5px rgba(185, 128, 54, 0.1)",
+                }
+              : {}),
+          }}
+        >
+          {/* Icon with gradient background */}
+          <div
+            className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br ${module.color} flex items-center justify-center mb-2 sm:mb-3 shadow-md`}
+          >
+            <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+          </div>
+
+          {/* Title */}
+          <h3
+            className={`font-semibold text-xs sm:text-sm mb-1 transition-colors ${
+              isHighlighted
+                ? ""
+                : "text-slate-900 dark:text-slate-100"
+            }`}
+            style={
+              isHighlighted
+                ? { color: "#b98036" }
+                : {}
+            }
+          >
+            {module.title}
+          </h3>
+
+          {/* Description */}
+          <p className="text-[10px] sm:text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mb-2">
+            {module.description}
+          </p>
+
+          {/* Connection details */}
+          {isHighlighted && connectedModules.length > 0 && (
+            <motion.div
+              className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+            >
+              <p className="text-[10px] font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                Connected to:
+              </p>
+              <ul className="space-y-1">
+                {connectedModules.map((connected) => (
+                  <li
+                    key={connected.id}
+                    className="text-[9px] sm:text-[10px] text-slate-600 dark:text-slate-400 flex items-center gap-1.5"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span>
+                    <span className="truncate">{connected.title}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
+        </motion.div>
+
+        {/* Pulse effect when highlighted */}
+        {isHighlighted && (
+          <motion.div
+            className={`absolute inset-0 rounded-xl bg-gradient-to-br ${module.color} opacity-20 blur-xl -z-10`}
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.2, 0.3, 0.2],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        )}
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export function PlatformInfrastructureDiagram() {
   const [hoveredModule, setHoveredModule] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Track positions of each module (for dragging)
+  const [modulePositions, setModulePositions] = useState<Record<string, { x: number; y: number }>>(() => {
+    const initial: Record<string, { x: number; y: number }> = {};
+    modules.forEach(module => {
+      initial[module.id] = { x: module.position.x, y: module.position.y };
+    });
+    return initial;
+  });
+  
 
   useEffect(() => {
     setIsVisible(true);
@@ -306,122 +530,38 @@ export function PlatformInfrastructureDiagram() {
             : true;
           
           const isDimmed = hoveredModule !== null && !isConnected && !isHighlighted;
+          
+          const position = modulePositions[module.id] || { x: module.position.x, y: module.position.y };
+          
+          // Convert percentage to pixels for initial position (relative to container center)
+          const initialX = containerSize.width > 0 ? (position.x / 100) * containerSize.width - (containerSize.width / 2) : 0;
+          const initialY = containerSize.height > 0 ? (position.y / 100) * containerSize.height - (containerSize.height / 2) : 0;
 
           return (
-            <motion.div
+            <ModuleCard
               key={module.id}
-              className="absolute"
-              style={{
-                left: `${module.position.x}%`,
-                top: `${module.position.y}%`,
-                transform: "translate(-50%, -50%)",
+              module={module}
+              Icon={Icon}
+              position={position}
+              initialX={initialX}
+              initialY={initialY}
+              containerSize={containerSize}
+              containerRef={containerRef}
+              isHighlighted={isHighlighted}
+              isConnected={isConnected}
+              isDimmed={isDimmed}
+              connectedModules={connectedModules}
+              onPositionUpdate={(newX, newY) => {
+                setModulePositions((prev: Record<string, { x: number; y: number }>) => ({
+                  ...prev,
+                  [module.id]: { x: newX, y: newY }
+                }));
               }}
-              variants={moduleVariants}
               onMouseEnter={() => setHoveredModule(module.id)}
               onMouseLeave={() => setHoveredModule(null)}
-            >
-              <motion.div
-                className={`relative group cursor-pointer ${
-                  isHighlighted ? "z-10" : "z-0"
-                }`}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                animate={{
-                  opacity: isDimmed ? 0.4 : 1,
-                  scale: isDimmed ? 0.95 : 1,
-                }}
-                transition={{ duration: 0.2 }}
-              >
-                {/* Module card */}
-                <motion.div
-                  className={`bg-white dark:bg-slate-800 rounded-xl p-3 sm:p-4 shadow-lg border-2 transition-all duration-300 ${
-                    isHighlighted
-                      ? "border-primary shadow-xl scale-110"
-                      : isConnected && hoveredModule
-                      ? "border-blue-400 dark:border-blue-500"
-                      : "border-slate-200 dark:border-slate-700"
-                  }`}
-                  style={{
-                    minWidth: "180px",
-                    maxWidth: "200px",
-                    ...(isHighlighted
-                      ? {
-                          boxShadow: "0 20px 25px -5px rgba(185, 128, 54, 0.2), 0 10px 10px -5px rgba(185, 128, 54, 0.1)",
-                        }
-                      : {}),
-                  }}
-                >
-                  {/* Icon with gradient background */}
-                  <div
-                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br ${module.color} flex items-center justify-center mb-2 sm:mb-3 shadow-md`}
-                  >
-                    <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                  </div>
-
-                  {/* Title */}
-                  <h3
-                    className={`font-semibold text-xs sm:text-sm mb-1 transition-colors ${
-                      isHighlighted
-                        ? ""
-                        : "text-slate-900 dark:text-slate-100"
-                    }`}
-                    style={
-                      isHighlighted
-                        ? { color: "#b98036" }
-                        : {}
-                    }
-                  >
-                    {module.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-[10px] sm:text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mb-2">
-                    {module.description}
-                  </p>
-
-                  {/* Connection details */}
-                  {isHighlighted && connectedModules.length > 0 && (
-                    <motion.div
-                      className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700"
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                    >
-                      <p className="text-[10px] font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                        Connected to:
-                      </p>
-                      <ul className="space-y-1">
-                        {connectedModules.map((connected) => (
-                          <li
-                            key={connected.id}
-                            className="text-[9px] sm:text-[10px] text-slate-600 dark:text-slate-400 flex items-center gap-1.5"
-                          >
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span>
-                            <span className="truncate">{connected.title}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </motion.div>
-                  )}
-                </motion.div>
-
-                {/* Pulse effect when highlighted */}
-                {isHighlighted && (
-                  <motion.div
-                    className={`absolute inset-0 rounded-xl bg-gradient-to-br ${module.color} opacity-20 blur-xl -z-10`}
-                    animate={{
-                      scale: [1, 1.2, 1],
-                      opacity: [0.2, 0.3, 0.2],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
-                )}
-              </motion.div>
-            </motion.div>
+              hoveredModule={hoveredModule}
+              variants={moduleVariants}
+            />
           );
         })}
       </motion.div>
