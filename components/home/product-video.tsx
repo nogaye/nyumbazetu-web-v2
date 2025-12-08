@@ -27,7 +27,7 @@ export function ProductVideo() {
                 <PlayIcon className="h-10 w-10 text-white ml-1" />
               </div>
               <p className="text-white text-sm font-medium mb-2">3-Minute Platform Overview</p>
-              <p className="text-white text-xs">Video placeholder - Dashboard walkthrough and key features</p>
+              {/* <p className="text-white text-xs">Video placeholder - Dashboard walkthrough and key features</p> */}
             </div>
           </div>
           

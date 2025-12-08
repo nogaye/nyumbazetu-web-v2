@@ -144,9 +144,9 @@ export function HeroCarousel() {
       
       {/* Carousel Container */}
       <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-24 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left Column - Content */}
-          <div className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
+        <div className="max-w-4xl mx-auto">
+          {/* Content */}
+          <div className="text-center">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -254,26 +254,6 @@ export function HeroCarousel() {
               </motion.div>
             </AnimatePresence>
           </div>
-        
-        {/* Right Column - Dashboard Screenshot Placeholder */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="hidden lg:block"
-        >
-          <div className="relative bg-slate-100 dark:bg-slate-900 rounded-xl p-4 shadow-2xl border border-slate-200 dark:border-slate-800">
-            <div className="aspect-video bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-800 dark:to-slate-700 rounded-lg flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-24 h-24 mx-auto mb-4 bg-slate-400 dark:bg-slate-600 rounded-lg flex items-center justify-center">
-                  <div className="w-16 h-16 bg-slate-500 dark:bg-slate-500 rounded"></div>
-                </div>
-                <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Dashboard Screenshot</p>
-                <p className="text-slate-600 dark:text-slate-400 text-xs mt-1">Platform interface preview</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
         </div>
       </div>
 
