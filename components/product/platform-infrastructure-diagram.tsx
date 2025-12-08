@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   CurrencyDollarIcon,
   DocumentTextIcon,
@@ -109,7 +109,7 @@ const containerVariants = {
   },
 };
 
-const moduleVariants = {
+const moduleVariants: any = {
   hidden: { opacity: 0, scale: 0.8 },
   visible: {
     opacity: 1,
@@ -122,57 +122,123 @@ const moduleVariants = {
   },
 };
 
-const lineVariants = {
+const lineVariants: any = {
   hidden: { pathLength: 0, opacity: 0 },
   visible: (i: number) => ({
     pathLength: 1,
-    opacity: 0.3,
+    opacity: 0.6,
     transition: {
-      pathLength: { delay: i * 0.1, duration: 1, ease: "easeInOut" },
-      opacity: { delay: i * 0.1, duration: 0.5 },
+      pathLength: { delay: i * 0.05, duration: 0.8, ease: "easeInOut" },
+      opacity: { delay: i * 0.05, duration: 0.4 },
     },
   }),
+  highlighted: {
+    pathLength: 1,
+    opacity: 1,
+    transition: {
+      opacity: { duration: 0.2 },
+    },
+  },
 };
 
 export function PlatformInfrastructureDiagram() {
   const [hoveredModule, setHoveredModule] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsVisible(true);
+    
+    const updateSize = () => {
+      if (containerRef.current) {
+        setContainerSize({
+          width: containerRef.current.offsetWidth,
+          height: containerRef.current.offsetHeight,
+        });
+      }
+    };
+    
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
   }, []);
 
   const getConnectionPath = (from: Module, to: Module): string => {
-    const fromX = from.position.x;
-    const fromY = from.position.y;
-    const toX = to.position.x;
-    const toY = to.position.y;
+    if (containerSize.width === 0 || containerSize.height === 0) {
+      return '';
+    }
 
-    // Create a curved path
-    const midX = (fromX + toX) / 2;
-    const midY = (fromY + toY) / 2;
-    const controlX = midX;
-    const controlY = midY - 5;
+    // Convert percentage to pixel coordinates (center of module cards)
+    const fromX = (from.position.x / 100) * containerSize.width;
+    const fromY = (from.position.y / 100) * containerSize.height;
+    const toX = (to.position.x / 100) * containerSize.width;
+    const toY = (to.position.y / 100) * containerSize.height;
 
-    return `M ${fromX} ${fromY} Q ${controlX} ${controlY} ${toX} ${toY}`;
+    // Calculate angle and distance
+    const dx = toX - fromX;
+    const dy = toY - fromY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    
+    if (distance === 0) return '';
+    
+    // Module card approximate size (accounting for responsive sizing)
+    const cardWidth = Math.min(200, containerSize.width * 0.15);
+    const cardHeight = 120;
+    
+    // Calculate connection points at card edges
+    const angle = Math.atan2(dy, dx);
+    const fromOffsetX = Math.cos(angle) * (cardWidth / 2);
+    const fromOffsetY = Math.sin(angle) * (cardHeight / 2);
+    const toOffsetX = -Math.cos(angle) * (cardWidth / 2);
+    const toOffsetY = -Math.sin(angle) * (cardHeight / 2);
+    
+    const startX = fromX + fromOffsetX;
+    const startY = fromY + fromOffsetY;
+    const endX = toX + toOffsetX;
+    const endY = toY + toOffsetY;
+    
+    // Create a curved path with control point
+    const midX = (startX + endX) / 2;
+    const midY = (startY + endY) / 2;
+    
+    // Perpendicular offset for curve (makes lines curve nicely)
+    const offset = Math.min(distance * 0.15, 40);
+    const controlX = midX + (dy / distance) * offset;
+    const controlY = midY - (dx / distance) * offset;
+
+    return `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`;
   };
 
+  // Build connections array, avoiding duplicates (A->B and B->A should only show once)
   const allConnections: Array<{ from: Module; to: Module; index: number }> = [];
+  const connectionSet = new Set<string>();
+  
   modules.forEach((module) => {
-    module.connections.forEach((connId, idx) => {
+    module.connections.forEach((connId) => {
       const connectedModule = modules.find((m) => m.id === connId);
       if (connectedModule) {
-        allConnections.push({
-          from: module,
-          to: connectedModule,
-          index: allConnections.length,
-        });
+        // Create a unique key for the connection (sorted to avoid duplicates)
+        const connectionKey = [module.id, connectedModule.id].sort().join('-');
+        
+        // Only add if we haven't seen this connection before
+        if (!connectionSet.has(connectionKey)) {
+          connectionSet.add(connectionKey);
+          allConnections.push({
+            from: module,
+            to: connectedModule,
+            index: allConnections.length,
+          });
+        }
       }
     });
   });
 
   return (
-    <div className="relative w-full h-[500px] sm:h-[600px] md:h-[700px] lg:h-[800px] overflow-hidden rounded-lg bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-800">
+    <div 
+      ref={containerRef}
+      className="relative w-full h-[500px] sm:h-[600px] md:h-[700px] lg:h-[800px] overflow-hidden rounded-lg bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-800"
+    >
       {/* Background grid pattern */}
       <div className="absolute inset-0 opacity-20 dark:opacity-10">
         <svg className="w-full h-full">
@@ -219,32 +285,6 @@ export function PlatformInfrastructureDiagram() {
         </div>
       </motion.div>
 
-      {/* Connection lines */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none">
-        {allConnections.map((conn, idx) => {
-          const isHighlighted =
-            hoveredModule === conn.from.id || hoveredModule === conn.to.id;
-          return (
-            <motion.path
-              key={`${conn.from.id}-${conn.to.id}-${idx}`}
-              d={getConnectionPath(conn.from, conn.to)}
-              fill="none"
-              stroke={
-                isHighlighted
-                  ? "rgb(59, 130, 246)"
-                  : "rgb(148, 163, 184)"
-              }
-              strokeWidth={isHighlighted ? 2.5 : 1.5}
-              strokeDasharray="5,5"
-              className="dark:stroke-slate-600"
-              variants={lineVariants}
-              initial="hidden"
-              animate={isVisible ? "visible" : "hidden"}
-              custom={idx}
-            />
-          );
-        })}
-      </svg>
 
       {/* Module nodes */}
       <motion.div
@@ -259,6 +299,13 @@ export function PlatformInfrastructureDiagram() {
           const connectedModules = module.connections
             .map((id) => modules.find((m) => m.id === id))
             .filter(Boolean) as Module[];
+          
+          // Check if this module is connected to the hovered module
+          const isConnected = hoveredModule 
+            ? connectedModules.some(m => m.id === hoveredModule) || module.id === hoveredModule
+            : true;
+          
+          const isDimmed = hoveredModule !== null && !isConnected && !isHighlighted;
 
           return (
             <motion.div
@@ -279,17 +326,24 @@ export function PlatformInfrastructureDiagram() {
                 }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
+                animate={{
+                  opacity: isDimmed ? 0.4 : 1,
+                  scale: isDimmed ? 0.95 : 1,
+                }}
+                transition={{ duration: 0.2 }}
               >
                 {/* Module card */}
                 <motion.div
                   className={`bg-white dark:bg-slate-800 rounded-xl p-3 sm:p-4 shadow-lg border-2 transition-all duration-300 ${
                     isHighlighted
                       ? "border-primary shadow-xl scale-110"
+                      : isConnected && hoveredModule
+                      ? "border-blue-400 dark:border-blue-500"
                       : "border-slate-200 dark:border-slate-700"
                   }`}
                   style={{
-                    minWidth: "160px",
-                    maxWidth: "180px",
+                    minWidth: "180px",
+                    maxWidth: "200px",
                     ...(isHighlighted
                       ? {
                           boxShadow: "0 20px 25px -5px rgba(185, 128, 54, 0.2), 0 10px 10px -5px rgba(185, 128, 54, 0.1)",
@@ -297,6 +351,11 @@ export function PlatformInfrastructureDiagram() {
                       : {}),
                   }}
                 >
+                  {/* Connection count badge */}
+                  <div className="absolute -top-2 -right-2 bg-primary text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-md">
+                    {connectedModules.length}
+                  </div>
+
                   {/* Icon with gradient background */}
                   <div
                     className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br ${module.color} flex items-center justify-center mb-2 sm:mb-3 shadow-md`}
@@ -321,22 +380,32 @@ export function PlatformInfrastructureDiagram() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-[10px] sm:text-xs text-slate-600 dark:text-slate-400 line-clamp-2">
+                  <p className="text-[10px] sm:text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mb-2">
                     {module.description}
                   </p>
 
-                  {/* Connection indicator */}
-                  {isHighlighted && (
+                  {/* Connection details */}
+                  {isHighlighted && connectedModules.length > 0 && (
                     <motion.div
                       className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700"
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
                     >
-                      <p className="text-xs text-slate-500 dark:text-slate-400">
-                        Connected to {connectedModules.length} module
-                        {connectedModules.length !== 1 ? "s" : ""}
+                      <p className="text-[10px] font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                        Connected to:
                       </p>
+                      <ul className="space-y-1">
+                        {connectedModules.map((connected) => (
+                          <li
+                            key={connected.id}
+                            className="text-[9px] sm:text-[10px] text-slate-600 dark:text-slate-400 flex items-center gap-1.5"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span>
+                            <span className="truncate">{connected.title}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </motion.div>
                   )}
                 </motion.div>
@@ -364,18 +433,29 @@ export function PlatformInfrastructureDiagram() {
 
       {/* Legend */}
       <motion.div
-        className="absolute bottom-2 sm:bottom-4 left-2 right-2 sm:left-4 sm:right-4 md:left-auto md:right-4 md:w-auto bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg p-2 sm:p-3 shadow-lg border border-slate-200 dark:border-slate-700"
+        className="absolute bottom-2 sm:bottom-4 left-2 right-2 sm:left-4 sm:right-4 md:left-auto md:right-4 md:w-auto bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm rounded-lg p-2 sm:p-3 shadow-lg border border-slate-200 dark:border-slate-700"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1 }}
       >
-        <p className="text-[10px] sm:text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1 sm:mb-2">
+        <p className="text-[10px] sm:text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5 sm:mb-2">
           Platform Architecture
         </p>
-        <p className="text-[9px] sm:text-xs text-slate-600 dark:text-slate-400">
-          <span className="hidden sm:inline">Hover over modules to see connections • </span>
-          {modules.length} integrated modules
-        </p>
+        <div className="space-y-1">
+          <p className="text-[9px] sm:text-xs text-slate-600 dark:text-slate-400">
+            <span className="hidden sm:inline">Hover over any module to see its connections • </span>
+            {modules.length} integrated modules
+          </p>
+          {hoveredModule && (
+            <motion.p
+              className="text-[9px] sm:text-xs text-primary font-medium"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              Showing connections for: {modules.find(m => m.id === hoveredModule)?.title}
+            </motion.p>
+          )}
+        </div>
       </motion.div>
     </div>
   );
