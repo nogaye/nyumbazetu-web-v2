@@ -17,6 +17,7 @@ const Integrations = dynamic(() => import("@/components/home/integrations").then
 const Partnerships = dynamic(() => import("@/components/home/partnerships").then(mod => ({ default: mod.Partnerships })), { ssr: true });
 const ResourcesTeaser = dynamic(() => import("@/components/home/resources-teaser").then(mod => ({ default: mod.ResourcesTeaser })), { ssr: true });
 const FinalCTA = dynamic(() => import("@/components/home/final-cta").then(mod => ({ default: mod.FinalCTA })), { ssr: true });
+const AutomatedWorkflow = dynamic(() => import("@/components/product/automated-workflow").then(mod => ({ default: mod.AutomatedWorkflow })), { ssr: true });
 
 export const metadata = {
   title: "Nyumba Zetu | Property Management Infrastructure for Modern Kenyan Real Estate",
@@ -33,6 +34,19 @@ export default function Home() {
       <ProblemContext />
       <FeatureGrid />
       <Differentiators />
+      <Section className="bg-secondary">
+        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight tracking-tight">
+            Fully Automated Invoice-to-Payment Workflow
+          </h2>
+          <p className="text-lg md:text-xl text-white leading-relaxed">
+            From invoice generation to financial reporting—completely automated with zero manual intervention.
+          </p>
+        </div>
+        <div className="max-w-7xl mx-auto">
+          <AutomatedWorkflow />
+        </div>
+      </Section>
       <Personas />
       <HowItWorks />
       <Testimonials />
