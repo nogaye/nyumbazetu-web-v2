@@ -16,6 +16,7 @@ import { LegacyReferral } from "@/components/legacy/home/legacy-referral";
 import { LegacyMobileApp } from "@/components/legacy/home/legacy-mobile-app";
 
 // Lazy load below-the-fold components for better performance
+const AsSeenOn = dynamic(() => import("@/components/home/as-seen-on").then(mod => ({ default: mod.AsSeenOn })), { ssr: true });
 const LegacyScreenshotsLazy = dynamic(
   () => import("@/components/legacy/home/legacy-screenshots").then((mod) => ({ default: mod.LegacyScreenshots })),
   { ssr: true }
@@ -61,6 +62,7 @@ export default function HomeLegacyPage() {
       <LegacyTransactions />
       <LegacyHeadline />
       <LegacyAwards />
+      <AsSeenOn />
       <LegacyPortfolio />
       <LegacyFeatures />
       <LegacyScreenshotsLazy />
