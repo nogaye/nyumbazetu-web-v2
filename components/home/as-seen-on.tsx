@@ -12,25 +12,72 @@ interface MediaOutlet {
   logo?: string;
   url: string;
   textOnly?: boolean; // If true, display text instead of logo
+  textStyle?: string; // Custom CSS classes for text styling
 }
 
 // Arranged from most popular to least popular
 const mediaOutlets: MediaOutlet[] = [
   { name: "Daily Nation", logo: "/legacy/media/daily-nation-logo.svg", url: "#" },
-  { name: "KTN", logo: "/legacy/media/ktn-logo.jpeg", url: "#", textOnly: true },
-  
-  { name: "Tech Africa", logo: "/legacy/media/tech-africa-news.png", url: "#", textOnly: true },
+  { 
+    name: "KTN", 
+    logo: "/legacy/media/ktn-logo.jpeg", 
+    url: "#", 
+    textOnly: true,
+    textStyle: "text-white text-base font-black tracking-tighter uppercase opacity-90 hover:opacity-100"
+  },
+  { 
+    name: "Tech Africa", 
+    logo: "/legacy/media/tech-africa-news.png", 
+    url: "#", 
+    textOnly: true,
+    textStyle: "text-white text-xs font-semibold tracking-widest uppercase opacity-85 hover:opacity-100"
+  },
   { name: "Africa Business", logo: "/legacy/media/africa-business-news-logo.png", url: "#" },
-  { name: "TV47", logo: "/legacy/media/tv-47-logo.jpeg", url: "#", textOnly: true },
+  { 
+    name: "TV47", 
+    logo: "/legacy/media/tv-47-logo.jpeg", 
+    url: "#", 
+    textOnly: true,
+    textStyle: "text-white text-lg font-extrabold tracking-tight opacity-95 hover:opacity-100"
+  },
   { name: "Nipashe Biz", logo: "/legacy/media/nipashe-logo.png", url: "#" },
-  { name: "Insider Kenya", logo: "/legacy/media/insider-kenya-logo.webp", url: "#", textOnly: true },
+  { 
+    name: "Insider Kenya", 
+    logo: "/legacy/media/insider-kenya-logo.webp", 
+    url: "#", 
+    textOnly: true,
+    textStyle: "text-white text-sm font-bold tracking-normal capitalize opacity-90 hover:opacity-100"
+  },
   { name: "Swala Nyeti", logo: "/legacy/media/swala-nyeti-logo.png", url: "#" },
-  { name: "Serrari Group", logo: "/legacy/media/serrari-logo.webp", url: "#", textOnly: true },
-
-  { name: "Business Tech", logo: "/legacy/media/business-tech-logo.webp", url: "#", textOnly: true },
-  { name: "Tech Trends", logo: "/legacy/media/tech-trends-logo.png", url: "#", textOnly: true },
+  { 
+    name: "Serrari Group", 
+    logo: "/legacy/media/serrari-logo.webp", 
+    url: "#", 
+    textOnly: true,
+    textStyle: "text-white text-xs font-medium tracking-wide uppercase opacity-85 hover:opacity-100"
+  },
+  { 
+    name: "Business Tech", 
+    logo: "/legacy/media/business-tech-logo.webp", 
+    url: "#", 
+    textOnly: true,
+    textStyle: "text-white text-sm font-bold tracking-wider uppercase opacity-90 hover:opacity-100"
+  },
+  { 
+    name: "Tech Trends", 
+    logo: "/legacy/media/tech-trends-logo.png", 
+    url: "#", 
+    textOnly: true,
+    textStyle: "text-white text-xs font-semibold tracking-normal capitalize opacity-88 hover:opacity-100"
+  },
   { name: "Bizna Kenya", logo: "/legacy/media/bizna-Logo.webp", url: "#" },
-  { name: "Aptantech", logo: "/legacy/media/aptan-logo.webp", url: "#", textOnly: true },
+  { 
+    name: "Aptantech", 
+    logo: "/legacy/media/aptan-logo.webp", 
+    url: "#", 
+    textOnly: true,
+    textStyle: "text-white text-sm font-extrabold tracking-tight lowercase opacity-90 hover:opacity-100"
+  },
 ];
 
 export function AsSeenOn() {
@@ -185,7 +232,7 @@ export function AsSeenOn() {
                       className="w-full h-24 bg-white/10 dark:bg-slate-800/50 backdrop-blur-sm rounded-lg flex items-center justify-center p-4 border border-white/20 dark:border-slate-700/50 hover:border-white/40 dark:hover:border-primary/30 transition-all duration-300"
                     >
                       {outlet.textOnly ? (
-                        <span className="text-white text-sm font-bold text-center leading-tight opacity-90 hover:opacity-100 transition-opacity duration-300 tracking-wide uppercase whitespace-nowrap px-2">
+                        <span className={`${outlet.textStyle || "text-white text-sm font-bold text-center leading-tight opacity-90 hover:opacity-100 tracking-wide uppercase"} text-center leading-tight whitespace-nowrap px-2 transition-opacity duration-300`}>
                           {outlet.name}
                         </span>
                       ) : outlet.logo ? (
