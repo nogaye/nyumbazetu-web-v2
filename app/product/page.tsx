@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
+import { PlatformInfrastructureDiagram } from "@/components/product/platform-infrastructure-diagram";
 
 export const metadata = {
   title: "Platform Overview | Nyumba Zetu",
@@ -20,20 +21,10 @@ export default function ProductPage() {
         />
       </Section>
 
-      {/* Platform Dashboard Screenshot */}
+      {/* Platform Infrastructure Diagram */}
       <Section>
         <div className="max-w-6xl mx-auto mb-12">
-          <div className="relative bg-slate-100 dark:bg-slate-900 rounded-xl p-4 shadow-2xl border border-slate-200 dark:border-slate-800">
-            <div className="aspect-video bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-800 dark:to-slate-700 rounded-lg flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-32 h-32 mx-auto mb-4 bg-slate-400 dark:bg-slate-600 rounded-lg flex items-center justify-center">
-                  <div className="w-24 h-24 bg-slate-500 dark:bg-slate-500 rounded"></div>
-                </div>
-                <p className="text-slate-700 dark:text-slate-300 font-medium mb-1">Platform Dashboard Screenshot</p>
-                <p className="text-slate-600 dark:text-slate-400 text-sm">Full platform interface with all modules visible</p>
-              </div>
-            </div>
-          </div>
+          <PlatformInfrastructureDiagram />
         </div>
       </Section>
 
