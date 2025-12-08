@@ -9,25 +9,26 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 interface MediaOutlet {
   name: string;
-  logo: string;
+  logo?: string;
   url: string;
+  textOnly?: boolean; // If true, display text instead of logo
 }
 
 // Arranged from most popular to least popular
 const mediaOutlets: MediaOutlet[] = [
   { name: "Daily Nation", logo: "/legacy/media/daily-nation-logo.svg", url: "#" },
- // { name: "KTN News", logo: "/legacy/media/ktn-logo.jpeg", url: "#" },
- // { name: "TV47 News", logo: "/legacy/media/tv-47-logo.jpeg", url: "#" },
- // { name: "Tech Africa News", logo: "/legacy/media/tech-africa-news.png", url: "#" },
-  //{ name: "Business Tech Kenya", logo: "/legacy/media/business-tech-logo.webp", url: "#" },
- // { name: "Tech Trends Kenya", logo: "/legacy/media/tech-trends-logo.png", url: "#" },
+  { name: "KTN News", logo: "/legacy/media/ktn-logo.jpeg", url: "#", textOnly: true },
+  { name: "TV47 News", logo: "/legacy/media/tv-47-logo.jpeg", url: "#", textOnly: true },
+  { name: "Tech Africa News", logo: "/legacy/media/tech-africa-news.png", url: "#", textOnly: true },
+  { name: "Business Tech Kenya", logo: "/legacy/media/business-tech-logo.webp", url: "#", textOnly: true },
+  { name: "Tech Trends Kenya", logo: "/legacy/media/tech-trends-logo.png", url: "#", textOnly: true },
   { name: "Africa Business News", logo: "/legacy/media/africa-business-news-logo.png", url: "#" },
   { name: "Nipashe Biz", logo: "/legacy/media/nipashe-logo.png", url: "#" },
-  //{ name: "Insider Kenya", logo: "/legacy/media/insider-kenya-logo.webp", url: "#" },
+  { name: "Insider Kenya", logo: "/legacy/media/insider-kenya-logo.webp", url: "#", textOnly: true },
   { name: "Swala Nyeti", logo: "/legacy/media/swala-nyeti-logo.png", url: "#" },
-  //{ name: "Serrari Group", logo: "/legacy/media/serrari-logo.webp", url: "#" },
+  { name: "Serrari Group", logo: "/legacy/media/serrari-logo.webp", url: "#", textOnly: true },
   { name: "Bizna Kenya", logo: "/legacy/media/bizna-Logo.webp", url: "#" },
-  //{ name: "Aptantech", logo: "/legacy/media/aptan-logo.webp", url: "#" },
+  { name: "Aptantech", logo: "/legacy/media/aptan-logo.webp", url: "#", textOnly: true },
 ];
 
 export function AsSeenOn() {
@@ -181,15 +182,25 @@ export function AsSeenOn() {
                       rel={outlet.url !== "#" ? "noopener noreferrer" : undefined}
                       className="w-full h-24 bg-white/10 dark:bg-slate-800/50 backdrop-blur-sm rounded-lg flex items-center justify-center p-4 border border-white/20 dark:border-slate-700/50 hover:border-white/40 dark:hover:border-primary/30 transition-all duration-300"
                     >
-                      <Image
-                        src={outlet.logo}
-                        alt={outlet.name}
-                        width={120}
-                        height={48}
-                        className="w-full h-full object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-all duration-300"
-                        sizes="(max-width: 640px) 150px, 150px"
-                        loading="lazy"
-                      />
+                      {outlet.textOnly ? (
+                        <span className="text-white text-sm font-bold text-center leading-tight opacity-90 hover:opacity-100 transition-opacity duration-300 tracking-wide uppercase whitespace-nowrap px-2">
+                          {outlet.name}
+                        </span>
+                      ) : outlet.logo ? (
+                        <Image
+                          src={outlet.logo}
+                          alt={outlet.name}
+                          width={120}
+                          height={48}
+                          className="w-full h-full object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-all duration-300"
+                          sizes="(max-width: 640px) 150px, 150px"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <span className="text-white text-sm font-bold text-center leading-tight opacity-90 hover:opacity-100 transition-opacity duration-300 tracking-wide uppercase whitespace-nowrap px-2">
+                          {outlet.name}
+                        </span>
+                      )}
                     </Link>
                   </div>
                 ))}
