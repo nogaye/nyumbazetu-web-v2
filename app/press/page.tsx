@@ -4,6 +4,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { ExternalLink, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -24,14 +25,9 @@ interface MediaMention {
   category: "mainstream" | "digital";
 }
 
+// Arranged from most popular to least popular within each category
 const mediaMentions: MediaMention[] = [
-  {
-    outlet: "KTN News",
-    headline: "NCBA Partners with Zetu Innovations",
-    description: "NCBA Group partners with Zetu Innovations to roll out Nyumba Zetu property management platform.",
-    link: "https://www.youtube.com/watch?v=AnvB9Br6RvI",
-    category: "mainstream",
-  },
+  // Mainstream - Most Popular First
   {
     outlet: "Daily Nation",
     headline: "AI-Powered System for SMEs and Rentals",
@@ -41,61 +37,25 @@ const mediaMentions: MediaMention[] = [
     category: "mainstream",
   },
   {
+    outlet: "KTN News",
+    headline: "NCBA Partners with Zetu Innovations",
+    description: "NCBA Group partners with Zetu Innovations to roll out Nyumba Zetu property management platform.",
+    link: "https://www.youtube.com/watch?v=AnvB9Br6RvI",
+    category: "mainstream",
+  },
+  {
     outlet: "TV47 News",
     headline: "Property Management Platform Launch",
     description: "Coverage of the Nyumba Zetu platform launch and its impact on property management in Kenya.",
     link: "https://www.youtube.com/watch?v=dayoO5_tcRk",
     category: "mainstream",
   },
+  // Digital - Most Popular First
   {
     outlet: "Tech Africa News",
     headline: "NCBA Partners with Zetu Innovations to Digitise Property Management",
     description: "NCBA partners with Zetu Innovations to digitize property management in Kenya through the Nyumba Zetu platform.",
     link: "https://techafricanews.com/2025/08/01/ncba-partners-with-zetu-innovations-to-digitise-property-management-in-kenya/",
-    date: "Aug 1, 2025",
-    category: "digital",
-  },
-  {
-    outlet: "Bizna Kenya",
-    headline: "Nyumba Zetu Platform",
-    description: "Comprehensive coverage of the Nyumba Zetu platform and its features for property managers.",
-    link: "https://biznakenya.com/nyumba-zetu-platform/",
-    category: "digital",
-  },
-  {
-    outlet: "Kenyan Corporates",
-    headline: "NCBA-Zetu Innovations Partner in Distribution Deal",
-    description: "NCBA and Zetu Innovations partner in Nyumba Zetu distribution deal to support property managers and landlords.",
-    link: "https://kenyancorporates.co.ke/2025/08/05/ncba-zetu-innovations-partner-in-nyumba-zetu-distribution-deal-tosupport-property-managers-and-landlords/",
-    date: "Aug 5, 2025",
-    category: "digital",
-  },
-  {
-    outlet: "Serrari Group",
-    headline: "NCBA and Zetu Innovations Forge Partnership",
-    description: "NCBA and Zetu Innovations forge partnership in property management to support developers and property managers.",
-    link: "https://serrarigroup.com/ncba-and-zetu-innovations-forge-partnership-in-property-management/",
-    category: "digital",
-  },
-  {
-    outlet: "Swala Nyeti",
-    headline: "NCBA and Zetu Innovations Collaborate to Unveil Property Management System",
-    description: "NCBA and Zetu Innovations collaborate to unveil property management system designed to simplify operations.",
-    link: "https://www.swalanyeti.co.ke/business/article/10582/ncba-and-zetu-innovations-collaborate-to-unveil-property-management-system/",
-    category: "digital",
-  },
-  {
-    outlet: "Insider Kenya",
-    headline: "Zetu Innovations Coverage",
-    description: "Latest news and updates about Zetu Innovations and the Nyumba Zetu platform.",
-    link: "https://insiderkenya.com/tag/zetu-innovations/",
-    category: "digital",
-  },
-  {
-    outlet: "Aptantech",
-    headline: "NCBA Partners with Zetu Innovations in Distribution Deal",
-    description: "NCBA partners with Zetu Innovations in Nyumba Zetu distribution deal to support developers and property managers.",
-    link: "https://aptantech.com/2025/08/01/ncba-partners-with-zetu-innovations-in-nyumba-zetu-distribution-deal-to-support-developers-and-property-managers/",
     date: "Aug 1, 2025",
     category: "digital",
   },
@@ -107,10 +67,10 @@ const mediaMentions: MediaMention[] = [
     category: "digital",
   },
   {
-    outlet: "Digital Banking News",
-    headline: "NCBA Group Partners with Zetu Innovations",
-    description: "NCBA Group partners with Zetu Innovations to roll out Nyumba Zetu property platform for enhanced property management.",
-    link: "https://digitalbankingnews.co.ke/ncba-group-partners-with-zetu-innovations-to-roll-out-nyumba-zetu-property-platform/",
+    outlet: "Business Tech Kenya",
+    headline: "NCBA Nyumba Zetu to Support Property Management",
+    description: "NCBA and Nyumba Zetu collaborate to support property management in Kenya with innovative solutions.",
+    link: "https://businesstech.co.ke/ncba-nyumba-zetu-to-support-property-management-in-kenya/",
     category: "digital",
   },
   {
@@ -122,13 +82,6 @@ const mediaMentions: MediaMention[] = [
     category: "digital",
   },
   {
-    outlet: "Hapa Kenya",
-    headline: "Zetu Innovations Coverage",
-    description: "Latest updates and news about Zetu Innovations and their property management solutions.",
-    link: "https://hapakenya.com/tag/zetu-innovations/",
-    category: "digital",
-  },
-  {
     outlet: "Nipashe Biz",
     headline: "NCBA-Zetu Unveil Nyumba Zetu Platform",
     description: "NCBA and Zetu unveil Nyumba Zetu platform to digitize property management in Kenya.",
@@ -136,10 +89,54 @@ const mediaMentions: MediaMention[] = [
     category: "digital",
   },
   {
-    outlet: "Business Tech Kenya",
-    headline: "NCBA Nyumba Zetu to Support Property Management",
-    description: "NCBA and Nyumba Zetu collaborate to support property management in Kenya with innovative solutions.",
-    link: "https://businesstech.co.ke/ncba-nyumba-zetu-to-support-property-management-in-kenya/",
+    outlet: "Insider Kenya",
+    headline: "Zetu Innovations Coverage",
+    description: "Latest news and updates about Zetu Innovations and the Nyumba Zetu platform.",
+    link: "https://insiderkenya.com/tag/zetu-innovations/",
+    category: "digital",
+  },
+  {
+    outlet: "Swala Nyeti",
+    headline: "NCBA and Zetu Innovations Collaborate to Unveil Property Management System",
+    description: "NCBA and Zetu Innovations collaborate to unveil property management system designed to simplify operations.",
+    link: "https://www.swalanyeti.co.ke/business/article/10582/ncba-and-zetu-innovations-collaborate-to-unveil-property-management-system/",
+    category: "digital",
+  },
+  {
+    outlet: "Serrari Group",
+    headline: "NCBA and Zetu Innovations Forge Partnership",
+    description: "NCBA and Zetu Innovations forge partnership in property management to support developers and property managers.",
+    link: "https://serrarigroup.com/ncba-and-zetu-innovations-forge-partnership-in-property-management/",
+    category: "digital",
+  },
+  {
+    outlet: "Bizna Kenya",
+    headline: "Nyumba Zetu Platform",
+    description: "Comprehensive coverage of the Nyumba Zetu platform and its features for property managers.",
+    link: "https://biznakenya.com/nyumba-zetu-platform/",
+    category: "digital",
+  },
+  {
+    outlet: "Aptantech",
+    headline: "NCBA Partners with Zetu Innovations in Distribution Deal",
+    description: "NCBA partners with Zetu Innovations in Nyumba Zetu distribution deal to support developers and property managers.",
+    link: "https://aptantech.com/2025/08/01/ncba-partners-with-zetu-innovations-in-nyumba-zetu-distribution-deal-to-support-developers-and-property-managers/",
+    date: "Aug 1, 2025",
+    category: "digital",
+  },
+  {
+    outlet: "Digital Banking News",
+    headline: "NCBA Group Partners with Zetu Innovations",
+    description: "NCBA Group partners with Zetu Innovations to roll out Nyumba Zetu property platform for enhanced property management.",
+    link: "https://digitalbankingnews.co.ke/ncba-group-partners-with-zetu-innovations-to-roll-out-nyumba-zetu-property-platform/",
+    category: "digital",
+  },
+  {
+    outlet: "Kenyan Corporates",
+    headline: "NCBA-Zetu Innovations Partner in Distribution Deal",
+    description: "NCBA and Zetu Innovations partner in Nyumba Zetu distribution deal to support property managers and landlords.",
+    link: "https://kenyancorporates.co.ke/2025/08/05/ncba-zetu-innovations-partner-in-nyumba-zetu-distribution-deal-tosupport-property-managers-and-landlords/",
+    date: "Aug 5, 2025",
     category: "digital",
   },
   {
@@ -150,10 +147,50 @@ const mediaMentions: MediaMention[] = [
     date: "Jul 2025",
     category: "digital",
   },
+  {
+    outlet: "Hapa Kenya",
+    headline: "Zetu Innovations Coverage",
+    description: "Latest updates and news about Zetu Innovations and their property management solutions.",
+    link: "https://hapakenya.com/tag/zetu-innovations/",
+    category: "digital",
+  },
 ];
 
+// Map outlet names to their logo files
+const outletLogoMap: Record<string, string> = {
+  "KTN News": "/legacy/media/ktn-logo.jpeg",
+  "Daily Nation": "/legacy/media/daily-nation-logo.svg",
+  "TV47 News": "/legacy/media/tv-47-logo.jpeg",
+  "Tech Africa News": "/legacy/media/tech-africa-news.png",
+  "Bizna Kenya": "/legacy/media/bizna-Logo.webp",
+  "Serrari Group": "/legacy/media/serrari-logo.webp",
+  "Swala Nyeti": "/legacy/media/swala-nyeti-logo.png",
+  "Insider Kenya": "/legacy/media/insider-kenya-logo.webp",
+  "Aptantech": "/legacy/media/aptan-logo.webp",
+  "Africa Business News": "/legacy/media/africa-business-news-logo.png",
+  "Business Tech Kenya": "/legacy/media/business-tech-logo.webp",
+  "Tech Trends Kenya": "/legacy/media/tech-trends-logo.png",
+  "Nipashe Biz": "/legacy/media/nipashe-logo.png",
+};
+
 const getOutletLogo = (outlet: string) => {
-  // Create text-based logos for outlets
+  const logoPath = outletLogoMap[outlet];
+
+  if (logoPath) {
+    return (
+      <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-shrink-0 p-2 border border-slate-200 dark:border-slate-700">
+        <Image
+          src={logoPath}
+          alt={`${outlet} logo`}
+          width={48}
+          height={48}
+          className="object-contain w-full h-full"
+        />
+      </div>
+    );
+  }
+
+  // Fallback to text-based logo if no image found
   const initials = outlet
     .split(" ")
     .map((word) => word[0])
