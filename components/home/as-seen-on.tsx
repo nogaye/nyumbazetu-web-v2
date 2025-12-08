@@ -16,18 +16,18 @@ interface MediaOutlet {
 // Arranged from most popular to least popular
 const mediaOutlets: MediaOutlet[] = [
   { name: "Daily Nation", logo: "/legacy/media/daily-nation-logo.svg", url: "#" },
-  { name: "KTN News", logo: "/legacy/media/ktn-logo.jpeg", url: "#" },
-  { name: "TV47 News", logo: "/legacy/media/tv-47-logo.jpeg", url: "#" },
-  { name: "Tech Africa News", logo: "/legacy/media/tech-africa-news.png", url: "#" },
-  { name: "Business Tech Kenya", logo: "/legacy/media/business-tech-logo.webp", url: "#" },
-  { name: "Tech Trends Kenya", logo: "/legacy/media/tech-trends-logo.png", url: "#" },
+ // { name: "KTN News", logo: "/legacy/media/ktn-logo.jpeg", url: "#" },
+ // { name: "TV47 News", logo: "/legacy/media/tv-47-logo.jpeg", url: "#" },
+ // { name: "Tech Africa News", logo: "/legacy/media/tech-africa-news.png", url: "#" },
+  //{ name: "Business Tech Kenya", logo: "/legacy/media/business-tech-logo.webp", url: "#" },
+ // { name: "Tech Trends Kenya", logo: "/legacy/media/tech-trends-logo.png", url: "#" },
   { name: "Africa Business News", logo: "/legacy/media/africa-business-news-logo.png", url: "#" },
   { name: "Nipashe Biz", logo: "/legacy/media/nipashe-logo.png", url: "#" },
-  { name: "Insider Kenya", logo: "/legacy/media/insider-kenya-logo.webp", url: "#" },
+  //{ name: "Insider Kenya", logo: "/legacy/media/insider-kenya-logo.webp", url: "#" },
   { name: "Swala Nyeti", logo: "/legacy/media/swala-nyeti-logo.png", url: "#" },
-  { name: "Serrari Group", logo: "/legacy/media/serrari-logo.webp", url: "#" },
+  //{ name: "Serrari Group", logo: "/legacy/media/serrari-logo.webp", url: "#" },
   { name: "Bizna Kenya", logo: "/legacy/media/bizna-Logo.webp", url: "#" },
-  { name: "Aptantech", logo: "/legacy/media/aptan-logo.webp", url: "#" },
+  //{ name: "Aptantech", logo: "/legacy/media/aptan-logo.webp", url: "#" },
 ];
 
 export function AsSeenOn() {
