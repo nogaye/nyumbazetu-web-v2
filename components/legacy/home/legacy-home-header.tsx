@@ -1,61 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Section } from "@/components/section";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { SparklesIcon, TrophyIcon } from "@heroicons/react/24/solid";
+import { SparklesIcon } from "@heroicons/react/24/solid";
 
 export function LegacyHomeHeader() {
-  const [currentText, setCurrentText] = useState("award-winning");
-
-  useEffect(() => {
-    const strings = [
-      "groundbreaking",
-      "innovative",
-      "pioneering",
-      "trailblazing",
-      "award-winning",
-    ];
-
-    let currentIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let typeSpeed = 100;
-    let backSpeed = 50;
-    let backDelay = 2000;
-    let startDelay = 3000;
-
-    const timeout = setTimeout(() => {
-      const type = () => {
-        const currentString = strings[currentIndex];
-        
-        if (!isDeleting && charIndex < currentString.length) {
-          setCurrentText(currentString.substring(0, charIndex + 1));
-          charIndex++;
-          setTimeout(type, typeSpeed);
-        } else if (isDeleting && charIndex > 0) {
-          setCurrentText(currentString.substring(0, charIndex - 1));
-          charIndex--;
-          setTimeout(type, backSpeed);
-        } else if (!isDeleting && charIndex === currentString.length) {
-          setTimeout(() => {
-            isDeleting = true;
-            type();
-          }, backDelay);
-        } else if (isDeleting && charIndex === 0) {
-          isDeleting = false;
-          currentIndex = (currentIndex + 1) % strings.length;
-          setTimeout(type, 500);
-        }
-      };
-
-      type();
-    }, startDelay);
-
-    return () => clearTimeout(timeout);
-  }, []);
 
   return (
     <Section className="relative bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden">
@@ -110,11 +61,8 @@ export function LegacyHomeHeader() {
               className="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto lg:mx-0"
             >
               Join the{" "}
-              <span className="font-bold text-primary inline-flex items-center gap-1">
-                <span>{currentText}</span>
-                {currentText === "award-winning" && <TrophyIcon className="h-5 w-5 text-yellow-500" />}
-              </span>{" "}
-              revolution that&apos;s transforming real estate efficiency.
+              <span className="font-bold text-primary">award winning</span>{" "}
+              solution that&apos;s transforming real estate efficiency.
             </motion.p>
 
             <motion.div
