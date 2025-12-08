@@ -11,6 +11,11 @@ export const metadata: Metadata = {
 };
 
 export default function AdminDashboardPage() {
-  return <DashboardContent />;
+  return (
+    <div>
+      <DashboardContent />
+    </div>
+  );
 }
+
 

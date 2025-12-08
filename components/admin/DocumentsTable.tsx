@@ -22,98 +22,123 @@ interface DocumentRow {
   reviewer: string | null;
 }
 
-const mockDocuments: DocumentRow[] = [
-  {
-    id: "1",
-    header: "Cover page",
-    sectionType: "Cover page",
-    status: "in-process",
-    target: 18,
-    limit: 5,
-    reviewer: "Eddie Lake",
-  },
-  {
-    id: "2",
-    header: "Table of contents",
-    sectionType: "Table of contents",
-    status: "done",
-    target: 29,
-    limit: 24,
-    reviewer: "Eddie Lake",
-  },
-  {
-    id: "3",
-    header: "Executive summary",
-    sectionType: "Narrative",
-    status: "done",
-    target: 10,
-    limit: 13,
-    reviewer: "Eddie Lake",
-  },
-  {
-    id: "4",
-    header: "Technical approach",
-    sectionType: "Narrative",
-    status: "done",
-    target: 27,
-    limit: 23,
-    reviewer: "Jamik Tashpulatov",
-  },
-  {
-    id: "5",
-    header: "Design",
-    sectionType: "Narrative",
-    status: "in-process",
-    target: 2,
-    limit: 16,
-    reviewer: "Jamik Tashpulatov",
-  },
-  {
-    id: "6",
-    header: "Capabilities",
-    sectionType: "Narrative",
-    status: "in-process",
-    target: 20,
-    limit: 8,
-    reviewer: "Jamik Tashpulatov",
-  },
-  {
-    id: "7",
-    header: "Integration with existing systems",
-    sectionType: "Narrative",
-    status: "in-process",
-    target: 19,
-    limit: 21,
-    reviewer: "Jamik Tashpulatov",
-  },
-  {
-    id: "8",
-    header: "Innovation and Advantages",
-    sectionType: "Narrative",
-    status: "done",
-    target: 25,
-    limit: 26,
-    reviewer: null,
-  },
-  {
-    id: "9",
-    header: "Overview of EMR's Innovative Solutions",
-    sectionType: "Technical content",
-    status: "done",
-    target: 7,
-    limit: 23,
-    reviewer: null,
-  },
-  {
-    id: "10",
-    header: "Advanced Algorithms and Machine Learning",
-    sectionType: "Narrative",
-    status: "done",
-    target: 30,
-    limit: 28,
-    reviewer: null,
-  },
-];
+// Generate 68 mock documents to match the shadcn example
+const generateMockDocuments = (): DocumentRow[] => {
+  const baseDocuments: DocumentRow[] = [
+    {
+      id: "1",
+      header: "Cover page",
+      sectionType: "Cover page",
+      status: "in-process",
+      target: 18,
+      limit: 5,
+      reviewer: "Eddie Lake",
+    },
+    {
+      id: "2",
+      header: "Table of contents",
+      sectionType: "Table of contents",
+      status: "done",
+      target: 29,
+      limit: 24,
+      reviewer: "Eddie Lake",
+    },
+    {
+      id: "3",
+      header: "Executive summary",
+      sectionType: "Narrative",
+      status: "done",
+      target: 10,
+      limit: 13,
+      reviewer: "Eddie Lake",
+    },
+    {
+      id: "4",
+      header: "Technical approach",
+      sectionType: "Narrative",
+      status: "done",
+      target: 27,
+      limit: 23,
+      reviewer: "Jamik Tashpulatov",
+    },
+    {
+      id: "5",
+      header: "Design",
+      sectionType: "Narrative",
+      status: "in-process",
+      target: 2,
+      limit: 16,
+      reviewer: "Jamik Tashpulatov",
+    },
+    {
+      id: "6",
+      header: "Capabilities",
+      sectionType: "Narrative",
+      status: "in-process",
+      target: 20,
+      limit: 8,
+      reviewer: "Jamik Tashpulatov",
+    },
+    {
+      id: "7",
+      header: "Integration with existing systems",
+      sectionType: "Narrative",
+      status: "in-process",
+      target: 19,
+      limit: 21,
+      reviewer: "Jamik Tashpulatov",
+    },
+    {
+      id: "8",
+      header: "Innovation and Advantages",
+      sectionType: "Narrative",
+      status: "done",
+      target: 25,
+      limit: 26,
+      reviewer: null,
+    },
+    {
+      id: "9",
+      header: "Overview of EMR's Innovative Solutions",
+      sectionType: "Technical content",
+      status: "done",
+      target: 7,
+      limit: 23,
+      reviewer: null,
+    },
+    {
+      id: "10",
+      header: "Advanced Algorithms and Machine Learning",
+      sectionType: "Narrative",
+      status: "done",
+      target: 30,
+      limit: 28,
+      reviewer: null,
+    },
+  ];
+
+  // Generate additional documents to reach 68 total
+  const additionalDocuments: DocumentRow[] = [];
+  const sectionTypes = ["Narrative", "Technical content", "Cover page", "Table of contents"];
+  const reviewers = ["Eddie Lake", "Jamik Tashpulatov", null];
+  const statuses: ("done" | "in-process")[] = ["done", "in-process"];
+
+  for (let i = 11; i <= 68; i++) {
+    additionalDocuments.push({
+      id: i.toString(),
+      header: `Document Section ${i}`,
+      sectionType: sectionTypes[Math.floor(Math.random() * sectionTypes.length)],
+      status: statuses[Math.floor(Math.random() * statuses.length)],
+      target: Math.floor(Math.random() * 30) + 1,
+      limit: Math.floor(Math.random() * 30) + 1,
+      reviewer: reviewers[Math.floor(Math.random() * reviewers.length)],
+    });
+  }
+
+  return [...baseDocuments, ...additionalDocuments];
+};
+
+const mockDocuments: DocumentRow[] = generateMockDocuments();
 
 export function DocumentsTable() {
   const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set());
@@ -160,7 +185,9 @@ export function DocumentsTable() {
                   className="rounded border-slate-300 dark:border-slate-700"
                 />
               </th>
-              <th className="w-12 px-4 py-3"></th>
+              <th className="w-12 px-4 py-3 text-left text-sm font-semibold text-slate-900 dark:text-slate-50">
+                Drag to reorder
+              </th>
               <th className="px-4 py-3 text-left text-sm font-semibold text-slate-900 dark:text-slate-50">
                 Header
               </th>

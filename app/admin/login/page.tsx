@@ -38,7 +38,7 @@ function LoginForm() {
 
       if (response.ok) {
         // Redirect to the page they were trying to access, or admin dashboard
-        const redirect = searchParams.get("redirect") || "/admin/properties";
+        const redirect = searchParams.get("redirect") || "/admin";
         router.push(redirect);
         router.refresh();
       } else {

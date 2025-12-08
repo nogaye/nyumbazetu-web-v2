@@ -16,7 +16,7 @@ export function DashboardContent() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-50">
-            Dashboard
+            Documents
           </h1>
         </div>
         <Button className="bg-black text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200">
@@ -66,16 +66,18 @@ export function DashboardContent() {
                 Total for the last 3 months
               </p>
             </div>
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm" className="bg-white dark:bg-slate-900">
-                Last 3 months
-              </Button>
-              <Button variant="ghost" size="sm">
-                Last 30 days
-              </Button>
-              <Button variant="ghost" size="sm">
-                Last 7 days
-              </Button>
+            <div className="flex items-center gap-2">
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" className="bg-white dark:bg-slate-900">
+                  Last 3 months
+                </Button>
+                <Button variant="ghost" size="sm">
+                  Last 30 days
+                </Button>
+                <Button variant="ghost" size="sm">
+                  Last 7 days
+                </Button>
+              </div>
             </div>
           </div>
         </CardHeader>
