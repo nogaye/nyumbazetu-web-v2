@@ -14,11 +14,15 @@ export function LegacyScreenshots() {
     {
       src: "/legacy/images/screenshots/dashboard.png",
       alt: "Dashboard Overview",
+      title: "Comprehensive Management Dashboard",
+      description: "A centralized hub for real-time insights and performance tracking",
       caption: "Powerful dashboard with real-time metrics.",
     },
     {
       src: "/legacy/images/screenshots/grid.png",
       alt: "Advanced Data Grid",
+      title: "Powerful Grids",
+      description: "Everything you like in excel but supercharged with automation and real-time updates",
       caption: "Manage data efficiently with powerful grids.",
     },
   ];
@@ -47,8 +51,8 @@ export function LegacyScreenshots() {
     <Section>
       <div className="container mx-auto px-4">
         <SectionHeader
-          title="Comprehensive Management Dashboard"
-          description="A centralized hub for real-time insights and performance tracking"
+          title={screenshots[current].title}
+          description={screenshots[current].description}
         />
 
         <div className="relative max-w-6xl mx-auto">
@@ -109,26 +113,6 @@ export function LegacyScreenshots() {
             >
               <ChevronRightIcon className="h-5 w-5" />
             </Button>
-          </div>
-        </div>
-
-        <div className="mt-16">
-          <SectionHeader
-            title="Powerful Grids"
-            description="Everything you like in excel but supercharged with automation and real-time updates"
-          />
-          <div className="max-w-6xl mx-auto">
-            <div className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-4 md:p-6 border-2 border-slate-200 dark:border-slate-700">
-              <Image
-                className="w-full rounded-lg"
-                src="/legacy/images/screenshots/grid.png"
-                alt="Grid view"
-                width={1200}
-                height={600}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-                loading="lazy"
-              />
-            </div>
           </div>
         </div>
       </div>
