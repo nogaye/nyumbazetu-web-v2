@@ -6,6 +6,7 @@ import Link from "next/link";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { PlatformInfrastructureDiagram } from "@/components/product/platform-infrastructure-diagram";
 import { AutomatedWorkflow } from "@/components/product/automated-workflow";
+import { ManagementDashboard } from "@/components/product/management-dashboard";
 
 export const metadata = {
   title: "Platform Overview | Nyumba Zetu",
@@ -41,6 +42,13 @@ export default function ProductPage() {
         </div>
         <div className="max-w-7xl mx-auto">
           <AutomatedWorkflow />
+        </div>
+      </Section>
+
+      {/* Management Dashboard */}
+      <Section className="bg-secondary">
+        <div className="max-w-7xl mx-auto">
+          <ManagementDashboard />
         </div>
       </Section>
 

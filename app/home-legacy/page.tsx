@@ -13,7 +13,6 @@ import { LegacyPartners } from "@/components/legacy/home/legacy-partners";
 import { LegacyRequestDemo } from "@/components/legacy/home/legacy-request-demo";
 import { LegacyClients } from "@/components/legacy/home/legacy-clients";
 import { LegacyReferral } from "@/components/legacy/home/legacy-referral";
-import { LegacyMobileApp } from "@/components/legacy/home/legacy-mobile-app";
 
 // Lazy load below-the-fold components for better performance
 const AsSeenOn = dynamic(() => import("@/components/home/as-seen-on").then(mod => ({ default: mod.AsSeenOn })), { ssr: true });
@@ -45,10 +44,6 @@ const LegacyReferralLazy = dynamic(
   () => import("@/components/legacy/home/legacy-referral").then((mod) => ({ default: mod.LegacyReferral })),
   { ssr: true }
 );
-const LegacyMobileAppLazy = dynamic(
-  () => import("@/components/legacy/home/legacy-mobile-app").then((mod) => ({ default: mod.LegacyMobileApp })),
-  { ssr: true }
-);
 
 export const metadata = {
   title: "Home | Nyumba Zetu - Property Management for Kenya",
@@ -73,7 +68,6 @@ export default function HomeLegacyPage() {
       <LegacyRequestDemo />
       <LegacyClientsLazy />
       <LegacyReferralLazy />
-      <LegacyMobileAppLazy />
     </>
   );
 }

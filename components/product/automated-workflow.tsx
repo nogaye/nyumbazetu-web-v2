@@ -9,6 +9,7 @@ import {
   ArrowsRightLeftIcon,
   BookOpenIcon,
   ChartBarIcon,
+  CheckIcon,
 } from "@heroicons/react/24/outline";
 
 interface WorkflowStep {
@@ -57,6 +58,7 @@ const workflowSteps: WorkflowStep[] = [
   },
 ];
 
+const ANIMATION_DURATION = 3000;
 
 export function AutomatedWorkflow() {
   const [activeStep, setActiveStep] = useState(0);
@@ -64,151 +66,137 @@ export function AutomatedWorkflow() {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % workflowSteps.length);
-    }, 3000);
+    }, ANIMATION_DURATION);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="w-full py-20 md:py-24">
+    <div className="w-full">
       <div className="relative max-w-7xl mx-auto px-4 md:px-8">
-        {/* Steps container */}
-        <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-16 md:gap-8">
+        <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-12 md:gap-4 lg:gap-8">
           {workflowSteps.map((step, index) => {
             const Icon = step.icon;
             const isActive = activeStep === index;
             const isCompleted = activeStep > index;
+            const isLast = index === workflowSteps.length - 1;
 
             return (
               <div key={step.id} className="relative flex-1 flex flex-col items-center">
-                {/* Step button/container - cleaner design */}
-                <motion.button
-                  className="relative group focus:outline-none"
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                >
-                  {/* Icon container with subtle background */}
-                  <motion.div
-                    className="relative mb-6"
-                    animate={{
-                      scale: isActive ? 1.05 : 1,
-                    }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 20,
-                    }}
-                  >
-                    {/* Background circle - subtle and clean */}
+                {/* Connecting line/arrow - hidden on mobile, shown on desktop */}
+                {!isLast && (
+                  <div className="hidden md:block absolute top-8 left-1/2 w-full h-0.5 pointer-events-none">
                     <motion.div
-                      className={`absolute inset-0 rounded-full transition-all duration-300 ${
+                      className="h-full bg-white/30"
+                      initial={{ width: 0 }}
+                      animate={{ width: isCompleted ? "100%" : activeStep === index ? "50%" : "0%" }}
+                      transition={{ duration: 0.5 }}
+                    />
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-l-[6px] border-l-white/30 border-t-[3px] border-t-transparent border-b-[3px] border-b-transparent" />
+                  </div>
+                )}
+
+                {/* Step container */}
+                <motion.div
+                  className="relative mb-6"
+                  animate={{
+                    scale: isActive ? 1.05 : 1,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 20,
+                  }}
+                >
+                  {/* Background circle */}
+                  <div
+                    className={`absolute w-16 h-16 rounded-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${
+                      isActive
+                        ? "bg-white/10 scale-110"
+                        : isCompleted
+                        ? "bg-white/5"
+                        : "bg-transparent"
+                    }`}
+                  />
+
+                  {/* Icon */}
+                  <div className="relative w-16 h-16 flex items-center justify-center">
+                    <Icon
+                      className={`w-8 h-8 transition-colors duration-300 ${
                         isActive
-                          ? "bg-gray-100 dark:bg-gray-900 scale-110"
+                          ? "text-white"
                           : isCompleted
-                          ? "bg-gray-50 dark:bg-gray-950"
-                          : "bg-transparent"
+                          ? "text-white/80"
+                          : "text-white/50"
                       }`}
-                      style={{
-                        width: "64px",
-                        height: "64px",
-                        left: "50%",
-                        top: "50%",
-                        transform: "translate(-50%, -50%)",
+                    />
+                  </div>
+
+                  {/* Active indicator */}
+                  {isActive && (
+                    <motion.div
+                      className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-white"
+                      initial={{ scale: 0 }}
+                      animate={{
+                        scale: [1, 1.3, 1],
+                      }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
                       }}
                     />
+                  )}
 
-                    {/* Icon */}
-                    <div className="relative w-16 h-16 flex items-center justify-center">
-                      <Icon
-                        className={`w-8 h-8 transition-colors duration-300 ${
-                          isActive
-                            ? "text-black dark:text-white"
-                            : isCompleted
-                            ? "text-gray-700 dark:text-gray-300"
-                            : "text-gray-400 dark:text-gray-600"
-                        }`}
-                      />
-                    </div>
-
-                    {/* Active indicator - cleaner dot */}
-                    {isActive && (
-                      <motion.div
-                        className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-black dark:bg-white"
-                        initial={{ scale: 0 }}
-                        animate={{
-                          scale: [1, 1.3, 1],
-                        }}
-                        transition={{
-                          duration: 1.5,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                      />
-                    )}
-
-                    {/* Completed checkmark - more refined */}
-                    {isCompleted && (
-                      <motion.div
-                        className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-black dark:bg-white flex items-center justify-center shadow-sm"
-                        initial={{ scale: 0, rotate: -180 }}
-                        animate={{ scale: 1, rotate: 0 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 200,
-                          damping: 15,
-                        }}
-                      >
-                        <svg
-                          className="w-3 h-3 text-white dark:text-black"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth={2.5}
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                      </motion.div>
-                    )}
-
-                    {/* Step number - subtle badge */}
-                    <div
-                      className={`absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-medium transition-colors ${
-                        isActive
-                          ? "bg-black dark:bg-white text-white dark:text-black"
-                          : "bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-400"
-                      }`}
+                  {/* Completed checkmark */}
+                  {isCompleted && (
+                    <motion.div
+                      className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-white flex items-center justify-center shadow-sm"
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 15,
+                      }}
                     >
-                      {index + 1}
-                    </div>
-                  </motion.div>
-                </motion.button>
+                      <CheckIcon className="w-3 h-3 text-black" />
+                    </motion.div>
+                  )}
 
-                {/* Title - cleaner typography */}
+                  {/* Step number badge */}
+                  <div
+                    className={`absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-medium transition-colors ${
+                      isActive
+                        ? "bg-white text-black"
+                        : "bg-white/20 text-white/80"
+                    }`}
+                  >
+                    {index + 1}
+                  </div>
+                </motion.div>
+
+                {/* Title */}
                 <h3
-                  className={`text-sm md:text-base font-medium mb-1.5 text-center max-w-[140px] transition-colors duration-300 ${
+                  className={`text-sm md:text-base font-medium mb-1.5 text-center transition-colors duration-300 ${
                     isActive
-                      ? "text-black dark:text-white"
+                      ? "text-white"
                       : isCompleted
-                      ? "text-gray-800 dark:text-white"
-                      : "text-gray-600 dark:text-gray-100"
+                      ? "text-white/90"
+                      : "text-white/70"
                   }`}
                 >
                   {step.title}
                 </h3>
 
-                {/* Description - refined spacing */}
+                {/* Description */}
                 <p
-                  className={`text-xs md:text-sm text-center max-w-[140px] leading-relaxed transition-colors duration-300 ${
+                  className={`text-xs md:text-sm text-center leading-relaxed transition-colors duration-300 ${
                     isActive
-                      ? "text-gray-700 dark:text-gray-100"
+                      ? "text-white/90"
                       : isCompleted
-                      ? "text-gray-600 dark:text-gray-200"
-                      : "text-gray-500 dark:text-gray-300"
+                      ? "text-white/70"
+                      : "text-white/60"
                   }`}
                 >
                   {step.description}

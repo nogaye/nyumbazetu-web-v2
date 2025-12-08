@@ -78,7 +78,7 @@ export function LegacyMobileApp() {
             </Card>
           </motion.div>
 
-          {/* Right: App Preview */}
+          {/* Right: App Icon */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -87,13 +87,9 @@ export function LegacyMobileApp() {
             className="flex justify-center"
           >
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl blur-2xl"></div>
-              <div className="relative bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-8 shadow-2xl">
-                <div className="w-48 h-96 mx-auto bg-white dark:bg-slate-700 rounded-[2.5rem] p-2 shadow-xl">
-                  <div className="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 rounded-[2rem] flex items-center justify-center">
-                    <DevicePhoneMobileIcon className="h-24 w-24 text-primary/50" />
-                  </div>
-                </div>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full blur-3xl"></div>
+              <div className="relative w-64 h-64 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-2xl">
+                <DevicePhoneMobileIcon className="h-32 w-32 text-white" />
               </div>
             </div>
           </motion.div>

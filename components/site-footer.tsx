@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { TwitterIcon, LinkedInIcon, FacebookIcon, InstagramIcon } from "@/components/social-icons";
 import { useEffect, useState } from "react";
+import { DevicePhoneMobileIcon, ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 
 const footerLinks = {
   product: [
@@ -147,6 +148,20 @@ export function SiteFooter() {
               🇰🇪 Proudly built in Kenya for African real estate.
             </p>
            
+            {/* Mobile App Download */}
+            <div className="mb-4">
+              <Link
+                href="https://apps.apple.com/us/app/nyumba-zetu/id6456750559"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-primary/50"
+              >
+                <DevicePhoneMobileIcon className="h-5 w-5" />
+                <span className="text-sm font-medium">Download Mobile App</span>
+                <ArrowDownTrayIcon className="h-4 w-4" />
+              </Link>
+            </div>
+
             <div className="flex items-center gap-4">
               <a
                 href="https://twitter.com/nyumbazetu"
