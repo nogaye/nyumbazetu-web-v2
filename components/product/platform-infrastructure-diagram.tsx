@@ -568,29 +568,14 @@ export function PlatformInfrastructureDiagram() {
 
       {/* Legend */}
       <motion.div
-        className="absolute bottom-2 sm:bottom-4 left-2 right-2 sm:left-4 sm:right-4 md:left-auto md:right-4 md:w-auto bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm rounded-lg p-2 sm:p-3 shadow-lg border border-slate-200 dark:border-slate-700"
+        className="absolute bottom-2 sm:bottom-4 right-2 sm:right-4 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm rounded-lg p-2 sm:p-3 shadow-lg border border-slate-200 dark:border-slate-700"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1 }}
       >
-        <p className="text-[10px] sm:text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5 sm:mb-2">
+        <p className="text-[10px] sm:text-xs font-semibold text-slate-700 dark:text-slate-300">
           Platform Architecture
         </p>
-        <div className="space-y-1">
-          <p className="text-[9px] sm:text-xs text-slate-600 dark:text-slate-400">
-            <span className="hidden sm:inline">Hover over any module to see its connections • </span>
-            {modules.length} integrated modules
-          </p>
-          {hoveredModule && (
-            <motion.p
-              className="text-[9px] sm:text-xs text-primary font-medium"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-            >
-              Showing connections for: {modules.find(m => m.id === hoveredModule)?.title}
-            </motion.p>
-          )}
-        </div>
       </motion.div>
     </div>
   );
