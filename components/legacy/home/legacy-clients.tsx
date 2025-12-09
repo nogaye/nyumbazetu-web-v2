@@ -427,7 +427,7 @@ export function LegacyClients() {
         <div className="mt-12 text-center">
           <Button size="lg" variant="outline" asChild>
             <Link href="/clients" className="group">
-              View All Clients
+              View More Clients
               <ArrowRightIcon className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
