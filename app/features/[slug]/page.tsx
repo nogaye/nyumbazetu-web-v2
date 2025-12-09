@@ -265,6 +265,39 @@ const features: Record<string, {
       },
     ],
   },
+  listings: {
+    title: "Property Listings Platform for Kenyan Real Estate",
+    description: "Browse and search verified apartments, maisonettes, and TPS homes across Kenya with advanced filtering and search capabilities.",
+    what: "Nyumba Zetu's Property Listings feature provides a comprehensive platform for browsing and discovering verified rental properties across Kenya. Whether you're looking for apartments in Nairobi, maisonettes in Mombasa, or TPS homes in various cities, the listings platform offers an intuitive search experience with detailed property information, high-quality images, and direct contact options.",
+    how: "Property owners and managers can list their properties through the Nyumba Zetu platform, providing details such as location, size, rent, amenities, and property type. The listings are verified to ensure accuracy and quality. Tenants and prospective renters can browse listings using advanced filters including location (city and area), property type, rent range, number of bedrooms, and amenities. The search functionality includes text search for specific keywords, sorting options (by price, date, recommended), and pagination for easy navigation. Each listing includes comprehensive details, multiple images, location information, and a direct contact option to reach property owners or managers. The platform supports various property types including apartments, maisonettes, houses, and TPS (Tenant Purchase Scheme) properties.",
+    why: "Finding the right rental property in Kenya can be challenging, with information scattered across multiple platforms and limited verification. Nyumba Zetu's Property Listings platform centralizes verified property information, making it easier for tenants to find suitable homes and for property owners to reach qualified tenants. The advanced search and filtering capabilities save time for both parties, while verification ensures that listings are accurate and trustworthy. For property managers using Nyumba Zetu, the listings feature integrates seamlessly with property management workflows, allowing them to showcase available units directly from their property portfolio.",
+    faqs: [
+      {
+        q: "What types of properties are listed?",
+        a: "The platform includes apartments, maisonettes, houses, and TPS (Tenant Purchase Scheme) properties across various cities in Kenya, with a focus on Nairobi and other major urban centers.",
+      },
+      {
+        q: "How are listings verified?",
+        a: "Listings are verified to ensure accuracy of property details, location, and availability. Property owners and managers must provide accurate information, and the platform includes verification processes to maintain quality.",
+      },
+      {
+        q: "Can I filter listings by location?",
+        a: "Yes, you can filter listings by city and area, allowing you to find properties in specific neighborhoods or regions across Kenya.",
+      },
+      {
+        q: "How do I contact a property owner?",
+        a: "Each listing includes contact information and a direct contact option, allowing you to reach out to property owners or managers to inquire about the property or schedule a viewing.",
+      },
+      {
+        q: "Can property managers list their properties?",
+        a: "Yes, property managers using Nyumba Zetu can list available properties directly from their property portfolio, making it easy to showcase units to prospective tenants.",
+      },
+      {
+        q: "Are TPS properties included?",
+        a: "Yes, the platform includes Tenant Purchase Scheme (TPS) properties, allowing you to search for rent-to-own opportunities alongside traditional rental properties.",
+      },
+    ],
+  },
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {

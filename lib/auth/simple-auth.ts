@@ -14,7 +14,7 @@ import { cookies } from "next/headers";
 import { supabaseAdmin } from "@/lib/supabase/server";
 import crypto from "crypto";
 
-const SESSION_SECRET = process.env.SESSION_SECRET || "change-this-in-production";
+const SESSION_SECRET = process.env.SUPABASE_SESSION_SECRET || "change-this-in-production";
 const SESSION_COOKIE_NAME = "admin_session";
 const SESSION_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days
 

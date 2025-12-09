@@ -72,6 +72,7 @@ const navItems = [
       { label: "White Labeling", href: "/features/white-labeling", description: "Fully customizable white-label solution", icon: PaintBrushIcon },
       { label: "Calendar & Event Scheduling", href: "/features/calendar-scheduling", description: "Automated scheduling for invoices, reminders, and penalties", icon: CalendarDaysIcon },
       { label: "Webhooks & API Events", href: "/features/webhooks", description: "Real-time event notifications and system integrations", icon: BoltIcon },
+      { label: "Property Listings", href: "/features/listings", description: "Browse and search verified properties across Kenya", icon: BuildingOffice2Icon },
     ],
   },
   { label: "Listings", href: "/listings" },

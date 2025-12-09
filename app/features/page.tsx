@@ -143,6 +143,17 @@ const features = [
       "Custom workflow automation",
     ],
   },
+  {
+    slug: "listings",
+    title: "Property Listings",
+    description: "Browse and search verified apartments, maisonettes, and TPS homes across Kenya with advanced filtering and search capabilities.",
+    highlights: [
+      "Verified property listings across Kenya",
+      "Advanced search and filtering options",
+      "Property details with images and descriptions",
+      "Direct contact with property owners",
+    ],
+  },
 ];
 
 export default function FeaturesPage() {

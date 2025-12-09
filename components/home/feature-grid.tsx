@@ -18,6 +18,7 @@ import {
   PaintBrushIcon,
   CalendarDaysIcon,
   LinkIcon,
+  MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 
 const features = [
@@ -152,6 +153,17 @@ const features = [
     ],
     icon: LinkIcon,
     href: "/features/webhooks",
+  },
+  {
+    title: "Property Listings",
+    description: "Browse and search verified apartments, maisonettes, and TPS homes across Kenya.",
+    bullets: [
+      "Verified property listings",
+      "Advanced search and filtering",
+      "Property details and images",
+    ],
+    icon: MagnifyingGlassIcon,
+    href: "/features/listings",
   },
 ];
 
