@@ -96,6 +96,30 @@ export default function ProductPage() {
               title: "Communications",
               description: "Centralized email, SMS, and in-app messaging for tenants, owners, and teams.",
             },
+            {
+              title: "Reports & Analytics",
+              description: "Landlord statements, tenant ledgers, trial balance, P&L, balance sheet, and Ask Nyumba Zetu (RAG) for policy and statement insights.",
+            },
+            {
+              title: "Visitor Management",
+              description: "Register and track visitors with check-in/check-out, host and unit linking, and visit history for security and compliance.",
+            },
+            {
+              title: "Lease Applications",
+              description: "Application submission, approval workflows, KYC, and seamless onboarding to leases and units.",
+            },
+            {
+              title: "Smart Meters & Utilities",
+              description: "IoT meter readings, consumption tracking, tariffs, and automated utility billing runs.",
+            },
+            {
+              title: "Security Deposits",
+              description: "Track security deposits by unit, link to invoices, and manage refunds and adjustments with full audit trail.",
+            },
+            {
+              title: "Property Listings",
+              description: "Browse and search verified apartments, maisonettes, and TPS homes across Kenya with advanced filtering (on nyumbazetu.co.ke).",
+            },
           ].map((module, idx) => (
             <Card key={idx} className="bg-white/10 backdrop-blur-sm border-white/20">
               <CardHeader>
