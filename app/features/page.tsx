@@ -154,6 +154,56 @@ const features = [
       "Direct contact with property owners",
     ],
   },
+  {
+    slug: "visitors",
+    title: "Visitor Management",
+    description: "Register and track visitors with check-in/check-out, host linking, and visit history for security and compliance.",
+    highlights: [
+      "Visitor registration and check-in/out",
+      "Host and unit linking",
+      "Visit history and reporting",
+    ],
+  },
+  {
+    slug: "reports",
+    title: "Reports & Analytics",
+    description: "Financial reports, tenant ledgers, trial balance, P&L, balance sheet, and RAG-powered Ask Nyumba Zetu insights.",
+    highlights: [
+      "Landlord statements and tenant ledgers",
+      "Trial balance, P&L, and balance sheet",
+      "Ask Nyumba Zetu (RAG) for policy and statement insights",
+    ],
+  },
+  {
+    slug: "lease-applications",
+    title: "Lease Applications",
+    description: "Manage lease applications, approval workflows, KYC, and onboarding from a single integrated workflow.",
+    highlights: [
+      "Application submission and tracking",
+      "Approval workflows and KYC",
+      "Seamless onboarding to lease and units",
+    ],
+  },
+  {
+    slug: "smart-meters",
+    title: "Smart Meters & Utilities",
+    description: "IoT meter readings, consumption tracking, tariffs, and automated utility billing runs.",
+    highlights: [
+      "Smart meter integration and readings",
+      "Consumption tracking and tariffs",
+      "Automated utility billing runs",
+    ],
+  },
+  {
+    slug: "security-deposits",
+    title: "Security Deposits",
+    description: "Track security deposits by unit, link to invoices, and manage refunds and adjustments with full audit trail.",
+    highlights: [
+      "Security deposit tracking per unit",
+      "Invoice linking and allocation",
+      "Refunds and audit trail",
+    ],
+  },
 ];
 
 export default function FeaturesPage() {

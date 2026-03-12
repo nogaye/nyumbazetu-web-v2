@@ -128,7 +128,7 @@ export default function ContactPage() {
       
       // Reset success message after 5 seconds
       setTimeout(() => setSubmitStatus("idle"), 5000);
-    } catch (error) {
+    } catch (_error) {
       setSubmitStatus("error");
       trackFormSubmit("contact", false);
       setTimeout(() => setSubmitStatus("idle"), 5000);
@@ -151,7 +151,7 @@ export default function ContactPage() {
             <div>
               <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">Get in Touch</h2>
               <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-                Fill out the form and our team will get back to you within 24 hours. We'll schedule
+                Fill out the form and our team will get back to you within 24 hours. We&apos;ll schedule
                 a demo tailored to your portfolio and answer any questions you have.
               </p>
             </div>
@@ -238,7 +238,7 @@ export default function ContactPage() {
             <CardHeader className="space-y-2 pb-4">
               <CardTitle className="text-2xl font-bold">Request a Demo</CardTitle>
               <CardDescription>
-                Fill out the form below and we'll get back to you within 24 hours.
+                Fill out the form below and we&apos;ll get back to you within 24 hours.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -249,7 +249,7 @@ export default function ContactPage() {
                     Thank you for your message!
                   </AlertTitle>
                   <AlertDescription className="text-green-700 dark:text-green-300">
-                    We'll get back to you within 24 hours.
+                    We&apos;ll get back to you within 24 hours.
                   </AlertDescription>
                 </Alert>
               )}

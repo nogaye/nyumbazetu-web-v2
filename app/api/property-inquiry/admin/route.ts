@@ -41,8 +41,9 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    let query = (supabaseAdmin
-      .from("property_inquiries") as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+    let query = (supabaseAdmin as any)
+      .from("property_inquiries")
       .select("*", { count: "exact" })
       .order("created_at", { ascending: false })
       .range(offset, offset + limit - 1);
@@ -119,9 +120,10 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    const { data, error } = await (supabaseAdmin
-      .from("property_inquiries") as any)
-      .update({ status } as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+    const { data, error } = await (supabaseAdmin as any)
+      .from("property_inquiries")
+      .update({ status })
       .eq("id", id)
       .select()
       .single();

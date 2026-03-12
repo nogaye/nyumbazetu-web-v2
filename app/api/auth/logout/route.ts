@@ -9,7 +9,7 @@ import { destroySession } from "@/lib/auth/simple-auth";
 
 export const runtime = "edge";
 
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     await destroySession();
 

@@ -6,15 +6,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowDownTrayIcon, ShieldCheckIcon, DocumentTextIcon } from "@heroicons/react/24/outline";
 import { QRCodeSVG } from "qrcode.react";
-import { useState, useEffect } from "react";
+import { useState, useSyncExternalStore } from "react";
+
+/** Returns current page URL on client; empty string during SSR. */
+function usePageUrl(): string {
+  const getSnapshot = () => (typeof window !== "undefined" ? window.location.href : "");
+  const subscribe = (onStoreChange: () => void) => {
+    if (typeof window === "undefined") return () => {};
+    window.addEventListener("popstate", onStoreChange);
+    return () => window.removeEventListener("popstate", onStoreChange);
+  };
+  return useSyncExternalStore(subscribe, getSnapshot, () => "");
+}
 
 export default function ODPCPage() {
   const [pdfUrl] = useState("/legacy/docs/odpc.pdf");
-  const [pageUrl, setPageUrl] = useState("");
-
-  useEffect(() => {
-    setPageUrl(window.location.href);
-  }, []);
+  const pageUrl = usePageUrl();
 
   const handleDownload = () => {
     const link = document.createElement("a");

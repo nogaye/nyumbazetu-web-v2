@@ -31,22 +31,23 @@ export async function PATCH(
     }
 
     // Build update object (only include provided fields)
-    const updateData: any = {};
+    const updateData: Record<string, unknown> = {};
     if (body.title !== undefined) updateData.title = body.title;
     if (body.slug !== undefined) updateData.slug = body.slug;
     if (body.description !== undefined) updateData.description = body.description;
     if (body.city !== undefined) updateData.city = body.city;
     if (body.area !== undefined) updateData.area = body.area;
-    if (body.monthly_rent !== undefined) updateData.monthly_rent = parseInt(body.monthly_rent);
-    if (body.bedrooms !== undefined) updateData.bedrooms = parseInt(body.bedrooms);
-    if (body.bathrooms !== undefined) updateData.bathrooms = parseInt(body.bathrooms);
-    if (body.size_sqm !== undefined) updateData.size_sqm = body.size_sqm ? parseInt(body.size_sqm) : null;
+    if (body.monthly_rent !== undefined) updateData.monthly_rent = parseInt(body.monthly_rent, 10);
+    if (body.bedrooms !== undefined) updateData.bedrooms = parseInt(body.bedrooms, 10);
+    if (body.bathrooms !== undefined) updateData.bathrooms = parseInt(body.bathrooms, 10);
+    if (body.size_sqm !== undefined) updateData.size_sqm = body.size_sqm ? parseInt(body.size_sqm, 10) : null;
     if (body.property_type !== undefined) updateData.property_type = body.property_type;
     if (body.is_tps_available !== undefined) updateData.is_tps_available = body.is_tps_available;
     if (body.is_verified !== undefined) updateData.is_verified = body.is_verified;
 
-    const { data, error } = await (supabaseAdmin
-      .from("properties") as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+    const { data, error } = await (supabaseAdmin as any)
+      .from("properties")
       .update(updateData)
       .eq("id", id)
       .select()
@@ -93,8 +94,9 @@ export async function DELETE(
       );
     }
 
-    const { error } = await (supabaseAdmin
-      .from("properties") as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+    const { error } = await (supabaseAdmin as any)
+      .from("properties")
       .delete()
       .eq("id", id);
 

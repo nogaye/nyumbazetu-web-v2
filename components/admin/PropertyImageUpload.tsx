@@ -167,7 +167,7 @@ export function PropertyImageUpload({
       } else {
         setError(data.error || "Failed to upload images");
         if (data.errors && data.errors.length > 0) {
-          const errorMessages = data.errors.map((e: any) => `${e.file}: ${e.error}`).join("; ");
+          const errorMessages = data.errors.map((e: { file: string; error: string }) => `${e.file}: ${e.error}`).join("; ");
           setError(errorMessages);
         }
       }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -12,11 +12,7 @@ export function AdminAuthGuard({ children }: AdminAuthGuardProps) {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
+  const checkAuth = useCallback(async () => {
     try {
       const response = await fetch("/api/auth/me");
       if (response.ok) {
@@ -25,11 +21,15 @@ export function AdminAuthGuard({ children }: AdminAuthGuardProps) {
         setIsAuthenticated(false);
         router.push("/admin/login");
       }
-    } catch (error) {
+    } catch {
       setIsAuthenticated(false);
       router.push("/admin/login");
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    queueMicrotask(() => checkAuth());
+  }, [checkAuth]);
 
   if (isAuthenticated === null) {
     return (

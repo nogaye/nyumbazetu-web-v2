@@ -21,9 +21,13 @@ import { PropertyFormModal } from "./PropertyFormModal";
 import { Property } from "@/lib/listings/types";
 import Link from "next/link";
 
-interface PropertiesAdminListProps {}
+/** Props for the admin properties list; currently no props required. */
+interface PropertiesAdminListProps {
+  /** Optional placeholder for future props (e.g. initialFilters). */
+  className?: string;
+}
 
-export function PropertiesAdminList({}: PropertiesAdminListProps) {
+export function PropertiesAdminList(_props: PropertiesAdminListProps) {
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -53,7 +57,7 @@ export function PropertiesAdminList({}: PropertiesAdminListProps) {
       } else {
         setError(data.error || "Failed to fetch properties");
       }
-    } catch (err) {
+    } catch (_err) {
       setError("Network error. Make sure the API is accessible.");
     } finally {
       setLoading(false);
@@ -77,7 +81,7 @@ export function PropertiesAdminList({}: PropertiesAdminListProps) {
       } else {
         alert(`Failed to delete: ${data.error}`);
       }
-    } catch (err) {
+    } catch (_err) {
       alert("Error deleting property");
     }
   };

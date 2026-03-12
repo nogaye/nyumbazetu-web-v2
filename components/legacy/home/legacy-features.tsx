@@ -14,6 +14,8 @@ import {
   DevicePhoneMobileIcon as MobileIcon,
   ChatBubbleLeftRightIcon,
   Cog6ToothIcon,
+  UserPlusIcon,
+  ChartBarSquareIcon,
 } from "@heroicons/react/24/outline";
 
 interface FeatureItem {
@@ -87,6 +89,20 @@ export function LegacyFeatures() {
       title: "ETIMS Integration",
       description:
         "Easily generate and transmit e-invoices to KRA through ETIMS. Stay compliant with real-time tax reporting, audit logs, and digital record keeping.",
+    },
+    {
+      id: 10,
+      icon: UserPlusIcon,
+      title: "Visitor Management",
+      description:
+        "Register and track visitors with check-in and check-out, link visits to hosts and units, and maintain visit history for security and compliance.",
+    },
+    {
+      id: 11,
+      icon: ChartBarSquareIcon,
+      title: "Reports & Analytics",
+      description:
+        "Run landlord statements, tenant ledgers, trial balance, P&L, and balance sheet. Use Ask Nyumba Zetu (RAG) to query policies and statements in natural language.",
     },
   ];
 

@@ -31,8 +31,9 @@ export async function POST(
     }
 
     // Verify property exists
-    const { data: property, error: propertyError } = await (supabaseAdmin
-      .from("properties") as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types infer as never with our Database shape
+    const { data: property, error: propertyError } = await (supabaseAdmin as any)
+      .from("properties")
       .select("id")
       .eq("id", propertyId)
       .single();
@@ -73,8 +74,9 @@ export async function POST(
     }
 
     // Get current max position for this property
-    const { data: existingImages } = await (supabaseAdmin
-      .from("property_images") as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+    const { data: existingImages } = await (supabaseAdmin as any)
+      .from("property_images")
       .select("position")
       .eq("property_id", propertyId)
       .order("position", { ascending: false })
@@ -86,8 +88,9 @@ export async function POST(
     }
 
     // Check if there's already a cover image
-    const { data: coverImage } = await (supabaseAdmin
-      .from("property_images") as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+    const { data: coverImage } = await (supabaseAdmin as any)
+      .from("property_images")
       .select("id")
       .eq("property_id", propertyId)
       .eq("is_cover", true)
@@ -111,7 +114,7 @@ export async function POST(
         const buffer = Buffer.from(arrayBuffer);
 
         // Upload to Supabase Storage
-        const { data: uploadData, error: uploadError } = await supabaseAdmin.storage
+        const { error: uploadError } = await supabaseAdmin.storage
           .from("property-images")
           .upload(storagePath, buffer, {
             contentType: file.type,
@@ -127,8 +130,9 @@ export async function POST(
         const isCover = !hasCoverImage && i === 0; // First image is cover if no cover exists
         const position = nextPosition + i;
 
-        const { data: imageRecord, error: dbError } = await (supabaseAdmin
-          .from("property_images") as any)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+        const { data: imageRecord, error: dbError } = await (supabaseAdmin as any)
+          .from("property_images")
           .insert({
             property_id: propertyId,
             storage_path: storagePath,
@@ -160,8 +164,9 @@ export async function POST(
           is_cover: isCover,
           position: position,
         });
-      } catch (error: any) {
-        errors.push({ file: file.name, error: error.message || "Unknown error" });
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : "Unknown error";
+        errors.push({ file: file.name, error: message });
       }
     }
 
@@ -183,10 +188,11 @@ export async function POST(
       },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error uploading images:", error);
+    const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: "Internal server error", details: error.message },
+      { error: "Internal server error", details: message },
       { status: 500 }
     );
   }
@@ -209,8 +215,9 @@ export async function GET(
       );
     }
 
-    const { data, error } = await (supabaseAdmin
-      .from("property_images") as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+    const { data, error } = await (supabaseAdmin as any)
+      .from("property_images")
       .select("*")
       .eq("property_id", propertyId)
       .order("position", { ascending: true });
@@ -224,7 +231,7 @@ export async function GET(
     }
 
     // Get public URLs for all images
-    const imagesWithUrls = (data || []).map((img: any) => {
+    const imagesWithUrls = (data || []).map((img: { storage_path: string; id: string }) => {
       if (!supabaseAdmin) {
         return { ...img, url: "" };
       }
@@ -245,10 +252,11 @@ export async function GET(
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error fetching images:", error);
+    const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: "Internal server error", details: error.message },
+      { error: "Internal server error", details: message },
       { status: 500 }
     );
   }

@@ -1,7 +1,7 @@
 /**
  * API Route: GET /api/admin/properties
  * API Route: POST /api/admin/properties
- * 
+ *
  * Admin endpoints for managing properties.
  * Requires authentication (to be implemented).
  */
@@ -35,12 +35,13 @@ export async function GET(request: NextRequest) {
           properties: [],
           total: 0,
         },
-        { status: 200 }
+        { status: 200 },
       );
     }
 
-    let query = (supabaseAdmin
-      .from("properties") as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+    let query = (supabaseAdmin as any)
+      .from("properties")
       .select("*", { count: "exact" })
       .order("created_at", { ascending: false })
       .range(offset, offset + limit - 1);
@@ -64,7 +65,7 @@ export async function GET(request: NextRequest) {
       console.error("Error fetching properties:", error);
       return NextResponse.json(
         { error: "Failed to fetch properties", details: error.message },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -76,13 +77,13 @@ export async function GET(request: NextRequest) {
         offset,
         hasMore: (count || 0) > offset + limit,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Error in admin properties endpoint:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -109,36 +110,46 @@ export async function POST(request: NextRequest) {
     } = body;
 
     // Validation
-    if (!title || !slug || !city || !area || !monthly_rent || !bedrooms || !bathrooms || !property_type) {
+    if (
+      !title ||
+      !slug ||
+      !city ||
+      !area ||
+      !monthly_rent ||
+      !bedrooms ||
+      !bathrooms ||
+      !property_type
+    ) {
       return NextResponse.json(
         { error: "Missing required fields" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!supabaseAdmin) {
       return NextResponse.json(
         { error: "Supabase not configured" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
-    const { data, error } = await (supabaseAdmin
-      .from("properties") as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+    const { data, error } = await (supabaseAdmin as any)
+      .from("properties")
       .insert({
         title,
         slug,
         description: description || null,
         city,
         area,
-        monthly_rent: parseInt(monthly_rent),
-        bedrooms: parseInt(bedrooms),
-        bathrooms: parseInt(bathrooms),
-        size_sqm: size_sqm ? parseInt(size_sqm) : null,
+        monthly_rent: parseInt(monthly_rent, 10),
+        bedrooms: parseInt(bedrooms, 10),
+        bathrooms: parseInt(bathrooms, 10),
+        size_sqm: size_sqm ? parseInt(size_sqm, 10) : null,
         property_type,
         is_tps_available: is_tps_available || false,
         is_verified: is_verified || false,
-      } as any)
+      })
       .select()
       .single();
 
@@ -146,7 +157,7 @@ export async function POST(request: NextRequest) {
       console.error("Error creating property:", error);
       return NextResponse.json(
         { error: "Failed to create property", details: error.message },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -155,15 +166,13 @@ export async function POST(request: NextRequest) {
         success: true,
         property: data,
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Error creating property:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
-
-

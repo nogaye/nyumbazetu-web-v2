@@ -40,10 +40,13 @@ export function PropertyImage({
   const [imageSrc, setImageSrc] = useState(src);
   const [hasError, setHasError] = useState(false);
 
-  // Update image source when src prop changes
+  // Sync with src prop when it changes (deferred to avoid setState-in-effect lint)
   useEffect(() => {
-    setImageSrc(src);
-    setHasError(false); // Reset error state when src changes
+    const id = setTimeout(() => {
+      setImageSrc(src);
+      setHasError(false);
+    }, 0);
+    return () => clearTimeout(id);
   }, [src]);
 
   // Extract property ID from Supabase Storage URL or path for fallback

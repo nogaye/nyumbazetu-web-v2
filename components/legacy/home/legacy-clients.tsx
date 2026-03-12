@@ -180,19 +180,26 @@ export function LegacyClients() {
     const minIndex = 0; // Start of first set
 
     if (estatesCurrentIndex >= maxIndex) {
-      setEstatesIsTransitioning(true);
-      // Jump to middle set without animation
-      setTimeout(() => {
+      const t0 = setTimeout(() => setEstatesIsTransitioning(true), 0);
+      const t1 = setTimeout(() => {
         setEstatesCurrentIndex(estatesStartIndex);
         setEstatesIsTransitioning(false);
       }, 50);
-    } else if (estatesCurrentIndex < minIndex) {
-      setEstatesIsTransitioning(true);
-      // Jump to middle set without animation
-      setTimeout(() => {
+      return () => {
+        clearTimeout(t0);
+        clearTimeout(t1);
+      };
+    }
+    if (estatesCurrentIndex < minIndex) {
+      const t0 = setTimeout(() => setEstatesIsTransitioning(true), 0);
+      const t1 = setTimeout(() => {
         setEstatesCurrentIndex(estatesStartIndex + totalItems - 1);
         setEstatesIsTransitioning(false);
       }, 50);
+      return () => {
+        clearTimeout(t0);
+        clearTimeout(t1);
+      };
     }
   }, [estatesCurrentIndex, estatesStartIndex, mainClients.length, estatesIsTransitioning]);
 

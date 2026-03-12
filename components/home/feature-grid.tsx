@@ -1,3 +1,8 @@
+/**
+ * Feature grid for the marketing site. Renders a grid of product features (collections,
+ * accounting, tenant experience, maintenance, TPS, eTIMS, communications, CRM, etc.) with
+ * icons, descriptions, bullets, and links to /features/[slug]. Used on the modern home page.
+ */
 "use client";
 
 import { motion } from "framer-motion";
@@ -19,6 +24,11 @@ import {
   CalendarDaysIcon,
   LinkIcon,
   MagnifyingGlassIcon,
+  UserPlusIcon,
+  ChartBarSquareIcon,
+  ClipboardDocumentListIcon,
+  BoltIcon,
+  ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
 
 const features = [
@@ -164,6 +174,61 @@ const features = [
     ],
     icon: MagnifyingGlassIcon,
     href: "/features/listings",
+  },
+  {
+    title: "Visitor Management",
+    description: "Register and track visitors with check-in/check-out, host linking, and visit history.",
+    bullets: [
+      "Visitor registration and check-in/out",
+      "Host and unit linking",
+      "Visit history and reporting",
+    ],
+    icon: UserPlusIcon,
+    href: "/features/visitors",
+  },
+  {
+    title: "Reports & Analytics",
+    description: "Financial reports, tenant ledgers, trial balance, P&L, balance sheet, and RAG-powered insights.",
+    bullets: [
+      "Landlord statements and tenant ledgers",
+      "Trial balance, P&L, and balance sheet",
+      "Ask Nyumba Zetu (RAG) for policy and statement insights",
+    ],
+    icon: ChartBarSquareIcon,
+    href: "/features/reports",
+  },
+  {
+    title: "Lease Applications",
+    description: "Manage lease applications, approvals, and onboarding from a single workflow.",
+    bullets: [
+      "Application submission and tracking",
+      "Approval workflows and KYC",
+      "Seamless onboarding to lease and units",
+    ],
+    icon: ClipboardDocumentListIcon,
+    href: "/features/lease-applications",
+  },
+  {
+    title: "Smart Meters & Utilities",
+    description: "IoT meter readings, consumption tracking, billing runs, and utility management.",
+    bullets: [
+      "Smart meter integration and readings",
+      "Consumption tracking and tariffs",
+      "Automated utility billing runs",
+    ],
+    icon: BoltIcon,
+    href: "/features/smart-meters",
+  },
+  {
+    title: "Security Deposits",
+    description: "Track security deposits by unit, link to invoices, and manage refunds and adjustments.",
+    bullets: [
+      "Security deposit tracking per unit",
+      "Invoice linking and allocation",
+      "Refunds and audit trail",
+    ],
+    icon: ShieldCheckIcon,
+    href: "/features/security-deposits",
   },
 ];
 

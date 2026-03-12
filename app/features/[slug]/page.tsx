@@ -298,6 +298,61 @@ const features: Record<string, {
       },
     ],
   },
+  visitors: {
+    title: "Visitor Management for Property Security",
+    description: "Register and track visitors with check-in/check-out, host linking, and visit history for security and compliance.",
+    what: "Nyumba Zetu's Visitor Management module lets property managers and security personnel register visitors, record check-in and check-out times, and link each visit to a host (resident or unit). Full visit history is maintained for security audits and compliance.",
+    how: "Visitors are registered at the gate or reception with name, contact, and host details. Check-in and check-out timestamps are recorded. Reports show visit history by date, visitor, unit, or property. The feature integrates with your existing property and unit data so hosts are selected from current residents or units.",
+    why: "Controlled visitor access improves security, supports incident investigation, and meets compliance requirements for many residential and commercial properties. Centralized visitor records replace paper logbooks and make reporting straightforward.",
+    faqs: [
+      { q: "Can I link a visitor to a specific unit or resident?", a: "Yes, each visit can be linked to a host (resident) and unit so you know who the visitor came to see." },
+      { q: "Is visit history searchable?", a: "Yes, you can search and filter visit history by date, visitor name, unit, or property and export for reporting." },
+    ],
+  },
+  reports: {
+    title: "Reports & Analytics for Property Management",
+    description: "Financial reports, tenant ledgers, trial balance, P&L, balance sheet, and RAG-powered Ask Nyumba Zetu insights.",
+    what: "Nyumba Zetu provides a full reporting suite: landlord statements, tenant ledgers, income summaries, trial balance, profit & loss, balance sheet, and cash flow—filterable by property, unit, or branch. Ask Nyumba Zetu (RAG) lets you query policies, invoices, and statements in natural language.",
+    how: "Run standard reports from the Reports module with date ranges and filters. Accounting reports (trial balance, P&L, balance sheet) use the general ledger. Tenant and landlord reports use lease and payment data. Ask Nyumba Zetu uses RAG to answer questions over your uploaded policies and financial data.",
+    why: "Accurate, export-ready reports are essential for owners, auditors, and management. Centralizing reporting in the platform avoids spreadsheets and ensures consistency. RAG-powered insights make it easier to find answers in long documents and statements.",
+    faqs: [
+      { q: "Can I export reports?", a: "Yes, reports can be exported in common formats for sharing with stakeholders and auditors." },
+      { q: "What is Ask Nyumba Zetu?", a: "Ask Nyumba Zetu is an RAG-powered feature that answers questions using your organization's policies, invoices, and statements so you can get insights without manually searching documents." },
+    ],
+  },
+  "lease-applications": {
+    title: "Lease Applications & Onboarding",
+    description: "Manage lease applications, approval workflows, KYC, and onboarding from a single integrated workflow.",
+    what: "The Lease Applications module handles the full journey from application submission to lease and unit onboarding. Applicants submit details online; managers run approval workflows, collect KYC documents, and once approved, onboard the tenant into leases and units.",
+    how: "Applicants use the apply flow to submit applications. Managers review applications, request KYC, and approve or reject. Approved applicants are converted to residents and linked to leases and units. The workflow is configurable and integrated with documents and permissions.",
+    why: "Streamlining applications reduces time-to-lease and ensures consistent KYC and approval standards. Having applications and onboarding in the same platform as leases and finance keeps data in one place.",
+    faqs: [
+      { q: "Can applicants track their application status?", a: "Yes, applicants can track the status of their application through the application portal." },
+      { q: "Is KYC document storage included?", a: "Yes, KYC documents can be uploaded, stored, and linked to applications and tenant records with appropriate access controls." },
+    ],
+  },
+  "smart-meters": {
+    title: "Smart Meters & Utilities",
+    description: "IoT meter readings, consumption tracking, tariffs, and automated utility billing runs.",
+    what: "Nyumba Zetu's Smart Meters & Utilities feature connects IoT meters to the platform for automated readings, consumption tracking, and tariff-based billing. Billing runs generate utility charges from consumption data.",
+    how: "Meters are registered and linked to units. Readings are collected via integration (API or manual entry). Tariffs define rates; billing runs calculate consumption and create charges or invoices. The system supports multiple meter types and vendors.",
+    why: "Automating meter reading and utility billing reduces manual errors and disputes, and gives tenants and managers clear consumption and cost visibility. IoT integration scales across many units and meters.",
+    faqs: [
+      { q: "Which meter types are supported?", a: "The platform supports integration with various IoT meter vendors and manual meter reading entry. Supported types and APIs depend on your deployment." },
+      { q: "How are billing runs executed?", a: "Billing runs use consumption data and configured tariffs to generate charges or invoices, which then flow into the standard finance and collections workflow." },
+    ],
+  },
+  "security-deposits": {
+    title: "Security Deposits Management",
+    description: "Track security deposits by unit, link to invoices, and manage refunds and adjustments with full audit trail.",
+    what: "The Security Deposits feature tracks deposit amounts per unit (or lease), links them to security deposit invoices, and supports refunds and adjustments. Full history is kept for compliance and move-out reconciliation.",
+    how: "Deposits are recorded against units or leases. Invoices can be raised for security deposits and payments allocated to them. When tenants move out, refunds or adjustments are processed and recorded. All movements are auditable.",
+    why: "Security deposits are a compliance and dispute hotspot. Centralized tracking and clear allocation to invoices and refunds reduces errors and provides a clear audit trail for tenants and regulators.",
+    faqs: [
+      { q: "Can I link deposits to specific invoices?", a: "Yes, security deposits can be linked to invoices and payments so you can see what was charged and what was received." },
+      { q: "How are refunds handled?", a: "Refunds are recorded in the system with amount, reason, and date, and can be tracked through the finance and payments modules." },
+    ],
+  },
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {

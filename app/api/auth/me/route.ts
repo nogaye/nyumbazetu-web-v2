@@ -10,7 +10,7 @@ import { getSession } from "@/lib/auth/simple-auth";
 // Note: Using Node.js runtime for compatibility
 // export const runtime = "edge";
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     const session = await getSession();
 

@@ -6,13 +6,10 @@ import {
   ArrowPathIcon,
   ArrowUturnLeftIcon,
   ArrowUturnRightIcon,
-  XMarkIcon,
   CheckIcon,
-  PhotoIcon,
   ScissorsIcon,
 } from "@heroicons/react/24/outline";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet";
-import { cn } from "@/lib/utils";
 
 // Crop Overlay Component
 function CropOverlay({
@@ -99,9 +96,10 @@ export function ImageEditor({ files, isOpen, onClose, onSave }: ImageEditorProps
   const [cropMode, setCropMode] = useState<"free" | "16:9" | "4:3" | "1:1">("16:9");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const imageRef = useRef<HTMLImageElement | null>(null);
+  /** Canvas element in state so we can use it during render without reading ref (React rules). */
+  const [canvasElement, setCanvasElement] = useState<HTMLCanvasElement | null>(null);
+  /** Crop overlay area computed in effect to avoid reading refs during render. */
+  const [overlayCrop, setOverlayCrop] = useState<CropArea | null>(null);
 
   // Calculate best default crop (16:9 landscape for property photos)
   const calculateDefaultCrop = (imgWidth: number, imgHeight: number): CropArea => {
@@ -345,34 +343,26 @@ export function ImageEditor({ files, isOpen, onClose, onSave }: ImageEditorProps
     });
   };
 
-  // Get crop area in canvas coordinates
-  const getCanvasCropArea = (): CropArea | null => {
-    if (!currentImage || !currentImage.crop || !canvasRef.current) return null;
-
+  /** Returns crop area in canvas coordinates; uses refs so call only from effect/handlers. */
+  const getCanvasCropAreaForOverlay = (): CropArea | null => {
+    if (!currentImage || !currentImage.crop || !canvasRef.current || !containerRef.current) return null;
     const canvas = canvasRef.current;
-    
-    // Account for rotation to get display dimensions
+    const container = containerRef.current;
+    const maxWidth = container.clientWidth - 32;
+    const maxHeight = 400;
     const rotationRad = (currentImage.rotation * Math.PI) / 180;
     const cos = Math.abs(Math.cos(rotationRad));
     const sin = Math.abs(Math.sin(rotationRad));
     const rotatedWidth = currentImage.originalWidth * cos + currentImage.originalHeight * sin;
     const rotatedHeight = currentImage.originalWidth * sin + currentImage.originalHeight * cos;
-
-    const displayScale = getCanvasScale(rotatedWidth, rotatedHeight);
-    
-    // Calculate how the original image maps to the canvas
-    // The canvas shows the rotated image, so we need to map crop coordinates
+    const scaleX = maxWidth / rotatedWidth;
+    const scaleY = maxHeight / rotatedHeight;
+    const displayScale = Math.min(1, scaleX, scaleY);
     const canvasWidth = rotatedWidth * displayScale;
     const canvasHeight = rotatedHeight * displayScale;
-    
-    // For now, show crop on original image coordinates (before rotation)
-    // This is a simplified version - in a full implementation, you'd transform coordinates
     const cropScale = displayScale;
-    
-    // Center the crop area on canvas
     const offsetX = (canvas.width - canvasWidth) / 2;
     const offsetY = (canvas.height - canvasHeight) / 2;
-
     return {
       x: offsetX + (currentImage.crop.x * cropScale),
       y: offsetY + (currentImage.crop.y * cropScale),
@@ -380,6 +370,15 @@ export function ImageEditor({ files, isOpen, onClose, onSave }: ImageEditorProps
       height: currentImage.crop.height * cropScale,
     };
   };
+
+  // Compute overlay crop in effect so we don't read refs during render
+  useEffect(() => {
+    if (!isCropping || !currentImage?.crop || !canvasElement) {
+      setOverlayCrop(null);
+      return;
+    }
+    setOverlayCrop(getCanvasCropAreaForOverlay());
+  }, [isCropping, currentImage?.crop, canvasElement, currentIndex]);
 
   const handleSave = async () => {
     const editedFiles: File[] = [];
@@ -493,14 +492,17 @@ export function ImageEditor({ files, isOpen, onClose, onSave }: ImageEditorProps
             className="relative bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden min-h-[300px] flex items-center justify-center p-4"
           >
             <canvas
-              ref={canvasRef}
+              ref={(el) => {
+                (canvasRef as React.MutableRefObject<HTMLCanvasElement | null>).current = el;
+                setCanvasElement(el ?? null);
+              }}
               className="max-w-full max-h-[400px] object-contain"
             />
-            {/* Crop Overlay */}
-            {isCropping && currentImage.crop && canvasRef.current && (
+            {/* Crop Overlay: overlayCrop is computed in effect to avoid ref access during render */}
+            {isCropping && currentImage.crop && canvasElement && overlayCrop && (
               <CropOverlay
-                crop={getCanvasCropArea()}
-                canvas={canvasRef.current}
+                crop={overlayCrop}
+                canvas={canvasElement}
               />
             )}
           </div>

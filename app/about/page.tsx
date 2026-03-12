@@ -132,7 +132,7 @@ export default function AboutPage() {
                 real estate developers to provide enterprise-grade property management solutions.
               </p>
               <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-                If you're interested in partnering with us, please{" "}
+                If you&apos;re interested in partnering with us, please{" "}
                 <a href="/contact" className="text-primary hover:underline font-medium">
                   get in touch
                 </a>

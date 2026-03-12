@@ -3,10 +3,12 @@
 ## ✅ Completed Steps
 
 ### 1. Supabase MCP Setup
+
 - ✅ Supabase MCP server configured and working
 - ✅ Can access Supabase projects via MCP
 
 ### 2. Database Setup
+
 - ✅ Created `properties` table with all required columns
 - ✅ Created `property_images` table for image metadata
 - ✅ Set up indexes for performance
@@ -15,17 +17,20 @@
 - ✅ Fixed security advisor warning (function search_path)
 
 ### 3. Environment Configuration
+
 - ✅ Set up `.env.local` with Supabase credentials:
   - `NEXT_PUBLIC_SUPABASE_URL`
   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
   - `SUPABASE_PASSWORD`
 
 ### 4. Mock Data
+
 - ✅ Inserted 10 properties into database
 - ✅ Inserted 40 property images (3-6 images per property)
 - ✅ All properties have cover images and additional images
 
 ### 5. Image Display
+
 - ✅ Fixed image display to use placeholder images (Picsum Photos)
 - ✅ Updated `getImageUrl()` function with proper property ID extraction
 - ✅ Images now display correctly on listings page and detail pages
@@ -96,10 +101,12 @@ npm run dev
 ```
 
 Then visit:
+
 - **Listings page**: http://localhost:3000/listings
 - **Property detail**: http://localhost:3000/listings/2br-apartment-kilimani
 
 You should see:
+
 - ✅ All 10 properties displayed
 - ✅ Placeholder images for each property
 - ✅ Filters working correctly
@@ -136,4 +143,3 @@ You should see:
 ---
 
 **Ready to proceed!** Follow the steps in `STORAGE_SETUP.md` to set up the storage bucket and start uploading real images.
-

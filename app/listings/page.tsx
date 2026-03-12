@@ -123,10 +123,10 @@ async function ListingsContent({
                     page > 1
                       ? `/listings?${new URLSearchParams({
                           ...Object.fromEntries(
-                            Object.entries(filters).filter(([_, v]) => v !== undefined)
+                            Object.entries(filters).filter(([_k, v]) => v !== undefined)
                           ),
                           page: (page - 1).toString(),
-                        } as any).toString()}`
+                        } as Record<string, string>).toString()}`
                       : "#"
                   }
                 >
@@ -149,10 +149,10 @@ async function ListingsContent({
                     page < totalPages
                       ? `/listings?${new URLSearchParams({
                           ...Object.fromEntries(
-                            Object.entries(filters).filter(([_, v]) => v !== undefined)
+                            Object.entries(filters).filter(([_k, v]) => v !== undefined)
                           ),
                           page: (page + 1).toString(),
-                        } as any).toString()}`
+                        } as Record<string, string>).toString()}`
                       : "#"
                   }
                 >

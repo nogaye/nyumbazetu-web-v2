@@ -28,8 +28,9 @@ export async function PATCH(
     }
 
     // Verify image belongs to property
-    const { data: image, error: imageError } = await (supabaseAdmin
-      .from("property_images") as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+    const { data: image, error: imageError } = await (supabaseAdmin as any)
+      .from("property_images")
       .select("*")
       .eq("id", imageId)
       .eq("property_id", propertyId)
@@ -42,13 +43,14 @@ export async function PATCH(
       );
     }
 
-    const updateData: any = {};
+    const updateData: { is_cover?: boolean; position?: number } = {};
 
     // Handle setting cover image
     if (body.is_cover === true) {
       // Unset all other cover images for this property
-      await (supabaseAdmin
-        .from("property_images") as any)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+      await (supabaseAdmin as any)
+        .from("property_images")
         .update({ is_cover: false })
         .eq("property_id", propertyId)
         .neq("id", imageId);
@@ -70,8 +72,9 @@ export async function PATCH(
       );
     }
 
-    const { data, error } = await (supabaseAdmin
-      .from("property_images") as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+    const { data, error } = await (supabaseAdmin as any)
+      .from("property_images")
       .update(updateData)
       .eq("id", imageId)
       .select()
@@ -100,10 +103,11 @@ export async function PATCH(
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error updating image:", error);
+    const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: "Internal server error", details: error.message },
+      { error: "Internal server error", details: message },
       { status: 500 }
     );
   }
@@ -127,8 +131,9 @@ export async function DELETE(
     }
 
     // Get image record to get storage path
-    const { data: image, error: imageError } = await (supabaseAdmin
-      .from("property_images") as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+    const { data: image, error: imageError } = await (supabaseAdmin as any)
+      .from("property_images")
       .select("storage_path")
       .eq("id", imageId)
       .eq("property_id", propertyId)
@@ -152,8 +157,9 @@ export async function DELETE(
     }
 
     // Delete from database
-    const { error: dbError } = await (supabaseAdmin
-      .from("property_images") as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+    const { error: dbError } = await (supabaseAdmin as any)
+      .from("property_images")
       .delete()
       .eq("id", imageId);
 
@@ -172,10 +178,11 @@ export async function DELETE(
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error deleting image:", error);
+    const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: "Internal server error", details: error.message },
+      { error: "Internal server error", details: message },
       { status: 500 }
     );
   }

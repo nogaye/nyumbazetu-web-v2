@@ -56,9 +56,10 @@ export async function POST(request: NextRequest) {
         },
       };
 
-      const { data, error } = await (supabaseAdmin
-        .from("property_inquiries") as any)
-        .insert(inquiryData as any)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
+      const { data, error } = await (supabaseAdmin as any)
+        .from("property_inquiries")
+        .insert(inquiryData)
         .select()
         .single();
 

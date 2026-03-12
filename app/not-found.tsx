@@ -12,10 +12,11 @@ export default function NotFound() {
             Page not found
           </h2>
           <p className="text-slate-600 dark:text-slate-400">
-            The page you're looking for doesn't exist or has been moved.
+            The page you&apos;re looking for doesn&apos;t exist or has been
+            moved.
           </p>
         </div>
-        
+
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button size="lg" asChild>
             <Link href="/" className="flex items-center gap-2">
@@ -36,16 +37,28 @@ export default function NotFound() {
             Popular pages:
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/product" className="text-sm text-primary hover:underline">
+            <Link
+              href="/product"
+              className="text-sm text-primary hover:underline"
+            >
               Product
             </Link>
-            <Link href="/features" className="text-sm text-primary hover:underline">
+            <Link
+              href="/features"
+              className="text-sm text-primary hover:underline"
+            >
               Features
             </Link>
-            <Link href="/solutions" className="text-sm text-primary hover:underline">
+            <Link
+              href="/solutions"
+              className="text-sm text-primary hover:underline"
+            >
               Solutions
             </Link>
-            <Link href="/pricing" className="text-sm text-primary hover:underline">
+            <Link
+              href="/pricing"
+              className="text-sm text-primary hover:underline"
+            >
               Pricing
             </Link>
           </div>
@@ -54,4 +67,3 @@ export default function NotFound() {
     </div>
   );
 }
-
