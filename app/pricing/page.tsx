@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
+  ArrowRightIcon,
   CheckIcon,
   PhoneIcon,
   SparklesIcon,
@@ -34,9 +35,140 @@ const PRICE_PER_UNIT = {
   enterprise: 250,
 } as const;
 
+/** Plan IDs used in the feature matrix; must match plan names in plans[]. */
+const PLAN_IDS = ["Free", "Starter", "Growth", "Enterprise"] as const;
+
+/**
+ * Feature definition aligned with /features page. plans lists which tiers include this feature
+ * (inclusive: e.g. ["Starter","Growth","Enterprise"] means all paid plans).
+ */
+interface FeaturePlanRow {
+  slug: string;
+  title: string;
+  description: string;
+  /** Plans that include this feature (at least one). */
+  plans: readonly (typeof PLAN_IDS)[number][];
+}
+
+/**
+ * All platform features and which pricing plan(s) include them. Kept in sync with app/features/page.tsx.
+ */
+const FEATURES_BY_PLAN: FeaturePlanRow[] = [
+  {
+    slug: "collections",
+    title: "Rent & Service Charge Collections",
+    description:
+      "Automated invoicing and payment tracking; M-Pesa, bank, and wallet on paid plans.",
+    plans: ["Free", "Starter", "Growth", "Enterprise"],
+  },
+  {
+    slug: "accounting",
+    title: "Accounting & General Ledger",
+    description:
+      "Double-entry accounting, journal entries, trial balance, P&L, balance sheet.",
+    plans: ["Starter", "Growth", "Enterprise"],
+  },
+  {
+    slug: "tenant-experience",
+    title: "Tenant & Owner Experience",
+    description: "Self-service portals, mobile apps, WhatsApp chatbot; owner portals on Growth+.",
+    plans: ["Free", "Starter", "Growth", "Enterprise"],
+  },
+  {
+    slug: "maintenance",
+    title: "Maintenance & Assets",
+    description: "Maintenance requests, work orders, asset tracking, vendor management.",
+    plans: ["Free", "Starter", "Growth", "Enterprise"],
+  },
+  {
+    slug: "tasks",
+    title: "Tasks & Projects",
+    description: "Project tracking, task assignment, budget and cost tracking for developments.",
+    plans: ["Growth", "Enterprise"],
+  },
+  {
+    slug: "etims",
+    title: "KRA eTIMS & Compliance",
+    description: "eTIMS-compliant invoicing, automatic submission, tax workflows, audit trails.",
+    plans: ["Starter", "Growth", "Enterprise"],
+  },
+  {
+    slug: "tps",
+    title: "TPS & Rent-to-Own",
+    description: "Tenant Purchase Scheme, installment tracking, ownership %, transfer workflows.",
+    plans: ["Enterprise"],
+  },
+  {
+    slug: "communications",
+    title: "Communication Hub",
+    description: "Email, SMS, in-app messaging, bulk announcements, communication history.",
+    plans: ["Free", "Starter", "Growth", "Enterprise"],
+  },
+  {
+    slug: "crm",
+    title: "CRM",
+    description: "Contact management, interaction history, leads, vendor relationships.",
+    plans: ["Growth", "Enterprise"],
+  },
+  {
+    slug: "white-labeling",
+    title: "White Labeling",
+    description: "Custom branding, domain, SSL, branded portals and apps, email templates.",
+    plans: ["Enterprise"],
+  },
+  {
+    slug: "calendar-scheduling",
+    title: "Calendar & Event Scheduling",
+    description: "Scheduled invoicing, payment reminders, penalty automation, recurring tasks.",
+    plans: ["Free", "Starter", "Growth", "Enterprise"],
+  },
+  {
+    slug: "webhooks",
+    title: "Webhooks & API Events",
+    description: "Real-time event notifications, webhook endpoints, API triggers, automation.",
+    plans: ["Growth", "Enterprise"],
+  },
+  {
+    slug: "listings",
+    title: "Property Listings",
+    description: "Verified listings, search and filters, property details, contact options.",
+    plans: ["Growth", "Enterprise"],
+  },
+  {
+    slug: "visitors",
+    title: "Visitor Management",
+    description: "Visitor registration, check-in/out, host linking, visit history and reporting.",
+    plans: ["Free", "Starter", "Growth", "Enterprise"],
+  },
+  {
+    slug: "reports",
+    title: "Reports & Analytics",
+    description: "Landlord statements, tenant ledgers, trial balance, P&L, Ask Nyumba Zetu (RAG).",
+    plans: ["Free", "Starter", "Growth", "Enterprise"],
+  },
+  {
+    slug: "lease-applications",
+    title: "Lease Applications",
+    description: "Application tracking, approval workflows, KYC, onboarding to lease and units.",
+    plans: ["Free", "Starter", "Growth", "Enterprise"],
+  },
+  {
+    slug: "smart-meters",
+    title: "Smart Meters & Utilities",
+    description: "Meter integration, consumption tracking, tariffs, automated utility billing.",
+    plans: ["Growth", "Enterprise"],
+  },
+  {
+    slug: "security-deposits",
+    title: "Security Deposits",
+    description: "Deposit tracking per unit, invoice linking, refunds and adjustments, audit trail.",
+    plans: ["Free", "Starter", "Growth", "Enterprise"],
+  },
+];
+
 /**
  * Plan definition for the pricing grid. price and priceSubline drive the main display;
- * units and features describe scope and inclusions.
+ * units and features describe scope and inclusions. Feature bullets align with FEATURES_BY_PLAN.
  */
 interface PlanDef {
   name: string;
@@ -62,13 +194,15 @@ const plans: PlanDef[] = [
       "Core features for small portfolios—no bank integrations, weekly payouts via Nyumba Zetu.",
     units: "1–4 units",
     features: [
-      "Core property management",
-      "Rent collection & invoicing",
-      "Tenant portal",
-      "Basic reporting",
-      "Weekly settlements to your Nyumba Zetu account",
-      "Email support",
-      "Mobile app access",
+      "Rent & service charge collections (invoicing; weekly settlements via Nyumba Zetu account)",
+      "Tenant & owner experience (tenant portal, mobile app)",
+      "Communication hub (email, SMS, in-app messaging)",
+      "Calendar & event scheduling (invoicing, reminders, penalties)",
+      "Visitor management",
+      "Reports & analytics (basic)",
+      "Lease applications & onboarding",
+      "Security deposits",
+      "Maintenance & assets (basic tracking)",
     ],
     cta: "Start Free",
     popular: false,
@@ -80,16 +214,14 @@ const plans: PlanDef[] = [
     priceSubline: "per unit per month",
     period: "",
     description:
-      "Perfect for individual landlords and small portfolios with optional bank integration.",
+      "Perfect for individual landlords and small portfolios with bank integration.",
     units: "5+ units",
     features: [
       "Everything in Free",
-      "Bank & M-Pesa integrations",
-      "Daily settlements (not weekly only)",
-      "Basic accounting",
-      "KRA eTIMS integration",
-      "Email support",
-      "Mobile app access",
+      "Bank & M-Pesa integrations; daily settlements",
+      "Accounting & general ledger (basic)",
+      "KRA eTIMS & compliance",
+      "Full maintenance & assets",
     ],
     cta: "Get Started",
     popular: false,
@@ -105,11 +237,13 @@ const plans: PlanDef[] = [
     features: [
       "Everything in Starter",
       "Advanced accounting & GL",
-      "Owner portals",
-      "Maintenance management",
-      "Custom reporting",
+      "Owner portals (full tenant & owner experience)",
+      "Tasks & projects",
+      "CRM",
+      "Webhooks & API events",
+      "Property listings",
+      "Smart meters & utilities",
       "Priority support",
-      "API access",
     ],
     cta: "Get Started",
     popular: true,
@@ -124,12 +258,11 @@ const plans: PlanDef[] = [
     units: "Unlimited units",
     features: [
       "Everything in Growth",
+      "TPS & rent-to-own",
+      "White labeling",
       "Dedicated account manager",
-      "Custom integrations",
-      "Advanced security & compliance",
-      "White-label options",
-      "On-site training",
-      "SLA & guaranteed uptime",
+      "Custom integrations & advanced security",
+      "On-site training & SLA",
     ],
     cta: "Contact Sales",
     popular: false,
@@ -239,6 +372,81 @@ export default function PricingPage() {
           Example: 10 units on Growth = KES{" "}
           {((10 * PRICE_PER_UNIT.growth) / 1).toLocaleString()}/month (
           {PRICE_PER_UNIT.growth} × 10). You only pay for the units you manage.
+        </p>
+      </Section>
+
+      {/* Features by plan — detailed matrix of all features and which plans include them */}
+      <Section className="bg-slate-50 dark:bg-slate-900/50">
+        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-50 mb-4 md:mb-6 leading-tight tracking-tight">
+            Features by plan
+          </h2>
+          <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+            Every feature from our platform, and which plan includes it. All features link to full details on our Features page.
+          </p>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[720px] border-collapse text-left">
+            <thead>
+              <tr className="border-b border-slate-200 dark:border-slate-700">
+                <th className="py-4 px-4 font-semibold text-slate-900 dark:text-slate-50 w-[min(220px,30%)]">
+                  Feature
+                </th>
+                <th className="py-4 px-3 font-semibold text-slate-700 dark:text-slate-300 text-center w-[72px]">
+                  Free
+                </th>
+                <th className="py-4 px-3 font-semibold text-slate-700 dark:text-slate-300 text-center w-[72px]">
+                  Starter
+                </th>
+                <th className="py-4 px-3 font-semibold text-slate-700 dark:text-slate-300 text-center w-[72px]">
+                  Growth
+                </th>
+                <th className="py-4 px-3 font-semibold text-slate-700 dark:text-slate-300 text-center w-[72px]">
+                  Enterprise
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {FEATURES_BY_PLAN.map((row) => (
+                <tr
+                  key={row.slug}
+                  className="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-100/50 dark:hover:bg-slate-800/30 transition-colors"
+                >
+                  <td className="py-4 px-4">
+                    <Link
+                      href={`/features/${row.slug}`}
+                      className="group font-medium text-slate-900 dark:text-slate-50 hover:text-primary inline-flex items-center gap-1"
+                    >
+                      {row.title}
+                      <ArrowRightIcon className="h-4 w-4 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                    </Link>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5 max-w-md">
+                      {row.description}
+                    </p>
+                  </td>
+                  {PLAN_IDS.map((planId) => (
+                    <td key={planId} className="py-4 px-3 text-center">
+                      {row.plans.includes(planId) ? (
+                        <CheckIcon className="h-6 w-6 text-tertiary mx-auto" aria-hidden />
+                      ) : (
+                        <span className="text-slate-300 dark:text-slate-600" aria-label="Not included">
+                          —
+                        </span>
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-center mt-8">
+          <Button variant="outline" size="lg" asChild>
+            <Link href="/features" className="inline-flex items-center gap-2">
+              View all features in detail
+              <ArrowRightIcon className="h-4 w-4" />
+            </Link>
+          </Button>
         </p>
       </Section>
 
