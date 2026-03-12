@@ -8,7 +8,13 @@
 import { motion } from "framer-motion";
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import Link from "next/link";
 import {
   CurrencyDollarIcon,
@@ -34,7 +40,8 @@ import {
 const features = [
   {
     title: "Rent & Service Charge Collections",
-    description: "Automated invoicing and payment tracking with M-Pesa, bank, and wallet integrations.",
+    description:
+      "Automated invoicing and payment tracking with M-Pesa, bank, and wallet integrations.",
     bullets: [
       "Automated rent and service charge invoicing",
       "M-Pesa, bank, and mobile wallet payments",
@@ -45,7 +52,8 @@ const features = [
   },
   {
     title: "Accounting & General Ledger",
-    description: "Full accounting system with journals, ledgers, trial balance, P&L, and balance sheet.",
+    description:
+      "Full accounting system with journals, ledgers, trial balance, P&L, and balance sheet.",
     bullets: [
       "Double-entry accounting system",
       "Automated journal entries",
@@ -56,7 +64,8 @@ const features = [
   },
   {
     title: "Tenant & Owner Experience",
-    description: "Portals, mobile apps, and WhatsApp chatbot for seamless tenant and owner engagement.",
+    description:
+      "Portals, mobile apps, and WhatsApp chatbot for seamless tenant and owner engagement.",
     bullets: [
       "Self-service tenant and owner portals",
       "Mobile apps for iOS and Android",
@@ -67,7 +76,8 @@ const features = [
   },
   {
     title: "Maintenance & Assets",
-    description: "Track maintenance requests, work orders, and property assets with full history.",
+    description:
+      "Track maintenance requests, work orders, and property assets with full history.",
     bullets: [
       "Maintenance request management",
       "Asset tracking and depreciation",
@@ -78,7 +88,8 @@ const features = [
   },
   {
     title: "Tasks & Projects",
-    description: "Project management for property development, renovations, and capital improvements.",
+    description:
+      "Project management for property development, renovations, and capital improvements.",
     bullets: [
       "Task assignment and tracking",
       "Project timelines and milestones",
@@ -89,7 +100,8 @@ const features = [
   },
   {
     title: "KRA eTIMS & Compliance",
-    description: "KRA eTIMS-ready invoicing and tax-compliant workflows for property operations.",
+    description:
+      "KRA eTIMS-ready invoicing and tax-compliant workflows for property operations.",
     bullets: [
       "eTIMS invoice generation",
       "Tax-compliant reporting",
@@ -100,7 +112,8 @@ const features = [
   },
   {
     title: "TPS & Rent-to-Own",
-    description: "Tenant Purchase Scheme and rent-to-own tracking with installment management.",
+    description:
+      "Tenant Purchase Scheme and rent-to-own tracking with installment management.",
     bullets: [
       "TPS installment tracking",
       "Rent-to-own calculations",
@@ -111,7 +124,8 @@ const features = [
   },
   {
     title: "Communication Hub",
-    description: "Centralized communication with tenants, owners, and team members.",
+    description:
+      "Centralized communication with tenants, owners, and team members.",
     bullets: [
       "Email and SMS notifications",
       "In-app messaging",
@@ -122,7 +136,7 @@ const features = [
   },
   {
     title: "CRM",
-    description: "Customer relationship management for tenants, owners, vendors, and prospects.",
+    description: "CRM for tenants, owners, vendors, and prospects.",
     bullets: [
       "Contact and interaction tracking",
       "Lead management and conversion",
@@ -133,7 +147,8 @@ const features = [
   },
   {
     title: "White Labeling",
-    description: "Fully customizable white-label solution to brand the platform as your own.",
+    description:
+      "Fully customizable white-label solution to brand the platform as your own.",
     bullets: [
       "Custom branding and domain",
       "Logo and color customization",
@@ -144,7 +159,8 @@ const features = [
   },
   {
     title: "Calendar & Event Scheduling",
-    description: "Automated scheduling for invoice generation, reminders, penalties, and recurring tasks.",
+    description:
+      "Automated scheduling for invoice generation, reminders, penalties, and recurring tasks.",
     bullets: [
       "Schedule invoice generation",
       "Automated payment reminders",
@@ -155,7 +171,8 @@ const features = [
   },
   {
     title: "Webhooks & API Events",
-    description: "Real-time event notifications and integrations to connect with your existing systems.",
+    description:
+      "Real-time event notifications and integrations to connect with your existing systems.",
     bullets: [
       "Real-time event notifications",
       "API integrations and workflows",
@@ -166,7 +183,8 @@ const features = [
   },
   {
     title: "Property Listings",
-    description: "Browse and search verified apartments, maisonettes, and TPS homes across Kenya.",
+    description:
+      "Browse and search verified apartments, maisonettes, and TPS homes across Kenya.",
     bullets: [
       "Verified property listings",
       "Advanced search and filtering",
@@ -177,7 +195,8 @@ const features = [
   },
   {
     title: "Visitor Management",
-    description: "Register and track visitors with check-in/check-out, host linking, and visit history.",
+    description:
+      "Register and track visitors with check-in/check-out, host linking, and visit history.",
     bullets: [
       "Visitor registration and check-in/out",
       "Host and unit linking",
@@ -188,7 +207,8 @@ const features = [
   },
   {
     title: "Reports & Analytics",
-    description: "Financial reports, tenant ledgers, trial balance, P&L, balance sheet, and RAG-powered insights.",
+    description:
+      "Financial reports, tenant ledgers, trial balance, P&L, balance sheet, and RAG-powered insights.",
     bullets: [
       "Landlord statements and tenant ledgers",
       "Trial balance, P&L, and balance sheet",
@@ -199,7 +219,8 @@ const features = [
   },
   {
     title: "Lease Applications",
-    description: "Manage lease applications, approvals, and onboarding from a single workflow.",
+    description:
+      "Manage lease applications, approvals, and onboarding from a single workflow.",
     bullets: [
       "Application submission and tracking",
       "Approval workflows and KYC",
@@ -210,7 +231,8 @@ const features = [
   },
   {
     title: "Smart Meters & Utilities",
-    description: "IoT meter readings, consumption tracking, billing runs, and utility management.",
+    description:
+      "IoT meter readings, consumption tracking, billing runs, and utility management.",
     bullets: [
       "Smart meter integration and readings",
       "Consumption tracking and tariffs",
@@ -221,7 +243,8 @@ const features = [
   },
   {
     title: "Security Deposits",
-    description: "Track security deposits by unit, link to invoices, and manage refunds and adjustments.",
+    description:
+      "Track security deposits by unit, link to invoices, and manage refunds and adjustments.",
     bullets: [
       "Security deposit tracking per unit",
       "Invoice linking and allocation",
@@ -254,7 +277,7 @@ export function FeatureGrid() {
                 <div className="mb-4 aspect-video bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center">
                   <div className="text-center">
                     <feature.icon className="h-8 w-8 text-primary mx-auto mb-2" />
-                     {/* <p className="text-slate-600 dark:text-slate-400 text-xs">Feature Screenshot</p> */}
+                    {/* <p className="text-slate-600 dark:text-slate-400 text-xs">Feature Screenshot</p> */}
                   </div>
                 </div>
                 <CardTitle className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-2">
@@ -267,8 +290,13 @@ export function FeatureGrid() {
               <CardContent className="pt-0">
                 <ul className="space-y-2.5 mb-6">
                   {feature.bullets.map((bullet, bulletIdx) => (
-                    <li key={bulletIdx} className="text-sm text-slate-700 dark:text-slate-300 flex items-start leading-relaxed">
-                      <span className="text-tertiary mr-2.5 flex-shrink-0 mt-0.5">•</span>
+                    <li
+                      key={bulletIdx}
+                      className="text-sm text-slate-700 dark:text-slate-300 flex items-start leading-relaxed"
+                    >
+                      <span className="text-tertiary mr-2.5 flex-shrink-0 mt-0.5">
+                        •
+                      </span>
                       <span>{bullet}</span>
                     </li>
                   ))}
@@ -287,5 +315,3 @@ export function FeatureGrid() {
     </Section>
   );
 }
-
-
