@@ -307,7 +307,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <Card className="shadow-lg">
+          <Card className="shadow-lg hidden">
             <CardHeader className="space-y-2 pb-4">
               <CardTitle className="text-2xl font-bold">
                 Request a Demo
