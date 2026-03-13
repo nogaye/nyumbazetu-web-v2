@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Bars3Icon,
-  XMarkIcon,
+  ChevronDownIcon,
   CalendarDaysIcon,
   CurrencyDollarIcon,
   CalculatorIcon,
@@ -202,6 +202,17 @@ const navItems = [
 
 export function MainNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  /** Tracks which mobile menu sections (e.g. Solutions, Features) are expanded. */
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
+
+  const toggleSection = (label: string) => {
+    setExpandedSections((prev) => {
+      const next = new Set(prev);
+      if (next.has(label)) next.delete(label);
+      else next.add(label);
+      return next;
+    });
+  };
 
   return (
     <nav
@@ -319,47 +330,76 @@ export function MainNav() {
           <SheetHeader>
             <SheetTitle>Menu</SheetTitle>
           </SheetHeader>
-          <div className="flex flex-col space-y-4 p-6 flex-1 overflow-y-auto">
+          <div className="flex flex-col space-y-1 p-6 flex-1 overflow-y-auto">
           {navItems.map((item) => (
             <div key={item.label}>
-              <Link
-                href={item.href}
-                className="block text-base font-medium text-slate-900 dark:text-slate-50 py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
-              {item.children && (
-                <div className="ml-4 mt-2 space-y-3">
-                  {item.children.map((child) => {
-                    const Icon =
-                      "icon" in child && child.icon ? child.icon : null;
-                    return (
-                      <Link
-                        key={child.href}
-                        href={child.href}
-                        className="block py-2"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        <div className="flex items-start gap-3">
-                          {Icon && (
-                            <Icon className="h-5 w-5 text-slate-400 dark:text-slate-500 flex-shrink-0 mt-0.5" />
-                          )}
-                          <div className="flex-1 min-w-0">
-                            <div className="text-sm font-medium text-slate-900 dark:text-slate-50">
-                              {child.label}
-                            </div>
-                            {"description" in child && child.description && (
-                              <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-                                {child.description}
+              {item.children ? (
+                <>
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between text-left text-base font-medium text-slate-900 dark:text-slate-50 py-3 px-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    onClick={() => toggleSection(item.label)}
+                    aria-expanded={expandedSections.has(item.label)}
+                    aria-controls={`mobile-nav-${item.label.replace(/\s+/g, "-").toLowerCase()}`}
+                  >
+                    {item.label}
+                    <ChevronDownIcon
+                      className={cn(
+                        "h-5 w-5 text-slate-500 dark:text-slate-400 flex-shrink-0 transition-transform duration-200",
+                        expandedSections.has(item.label) && "rotate-180"
+                      )}
+                      aria-hidden
+                    />
+                  </button>
+                  <div
+                    id={`mobile-nav-${item.label.replace(/\s+/g, "-").toLowerCase()}`}
+                    className={cn(
+                      "overflow-hidden transition-[max-height] duration-200 ease-out",
+                      expandedSections.has(item.label) ? "max-h-[2000px]" : "max-h-0"
+                    )}
+                    role="region"
+                    aria-label={`${item.label} submenu`}
+                  >
+                    <div className="ml-2 pl-2 border-l border-slate-200 dark:border-slate-700 space-y-1 pb-2">
+                      {item.children.map((child) => {
+                        const Icon =
+                          "icon" in child && child.icon ? child.icon : null;
+                        return (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            className="block py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 px-2 -ml-2"
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            <div className="flex items-start gap-3">
+                              {Icon && (
+                                <Icon className="h-5 w-5 text-slate-400 dark:text-slate-500 flex-shrink-0 mt-0.5" />
+                              )}
+                              <div className="flex-1 min-w-0">
+                                <div className="text-sm font-medium text-slate-900 dark:text-slate-50">
+                                  {child.label}
+                                </div>
+                                {"description" in child && child.description && (
+                                  <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                                    {child.description}
+                                  </div>
+                                )}
                               </div>
-                            )}
-                          </div>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </div>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <Link
+                  href={item.href}
+                  className="block text-base font-medium text-slate-900 dark:text-slate-50 py-3 px-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
               )}
             </div>
           ))}
