@@ -52,7 +52,7 @@ const navItems = [
         href: "/product#integrations",
         icon: PuzzlePieceIcon,
       },
-      { label: "Compare Solutions", href: "/compare", icon: SquaresPlusIcon },
+      { label: "Compare", href: "/compare", icon: SquaresPlusIcon },
     ],
   },
   {
@@ -66,7 +66,7 @@ const navItems = [
         icon: HomeIcon,
       },
       {
-        label: "Property Managers & Management Companies",
+        label: "Property Managers",
         href: "/solutions/managers",
         description: "For professional property management firms",
         icon: BuildingOfficeIcon,
@@ -85,7 +85,7 @@ const navItems = [
         icon: BuildingOffice2Icon,
       },
       {
-        label: "Banks & SACCOS / Mortgage Teams",
+        label: "Banks & SACCOS",
         href: "/solutions/banks",
         description: "For financial institutions managing mortgage portfolios",
         icon: BanknotesIcon,
@@ -194,8 +194,9 @@ const navItems = [
       },
     ],
   },
-  { label: "Listings", href: "/listings" },
+
   { label: "Pricing", href: "/pricing" },
+  { label: "Property Listings", href: "/listings" },
 ];
 
 export function MainNav() {
@@ -279,13 +280,17 @@ export function MainNav() {
           <div className="hidden lg:flex lg:items-center lg:space-x-4">
             <ThemeToggle />
             <Button variant="ghost" asChild>
-              <Link href="https://app.nyumbazetu.com/" target="_blank" rel="noopener noreferrer">
+              <Link
+                href="https://app.nyumbazetu.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Login
               </Link>
             </Button>
             <Button asChild>
               <Link href="/contact" className="flex items-center gap-2">
-                Request a Demo
+                Request a demo
                 <CalendarDaysIcon className="h-4 w-4" />
               </Link>
             </Button>
@@ -362,17 +367,17 @@ export function MainNav() {
             </div>
             <Button variant="outline" className="w-full" asChild>
               <Link
-              href="https://app.nyumbazetu.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Login
-            </Link>
+                href="https://app.nyumbazetu.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Login
+              </Link>
             </Button>
             <Button className="w-full" asChild>
               <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
-                Request a Demo
+                Request a demo
               </Link>
             </Button>
           </div>

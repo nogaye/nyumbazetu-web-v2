@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { HeroCarousel } from "@/components/home/hero-carousel";
+import { HeroSingle } from "@/components/home/hero-single";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { Section } from "@/components/section";
 
@@ -17,7 +17,6 @@ const Integrations = dynamic(() => import("@/components/home/integrations").then
 const Partnerships = dynamic(() => import("@/components/home/partnerships").then(mod => ({ default: mod.Partnerships })), { ssr: true });
 const ResourcesTeaser = dynamic(() => import("@/components/home/resources-teaser").then(mod => ({ default: mod.ResourcesTeaser })), { ssr: true });
 const FinalCTA = dynamic(() => import("@/components/home/final-cta").then(mod => ({ default: mod.FinalCTA })), { ssr: true });
-const AutomatedWorkflow = dynamic(() => import("@/components/product/automated-workflow").then(mod => ({ default: mod.AutomatedWorkflow })), { ssr: true });
 
 export const metadata = {
   title: "Nyumba Zetu | Property Management Infrastructure for Modern Kenyan Real Estate",
@@ -27,26 +26,13 @@ export const metadata = {
 export default function ModernHome() {
   return (
     <>
-      <HeroCarousel />
+      <HeroSingle />
       <AsSeenOn />
       <MetricsStrip />
       <ProductVideo />
       <ProblemContext />
       <FeatureGrid />
       <Differentiators />
-      <Section className="bg-secondary">
-        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight tracking-tight">
-            Fully Automated Invoice-to-Payment Workflow
-          </h2>
-          <p className="text-lg md:text-xl text-white leading-relaxed">
-            From invoice generation to financial reporting—completely automated with zero manual intervention.
-          </p>
-        </div>
-        <div className="max-w-7xl mx-auto">
-          <AutomatedWorkflow />
-        </div>
-      </Section>
       <Personas />
       <HowItWorks />
       <Testimonials />
@@ -59,10 +45,10 @@ export default function ModernHome() {
       <Section className="bg-slate-50 dark:bg-slate-900">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">
-            Stay updated with property management insights
+            Stay updated
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 mb-8">
-            Get the latest guides, case studies, and industry news delivered to your inbox.
+            Guides, case studies, and industry news—in your inbox.
           </p>
           <NewsletterSignup />
         </div>

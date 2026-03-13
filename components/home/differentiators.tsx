@@ -38,9 +38,9 @@ export function Differentiators() {
   return (
     <Section className="bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-white">
       <SectionHeader
-        title="Why serious Kenyan property teams choose Nyumba Zetu."
+        title="Why serious property teams choose Nyumba Zetu."
         titleClassName="text-slate-900 dark:text-white"
-        description="Built for institutions, trusted by banks, designed for the next decade of property operations."
+        description="Built for the Kenyan market. Designed for the next decade."
         className="text-slate-900 dark:text-white"
       />
       <div className="grid md:grid-cols-2 gap-6 lg:gap-8">

@@ -30,7 +30,7 @@ export function ProblemContext() {
               </div>
             </div>
             <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-              How property is still managed today in Kenya.
+              How property is still managed today.
             </h3>
             <ul className="space-y-4">
               {[

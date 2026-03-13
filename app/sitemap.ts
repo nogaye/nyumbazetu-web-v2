@@ -20,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/privacy',
     '/terms',
     '/error',
-    '/modern',
+    '/listings',
     '/solutions',
     '/solutions/landlords',
     '/solutions/managers',

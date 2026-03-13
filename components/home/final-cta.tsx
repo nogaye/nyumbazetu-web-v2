@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Section } from "@/components/section";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { CalendarDaysIcon, HomeIcon } from "@heroicons/react/24/outline";
+import { CalendarDaysIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
 export function FinalCTA() {
   return (
@@ -16,10 +16,10 @@ export function FinalCTA() {
         className="text-center max-w-3xl mx-auto"
       >
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white leading-tight tracking-tight">
-          Ready to upgrade your property operations to Fortune-500 level?
+          Ready to transform your property operations?
         </h2>
         <p className="text-xl text-white mb-8 leading-relaxed">
-          Talk to our team and see how Nyumba Zetu can transform your collections, accounting, and tenant experience.
+          Talk to our team. See how Nyumba Zetu can improve collections, accounting, and tenant experience.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button size="lg" className="bg-primary hover:bg-primary-600 text-primary-foreground" asChild>
@@ -29,9 +29,9 @@ export function FinalCTA() {
             </Link>
           </Button>
           <Button size="lg" variant="outline" className="border-white/30 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 hover:border-white/50" asChild>
-            <Link href="/listings" className="flex items-center gap-2">
-              Browse Property Listings
-              <HomeIcon className="h-4 w-4" />
+            <Link href="/product" className="flex items-center gap-2">
+              Explore the platform
+              <ArrowRightIcon className="h-4 w-4" />
             </Link>
           </Button>
         </div>

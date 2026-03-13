@@ -2,7 +2,13 @@
 
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,21 +22,23 @@ import {
 } from "@/components/ui/select";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
-import { 
-  CheckCircleIcon, 
-  ExclamationCircleIcon, 
+import {
+  CheckCircleIcon,
+  ExclamationCircleIcon,
   PaperAirplaneIcon,
   BuildingOfficeIcon,
   PhoneIcon,
   EnvelopeIcon,
-  InformationCircleIcon
+  InformationCircleIcon,
 } from "@heroicons/react/24/outline";
 import { trackFormSubmit } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
   const [formData, setFormData] = useState({
     name: "",
     company: "",
@@ -45,33 +53,35 @@ export default function ContactPage() {
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-    
+
     if (!formData.name.trim()) {
       newErrors.name = "Name is required";
     }
-    
+
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
     }
-    
+
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone is required";
     } else if (!/^[\d\s\-\+\(\)]+$/.test(formData.phone)) {
       newErrors.phone = "Please enter a valid phone number";
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => {
+      setErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[name];
         return newErrors;
@@ -80,10 +90,10 @@ export default function ContactPage() {
   };
 
   const handleSelectChange = (name: string, value: string) => {
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     // Clear error when user selects
     if (errors[name]) {
-      setErrors(prev => {
+      setErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[name];
         return newErrors;
@@ -93,14 +103,14 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     setIsSubmitting(true);
     setSubmitStatus("idle");
-    
+
     try {
       // TODO: Replace with actual API endpoint
       // const response = await fetch("/api/contact", {
@@ -108,12 +118,12 @@ export default function ContactPage() {
       //   headers: { "Content-Type": "application/json" },
       //   body: JSON.stringify(formData),
       // });
-      
+
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
       // if (!response.ok) throw new Error("Submission failed");
-      
+
       setSubmitStatus("success");
       setFormData({
         name: "",
@@ -125,7 +135,7 @@ export default function ContactPage() {
         message: "",
         source: "",
       });
-      
+
       // Reset success message after 5 seconds
       setTimeout(() => setSubmitStatus("idle"), 5000);
     } catch (_error) {
@@ -141,7 +151,7 @@ export default function ContactPage() {
       <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
         <SectionHeader
           title="Talk to our team"
-          description="Request a demo, ask questions, or learn how Nyumba Zetu can help your property operations."
+          description="Request a demo, ask questions, or learn how Nyumba Zetu can help your property operations. We'll respond within 24 hours."
         />
       </Section>
 
@@ -149,13 +159,16 @@ export default function ContactPage() {
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
           <div className="space-y-8">
             <div>
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">Get in Touch</h2>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">
+                Get in Touch
+              </h2>
               <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-                Fill out the form and our team will get back to you within 24 hours. We&apos;ll schedule
-                a demo tailored to your portfolio and answer any questions you have.
+                Fill out the form and our team will get back to you within 24
+                hours. We&apos;ll schedule a demo tailored to your portfolio and
+                answer any questions you have.
               </p>
             </div>
-            
+
             <div className="space-y-6">
               <Card className="border-slate-200 dark:border-slate-800">
                 <CardContent className="pt-6">
@@ -164,17 +177,21 @@ export default function ContactPage() {
                       <BuildingOfficeIcon className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Find us at the office</h3>
+                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">
+                        Find us at the office
+                      </h3>
                       <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Zetu Innovations<br />
-                        90 JGO, James Gichuru Road,<br />
+                        Zetu Innovations
+                        <br />
+                        90 JGO, James Gichuru Road,
+                        <br />
                         Nairobi, Kenya
                       </p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card className="border-slate-200 dark:border-slate-800">
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
@@ -182,21 +199,31 @@ export default function ContactPage() {
                       <PhoneIcon className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Give us a ring</h3>
+                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">
+                        Give us a ring
+                      </h3>
                       <p className="text-slate-600 dark:text-slate-400 space-y-1">
-                        <a href="tel:+254741382063" className="block text-primary hover:underline transition-colors">
+                        <a
+                          href="tel:+254741382063"
+                          className="block text-primary hover:underline transition-colors"
+                        >
                           +254 741 382063
                         </a>
-                        <a href="tel:+16143904422" className="block text-primary hover:underline transition-colors">
+                        <a
+                          href="tel:+16143904422"
+                          className="block text-primary hover:underline transition-colors"
+                        >
                           +1 614 390 4422
                         </a>
-                        <span className="block text-sm mt-2">Mon - Fri, 8:00 - 17:00</span>
+                        <span className="block text-sm mt-2">
+                          Mon - Fri, 8:00 - 17:00
+                        </span>
                       </p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card className="border-slate-200 dark:border-slate-800">
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
@@ -204,9 +231,11 @@ export default function ContactPage() {
                       <EnvelopeIcon className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Email us</h3>
-                      <a 
-                        href="mailto:admin@nyumbazetu.com" 
+                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">
+                        Email us
+                      </h3>
+                      <a
+                        href="mailto:admin@nyumbazetu.com"
                         className="text-primary hover:underline transition-colors block"
                       >
                         admin@nyumbazetu.com
@@ -215,7 +244,7 @@ export default function ContactPage() {
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card className="border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
@@ -223,9 +252,12 @@ export default function ContactPage() {
                       <InformationCircleIcon className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">Response Time</h3>
+                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">
+                        Response Time
+                      </h3>
                       <p className="text-slate-600 dark:text-slate-400">
-                        We typically respond within 24 hours during business days.
+                        We typically respond within 24 hours during business
+                        days.
                       </p>
                     </div>
                   </div>
@@ -236,9 +268,12 @@ export default function ContactPage() {
 
           <Card className="shadow-lg">
             <CardHeader className="space-y-2 pb-4">
-              <CardTitle className="text-2xl font-bold">Request a Demo</CardTitle>
+              <CardTitle className="text-2xl font-bold">
+                Request a Demo
+              </CardTitle>
               <CardDescription>
-                Fill out the form below and we&apos;ll get back to you within 24 hours.
+                Fill out the form below and we&apos;ll get back to you within 24
+                hours.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -253,22 +288,19 @@ export default function ContactPage() {
                   </AlertDescription>
                 </Alert>
               )}
-              
+
               {submitStatus === "error" && (
                 <Alert variant="destructive">
                   <ExclamationCircleIcon className="h-5 w-5" />
                   <AlertTitle>Something went wrong</AlertTitle>
                   <AlertDescription>
-                    Please try again or contact us directly at hello@nyumbazetu.com
+                    Please try again or contact us directly at
+                    admin@nyumbazetu.com
                   </AlertDescription>
                 </Alert>
               )}
-              
-              <form 
-                className="space-y-6" 
-                onSubmit={handleSubmit}
-                noValidate
-              >
+
+              <form className="space-y-6" onSubmit={handleSubmit} noValidate>
                 {/* Personal Information Section */}
                 <div className="space-y-4">
                   <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
@@ -276,12 +308,10 @@ export default function ContactPage() {
                       Personal Information
                     </h3>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2 md:col-span-2">
-                      <Label htmlFor="name">
-                        Full Name *
-                      </Label>
+                      <Label htmlFor="name">Full Name *</Label>
                       <Input
                         type="text"
                         id="name"
@@ -291,23 +321,28 @@ export default function ContactPage() {
                         required
                         placeholder="John Doe"
                         aria-invalid={errors.name ? "true" : "false"}
-                        aria-describedby={errors.name ? "name-error" : undefined}
+                        aria-describedby={
+                          errors.name ? "name-error" : undefined
+                        }
                         className={cn(
-                          errors.name && "border-red-500 dark:border-red-500 focus-visible:ring-red-500"
+                          errors.name &&
+                            "border-red-500 dark:border-red-500 focus-visible:ring-red-500",
                         )}
                       />
                       {errors.name && (
-                        <p id="name-error" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1" role="alert">
+                        <p
+                          id="name-error"
+                          className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1"
+                          role="alert"
+                        >
                           <ExclamationCircleIcon className="h-4 w-4" />
                           {errors.name}
                         </p>
                       )}
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="email">
-                        Email Address *
-                      </Label>
+                      <Label htmlFor="email">Email Address *</Label>
                       <Input
                         type="email"
                         id="email"
@@ -317,23 +352,28 @@ export default function ContactPage() {
                         required
                         placeholder="john@example.com"
                         aria-invalid={errors.email ? "true" : "false"}
-                        aria-describedby={errors.email ? "email-error" : undefined}
+                        aria-describedby={
+                          errors.email ? "email-error" : undefined
+                        }
                         className={cn(
-                          errors.email && "border-red-500 dark:border-red-500 focus-visible:ring-red-500"
+                          errors.email &&
+                            "border-red-500 dark:border-red-500 focus-visible:ring-red-500",
                         )}
                       />
                       {errors.email && (
-                        <p id="email-error" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1" role="alert">
+                        <p
+                          id="email-error"
+                          className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1"
+                          role="alert"
+                        >
                           <ExclamationCircleIcon className="h-4 w-4" />
                           {errors.email}
                         </p>
                       )}
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="phone">
-                        Phone Number *
-                      </Label>
+                      <Label htmlFor="phone">Phone Number *</Label>
                       <Input
                         type="tel"
                         id="phone"
@@ -343,13 +383,20 @@ export default function ContactPage() {
                         required
                         placeholder="+254 700 000 000"
                         aria-invalid={errors.phone ? "true" : "false"}
-                        aria-describedby={errors.phone ? "phone-error" : undefined}
+                        aria-describedby={
+                          errors.phone ? "phone-error" : undefined
+                        }
                         className={cn(
-                          errors.phone && "border-red-500 dark:border-red-500 focus-visible:ring-red-500"
+                          errors.phone &&
+                            "border-red-500 dark:border-red-500 focus-visible:ring-red-500",
                         )}
                       />
                       {errors.phone && (
-                        <p id="phone-error" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1" role="alert">
+                        <p
+                          id="phone-error"
+                          className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1"
+                          role="alert"
+                        >
                           <ExclamationCircleIcon className="h-4 w-4" />
                           {errors.phone}
                         </p>
@@ -365,12 +412,10 @@ export default function ContactPage() {
                       Company Information
                     </h3>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2 md:col-span-2">
-                      <Label htmlFor="company">
-                        Company Name
-                      </Label>
+                      <Label htmlFor="company">Company Name</Label>
                       <Input
                         type="text"
                         id="company"
@@ -380,11 +425,9 @@ export default function ContactPage() {
                         placeholder="Your Company Ltd"
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="role">
-                        Your Role
-                      </Label>
+                      <Label htmlFor="role">Your Role</Label>
                       <Input
                         type="text"
                         id="role"
@@ -394,14 +437,14 @@ export default function ContactPage() {
                         placeholder="Property Manager"
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="portfolio">
-                        Portfolio Size
-                      </Label>
+                      <Label htmlFor="portfolio">Portfolio Size</Label>
                       <Select
                         value={formData.portfolio}
-                        onValueChange={(value) => handleSelectChange("portfolio", value)}
+                        onValueChange={(value) =>
+                          handleSelectChange("portfolio", value)
+                        }
                       >
                         <SelectTrigger id="portfolio">
                           <SelectValue placeholder="Select portfolio size..." />
@@ -424,12 +467,10 @@ export default function ContactPage() {
                       Additional Information
                     </h3>
                   </div>
-                  
+
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="message">
-                        Message
-                      </Label>
+                      <Label htmlFor="message">Message</Label>
                       <Textarea
                         id="message"
                         name="message"
@@ -443,14 +484,14 @@ export default function ContactPage() {
                         Optional: Share any specific questions or requirements
                       </p>
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="source">
-                        How did you hear about us?
-                      </Label>
+                      <Label htmlFor="source">How did you hear about us?</Label>
                       <Select
                         value={formData.source}
-                        onValueChange={(value) => handleSelectChange("source", value)}
+                        onValueChange={(value) =>
+                          handleSelectChange("source", value)
+                        }
                       >
                         <SelectTrigger id="source">
                           <SelectValue placeholder="Select an option..." />
@@ -459,7 +500,9 @@ export default function ContactPage() {
                           <SelectItem value="search">Search Engine</SelectItem>
                           <SelectItem value="referral">Referral</SelectItem>
                           <SelectItem value="social">Social Media</SelectItem>
-                          <SelectItem value="event">Event/Conference</SelectItem>
+                          <SelectItem value="event">
+                            Event/Conference
+                          </SelectItem>
                           <SelectItem value="other">Other</SelectItem>
                         </SelectContent>
                       </Select>
@@ -468,10 +511,10 @@ export default function ContactPage() {
                 </div>
 
                 <div className="pt-4">
-                  <Button 
-                    type="submit" 
-                    size="lg" 
-                    className="w-full flex items-center justify-center gap-2 h-12 text-base font-semibold" 
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full flex items-center justify-center gap-2 h-12 text-base font-semibold"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
@@ -495,4 +538,3 @@ export default function ContactPage() {
     </>
   );
 }
-

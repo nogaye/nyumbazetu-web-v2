@@ -1,7 +1,17 @@
 "use client";
 
+/**
+ * Site-wide footer: brand, product, solutions, company, resources, legal.
+ * No Awards/status links (per audit); single canonical contact and taglines.
+ */
+
 import Link from "next/link";
-import { TwitterIcon, LinkedInIcon, FacebookIcon, InstagramIcon } from "@/components/social-icons";
+import {
+  TwitterIcon,
+  LinkedInIcon,
+  FacebookIcon,
+  InstagramIcon,
+} from "@/components/social-icons";
 import { AppStoreBadge, GooglePlayBadge } from "@/components/app-store-badges";
 import { useEffect, useState } from "react";
 
@@ -12,22 +22,22 @@ const footerLinks = {
     { label: "Integrations", href: "/product#integrations" },
     { label: "Compare Solutions", href: "/compare" },
   ],
-  features: [
-    { label: "Rent & Service Charge Collections", href: "/features/collections" },
-    { label: "Accounting & General Ledger", href: "/features/accounting" },
-    { label: "Tenant & Owner Experience", href: "/features/tenant-experience" },
-    { label: "Maintenance and Service Requests", href: "/features/maintenance" },
-    { label: "Assets Management", href: "/features/assets-management" },
-    { label: "Expense & Vendor Management", href: "/features/expense-vendor-management" },
-    { label: "Tasks & Projects", href: "/features/tasks" },
-    { label: "KRA eTIMS & Compliance", href: "/features/etims" },
-    { label: "TPS & Rent-to-Own", href: "/features/tps" },
-    { label: "Communication Hub", href: "/features/communications" },
-    { label: "CRM", href: "/features/crm" },
-    { label: "White Labeling", href: "/features/white-labeling" },
-    { label: "Calendar & Event Scheduling", href: "/features/calendar-scheduling" },
-    { label: "Webhooks & API Events", href: "/features/webhooks" },
-  ],
+  // features: [
+  //   { label: "Rent & Service Charge Collections", href: "/features/collections" },
+  //   { label: "Accounting & General Ledger", href: "/features/accounting" },
+  //   { label: "Tenant & Owner Experience", href: "/features/tenant-experience" },
+  //   { label: "Maintenance and Service Requests", href: "/features/maintenance" },
+  //   { label: "Assets Management", href: "/features/assets-management" },
+  //   { label: "Expense & Vendor Management", href: "/features/expense-vendor-management" },
+  //   { label: "Tasks & Projects", href: "/features/tasks" },
+  //   { label: "KRA eTIMS & Compliance", href: "/features/etims" },
+  //   { label: "TPS & Rent-to-Own", href: "/features/tps" },
+  //   { label: "Communication Hub", href: "/features/communications" },
+  //   { label: "CRM", href: "/features/crm" },
+  //   { label: "White Labeling", href: "/features/white-labeling" },
+  //   { label: "Calendar & Event Scheduling", href: "/features/calendar-scheduling" },
+  //   { label: "Webhooks & API Events", href: "/features/webhooks" },
+  // ],
   solutions: [
     { label: "Landlords & Agents", href: "/solutions/landlords" },
     { label: "Property Managers", href: "/solutions/managers" },
@@ -38,30 +48,20 @@ const footerLinks = {
   ],
   resources: [
     { label: "Blog", href: "/blogs" },
-    { label: "Guides", href: "/resources" },
-    { label: "Case Studies", href: "/resources" },
-    { label: "Webinars", href: "/resources" },
-    { label: "Newsletters", href: "/newsletters" },
     { label: "FAQs", href: "/faqs" },
+    { label: "Newsletters", href: "/newsletters" },
   ],
   company: [
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
     { label: "Partnerships", href: "/partnerships" },
     { label: "Careers", href: "/careers" },
-    { label: "Media & Press", href: "/press" },
-    { label: "Events", href: "/events" },
     { label: "Clients", href: "/clients" },
   ],
   legal: [
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
     { label: "Data Protection (ODPC)", href: "/compliance/odpc" },
-  ],
-  awards: [
-    { label: "Best Property Tech Solution 2024", href: "/awards" },
-    { label: "Innovation in Real Estate", href: "/awards" },
-    { label: "Excellence in Fintech", href: "/awards" },
   ],
 };
 
@@ -77,13 +77,15 @@ function generateStars(count: number) {
 }
 
 export function SiteFooter() {
-  const [stars, setStars] = useState<Array<{
-    id: number;
-    top: number;
-    left: number;
-    delay: number;
-    duration: number;
-  }>>([]);
+  const [stars, setStars] = useState<
+    Array<{
+      id: number;
+      top: number;
+      left: number;
+      delay: number;
+      duration: number;
+    }>
+  >([]);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -95,7 +97,7 @@ export function SiteFooter() {
     <footer className="relative border-t border-slate-800 bg-slate-950 overflow-hidden">
       {/* Animated Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 opacity-50 animate-gradient-shift pointer-events-none" />
-      
+
       {/* Twinkling Stars Background */}
       {mounted && (
         <div className="absolute inset-0 pointer-events-none">
@@ -124,7 +126,7 @@ export function SiteFooter() {
               className="absolute w-1 h-1 bg-primary/20 rounded-full blur-sm"
               style={{
                 left: `${10 + i * 12}%`,
-                bottom: '-10px',
+                bottom: "-10px",
                 animation: `float-up ${15 + i * 2}s linear infinite`,
                 animationDelay: `${i * 2}s`,
               }}
@@ -134,22 +136,22 @@ export function SiteFooter() {
       )}
 
       <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-20">
-        {/* All Footer Items in One Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-8 lg:gap-10 mb-12">
+        {/* Footer columns: Brand, Product, Solutions, Company, Resources, Legal */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-10 mb-12">
           {/* Brand Column */}
-          <div className="sm:col-span-2 lg:col-span-2">
+          <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" className="block mb-4">
-              <div className="text-2xl font-bold text-white">
-                Nyumba Zetu
-              </div>
+              <div className="text-2xl font-bold text-white">Nyumba Zetu</div>
             </Link>
             <p className="text-sm text-slate-200 mb-2 leading-relaxed">
               Property management infrastructure for modern Kenyan real estate.
             </p>
-            <p className="text-xs text-slate-300 mb-4">
+            <p className="text-xs text-slate-300 mb-2">
               🇰🇪 Proudly built in Kenya for African real estate.
             </p>
-           
+            <p className="text-xs text-slate-400 mb-4">
+              Award-winning property technology.
+            </p>
             {/* Mobile App Download */}
             <div className="mb-4 flex flex-col gap-2">
               <Link
@@ -225,26 +227,6 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* Features Column - All features in one column */}
-          <div>
-            <h3 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">
-              Features
-            </h3>
-            <ul className="space-y-3">
-              {footerLinks.features.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-slate-200 hover:text-primary transition-all duration-200 relative group"
-                  >
-                    <span className="relative z-10">{link.label}</span>
-                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
           {/* Solutions Column */}
           <div>
             <h3 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">
@@ -305,14 +287,14 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* Awards Column */}
+          {/* Legal Column */}
           <div>
             <h3 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">
-              Awards
+              Legal
             </h3>
             <ul className="space-y-3">
-              {footerLinks.awards.map((link) => (
-                <li key={link.label}>
+              {footerLinks.legal.map((link) => (
+                <li key={link.href}>
                   <Link
                     href={link.href}
                     className="text-sm text-slate-200 hover:text-primary transition-all duration-200 relative group"
@@ -342,20 +324,14 @@ export function SiteFooter() {
                 <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
               </Link>
             ))}
-            
-            {/* System Status */}
-            <div className="flex items-center gap-3">
-              <Link 
-                href="/status" 
-                className="flex items-center gap-2 text-sm text-slate-400 hover:text-primary transition-colors duration-200 group"
-                title="View system status"
-              >
-                <div className="relative">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  <div className="absolute inset-0 w-2 h-2 bg-green-500 rounded-full animate-ping opacity-75" />
-                </div>
-                <span className="text-xs group-hover:underline">All Systems Operational</span>
-              </Link>
+
+            {/* System Status - text only (no /status page) */}
+            <div className="flex items-center gap-2 text-sm text-slate-400">
+              <div className="relative">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <div className="absolute inset-0 w-2 h-2 bg-green-500 rounded-full animate-ping opacity-75" />
+              </div>
+              <span className="text-xs">All Systems Operational</span>
             </div>
           </div>
         </div>
@@ -363,4 +339,3 @@ export function SiteFooter() {
     </footer>
   );
 }
-

@@ -19,7 +19,7 @@ export function StructuredData() {
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "Customer Service",
-      email: "hello@nyumbazetu.com",
+      email: "admin@nyumbazetu.com",
       areaServed: "KE",
       availableLanguage: ["en"],
     },
