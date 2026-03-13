@@ -48,20 +48,6 @@ const Testimonials = dynamic(
     })),
   { ssr: true },
 );
-const Integrations = dynamic(
-  () =>
-    import("@/components/home/integrations").then((mod) => ({
-      default: mod.Integrations,
-    })),
-  { ssr: true },
-);
-const Partnerships = dynamic(
-  () =>
-    import("@/components/home/partnerships").then((mod) => ({
-      default: mod.Partnerships,
-    })),
-  { ssr: true },
-);
 const ResourcesTeaser = dynamic(
   () =>
     import("@/components/home/resources-teaser").then((mod) => ({
@@ -95,8 +81,6 @@ export default function ModernHome() {
       <Differentiators />
       <HowItWorks />
       <Testimonials />
-      <Integrations />
-      <Partnerships />
       <ResourcesTeaser />
       <FinalCTA />
 
