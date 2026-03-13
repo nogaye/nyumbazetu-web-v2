@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Bars3Icon,
@@ -22,6 +23,7 @@ import {
   UsersIcon,
   BuildingOffice2Icon,
   BanknotesIcon,
+  CubeIcon,
   GlobeAltIcon,
   Squares2X2Icon,
   PuzzlePieceIcon,
@@ -119,10 +121,22 @@ const navItems = [
         icon: UserGroupIcon,
       },
       {
-        label: "Maintenance & Assets",
+        label: "Maintenance and Service Requests",
         href: "/features/maintenance",
-        description: "Maintenance requests and asset tracking",
+        description: "Maintenance and service requests, work orders",
         icon: WrenchScrewdriverIcon,
+      },
+      {
+        label: "Assets Management",
+        href: "/features/assets-management",
+        description: "Asset register, tracking, and depreciation",
+        icon: CubeIcon,
+      },
+      {
+        label: "Expense & Vendor Management",
+        href: "/features/expense-vendor-management",
+        description: "Expenses, vendors, contracts, and payments",
+        icon: BanknotesIcon,
       },
       {
         label: "Tasks & Projects",
@@ -145,7 +159,7 @@ const navItems = [
       {
         label: "Communication Hub",
         href: "/features/communications",
-        description: "Email, SMS, and in-app messaging",
+        description: "Email, SMS, WhatsApp, and AI-powered chatbot",
         icon: ChatBubbleLeftRightIcon,
       },
       {
@@ -197,12 +211,19 @@ export function MainNav() {
         <div className="flex h-16 items-center justify-between">
           <Link
             href="/"
-            className="flex items-center space-x-2"
+            className="flex items-center gap-2"
             aria-label="Nyumba Zetu Home"
           >
-            <div className="text-2xl font-bold text-secondary dark:text-slate-50">
+            <Image
+              src="/logo.svg"
+              alt=""
+              width={36}
+              height={36}
+              className="h-9 w-9 flex-shrink-0"
+            />
+            <span className="text-xl font-bold text-secondary dark:text-slate-50">
               Nyumba Zetu
-            </div>
+            </span>
           </Link>
 
           {/* Desktop Navigation */}

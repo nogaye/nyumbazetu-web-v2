@@ -11,6 +11,8 @@ import {
   ShieldCheckIcon,
   HomeIcon,
   ChatBubbleLeftRightIcon,
+  CubeIcon,
+  BanknotesIcon,
 } from "@heroicons/react/24/outline";
 
 interface Module {
@@ -53,12 +55,30 @@ const modules: Module[] = [
   },
   {
     id: "maintenance",
-    title: "Maintenance & Assets",
-    description: "Maintenance request management, work orders, and asset tracking",
+    title: "Maintenance and Service Requests",
+    description: "Maintenance and service requests, work orders, and completion tracking",
     icon: WrenchScrewdriverIcon,
-    position: { x: 50, y: 45 },
+    position: { x: 40, y: 45 },
     color: "from-orange-500 to-red-600",
     connections: ["accounting", "tenant-experience", "tasks", "communications"],
+  },
+  {
+    id: "assets-management",
+    title: "Assets Management",
+    description: "Asset register, tracking, and depreciation",
+    icon: CubeIcon,
+    position: { x: 55, y: 52 },
+    color: "from-amber-500 to-orange-600",
+    connections: ["accounting", "maintenance"],
+  },
+  {
+    id: "expense-vendor-management",
+    title: "Expense & Vendor Management",
+    description: "Expenses, vendors, contracts, and payments",
+    icon: BanknotesIcon,
+    position: { x: 65, y: 45 },
+    color: "from-lime-500 to-emerald-600",
+    connections: ["accounting", "maintenance"],
   },
   {
     id: "tasks",
@@ -90,7 +110,7 @@ const modules: Module[] = [
   {
     id: "communications",
     title: "Communications",
-    description: "Centralized email, SMS, and in-app messaging",
+    description: "Email, SMS, WhatsApp, and AI-powered chatbot",
     icon: ChatBubbleLeftRightIcon,
     position: { x: 80, y: 75 },
     color: "from-rose-500 to-pink-600",

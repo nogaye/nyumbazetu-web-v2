@@ -77,8 +77,16 @@ export default function ProductPage() {
               description: "Self-service portals, mobile apps, and WhatsApp chatbot for seamless engagement.",
             },
             {
-              title: "Maintenance & Assets",
-              description: "Maintenance request management, work orders, and asset tracking with depreciation.",
+              title: "Maintenance and Service Requests",
+              description: "Maintenance and service request management, work orders, and completion tracking.",
+            },
+            {
+              title: "Assets Management",
+              description: "Property and facility asset register with tracking and depreciation.",
+            },
+            {
+              title: "Expense & Vendor Management",
+              description: "Expense tracking, vendor records, contracts, and vendor payments.",
             },
             {
               title: "Tasks & Projects",
@@ -94,7 +102,7 @@ export default function ProductPage() {
             },
             {
               title: "Communications",
-              description: "Centralized email, SMS, and in-app messaging for tenants, owners, and teams.",
+              description: "Centralized email, SMS, WhatsApp, and AI-powered chatbot for tenants, owners, and teams.",
             },
             {
               title: "Reports & Analytics",
@@ -111,10 +119,6 @@ export default function ProductPage() {
             {
               title: "Smart Meters & Utilities",
               description: "IoT meter readings, consumption tracking, tariffs, and automated utility billing runs.",
-            },
-            {
-              title: "Security Deposits",
-              description: "Track security deposits by unit, link to invoices, and manage refunds and adjustments with full audit trail.",
             },
             {
               title: "Property Listings",

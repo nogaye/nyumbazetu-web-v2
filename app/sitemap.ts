@@ -33,6 +33,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/features/collections',
     '/features/tenant-experience',
     '/features/maintenance',
+    '/features/assets-management',
+    '/features/expense-vendor-management',
     '/features/tasks',
     '/features/etims',
     '/features/tps',

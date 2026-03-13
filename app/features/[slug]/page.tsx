@@ -69,19 +69,53 @@ const features: Record<string, {
     ],
   },
   maintenance: {
-    title: "Maintenance & Asset Management for Property Portfolios",
-    description: "Track maintenance requests, work orders, and property assets with full history.",
-    what: "The maintenance module allows tenants to submit maintenance requests, property managers to create work orders, assign vendors, track completion, and manage asset depreciation. Full history is maintained for audit and planning purposes.",
-    how: "Tenants submit maintenance requests through the portal or mobile app. Property managers review, create work orders, assign vendors, and track progress. Completed work is recorded with costs, and assets are tracked with depreciation schedules.",
-    why: "Proper maintenance management extends asset life, improves tenant satisfaction, and provides cost visibility for budgeting and planning.",
+    title: "Maintenance and Service Requests for Property Portfolios",
+    description: "Track maintenance and service requests, create work orders, assign and track completion.",
+    what: "The Maintenance and Service Requests module allows tenants to submit maintenance and service requests and property managers to create work orders, assign to staff or vendors, and track progress to completion. Full history is maintained for audit and planning.",
+    how: "Tenants submit maintenance and service requests through the portal or mobile app. Property managers review, create work orders, assign assignees, and track progress. Completed work is recorded with status and notes.",
+    why: "Structured maintenance and service request management improves response times, tenant satisfaction, and visibility into property condition and repair history.",
     faqs: [
       {
-        q: "Can I track asset depreciation?",
-        a: "Yes, the system supports asset tracking with depreciation schedules and methods.",
+        q: "Can I assign work orders to vendors?",
+        a: "Yes, work orders can be assigned to internal staff or external vendors; vendor payment is handled in Expense & Vendor Management.",
       },
       {
-        q: "How do vendors get paid?",
-        a: "Vendor invoices can be created and tracked, with payments integrated into the accounting system.",
+        q: "Is maintenance history retained?",
+        a: "Yes, full request and work order history is kept for each unit and property.",
+      },
+    ],
+  },
+  "assets-management": {
+    title: "Assets Management for Property Portfolios",
+    description: "Property and facility asset register with tracking and depreciation.",
+    what: "Assets Management lets you maintain a register of property and facility assets—appliances, fixtures, equipment—with tracking by property or unit and optional depreciation schedules for financial reporting.",
+    how: "Create asset records with name, category, location (property/unit), purchase or installation date, and value. Configure depreciation method and useful life where needed. Run reports for asset register, depreciation, and net book value.",
+    why: "A clear asset register supports insurance, budgeting, and compliance, and depreciation feeds correctly into your accounts.",
+    faqs: [
+      {
+        q: "Can I track assets by unit?",
+        a: "Yes, assets can be linked to a property, building, or specific unit.",
+      },
+      {
+        q: "Which depreciation methods are supported?",
+        a: "The system supports common methods such as straight-line; exact options depend on your configuration.",
+      },
+    ],
+  },
+  "expense-vendor-management": {
+    title: "Expense & Vendor Management",
+    description: "Expense tracking, vendor records, contracts, and vendor payments.",
+    what: "Expense & Vendor Management centralizes property-related expenses and vendor relationships. Track and categorize expenses, maintain vendor records and contracts, and manage vendor invoices and payments—all integrated with accounting.",
+    how: "Record expenses against properties or cost centers and categorize them. Create vendor records with contact and bank details; attach contracts and terms. Raise or receive vendor invoices and record payments; payments post to the general ledger.",
+    why: "Centralized expense and vendor management improves cost visibility, reduces duplicate payments, and keeps a clear audit trail for compliance.",
+    faqs: [
+      {
+        q: "How do vendor payments flow to accounting?",
+        a: "Vendor payments are recorded in the module and post to the appropriate expense and liability accounts in the general ledger.",
+      },
+      {
+        q: "Can I track contracts by vendor?",
+        a: "Yes, vendor records can include contract details, renewal dates, and related documents.",
       },
     ],
   },
@@ -146,14 +180,18 @@ const features: Record<string, {
   },
   communications: {
     title: "Communication Hub for Property Management",
-    description: "Centralized communication with tenants, owners, and team members through email, SMS, and in-app messaging.",
-    what: "Nyumba Zetu's Communication Hub centralizes all property-related communication. Send automated notifications, broadcast announcements, manage in-app messaging, and maintain a complete communication history—all from one place.",
-    how: "Send automated emails and SMS for rent reminders, payment confirmations, maintenance updates, and announcements. Use in-app messaging for direct communication with tenants and owners. Broadcast announcements to specific groups (all tenants, specific buildings, etc.). All communications are logged and searchable.",
-    why: "Property management involves constant communication with tenants, owners, and team members. Scattered communication across WhatsApp, email, and phone calls creates chaos. Nyumba Zetu brings it all together in one platform.",
+    description: "Centralized communication with tenants and owners via email, SMS, in-app messaging, WhatsApp, and an AI-powered chatbot.",
+    what: "Nyumba Zetu's Communication Hub centralizes all property-related communication. Reach tenants and owners through email, SMS, in-app messaging, and WhatsApp. The AI-powered chatbot handles common inquiries, balance checks, and payment confirmations 24/7. Send automated notifications, broadcast announcements, and maintain a complete communication history—all from one place.",
+    how: "Send automated emails and SMS for rent reminders, payment confirmations, maintenance updates, and announcements. Connect via WhatsApp so tenants can message you or use the AI chatbot for instant answers. Use in-app messaging for direct communication with tenants and owners. Broadcast announcements to specific groups (all tenants, specific buildings, etc.). All communications are logged and searchable.",
+    why: "Property management involves constant communication with tenants, owners, and team members. Scattered communication across WhatsApp, email, and phone calls creates chaos. Nyumba Zetu brings it all together—including WhatsApp and an AI-powered chatbot—so nothing gets lost and tenants get instant support.",
     faqs: [
       {
+        q: "What can the AI-powered chatbot do?",
+        a: "The chatbot can answer common questions, provide balance and payment information, and guide tenants through simple tasks—available 24/7 via WhatsApp and in-app.",
+      },
+      {
         q: "Can I send bulk messages to tenants?",
-        a: "Yes, you can send bulk messages to all tenants, specific buildings, or custom groups.",
+        a: "Yes, you can send bulk messages to all tenants, specific buildings, or custom groups via email, SMS, or in-app.",
       },
       {
         q: "Are SMS notifications included?",
@@ -340,17 +378,6 @@ const features: Record<string, {
     faqs: [
       { q: "Which meter types are supported?", a: "The platform supports integration with various IoT meter vendors and manual meter reading entry. Supported types and APIs depend on your deployment." },
       { q: "How are billing runs executed?", a: "Billing runs use consumption data and configured tariffs to generate charges or invoices, which then flow into the standard finance and collections workflow." },
-    ],
-  },
-  "security-deposits": {
-    title: "Security Deposits Management",
-    description: "Track security deposits by unit, link to invoices, and manage refunds and adjustments with full audit trail.",
-    what: "The Security Deposits feature tracks deposit amounts per unit (or lease), links them to security deposit invoices, and supports refunds and adjustments. Full history is kept for compliance and move-out reconciliation.",
-    how: "Deposits are recorded against units or leases. Invoices can be raised for security deposits and payments allocated to them. When tenants move out, refunds or adjustments are processed and recorded. All movements are auditable.",
-    why: "Security deposits are a compliance and dispute hotspot. Centralized tracking and clear allocation to invoices and refunds reduces errors and provides a clear audit trail for tenants and regulators.",
-    faqs: [
-      { q: "Can I link deposits to specific invoices?", a: "Yes, security deposits can be linked to invoices and payments so you can see what was charged and what was received." },
-      { q: "How are refunds handled?", a: "Refunds are recorded in the system with amount, reason, and date, and can be tracked through the finance and payments modules." },
     ],
   },
 };

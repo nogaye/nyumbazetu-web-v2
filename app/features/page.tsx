@@ -46,13 +46,32 @@ const features = [
   },
   {
     slug: "maintenance",
-    title: "Maintenance & Assets",
-    description: "Track maintenance requests, work orders, and property assets with full history.",
+    title: "Maintenance and Service Requests",
+    description: "Track maintenance and service requests, create work orders, assign and track completion.",
     highlights: [
       "Maintenance request management",
-      "Work order tracking and assignment",
-      "Asset tracking with depreciation",
-      "Vendor management and payment",
+      "Work order creation and assignment",
+      "Completion tracking and history",
+    ],
+  },
+  {
+    slug: "assets-management",
+    title: "Assets Management",
+    description: "Property and facility asset register with tracking and depreciation.",
+    highlights: [
+      "Asset register and catalog",
+      "Asset tracking by property or unit",
+      "Depreciation schedules and reporting",
+    ],
+  },
+  {
+    slug: "expense-vendor-management",
+    title: "Expense & Vendor Management",
+    description: "Track expenses, manage vendor records, contracts, and payments.",
+    highlights: [
+      "Expense tracking and categorization",
+      "Vendor records and contracts",
+      "Vendor payment management",
     ],
   },
   {
@@ -91,8 +110,9 @@ const features = [
   {
     slug: "communications",
     title: "Communication Hub",
-    description: "Centralized communication with tenants, owners, and team members through email, SMS, and in-app messaging.",
+    description: "Centralized communication with tenants and owners via email, SMS, in-app messaging, WhatsApp, and an AI-powered chatbot.",
     highlights: [
+      "WhatsApp integration and AI-powered chatbot",
       "Email and SMS notifications",
       "In-app messaging system",
       "Bulk announcements",
@@ -192,16 +212,6 @@ const features = [
       "Smart meter integration and readings",
       "Consumption tracking and tariffs",
       "Automated utility billing runs",
-    ],
-  },
-  {
-    slug: "security-deposits",
-    title: "Security Deposits",
-    description: "Track security deposits by unit, link to invoices, and manage refunds and adjustments with full audit trail.",
-    highlights: [
-      "Security deposit tracking per unit",
-      "Invoice linking and allocation",
-      "Refunds and audit trail",
     ],
   },
 ];

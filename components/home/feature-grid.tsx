@@ -34,7 +34,8 @@ import {
   ChartBarSquareIcon,
   ClipboardDocumentListIcon,
   BoltIcon,
-  ShieldCheckIcon,
+  CubeIcon,
+  BanknotesIcon,
 } from "@heroicons/react/24/outline";
 
 const features = [
@@ -75,16 +76,40 @@ const features = [
     href: "/features/tenant-experience",
   },
   {
-    title: "Maintenance & Assets",
+    title: "Maintenance and Service Requests",
     description:
-      "Track maintenance requests, work orders, and property assets with full history.",
+      "Track maintenance and service requests, create work orders, and track completion.",
     bullets: [
-      "Maintenance request management",
-      "Asset tracking and depreciation",
-      "Vendor and contractor management",
+      "Maintenance and service request management",
+      "Work order creation and assignment",
+      "Completion tracking and history",
     ],
     icon: WrenchScrewdriverIcon,
     href: "/features/maintenance",
+  },
+  {
+    title: "Assets Management",
+    description:
+      "Property and facility asset register with tracking and depreciation.",
+    bullets: [
+      "Asset register and catalog",
+      "Asset tracking by property or unit",
+      "Depreciation schedules and reporting",
+    ],
+    icon: CubeIcon,
+    href: "/features/assets-management",
+  },
+  {
+    title: "Expense & Vendor Management",
+    description:
+      "Track expenses, manage vendor records, contracts, and payments.",
+    bullets: [
+      "Expense tracking and categorization",
+      "Vendor records and contracts",
+      "Vendor payment management",
+    ],
+    icon: BanknotesIcon,
+    href: "/features/expense-vendor-management",
   },
   {
     title: "Tasks & Projects",
@@ -125,11 +150,11 @@ const features = [
   {
     title: "Communication Hub",
     description:
-      "Centralized communication with tenants, owners, and team members.",
+      "Centralized communication via email, SMS, WhatsApp, and an AI-powered chatbot.",
     bullets: [
+      "WhatsApp integration and AI-powered chatbot",
       "Email and SMS notifications",
-      "In-app messaging",
-      "Announcement broadcasts",
+      "In-app messaging and announcement broadcasts",
     ],
     icon: ChatBubbleLeftRightIcon,
     href: "/features/communications",
@@ -240,18 +265,6 @@ const features = [
     ],
     icon: BoltIcon,
     href: "/features/smart-meters",
-  },
-  {
-    title: "Security Deposits",
-    description:
-      "Track security deposits by unit, link to invoices, and manage refunds and adjustments.",
-    bullets: [
-      "Security deposit tracking per unit",
-      "Invoice linking and allocation",
-      "Refunds and audit trail",
-    ],
-    icon: ShieldCheckIcon,
-    href: "/features/security-deposits",
   },
 ];
 
