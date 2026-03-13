@@ -1,7 +1,14 @@
+/**
+ * Core integrations detail: QuickBooks, WhatsApp ChatBot, and eTIMS. Rendered on the
+ * /integrations page. Exported for use in app/integrations/page.tsx.
+ */
 import { Section } from "@/components/section";
 import Image from "next/image";
 
-export function LegacyIntegrations() {
+/**
+ * Renders the three main integration blocks (QuickBooks, WhatsApp, eTIMS) with copy and images.
+ */
+export function IntegrationsSection() {
   return (
     <>
       {/* QuickBooks Integration */}
@@ -108,4 +115,3 @@ export function LegacyIntegrations() {
     </>
   );
 }
-

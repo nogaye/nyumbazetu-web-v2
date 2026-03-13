@@ -19,7 +19,7 @@ const footerLinks = {
   product: [
     { label: "Overview", href: "/product" },
     { label: "Features", href: "/features" },
-    { label: "Integrations", href: "/product#integrations" },
+    { label: "Integrations", href: "/integrations" },
     { label: "Compare Solutions", href: "/compare" },
   ],
   // features: [

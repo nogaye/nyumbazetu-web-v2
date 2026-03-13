@@ -2,8 +2,11 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
+import { Button } from "@/components/ui/button";
 
 const integrations = [
   {
@@ -69,6 +72,14 @@ export function Integrations() {
             </div>
           </motion.div>
         ))}
+      </div>
+      <div className="flex justify-center mt-8">
+        <Button size="lg" variant="outline" asChild>
+          <Link href="/integrations" className="flex items-center gap-2">
+            View integration details
+            <ArrowRightIcon className="h-4 w-4" />
+          </Link>
+        </Button>
       </div>
     </Section>
   );

@@ -49,7 +49,7 @@ const navItems = [
       { label: "Features", href: "/features", icon: BoltIcon },
       {
         label: "Integrations",
-        href: "/product#integrations",
+        href: "/integrations",
         icon: PuzzlePieceIcon,
       },
       { label: "Compare", href: "/compare", icon: SquaresPlusIcon },

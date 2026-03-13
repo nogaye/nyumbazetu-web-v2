@@ -6,8 +6,6 @@ import { LegacyAwards } from "@/components/legacy/home/legacy-awards";
 import { LegacyPortfolio } from "@/components/legacy/home/legacy-portfolio";
 import { FeatureGrid } from "@/components/home/feature-grid";
 import { LegacyScreenshots } from "@/components/legacy/home/legacy-screenshots";
-import { LegacyIntegrations } from "@/components/legacy/home/legacy-integrations";
-import { LegacyStats } from "@/components/legacy/home/legacy-stats";
 import { LegacyTestimonials } from "@/components/legacy/home/legacy-testimonials";
 import { LegacyPartners } from "@/components/legacy/home/legacy-partners";
 import { LegacyRequestDemo } from "@/components/legacy/home/legacy-request-demo";
@@ -20,13 +18,9 @@ const LegacyScreenshotsLazy = dynamic(
   () => import("@/components/legacy/home/legacy-screenshots").then((mod) => ({ default: mod.LegacyScreenshots })),
   { ssr: true }
 );
-const LegacyIntegrationsLazy = dynamic(
-  () => import("@/components/legacy/home/legacy-integrations").then((mod) => ({ default: mod.LegacyIntegrations })),
-  { ssr: true }
-);
-const LegacyStatsLazy = dynamic(
-  () => import("@/components/legacy/home/legacy-stats").then((mod) => ({ default: mod.LegacyStats })),
-  { ssr: true }
+const Integrations = dynamic(
+  () => import("@/components/home/integrations").then((mod) => ({ default: mod.Integrations })),
+  { ssr: true },
 );
 const LegacyTestimonialsLazy = dynamic(
   () => import("@/components/legacy/home/legacy-testimonials").then((mod) => ({ default: mod.LegacyTestimonials })),
@@ -61,8 +55,7 @@ export default function HomeLegacyPage() {
       <LegacyPortfolio />
       <FeatureGrid />
       <LegacyScreenshotsLazy />
-      <LegacyIntegrationsLazy />
-      <LegacyStatsLazy />
+      <Integrations />
       <LegacyTestimonialsLazy />
       <LegacyPartnersLazy />
       <LegacyRequestDemo />

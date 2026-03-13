@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { Differentiators } from "@/components/home/differentiators";
 
 export const metadata = {
   title: "Property Management Solutions | Nyumba Zetu",
@@ -88,6 +89,8 @@ export default function SolutionsPage() {
           description="Tailored solutions designed for the unique needs of different property professionals in Kenya."
         />
       </Section>
+
+      <Differentiators />
 
       <Section>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">

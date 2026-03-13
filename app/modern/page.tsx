@@ -27,13 +27,6 @@ const ProductVideo = dynamic(
   { ssr: true },
 );
 
-const Differentiators = dynamic(
-  () =>
-    import("@/components/home/differentiators").then((mod) => ({
-      default: mod.Differentiators,
-    })),
-  { ssr: true },
-);
 const HowItWorks = dynamic(
   () =>
     import("@/components/home/how-it-works").then((mod) => ({
@@ -78,7 +71,6 @@ export default function ModernHome() {
       <MetricsStrip />
       <ProductVideo />
 
-      <Differentiators />
       <HowItWorks />
       <Testimonials />
       <ResourcesTeaser />
