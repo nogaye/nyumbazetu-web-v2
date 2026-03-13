@@ -279,7 +279,9 @@ export function MainNav() {
           <div className="hidden lg:flex lg:items-center lg:space-x-4">
             <ThemeToggle />
             <Button variant="ghost" asChild>
-              <Link href="/login">Login</Link>
+              <Link href="https://app.nyumbazetu.com/" target="_blank" rel="noopener noreferrer">
+                Login
+              </Link>
             </Button>
             <Button asChild>
               <Link href="/contact" className="flex items-center gap-2">
@@ -359,9 +361,14 @@ export function MainNav() {
               <ThemeToggle />
             </div>
             <Button variant="outline" className="w-full" asChild>
-              <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                Login
-              </Link>
+              <Link
+              href="https://app.nyumbazetu.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Login
+            </Link>
             </Button>
             <Button className="w-full" asChild>
               <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
