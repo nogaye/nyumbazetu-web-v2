@@ -61,11 +61,9 @@ export const FEATURES: FeatureItem[] = [
     description:
       "Automated invoicing and payment tracking with M-Pesa, bank, and wallet integrations.",
     bullets: [
-      "Digital invoices and receipts via email or WhatsApp",
-      "Automated rent and service charge invoicing",
-      "M-Pesa, bank, and mobile wallet payments",
-      "Bill payments auto-reconciled against tenant accounts",
-      "Real-time payment reconciliation",
+      "Invoices and receipts by email or WhatsApp",
+      "M-Pesa, bank, and wallet with auto-reconciliation",
+      "Real-time payment tracking",
     ],
     icon: CurrencyDollarIcon,
     href: "/features/collections",
@@ -75,9 +73,9 @@ export const FEATURES: FeatureItem[] = [
     description:
       "Full accounting system with journals, ledgers, trial balance, P&L, and balance sheet.",
     bullets: [
-      "Double-entry accounting system",
+      "Double-entry accounting",
       "Automated journal entries",
-      "Financial reports, statements, and exports",
+      "Reports, statements, and exports",
     ],
     icon: CalculatorIcon,
     href: "/features/accounting",
@@ -87,10 +85,9 @@ export const FEATURES: FeatureItem[] = [
     description:
       "Portals, mobile apps, and WhatsApp chatbot for seamless tenant and owner engagement.",
     bullets: [
-      "Tenant and lease management, renewals, and digitized records",
-      "Self-service tenant and owner portals",
-      "Full mobile app access for tenants and landlords on iOS and Android",
-      "WhatsApp chatbot for balances, payments, and maintenance requests",
+      "Lease management, renewals, and digitized records",
+      "Portals and mobile apps (iOS & Android)",
+      "WhatsApp chatbot for balances and requests",
     ],
     icon: UserGroupIcon,
     href: "/features/tenant-experience",
@@ -100,8 +97,8 @@ export const FEATURES: FeatureItem[] = [
     description:
       "Track maintenance and service requests, create work orders, and track completion.",
     bullets: [
-      "Maintenance and service request management",
-      "Work order creation and assignment",
+      "Request logging and prioritization",
+      "Work orders and assignment",
       "Completion tracking and history",
     ],
     icon: WrenchScrewdriverIcon,
@@ -113,8 +110,8 @@ export const FEATURES: FeatureItem[] = [
       "Property and facility asset register with tracking and depreciation.",
     bullets: [
       "Asset register and catalog",
-      "Asset tracking by property or unit",
-      "Depreciation schedules and reporting",
+      "Track by property or unit",
+      "Depreciation and reporting",
     ],
     icon: CubeIcon,
     href: "/features/assets-management",
@@ -124,9 +121,9 @@ export const FEATURES: FeatureItem[] = [
     description:
       "Track expenses, manage vendor records, contracts, and payments.",
     bullets: [
-      "Expense tracking and categorization",
+      "Expense tracking and categories",
       "Vendor records and contracts",
-      "Vendor payment management",
+      "Vendor payment tracking",
     ],
     icon: BanknotesIcon,
     href: "/features/expense-vendor-management",
@@ -137,7 +134,7 @@ export const FEATURES: FeatureItem[] = [
       "Project management for property development, renovations, and capital improvements.",
     bullets: [
       "Task assignment and tracking",
-      "Project timelines and milestones",
+      "Timelines and milestones",
       "Budget and cost tracking",
     ],
     icon: ClipboardDocumentCheckIcon,
@@ -148,9 +145,9 @@ export const FEATURES: FeatureItem[] = [
     description:
       "KRA eTIMS-ready invoicing and tax-compliant workflows for property operations.",
     bullets: [
-      "eTIMS e-invoice generation and transmission to KRA",
-      "Tax-compliant reporting and real-time tax reporting",
-      "Audit logs and digital record keeping",
+      "eTIMS e-invoices to KRA",
+      "Tax-compliant, real-time reporting",
+      "Audit logs and digital records",
     ],
     icon: DocumentTextIcon,
     href: "/features/etims",
@@ -162,7 +159,7 @@ export const FEATURES: FeatureItem[] = [
     bullets: [
       "TPS installment tracking",
       "Rent-to-own calculations",
-      "Ownership transfer workflows",
+      "Ownership transfer workflow",
     ],
     icon: HomeIcon,
     href: "/features/tps",
@@ -172,10 +169,9 @@ export const FEATURES: FeatureItem[] = [
     description:
       "Centralized communication via email, SMS, WhatsApp, and an AI-powered chatbot.",
     bullets: [
-      "Automated rent reminders, invoices, receipts, and lease alerts",
-      "WhatsApp integration and AI-powered chatbot",
-      "Email and SMS notifications",
-      "In-app messaging and announcement broadcasts",
+      "Automated reminders, invoices, and lease alerts",
+      "WhatsApp, email, SMS, and AI chatbot",
+      "In-app messaging and broadcasts",
     ],
     icon: ChatBubbleLeftRightIcon,
     href: "/features/communications",
@@ -184,9 +180,9 @@ export const FEATURES: FeatureItem[] = [
     title: "CRM",
     description: "CRM for tenants, owners, vendors, and prospects.",
     bullets: [
-      "Contact and interaction tracking",
+      "Contact and interaction history",
       "Lead management and conversion",
-      "Complete communication history",
+      "Full communication history",
     ],
     icon: BuildingOfficeIcon,
     href: "/features/crm",
@@ -197,8 +193,8 @@ export const FEATURES: FeatureItem[] = [
       "Fully customizable white-label solution to brand the platform as your own.",
     bullets: [
       "Custom branding and domain",
-      "Logo and color customization",
-      "Enterprise deployment options",
+      "Logo and color control",
+      "Enterprise deployment",
     ],
     icon: PaintBrushIcon,
     href: "/features/white-labeling",
@@ -208,9 +204,9 @@ export const FEATURES: FeatureItem[] = [
     description:
       "Automated scheduling for invoice generation, reminders, penalties, and recurring tasks.",
     bullets: [
-      "Schedule invoice generation",
+      "Scheduled invoice generation",
       "Automated payment reminders",
-      "Penalty calculation automation",
+      "Automatic penalty calculation",
     ],
     icon: CalendarDaysIcon,
     href: "/features/calendar-scheduling",
@@ -232,9 +228,9 @@ export const FEATURES: FeatureItem[] = [
     description:
       "Browse and search verified apartments, maisonettes, and TPS homes across Kenya.",
     bullets: [
-      "Verified property listings",
-      "Advanced search and filtering",
-      "Property details and images",
+      "Verified listings across Kenya",
+      "Search and filtering",
+      "Details and images",
     ],
     icon: MagnifyingGlassIcon,
     href: "/features/listings",
@@ -244,9 +240,9 @@ export const FEATURES: FeatureItem[] = [
     description:
       "Register and track visitors with check-in/check-out, host linking, and visit history.",
     bullets: [
-      "Visitor registration and check-in/out",
+      "Check-in and check-out",
       "Host and unit linking",
-      "Visit history and reporting",
+      "Visit history and reports",
     ],
     icon: UserPlusIcon,
     href: "/features/visitors",
@@ -257,8 +253,8 @@ export const FEATURES: FeatureItem[] = [
       "Financial reports, tenant ledgers, trial balance, P&L, balance sheet, and RAG-powered insights.",
     bullets: [
       "Landlord statements and tenant ledgers",
-      "Trial balance, P&L, and balance sheet",
-      "Ask Nyumba Zetu (RAG) for policy and statement insights",
+      "Trial balance, P&L, balance sheet",
+      "Ask Nyumba Zetu (RAG) for insights",
     ],
     icon: ChartBarSquareIcon,
     href: "/features/reports",
@@ -270,7 +266,7 @@ export const FEATURES: FeatureItem[] = [
     bullets: [
       "Application submission and tracking",
       "Approval workflows and KYC",
-      "Seamless onboarding to lease and units",
+      "Onboarding to lease and units",
     ],
     icon: ClipboardDocumentListIcon,
     href: "/features/lease-applications",
@@ -281,8 +277,8 @@ export const FEATURES: FeatureItem[] = [
       "IoT meter readings, consumption tracking, billing runs, and utility management.",
     bullets: [
       "Smart meter integration and readings",
-      "Consumption tracking and tariffs",
-      "Automated utility billing runs",
+      "Consumption and tariff tracking",
+      "Automated utility billing",
     ],
     icon: BoltIcon,
     href: "/features/smart-meters",
