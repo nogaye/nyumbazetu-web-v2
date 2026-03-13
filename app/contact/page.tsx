@@ -24,6 +24,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
 import {
   CheckCircleIcon,
+  CalendarDaysIcon,
   ExclamationCircleIcon,
   PaperAirplaneIcon,
   BuildingOfficeIcon,
@@ -151,8 +152,48 @@ export default function ContactPage() {
       <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
         <SectionHeader
           title="Talk to our team"
-          description="Request a demo, ask questions, or learn how Nyumba Zetu can help your property operations. We'll respond within 24 hours."
+          description="Request a demo, ask questions, or learn how Nyumba Zetu can help your property operations. Book a time below or send us a message."
         />
+      </Section>
+
+      {/* Embedded Calendly: book a demo without leaving the page. */}
+      <Section className="bg-slate-50/50 dark:bg-slate-900/30">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20">
+              <CalendarDaysIcon className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50">
+                Book a demo
+              </h2>
+              <p className="text-slate-600 dark:text-slate-400">
+                Pick a time that works for you — 30-minute call with our team.
+              </p>
+            </div>
+          </div>
+          <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 overflow-hidden shadow-sm">
+            <iframe
+              title="Book a demo with Nyumba Zetu"
+              src="https://calendly.com/ni-ogaye/30min?embed_domain=nyumbazetu.com&embed_type=Inline"
+              width="100%"
+              height="630"
+              className="min-h-[630px] w-full border-0"
+              allowFullScreen
+            />
+          </div>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-3 text-center">
+            Prefer to open in a new tab?{" "}
+            <a
+              href="https://calendly.com/ni-ogaye/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline font-medium"
+            >
+              Open Calendly
+            </a>
+          </p>
+        </div>
       </Section>
 
       <Section>
