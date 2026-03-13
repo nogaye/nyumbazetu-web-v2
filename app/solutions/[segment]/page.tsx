@@ -3,24 +3,47 @@ import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 
-const segments: Record<string, {
-  title: string;
-  description: string;
-  pains: string[];
-  solutions: string[];
-  features: string[];
-  what: string;
-  how: string;
-  why: string;
-  useCases: string[];
-  faqs: { q: string; a: string }[];
-}> = {
+/**
+ * Maps each solution segment slug to a Kenyan-context photorealistic hero image.
+ * Each image is relevant to the segment's content (landlords, managers, committees, etc.).
+ */
+const SOLUTION_IMAGE_MAP: Record<string, string> = {
+  landlords: "/images/solutions/solution-landlords.jpg",
+  managers: "/images/solutions/solution-managers.jpg",
+  committees: "/images/solutions/solution-committees.jpg",
+  developers: "/images/solutions/solution-developers.jpg",
+  banks: "/images/solutions/solution-banks.jpg",
+  diaspora: "/images/solutions/solution-diaspora.jpg",
+};
+
+/** Returns the hero image path for a solution segment; falls back to landlords image if unknown. */
+function getSolutionImage(segmentSlug: string): string {
+  return SOLUTION_IMAGE_MAP[segmentSlug] ?? SOLUTION_IMAGE_MAP.landlords;
+}
+
+const segments: Record<
+  string,
+  {
+    title: string;
+    description: string;
+    pains: string[];
+    solutions: string[];
+    features: string[];
+    what: string;
+    how: string;
+    why: string;
+    useCases: string[];
+    faqs: { q: string; a: string }[];
+  }
+> = {
   landlords: {
     title: "Property Management Software for Landlords & Agents in Kenya",
-    description: "Individual property owners and real estate agents managing residential and commercial portfolios.",
+    description:
+      "Individual property owners and real estate agents managing residential and commercial portfolios.",
     pains: [
       "Manual rent collection and tracking across spreadsheets",
       "Difficulty communicating with tenants and tracking payments",
@@ -64,8 +87,10 @@ const segments: Record<string, {
     ],
   },
   managers: {
-    title: "Property Management Software for Property Managers & Management Companies in Kenya",
-    description: "Professional property management firms handling multiple properties and portfolios.",
+    title:
+      "Property Management Software for Property Managers & Management Companies in Kenya",
+    description:
+      "Professional property management firms handling multiple properties and portfolios.",
     pains: [
       "Managing multiple properties across different systems",
       "Lack of team collaboration and workflow automation",
@@ -110,7 +135,8 @@ const segments: Record<string, {
   },
   committees: {
     title: "Property Management Software for Committees & HOAs in Kenya",
-    description: "Housing estate committees and homeowners associations managing shared spaces and service charges.",
+    description:
+      "Housing estate committees and homeowners associations managing shared spaces and service charges.",
     pains: [
       "Service charge collection and transparency issues",
       "Difficulty tracking committee decisions and voting",
@@ -154,8 +180,10 @@ const segments: Record<string, {
     ],
   },
   developers: {
-    title: "Property Management Software for Developers & Estate Owners in Kenya",
-    description: "Real estate developers and large estate owners managing mixed-use developments.",
+    title:
+      "Property Management Software for Developers & Estate Owners in Kenya",
+    description:
+      "Real estate developers and large estate owners managing mixed-use developments.",
     pains: [
       "Tracking development projects and phases",
       "Managing leases across multiple development phases",
@@ -199,8 +227,10 @@ const segments: Record<string, {
     ],
   },
   banks: {
-    title: "Property Management Software for Banks & SACCOS / Mortgage Teams in Kenya",
-    description: "Financial institutions managing mortgage portfolios and property-backed lending.",
+    title:
+      "Property Management Software for Banks & SACCOS / Mortgage Teams in Kenya",
+    description:
+      "Financial institutions managing mortgage portfolios and property-backed lending.",
     pains: [
       "Monitoring mortgage portfolio performance",
       "Property valuation and risk assessment challenges",
@@ -245,7 +275,8 @@ const segments: Record<string, {
   },
   diaspora: {
     title: "Property Management Software for Diaspora in Kenya",
-    description: "Kenyans living abroad managing property investments and rentals back home in Kenya.",
+    description:
+      "Kenyans living abroad managing property investments and rentals back home in Kenya.",
     pains: [
       "Difficulty monitoring property from overseas",
       "Challenges with rent collection and tenant communication across time zones",
@@ -295,21 +326,29 @@ const segments: Record<string, {
   },
 };
 
-export async function generateMetadata({ params }: { params: Promise<{ segment: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ segment: string }>;
+}) {
   const { segment: segmentSlug } = await params;
   const segment = segments[segmentSlug];
   if (!segment) return { title: "Solution Not Found" };
-  
+
   return {
     title: `${segment.title} | Nyumba Zetu`,
     description: segment.description,
   };
 }
 
-export default async function SolutionPage({ params }: { params: Promise<{ segment: string }> }) {
+export default async function SolutionPage({
+  params,
+}: {
+  params: Promise<{ segment: string }>;
+}) {
   const { segment: segmentSlug } = await params;
   const segment = segments[segmentSlug];
-  
+
   if (!segment) {
     notFound();
   }
@@ -324,29 +363,37 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
       </Section>
 
       <Section>
-        {/* Solution-Specific Screenshot Placeholder */}
+        {/* Solution hero image (Kenyan-context, photorealistic, segment-specific) */}
         <div className="max-w-5xl mx-auto mb-12">
-          <div className="aspect-video bg-slate-100 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-center">
-            <div className="text-center">
-              <div className="w-32 h-32 mx-auto mb-4 bg-slate-300 dark:bg-slate-700 rounded-lg flex items-center justify-center">
-                <div className="w-24 h-24 bg-slate-400 dark:bg-slate-600 rounded"></div>
-              </div>
-               {/* <p className="text-slate-700 dark:text-slate-300 font-medium mb-1">Solution-Specific Dashboard Screenshot</p> */}
-              <p className="text-slate-600 dark:text-slate-400 text-sm">Platform view tailored for {segment.title}</p>
-            </div>
+          <div className="aspect-video relative rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-slate-100 dark:bg-slate-900">
+            <Image
+              src={getSolutionImage(segmentSlug)}
+              alt={`${segment.title} — Kenyan property management`}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 1024px"
+              priority
+            />
           </div>
         </div>
-        
+
         <div className="grid md:grid-cols-2 gap-6 lg:gap-8 mb-12">
           <Card className="border-red-200 dark:border-red-900/50 bg-red-50/50 dark:bg-red-900/10">
             <CardHeader>
-              <CardTitle className="text-2xl text-slate-900 dark:text-slate-50">Their World Today</CardTitle>
+              <CardTitle className="text-2xl text-slate-900 dark:text-slate-50">
+                Their World Today
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="space-y-3">
                 {segment.pains.map((pain, idx) => (
-                  <li key={idx} className="text-slate-700 dark:text-slate-300 flex items-start">
-                    <span className="text-red-500 dark:text-red-400 mr-2">•</span>
+                  <li
+                    key={idx}
+                    className="text-slate-700 dark:text-slate-300 flex items-start"
+                  >
+                    <span className="text-red-500 dark:text-red-400 mr-2">
+                      •
+                    </span>
                     {pain}
                   </li>
                 ))}
@@ -356,12 +403,17 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
 
           <Card className="border-tertiary dark:border-tertiary/50 bg-tertiary/10 dark:bg-tertiary/5">
             <CardHeader>
-              <CardTitle className="text-2xl text-slate-900 dark:text-slate-50">How Nyumba Zetu Helps</CardTitle>
+              <CardTitle className="text-2xl text-slate-900 dark:text-slate-50">
+                How Nyumba Zetu Helps
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="space-y-3">
                 {segment.solutions.map((solution, idx) => (
-                  <li key={idx} className="text-slate-700 dark:text-slate-300 flex items-start">
+                  <li
+                    key={idx}
+                    className="text-slate-700 dark:text-slate-300 flex items-start"
+                  >
                     <span className="text-tertiary mr-2">•</span>
                     {solution}
                   </li>
@@ -375,18 +427,30 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
       <Section className="bg-slate-50 dark:bg-slate-900">
         <div className="max-w-4xl mx-auto space-y-8">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4">What It Is</h2>
-            <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">{segment.what}</p>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4">
+              What It Is
+            </h2>
+            <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+              {segment.what}
+            </p>
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4">How It Works</h2>
-            <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">{segment.how}</p>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4">
+              How It Works
+            </h2>
+            <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+              {segment.how}
+            </p>
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4">Why It Matters</h2>
-            <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">{segment.why}</p>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4">
+              Why It Matters
+            </h2>
+            <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+              {segment.why}
+            </p>
           </div>
         </div>
       </Section>
@@ -398,9 +462,14 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
         />
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {segment.features.map((feature, idx) => (
-            <Card key={idx} className="hover:shadow-md transition-all duration-200">
+            <Card
+              key={idx}
+              className="hover:shadow-md transition-all duration-200"
+            >
               <CardContent className="p-6 text-center">
-                <h3 className="font-semibold text-slate-900 dark:text-slate-50">{feature}</h3>
+                <h3 className="font-semibold text-slate-900 dark:text-slate-50">
+                  {feature}
+                </h3>
               </CardContent>
             </Card>
           ))}
@@ -417,7 +486,9 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
             {segment.useCases.map((useCase, idx) => (
               <li key={idx} className="flex items-start space-x-3">
                 <span className="text-primary mt-1">✓</span>
-                <span className="text-slate-700 dark:text-slate-300 text-lg">{useCase}</span>
+                <span className="text-slate-700 dark:text-slate-300 text-lg">
+                  {useCase}
+                </span>
               </li>
             ))}
           </ul>
@@ -433,7 +504,9 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
           {segment.faqs.map((faq, idx) => (
             <Card key={idx}>
               <CardHeader>
-                <CardTitle className="text-lg text-slate-900 dark:text-slate-50">{faq.q}</CardTitle>
+                <CardTitle className="text-lg text-slate-900 dark:text-slate-50">
+                  {faq.q}
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600 dark:text-slate-400">{faq.a}</p>
@@ -449,7 +522,8 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
             Ready to transform your property operations?
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 mb-8">
-            See how Nyumba Zetu can help your team increase efficiency and improve results.
+            See how Nyumba Zetu can help your team increase efficiency and
+            improve results.
           </p>
           <Button size="lg" asChild>
             <Link href="/contact" className="flex items-center gap-2">
@@ -462,5 +536,3 @@ export default async function SolutionPage({ params }: { params: Promise<{ segme
     </>
   );
 }
-
-
