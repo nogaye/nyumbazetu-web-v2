@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 import { Section } from "@/components/section";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 
 export function LegacyHomeHeader() {
-
   return (
     <Section className="relative bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden">
       {/* Decorative background elements */}
@@ -72,10 +72,15 @@ export function LegacyHomeHeader() {
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
             >
               <Button size="lg" className="text-lg px-8" asChild>
-                <a href="/contact">Request a Demo</a>
+                <Link href="/contact">Request a Demo</Link>
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8" asChild>
-                <a href="/product">Explore Platform</a>
+              <Button
+                size="lg"
+                variant="outline"
+                className="text-lg px-8"
+                asChild
+              >
+                <Link href="/features">Explore Platform</Link>
               </Button>
             </motion.div>
           </motion.div>
@@ -105,4 +110,3 @@ export function LegacyHomeHeader() {
     </Section>
   );
 }
-
