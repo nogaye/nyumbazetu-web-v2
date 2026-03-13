@@ -271,12 +271,14 @@ export function MainNav() {
                                 <div className="font-medium text-slate-900 dark:text-slate-50 group-hover/item:text-primary transition-colors duration-200">
                                   {child.label}
                                 </div>
+                                {/* Descriptions commented out for cleaner menu
                                 {"description" in child &&
                                   child.description && (
                                     <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                                       {child.description}
                                     </div>
                                   )}
+                                */}
                               </div>
                             </div>
                           </Link>
@@ -379,11 +381,13 @@ export function MainNav() {
                                 <div className="text-sm font-medium text-slate-900 dark:text-slate-50">
                                   {child.label}
                                 </div>
+                                {/* Descriptions commented out for cleaner menu
                                 {"description" in child && child.description && (
                                   <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                                     {child.description}
                                   </div>
                                 )}
+                                */}
                               </div>
                             </div>
                           </Link>
