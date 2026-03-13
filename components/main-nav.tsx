@@ -34,6 +34,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetClose,
+  SheetContent,
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
@@ -311,13 +312,14 @@ export function MainNav() {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation: content in SheetContent for solid panel and sharp text on small screens */}
       <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-        <SheetClose onClick={() => setMobileMenuOpen(false)} />
-        <SheetHeader>
-          <SheetTitle>Menu</SheetTitle>
-        </SheetHeader>
-        <div className="flex flex-col space-y-4 p-6">
+        <SheetContent className="flex flex-col w-full max-w-sm sm:max-w-sm">
+          <SheetClose onClick={() => setMobileMenuOpen(false)} />
+          <SheetHeader>
+            <SheetTitle>Menu</SheetTitle>
+          </SheetHeader>
+          <div className="flex flex-col space-y-4 p-6 flex-1 overflow-y-auto">
           {navItems.map((item) => (
             <div key={item.label}>
               <Link
@@ -382,6 +384,7 @@ export function MainNav() {
             </Button>
           </div>
         </div>
+        </SheetContent>
       </Sheet>
     </nav>
   );

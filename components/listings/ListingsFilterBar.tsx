@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Sheet, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet";
 import { ListingFilters, PropertyType } from "@/lib/listings/types";
 import { cn } from "@/lib/utils";
 
@@ -401,15 +401,17 @@ export function ListingsFilterBar({ filters }: ListingsFilterBarProps) {
         </div>
       </div>
 
-      {/* Mobile Filters Sheet */}
+      {/* Mobile Filters Sheet: content in SheetContent for solid panel and sharp text on small screens */}
       <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
-        <SheetClose onClick={() => setMobileFiltersOpen(false)} />
-        <SheetHeader>
-          <SheetTitle>Filter Listings</SheetTitle>
-        </SheetHeader>
-        <div className="p-6">
-          <FilterContent />
-        </div>
+        <SheetContent className="flex flex-col w-full max-w-sm sm:max-w-sm overflow-y-auto">
+          <SheetClose onClick={() => setMobileFiltersOpen(false)} />
+          <SheetHeader>
+            <SheetTitle>Filter Listings</SheetTitle>
+          </SheetHeader>
+          <div className="p-6 flex-1 overflow-y-auto">
+            <FilterContent />
+          </div>
+        </SheetContent>
       </Sheet>
     </>
   );

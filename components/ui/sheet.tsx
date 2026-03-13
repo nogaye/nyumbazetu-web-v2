@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,9 @@ interface SheetProps {
 }
 
 const Sheet = ({ open, onOpenChange, children }: SheetProps) => {
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+
   React.useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -24,15 +28,20 @@ const Sheet = ({ open, onOpenChange, children }: SheetProps) => {
   }, [open]);
 
   if (!open) return null;
+  if (!mounted || typeof document === "undefined") return null;
 
-  return (
+  /* Portal to body so the sheet is not clipped by nav/layout stacking context and is always visible on top. */
+  return createPortal(
     <>
+      {/* Overlay: dim only (no backdrop-blur) so menu content stays sharp on small screens */}
       <div
-        className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm"
+        className="fixed inset-0 z-[100] bg-black/50"
         onClick={() => onOpenChange(false)}
+        aria-hidden
       />
       {children}
-    </>
+    </>,
+    document.body
   );
 };
 
