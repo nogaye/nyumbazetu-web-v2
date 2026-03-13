@@ -4,7 +4,7 @@ import { LegacyTransactions } from "@/components/legacy/home/legacy-transactions
 import { LegacyHeadline } from "@/components/legacy/home/legacy-headline";
 import { LegacyAwards } from "@/components/legacy/home/legacy-awards";
 import { LegacyPortfolio } from "@/components/legacy/home/legacy-portfolio";
-import { LegacyFeatures } from "@/components/legacy/home/legacy-features";
+import { FeatureGrid } from "@/components/home/feature-grid";
 import { LegacyScreenshots } from "@/components/legacy/home/legacy-screenshots";
 import { LegacyIntegrations } from "@/components/legacy/home/legacy-integrations";
 import { LegacyStats } from "@/components/legacy/home/legacy-stats";
@@ -59,7 +59,7 @@ export default function Home() {
       <LegacyAwards />
       <AsSeenOn />
       <LegacyPortfolio />
-      <LegacyFeatures />
+      <FeatureGrid />
       <LegacyScreenshotsLazy />
       <LegacyIntegrationsLazy />
       <LegacyStatsLazy />

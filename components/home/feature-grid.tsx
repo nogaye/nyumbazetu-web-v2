@@ -1,7 +1,9 @@
 /**
  * Feature grid for the marketing site. Renders a grid of product features (collections,
  * accounting, tenant experience, maintenance, TPS, eTIMS, communications, CRM, etc.) with
- * icons, descriptions, bullets, and links to /features/[slug]. Used on the modern home page.
+ * icons, descriptions, bullets, and links to /features/[slug]. Used on the home page,
+ * /features page, and anywhere a consolidated feature list is needed. Exports FEATURES
+ * for reuse and FeatureGrid for rendering.
  */
 "use client";
 
@@ -15,6 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
   CurrencyDollarIcon,
@@ -36,16 +39,32 @@ import {
   BoltIcon,
   CubeIcon,
   BanknotesIcon,
+  ArrowRightIcon,
 } from "@heroicons/react/24/outline";
 
-const features = [
+/** Single feature item: title, description, bullets, icon, and detail page href. */
+export type FeatureItem = {
+  title: string;
+  description: string;
+  bullets: string[];
+  icon: React.ComponentType<{ className?: string }>;
+  href: string;
+};
+
+/**
+ * Canonical list of product features used across the site (home, /features page, etc.).
+ * Each item links to /features/[slug] for the detail page.
+ */
+export const FEATURES: FeatureItem[] = [
   {
     title: "Rent & Service Charge Collections",
     description:
       "Automated invoicing and payment tracking with M-Pesa, bank, and wallet integrations.",
     bullets: [
+      "Digital invoices and receipts via email or WhatsApp",
       "Automated rent and service charge invoicing",
       "M-Pesa, bank, and mobile wallet payments",
+      "Bill payments auto-reconciled against tenant accounts",
       "Real-time payment reconciliation",
     ],
     icon: CurrencyDollarIcon,
@@ -58,7 +77,7 @@ const features = [
     bullets: [
       "Double-entry accounting system",
       "Automated journal entries",
-      "Financial reports and exports",
+      "Financial reports, statements, and exports",
     ],
     icon: CalculatorIcon,
     href: "/features/accounting",
@@ -68,9 +87,10 @@ const features = [
     description:
       "Portals, mobile apps, and WhatsApp chatbot for seamless tenant and owner engagement.",
     bullets: [
+      "Tenant and lease management, renewals, and digitized records",
       "Self-service tenant and owner portals",
-      "Mobile apps for iOS and Android",
-      "WhatsApp chatbot for instant support",
+      "Full mobile app access for tenants and landlords on iOS and Android",
+      "WhatsApp chatbot for balances, payments, and maintenance requests",
     ],
     icon: UserGroupIcon,
     href: "/features/tenant-experience",
@@ -128,9 +148,9 @@ const features = [
     description:
       "KRA eTIMS-ready invoicing and tax-compliant workflows for property operations.",
     bullets: [
-      "eTIMS invoice generation",
-      "Tax-compliant reporting",
-      "Audit-ready documentation",
+      "eTIMS e-invoice generation and transmission to KRA",
+      "Tax-compliant reporting and real-time tax reporting",
+      "Audit logs and digital record keeping",
     ],
     icon: DocumentTextIcon,
     href: "/features/etims",
@@ -152,6 +172,7 @@ const features = [
     description:
       "Centralized communication via email, SMS, WhatsApp, and an AI-powered chatbot.",
     bullets: [
+      "Automated rent reminders, invoices, receipts, and lease alerts",
       "WhatsApp integration and AI-powered chatbot",
       "Email and SMS notifications",
       "In-app messaging and announcement broadcasts",
@@ -268,15 +289,36 @@ const features = [
   },
 ];
 
-export function FeatureGrid() {
+/** Props for FeatureGrid: optional title/description override and optional CTA section. */
+export interface FeatureGridProps {
+  /** Section title. Default: "One platform for every part of your property operations." */
+  title?: string;
+  /** Section description. Default: "From rent collection to accounting...". */
+  description?: string;
+  /** When true, renders a "See all features in action" CTA section below the grid. */
+  showCta?: boolean;
+}
+
+const DEFAULT_TITLE =
+  "One platform for every part of your property operations.";
+const DEFAULT_DESCRIPTION =
+  "From rent collection to accounting, tenant experience to compliance—everything you need in one integrated system.";
+
+/**
+ * Renders the consolidated feature grid. Used on the home page and /features page.
+ * Optionally shows a CTA section when showCta is true.
+ */
+export function FeatureGrid({
+  title = DEFAULT_TITLE,
+  description = DEFAULT_DESCRIPTION,
+  showCta = false,
+}: FeatureGridProps = {}) {
   return (
-    <Section>
-      <SectionHeader
-        title="One platform for every part of your property operations."
-        description="From rent collection to accounting, tenant experience to compliance—everything you need in one integrated system."
-      />
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-        {features.map((feature, idx) => (
+    <>
+      <Section>
+        <SectionHeader title={title} description={description} />
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {FEATURES.map((feature, idx) => (
           <motion.div
             key={idx}
             initial={{ opacity: 0, y: 20 }}
@@ -323,8 +365,33 @@ export function FeatureGrid() {
               </CardContent>
             </Card>
           </motion.div>
-        ))}
-      </div>
-    </Section>
+          ))}
+        </div>
+      </Section>
+
+      {showCta && (
+        <Section className="bg-secondary">
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              See all features in action
+            </h2>
+            <p className="text-lg text-white mb-8 leading-relaxed">
+              Schedule a demo to explore how these features work together to
+              transform your property operations.
+            </p>
+            <Button
+              size="lg"
+              className="bg-primary hover:bg-primary-600 text-primary-foreground"
+              asChild
+            >
+              <Link href="/contact" className="flex items-center gap-2">
+                Request a Demo
+                <ArrowRightIcon className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </Section>
+      )}
+    </>
   );
 }
