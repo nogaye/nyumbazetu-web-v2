@@ -8,6 +8,8 @@ import { FeatureGrid } from "@/components/home/feature-grid";
 import { LegacyRequestDemo } from "@/components/legacy/home/legacy-request-demo";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { Section } from "@/components/section";
+import { SectionHeader } from "@/components/section-header";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 // Lazy load below-the-fold components for better performance
 const AsSeenOn = dynamic(
@@ -90,6 +92,40 @@ export default function Home() {
       <LegacyRequestDemo />
       <LegacyClientsLazy />
       <Partnerships />
+
+      {/* Security & Reliability */}
+      <Section>
+        <SectionHeader
+          title="Security & Reliability"
+          description="Built for institutions that require enterprise-grade security and uptime."
+        />
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {[
+            {
+              title: "Role-Based Access Control",
+              description: "Granular permissions for managers, accountants, owners, and tenants.",
+            },
+            {
+              title: "Audit Logs",
+              description: "Complete transaction history with full audit trails for compliance.",
+            },
+            {
+              title: "Data Protection",
+              description: "Encrypted data storage, regular backups, and GDPR-compliant practices.",
+            },
+          ].map((item, idx) => (
+            <Card key={idx}>
+              <CardHeader>
+                <CardTitle>{item.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-slate-600 dark:text-slate-400">{item.description}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
       <LegacyReferralLazy />
 
       {/* Stay updated — newsletter signup */}

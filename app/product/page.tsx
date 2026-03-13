@@ -52,39 +52,6 @@ export default function ProductPage() {
         </div>
       </Section>
 
-      {/* Security & Reliability */}
-      <Section>
-        <SectionHeader
-          title="Security & Reliability"
-          description="Built for institutions that require enterprise-grade security and uptime."
-        />
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            {
-              title: "Role-Based Access Control",
-              description: "Granular permissions for managers, accountants, owners, and tenants.",
-            },
-            {
-              title: "Audit Logs",
-              description: "Complete transaction history with full audit trails for compliance.",
-            },
-            {
-              title: "Data Protection",
-              description: "Encrypted data storage, regular backups, and GDPR-compliant practices.",
-            },
-          ].map((item, idx) => (
-            <Card key={idx}>
-              <CardHeader>
-                <CardTitle>{item.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-slate-600">{item.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </Section>
-
       {/* Implementation */}
       <Section className="bg-secondary">
       <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">

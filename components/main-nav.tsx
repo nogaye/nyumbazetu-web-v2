@@ -41,20 +41,20 @@ import { cn } from "@/lib/utils";
 const navItems = [
   // { label: "Home", href: "/modern" },
 
-  {
-    label: "Product",
-    href: "/product",
-    children: [
-      { label: "Overview", href: "/product", icon: Squares2X2Icon },
-      { label: "Features", href: "/features", icon: BoltIcon },
-      {
-        label: "Integrations",
-        href: "/integrations",
-        icon: PuzzlePieceIcon,
-      },
-      { label: "Compare", href: "/compare", icon: SquaresPlusIcon },
-    ],
-  },
+  // {
+  //   label: "Product",
+  //   href: "/product",
+  //   children: [
+  //     { label: "Overview", href: "/product", icon: Squares2X2Icon },
+  //     { label: "Features", href: "/features", icon: BoltIcon },
+  //     {
+  //       label: "Integrations",
+  //       href: "/integrations",
+  //       icon: PuzzlePieceIcon,
+  //     },
+  //     { label: "Compare", href: "/compare", icon: SquaresPlusIcon },
+  //   ],
+  // },
   {
     label: "Solutions",
     href: "/solutions",
@@ -98,104 +98,105 @@ const navItems = [
       },
     ],
   },
+
+  {
+    label: "Features",
+    href: "/features",
+    children: [
+      {
+        label: "Rent & Service Charge Collections",
+        href: "/features/collections",
+        description: "Automated invoicing and payment tracking",
+        icon: CurrencyDollarIcon,
+      },
+      {
+        label: "Accounting & General Ledger",
+        href: "/features/accounting",
+        description: "Full double-entry accounting system",
+        icon: CalculatorIcon,
+      },
+      {
+        label: "Tenant & Owner Experience",
+        href: "/features/tenant-experience",
+        description: "Portals, mobile apps, and WhatsApp chatbot",
+        icon: UserGroupIcon,
+      },
+      {
+        label: "Maintenance and Service Requests",
+        href: "/features/maintenance",
+        description: "Maintenance and service requests, work orders",
+        icon: WrenchScrewdriverIcon,
+      },
+      {
+        label: "Assets Management",
+        href: "/features/assets-management",
+        description: "Asset register, tracking, and depreciation",
+        icon: CubeIcon,
+      },
+      {
+        label: "Expense & Vendor Management",
+        href: "/features/expense-vendor-management",
+        description: "Expenses, vendors, contracts, and payments",
+        icon: BanknotesIcon,
+      },
+      {
+        label: "Tasks & Projects",
+        href: "/features/tasks",
+        description: "Project management for developments",
+        icon: ClipboardDocumentListIcon,
+      },
+      {
+        label: "KRA eTIMS & Compliance",
+        href: "/features/etims",
+        description: "eTIMS-ready invoicing and tax compliance",
+        icon: ShieldCheckIcon,
+      },
+      {
+        label: "TPS & Rent-to-Own",
+        href: "/features/tps",
+        description: "Tenant Purchase Scheme tracking",
+        icon: HomeIcon,
+      },
+      {
+        label: "Communication Hub",
+        href: "/features/communications",
+        description: "Email, SMS, WhatsApp, and AI-powered chatbot",
+        icon: ChatBubbleLeftRightIcon,
+      },
+      {
+        label: "CRM",
+        href: "/features/crm",
+        description: "CRM for tenants and prospects.",
+        icon: UserCircleIcon,
+      },
+      {
+        label: "White Labeling",
+        href: "/features/white-labeling",
+        description: "Fully customizable white-label solution",
+        icon: PaintBrushIcon,
+      },
+      {
+        label: "Calendar & Event Scheduling",
+        href: "/features/calendar-scheduling",
+        description: "Automated scheduling for invoices and reminders",
+        icon: CalendarDaysIcon,
+      },
+      {
+        label: "Webhooks & API Events",
+        href: "/features/webhooks",
+        description: "Real-time event notifications and system integrations",
+        icon: BoltIcon,
+      },
+      {
+        label: "Property Listings",
+        href: "/features/listings",
+        description: "Browse and search verified properties across Kenya",
+        icon: BuildingOffice2Icon,
+      },
+    ],
+  },
   { label: "Property Listings", href: "/listings" },
   { label: "Pricing", href: "/pricing" },
-  // {
-  //   label: "Features",
-  //   href: "/features",
-  //   children: [
-  //     {
-  //       label: "Rent & Service Charge Collections",
-  //       href: "/features/collections",
-  //       description: "Automated invoicing and payment tracking",
-  //       icon: CurrencyDollarIcon,
-  //     },
-  //     {
-  //       label: "Accounting & General Ledger",
-  //       href: "/features/accounting",
-  //       description: "Full double-entry accounting system",
-  //       icon: CalculatorIcon,
-  //     },
-  //     {
-  //       label: "Tenant & Owner Experience",
-  //       href: "/features/tenant-experience",
-  //       description: "Portals, mobile apps, and WhatsApp chatbot",
-  //       icon: UserGroupIcon,
-  //     },
-  //     {
-  //       label: "Maintenance and Service Requests",
-  //       href: "/features/maintenance",
-  //       description: "Maintenance and service requests, work orders",
-  //       icon: WrenchScrewdriverIcon,
-  //     },
-  //     {
-  //       label: "Assets Management",
-  //       href: "/features/assets-management",
-  //       description: "Asset register, tracking, and depreciation",
-  //       icon: CubeIcon,
-  //     },
-  //     {
-  //       label: "Expense & Vendor Management",
-  //       href: "/features/expense-vendor-management",
-  //       description: "Expenses, vendors, contracts, and payments",
-  //       icon: BanknotesIcon,
-  //     },
-  //     {
-  //       label: "Tasks & Projects",
-  //       href: "/features/tasks",
-  //       description: "Project management for developments",
-  //       icon: ClipboardDocumentListIcon,
-  //     },
-  //     {
-  //       label: "KRA eTIMS & Compliance",
-  //       href: "/features/etims",
-  //       description: "eTIMS-ready invoicing and tax compliance",
-  //       icon: ShieldCheckIcon,
-  //     },
-  //     {
-  //       label: "TPS & Rent-to-Own",
-  //       href: "/features/tps",
-  //       description: "Tenant Purchase Scheme tracking",
-  //       icon: HomeIcon,
-  //     },
-  //     {
-  //       label: "Communication Hub",
-  //       href: "/features/communications",
-  //       description: "Email, SMS, WhatsApp, and AI-powered chatbot",
-  //       icon: ChatBubbleLeftRightIcon,
-  //     },
-  //     {
-  //       label: "CRM",
-  //       href: "/features/crm",
-  //       description: "CRM for tenants and prospects.",
-  //       icon: UserCircleIcon,
-  //     },
-  //     {
-  //       label: "White Labeling",
-  //       href: "/features/white-labeling",
-  //       description: "Fully customizable white-label solution",
-  //       icon: PaintBrushIcon,
-  //     },
-  //     {
-  //       label: "Calendar & Event Scheduling",
-  //       href: "/features/calendar-scheduling",
-  //       description: "Automated scheduling for invoices and reminders",
-  //       icon: CalendarDaysIcon,
-  //     },
-  //     {
-  //       label: "Webhooks & API Events",
-  //       href: "/features/webhooks",
-  //       description: "Real-time event notifications and system integrations",
-  //       icon: BoltIcon,
-  //     },
-  //     {
-  //       label: "Property Listings",
-  //       href: "/features/listings",
-  //       description: "Browse and search verified properties across Kenya",
-  //       icon: BuildingOffice2Icon,
-  //     },
-  //   ],
-  // },
 ];
 
 export function MainNav() {
