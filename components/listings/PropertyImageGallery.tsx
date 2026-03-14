@@ -13,11 +13,14 @@ interface PropertyImageGalleryProps {
     blurDataURL?: string;
   }>;
   propertyTitle: string;
+  /** Optional class for the main gallery container (e.g. rounded-xl). */
+  className?: string;
 }
 
 export function PropertyImageGallery({
   images,
   propertyTitle,
+  className,
 }: PropertyImageGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -86,7 +89,12 @@ export function PropertyImageGallery({
       {/* Main Gallery */}
       <div className="relative mb-4">
         {/* Main Image */}
-        <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-slate-200">
+        <div
+          className={cn(
+            "relative aspect-video w-full overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-800",
+            className
+          )}
+        >
           <PropertyImage
             src={currentImage.url}
             alt={currentImage.alt || propertyTitle}

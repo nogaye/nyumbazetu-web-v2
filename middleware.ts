@@ -1,37 +1,19 @@
 /**
  * Next.js Middleware
- * 
- * Protects admin routes with authentication
+ *
+ * Admin routes are currently open (no authentication). /admin/login redirects to /admin.
  */
 
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const SESSION_COOKIE_NAME = "admin_session";
-
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Allow access to login page
+  // Redirect login page to admin dashboard (auth disabled for now)
   if (pathname === "/admin/login") {
-    const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME);
-    // If already logged in, redirect to properties page
-    if (sessionCookie) {
-      return NextResponse.redirect(new URL("/admin/properties", request.url));
-    }
-    return NextResponse.next();
-  }
-
-  // Protect all other admin routes
-  if (pathname.startsWith("/admin")) {
-    const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME);
-
-    // If no session, redirect to login
-    if (!sessionCookie) {
-      const loginUrl = new URL("/admin/login", request.url);
-      loginUrl.searchParams.set("redirect", pathname);
-      return NextResponse.redirect(loginUrl);
-    }
+    const redirectTo = request.nextUrl.searchParams.get("redirect") || "/admin";
+    return NextResponse.redirect(new URL(redirectTo, request.url));
   }
 
   return NextResponse.next();

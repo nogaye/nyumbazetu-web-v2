@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed:one": "node scripts/seed-one-property-with-images.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -25,6 +26,7 @@
     "framer-motion": "^12.23.25",
     "lucide-react": "^0.556.0",
     "next": "16.0.7",
+    "openai": "^6.29.0",
     "qrcode.react": "^4.2.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",

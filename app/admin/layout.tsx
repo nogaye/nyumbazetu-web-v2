@@ -16,7 +16,6 @@ import {
   FolderOpen,
   BookOpen,
 } from "lucide-react";
-import { AdminAuthGuard } from "@/components/admin/AdminAuthGuard";
 import { AdminLayoutWrapper } from "@/components/admin/AdminLayoutWrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,9 +23,9 @@ import { cn } from "@/lib/utils";
 
 /**
  * Admin Layout
- * 
- * Protected by middleware and AdminAuthGuard component
- * Login page is excluded from sidebar and auth guard via AdminLayoutWrapper
+ *
+ * Login page is excluded from sidebar via AdminLayoutWrapper.
+ * Authentication is currently disabled; admin is open access.
  */
 
 export default function AdminLayout({
@@ -53,16 +52,28 @@ export default function AdminLayout({
               Home
             </p>
             <div className="space-y-1">
-              <NavLink href="/admin" icon={<LayoutDashboard className="h-5 w-5" />}>
+              <NavLink
+                href="/admin"
+                icon={<LayoutDashboard className="h-5 w-5" />}
+              >
                 Dashboard
               </NavLink>
-              <NavLink href="/admin/properties" icon={<Home className="h-5 w-5" />}>
+              <NavLink
+                href="/admin/properties"
+                icon={<Home className="h-5 w-5" />}
+              >
                 Properties
               </NavLink>
-              <NavLink href="/admin/inquiries" icon={<Bell className="h-5 w-5" />}>
+              <NavLink
+                href="/admin/inquiries"
+                icon={<Bell className="h-5 w-5" />}
+              >
                 Inquiries
               </NavLink>
-              <NavLink href="/admin/analytics" icon={<BarChart3 className="h-5 w-5" />}>
+              <NavLink
+                href="/admin/analytics"
+                icon={<BarChart3 className="h-5 w-5" />}
+              >
                 Analytics
               </NavLink>
               <NavLink href="/admin/team" icon={<Users className="h-5 w-5" />}>
@@ -77,16 +88,28 @@ export default function AdminLayout({
               Documents
             </p>
             <div className="space-y-1">
-              <NavLink href="/admin/documents" icon={<FolderOpen className="h-5 w-5" />}>
+              <NavLink
+                href="/admin/documents"
+                icon={<FolderOpen className="h-5 w-5" />}
+              >
                 Data Library
               </NavLink>
-              <NavLink href="/admin/reports" icon={<FileText className="h-5 w-5" />}>
+              <NavLink
+                href="/admin/reports"
+                icon={<FileText className="h-5 w-5" />}
+              >
                 Reports
               </NavLink>
-              <NavLink href="/admin/assistant" icon={<BookOpen className="h-5 w-5" />}>
+              <NavLink
+                href="/admin/assistant"
+                icon={<BookOpen className="h-5 w-5" />}
+              >
                 Word Assistant
               </NavLink>
-              <NavLink href="/admin/more" icon={<MoreVertical className="h-5 w-5" />}>
+              <NavLink
+                href="/admin/more"
+                icon={<MoreVertical className="h-5 w-5" />}
+              >
                 More
               </NavLink>
             </div>
@@ -154,7 +177,11 @@ export default function AdminLayout({
           </div>
 
           {/* Logout */}
-          <form action="/api/auth/logout" method="POST" className="pt-2 border-t border-slate-200 dark:border-slate-800">
+          <form
+            action="/api/auth/logout"
+            method="POST"
+            className="pt-2 border-t border-slate-200 dark:border-slate-800"
+          >
             <Button
               type="submit"
               variant="ghost"
@@ -168,9 +195,7 @@ export default function AdminLayout({
 
       {/* Main Content */}
       <main className="flex-1 bg-slate-50 dark:bg-slate-950">
-        <div className="p-8">
-          <AdminAuthGuard>{children}</AdminAuthGuard>
-        </div>
+        <div className="p-8">{children}</div>
       </main>
     </div>
   );
@@ -190,7 +215,8 @@ interface NavLinkProps {
 
 function NavLink({ href, icon, children }: NavLinkProps) {
   const pathname = usePathname();
-  const isActive = pathname === href || (href !== "/admin" && pathname.startsWith(href));
+  const isActive =
+    pathname === href || (href !== "/admin" && pathname.startsWith(href));
 
   return (
     <Link
@@ -199,7 +225,7 @@ function NavLink({ href, icon, children }: NavLinkProps) {
         "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
         isActive
           ? "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-50"
-          : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
+          : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800",
       )}
     >
       {icon}
@@ -207,5 +233,3 @@ function NavLink({ href, icon, children }: NavLinkProps) {
     </Link>
   );
 }
-
-
