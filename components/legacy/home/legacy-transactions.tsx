@@ -80,7 +80,7 @@ export function LegacyTransactions() {
     <Section className="bg-slate-50 dark:bg-slate-900/50">
       <div className="container mx-auto px-4">
         <SectionHeader
-          title="Trusted by Property Teams Across Kenya"
+          title="Powering Property Managers Across Kenya"
           description="Join hundreds of property managers, landlords, and committees using Nyumba Zetu to streamline their operations"
         />
 

@@ -22,11 +22,11 @@ export function LegacyHeadline() {
         >
           <div className="w-full lg:w-2/3">
             <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-              Kenya&apos;s Leading Property Management Software for Landlords & Agents
+              The platform powering modern property management in Kenya
             </h1>
 
             <p className="text-white text-lg md:text-xl leading-relaxed opacity-90">
-              Nyumba Zetu is a cloud-based software built for developers, landlords and property managers to streamline every aspect of property management, from listings, invoicing, and bill payments to maintenance, expenses, and reporting.
+              Nyumba Zetu is a cloud platform built for property managers, landlords, and estates to manage rent collection, accounting, tenant communication, maintenance, and reporting — all in one system.
             </p>
           </div>
         </motion.div>
