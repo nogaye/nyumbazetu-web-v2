@@ -215,7 +215,7 @@ Single canonical homepage at `/` (current modern content, tightened). Order and 
 - **Purpose:** Show breadth without 18 equal cards.
 - **Keep:** Feature coverage; link to `/features`.
 - **Remove:** Flat list of 18; duplicate or vague cards.
-- **Structure:** Group into 3–4 categories (e.g. Collections & payments, Accounting & compliance, Tenant & owner experience, Operations & integrations). One headline per group, 2–3 features each, “Learn more” → `/features`.
+- **Structure:** Group into 3–4 categories (e.g. Automated invoicing & payment reconciliation, Accounting & compliance, Tenant & owner experience, Operations & integrations). One headline per group, 2–3 features each, “Learn more” → `/features`.
 - **Headline:** “One platform for every part of your property operations.”
 - **Subheadline:** “Collections, accounting, compliance, and tenant experience—integrated and built for Kenya.”
 - **CTA:** “View all features” → `/features`.

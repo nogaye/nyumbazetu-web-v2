@@ -37,7 +37,7 @@ export function Hero() {
 
             <ul className="space-y-4 mb-8">
               {[
-                "End-to-end rent and service charge collections with M-Pesa, bank, and wallet flows",
+                "End-to-end collections and payments with M-Pesa, bank, and wallet flows",
                 "Accounting-grade general ledger with journals, ledgers, trial balance, P&L, balance sheet",
                 "Tenant and owner portals, mobile apps, and WhatsApp chatbot",
                 "KRA eTIMS-ready invoicing and tax-compliant workflows",

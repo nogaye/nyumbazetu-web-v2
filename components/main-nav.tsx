@@ -110,9 +110,9 @@ const navItems = [
     href: "/features",
     children: [
       {
-        label: "Rent & Service Charge Collections",
+        label: "Automated Invoicing & Payment Reconciliation",
         href: "/features/collections",
-        description: "Automated invoicing and payment tracking",
+        description: "Invoicing and payment reconciliation for any charge type",
         icon: CurrencyDollarIcon,
       },
       {

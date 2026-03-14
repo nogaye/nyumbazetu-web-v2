@@ -67,19 +67,19 @@ const features: Record<string, {
     ],
   },
   collections: {
-    title: "Rent Collection & Payments for Property Management in Kenya",
-    description: "Automated invoicing and payment tracking with M-Pesa, bank, and wallet integrations.",
-    what: "Nyumba Zetu automates the entire rent and service charge collection process. The system generates invoices automatically, sends them to tenants via email or SMS, tracks payments from M-Pesa, bank transfers, and mobile wallets, and reconciles everything in real-time.",
-    how: "Set up recurring invoices for rent and service charges. Tenants receive automated reminders before due dates. When payments come in via M-Pesa, bank transfer, or other methods, the system automatically matches them to invoices and updates tenant balances. Property managers get real-time dashboards showing collection rates, arrears, and payment trends.",
-    why: "Manual rent collection is time-consuming and error-prone. Automated collection increases on-time payments, reduces administrative overhead, and provides real-time visibility into cash flow. For property teams managing multiple units, this is essential.",
+    title: "Automated Invoicing & Payment Reconciliation for Property Management in Kenya",
+    description: "Automated invoicing and payment tracking for any charge type—rent, service charges, utilities, fees, and more—with M-Pesa, bank, and wallet integrations.",
+    what: "Nyumba Zetu automates the full collections and payment workflow. Create invoices for any charge type: rent, service charges, utility bills, fees, penalties, or custom line items. The system sends invoices via email or SMS, tracks payments from M-Pesa, bank transfers, and mobile wallets, and reconciles everything in real-time.",
+    how: "Set up recurring or one-off invoices for any charge type. Recipients receive automated reminders before due dates. When payments come in via M-Pesa, bank transfer, or other methods, the system automatically matches them to invoices and updates balances. Property managers get real-time dashboards showing collection rates, arrears, and payment trends across all charge types.",
+    why: "Manual collection is time-consuming and error-prone. Automated collections increase on-time payments, reduce administrative overhead, and give real-time visibility into cash flow—whether you collect rent, service charges, utilities, or other fees. For property teams managing multiple units, this is essential.",
     faqs: [
       {
         q: "Which payment methods are supported?",
         a: "M-Pesa, bank transfers, mobile wallets, and cash payments can all be tracked and reconciled.",
       },
       {
-        q: "How does M-Pesa reconciliation work?",
-        a: "The system automatically matches M-Pesa payments to invoices using transaction references and tenant phone numbers.",
+        q: "Can I collect more than rent and service charges?",
+        a: "Yes. You can invoice and collect any charge type—rent, service charges, utilities, fees, penalties, or custom line items—all in one workflow.",
       },
     ],
   },

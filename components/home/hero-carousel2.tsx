@@ -20,7 +20,7 @@ const heroSlides = [
     subtitle: "Forget everything you know about property management systems.",
     description: "Nyumba Zetu is a full-stack platform for property operations, accounting, and tenant experience, built for landlords, property managers, committees, developers, and banks in Kenya.",
     highlights: [
-      "End-to-end rent and service charge collections with M-Pesa, bank, and wallet flows",
+      "End-to-end collections and payments with M-Pesa, bank, and wallet flows",
       "Accounting-grade general ledger with journals, ledgers, trial balance, P&L, balance sheet",
       "Tenant and owner portals, mobile apps, and WhatsApp chatbot",
       "KRA eTIMS-ready invoicing and tax-compliant workflows",

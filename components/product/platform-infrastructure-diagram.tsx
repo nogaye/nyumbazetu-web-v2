@@ -28,8 +28,8 @@ interface Module {
 const modules: Module[] = [
   {
     id: "collections",
-    title: "Collections & Payments",
-    description: "Automated rent, service charge, and utility invoicing",
+    title: "Automated Invoicing & Payment Reconciliation",
+    description: "Automated invoicing and payment reconciliation for any charge type",
     icon: CurrencyDollarIcon,
     position: { x: 20, y: 15 },
     color: "from-emerald-500 to-teal-600",

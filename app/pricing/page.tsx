@@ -55,9 +55,9 @@ interface FeaturePlanRow {
 const FEATURES_BY_PLAN: FeaturePlanRow[] = [
   {
     slug: "collections",
-    title: "Rent & Service Charge Collections",
+    title: "Automated Invoicing & Payment Reconciliation",
     description:
-      "Automated invoicing and payment tracking; M-Pesa, bank, and wallet integrations.",
+      "Automated invoicing and payment tracking for any charge type; M-Pesa, bank, and wallet integrations.",
     plans: ["Standard", "Premier", "Enterprise"],
   },
   {
@@ -214,7 +214,7 @@ const plans: PlanDef[] = [
       "Entry plan for landlords and small portfolios: core property management with bank integration.",
     units: "Up to 3 admins",
     features: [
-      "Rent & service charge collections (invoicing; M-Pesa, daily settlements)",
+      "Collections (invoicing for any charge type; M-Pesa, daily settlements)",
       "Bank integrations*",
       "Tenant Portal",
       "Communication hub (email, SMS, WhatsApp, AI-powered chatbot, in-app messaging)",

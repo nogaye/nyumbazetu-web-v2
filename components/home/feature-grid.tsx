@@ -57,13 +57,13 @@ export type FeatureItem = {
  */
 export const FEATURES: FeatureItem[] = [
   {
-    title: "Rent & Service Charge Collections",
+    title: "Automated Invoicing & Payment Reconciliation",
     description:
-      "Automated invoicing and payment tracking with M-Pesa, bank, and wallet integrations.",
+      "Automated invoicing and payment tracking for any charge type—rent, service charges, utilities, fees—with M-Pesa, bank, and wallet integrations.",
     bullets: [
       "Invoices and receipts by email or WhatsApp",
       "M-Pesa, bank, and wallet with auto-reconciliation",
-      "Real-time payment tracking",
+      "Real-time payment tracking for any charge type",
     ],
     icon: CurrencyDollarIcon,
     href: "/features/collections",

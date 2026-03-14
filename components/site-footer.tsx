@@ -27,7 +27,7 @@ const footerLinks = {
     { label: "Compare Solutions", href: "/compare" },
   ],
   // features: [
-  //   { label: "Rent & Service Charge Collections", href: "/features/collections" },
+  //   { label: "Automated Invoicing & Payment Reconciliation", href: "/features/collections" },
   //   { label: "Accounting & General Ledger", href: "/features/accounting" },
   //   { label: "Tenant & Owner Experience", href: "/features/tenant-experience" },
   //   { label: "Maintenance and Service Requests", href: "/features/maintenance" },

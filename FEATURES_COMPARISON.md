@@ -10,7 +10,7 @@ Sources: **feature-grid.tsx**, **app/features/page.tsx**, **app/features/[slug]/
 
 | # | Feature (Web) | Where shown | Slug / Link |
 |---|----------------|-------------|-------------|
-| 1 | Rent & Service Charge Collections | Grid, Features, Product | `/features/collections` |
+| 1 | Automated Invoicing & Payment Reconciliation | Grid, Features, Product | `/features/collections` |
 | 2 | Accounting & General Ledger | Grid, Features, Product | `/features/accounting` |
 | 3 | Tenant & Owner Experience | Grid, Features, Product | `/features/tenant-experience` |
 | 4 | Maintenance & Assets | Grid, Features, Product | `/features/maintenance` |
@@ -137,7 +137,7 @@ Sources: **app.routes.ts**, **PermissionType** (user.types.ts). Grouped by featu
 
 | Feature area | App route(s) / module | Notes |
 |--------------|------------------------|-------|
-| **Collections & payments** | `payments`, `payments-2`, `payments-view`, `receive-pay`, `payment-rules`, `payment-allocation-rules`, `charges`, `recurring-charges`, `adjustments`, `invoices`, `tax-schedule`, `expense/payments` | Full flow |
+| **Automated invoicing & payment reconciliation** | `payments`, `payments-2`, `payments-view`, `receive-pay`, `payment-rules`, `payment-allocation-rules`, `charges`, `recurring-charges`, `adjustments`, `invoices`, `tax-schedule`, `expense/payments` | Full flow |
 | **Accounting** | `finance`, `accounting-ledger`, `accounting-reports`, `lookups`, `statements` | Ledger, reports, COA |
 | **Tenant / owner experience** | `profile`, `residents`, `tenant-portal`, `contacts`, `transactions`, `financial-records`, `polls`, `vote`, `bills`, `invoice` (public) | Portals, bills, polls |
 | **Maintenance & assets** | `service-requests`, `maintenance`, `assets` | Requests, work orders, assets |
@@ -182,7 +182,7 @@ Sources: **app.routes.ts**, **PermissionType** (user.types.ts). Grouped by featu
 
 | Feature | API | App | Web (grid / features / product) |
 |---------|-----|-----|----------------------------------|
-| Rent & service charge collections | ✅ payments, invoices, charges, receive | ✅ payments, invoices, receive-pay, charges | ✅ |
+| Automated invoicing & payment reconciliation | ✅ payments, invoices, charges, receive | ✅ payments, invoices, receive-pay, charges | ✅ |
 | Accounting & general ledger | ✅ ledger, finance, ag-grid | ✅ finance, accounting-ledger, accounting-reports | ✅ |
 | Tenant & owner experience | ✅ residents, profiles | ✅ profile, tenant-portal, residents | ✅ |
 | Maintenance & assets | ✅ service-requests | ✅ service-requests, maintenance, assets | ✅ |

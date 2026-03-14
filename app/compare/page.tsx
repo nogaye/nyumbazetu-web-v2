@@ -187,7 +187,7 @@ const comparisonFeatures = [
     ],
   },
   {
-    category: "Collections & Payments",
+    category: "Automated Invoicing & Payment Reconciliation",
     features: [
       {
         name: "Automated rent invoicing",

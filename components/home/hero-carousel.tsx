@@ -36,7 +36,7 @@ const heroSlides = [
     title: "Property management infrastructure for modern Kenyan real estate.",
     description: "Full-stack platform for property operations, accounting, and tenant experience—built specifically for Kenya.",
     highlights: [
-      "End-to-end rent and service charge collections with M-Pesa, bank, and wallet flows",
+      "End-to-end collections and payments with M-Pesa, bank, and wallet flows",
       "Accounting-grade general ledger with journals, ledgers, trial balance, P&L, balance sheet",
       "Tenant and owner portals, mobile apps, and WhatsApp chatbot",
       "KRA eTIMS-ready invoicing and tax-compliant workflows",
