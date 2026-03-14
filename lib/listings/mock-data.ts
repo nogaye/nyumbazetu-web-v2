@@ -5,6 +5,7 @@
  */
 
 import { Property, PropertyImage, ListingWithCoverImage, PropertyType } from "./types";
+import { getListingCoverImagePathById } from "./listing-cover-map";
 
 // Mock property data
 const mockProperties: Property[] = [
@@ -312,6 +313,7 @@ export function getPropertyBySlug(slug: string): Property | null {
 
 /**
  * Get all images for a property
+ * Uses location-matched cover image as first image when available; rest are placeholders.
  * TODO: Replace with real Supabase query
  */
 export function getPropertyImages(propertyId: string): Array<{
@@ -319,16 +321,24 @@ export function getPropertyImages(propertyId: string): Array<{
   alt: string;
   blurDataURL?: string;
 }> {
-  // Generate 3-8 images per property
-  const imageCount = 3 + Math.floor(Math.random() * 6);
-  const images = [];
+  const coverPath = getListingCoverImagePathById(propertyId);
+  const images: Array<{ url: string; alt: string; blurDataURL?: string }> = [];
 
-  for (let i = 0; i < imageCount; i++) {
-    // Use different image seeds for variety
+  if (coverPath) {
+    images.push({
+      url: coverPath,
+      alt: "Property exterior",
+      blurDataURL: getBlurDataURL(),
+    });
+  }
+
+  // Add 2–7 more placeholder images for gallery variety
+  const extraCount = 2 + Math.floor(Math.random() * 6);
+  for (let i = 0; i < extraCount; i++) {
     const seed = `${propertyId}-${i}`;
     images.push({
       url: getPlaceholderImageUrl(seed, 1200, 800),
-      alt: `Property image ${i + 1}`,
+      alt: `Property image ${images.length + 1}`,
       blurDataURL: getBlurDataURL(),
     });
   }

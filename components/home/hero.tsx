@@ -57,7 +57,7 @@ export function Hero() {
 
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <Button size="lg" className="bg-primary hover:bg-primary-600 text-primary-foreground" asChild>
-                <Link href="/contact">Request a demo</Link>
+                <Link href="/request-demo">Request a demo</Link>
               </Button>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10" asChild>
                 <Link href="/product">Explore the platform</Link>

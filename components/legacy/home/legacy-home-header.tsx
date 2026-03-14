@@ -72,7 +72,7 @@ export function LegacyHomeHeader() {
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
             >
               <Button size="lg" className="text-lg px-8" asChild>
-                <Link href="/contact">Request a Demo</Link>
+                <Link href="/request-demo">Request a Demo</Link>
               </Button>
               <Button
                 size="lg"

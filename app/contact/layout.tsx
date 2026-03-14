@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Contact Us | Nyumba Zetu",
-  description: "Talk to our team about how Nyumba Zetu can transform your property operations. Request a demo or get in touch.",
+  description: "Get in touch with the Nyumba Zetu team. Send a message, find our office, or reach us by phone or email.",
 };
 
 export default function ContactLayout({

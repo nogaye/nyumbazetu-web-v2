@@ -8,6 +8,7 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { StructuredData } from "@/components/structured-data";
 import { AnalyticsProvider } from "@/components/analytics-provider";
+import { IntercomProvider } from "@/components/intercom-provider";
 import { CookieConsent } from "@/components/cookie-consent";
 
 const geistSans = Geist({
@@ -96,6 +97,7 @@ export default function RootLayout({
         <StructuredData />
         <ThemeProvider>
           <AnalyticsProvider>
+            <IntercomProvider />
             <ErrorBoundary>
               <MainNav />
               <main className="min-h-screen" id="main-content" role="main">

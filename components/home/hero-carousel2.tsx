@@ -26,7 +26,7 @@ const heroSlides = [
       "KRA eTIMS-ready invoicing and tax-compliant workflows",
     ],
     ctaPrimary: "Request a demo",
-    ctaPrimaryHref: "/contact",
+    ctaPrimaryHref: "/request-demo",
     ctaSecondary: "Explore the platform",
     ctaSecondaryHref: "/product",
     visual: "dashboard",
@@ -62,7 +62,7 @@ const heroSlides = [
     ctaPrimary: "Learn about accounting",
     ctaPrimaryHref: "/features/accounting",
     ctaSecondary: "Request a demo",
-    ctaSecondaryHref: "/contact",
+    ctaSecondaryHref: "/request-demo",
     visual: "accounting",
   },
   {
@@ -79,7 +79,7 @@ const heroSlides = [
     ctaPrimary: "Explore tenant experience",
     ctaPrimaryHref: "/features/tenant-experience",
     ctaSecondary: "Request a demo",
-    ctaSecondaryHref: "/contact",
+    ctaSecondaryHref: "/request-demo",
     visual: "experience",
   },
   {
@@ -96,7 +96,7 @@ const heroSlides = [
     ctaPrimary: "View case studies",
     ctaPrimaryHref: "/resources",
     ctaSecondary: "Request a demo",
-    ctaSecondaryHref: "/contact",
+    ctaSecondaryHref: "/request-demo",
     visual: "trust",
   },
 ];

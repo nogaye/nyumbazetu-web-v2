@@ -134,7 +134,7 @@ export default function SolutionsPage() {
             Our team can help you find the right solution for your property management requirements.
           </p>
           <Button size="lg" className="bg-primary hover:bg-primary-600 text-primary-foreground" asChild>
-            <Link href="/contact" className="flex items-center gap-2">
+            <Link href="/request-demo" className="flex items-center gap-2">
               Contact Our Team
               <ArrowRightIcon className="h-4 w-4" />
             </Link>

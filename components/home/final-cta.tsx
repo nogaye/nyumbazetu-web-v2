@@ -23,7 +23,7 @@ export function FinalCTA() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button size="lg" className="bg-primary hover:bg-primary-600 text-primary-foreground" asChild>
-            <Link href="/contact" className="flex items-center gap-2">
+            <Link href="/request-demo" className="flex items-center gap-2">
               Request a demo
               <CalendarDaysIcon className="h-4 w-4" />
             </Link>

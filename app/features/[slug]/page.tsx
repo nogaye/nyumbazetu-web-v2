@@ -3,11 +3,43 @@ import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { LoadingSkeleton } from "@/components/loading-skeleton";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { FeatureViewTracker } from "@/components/feature-view-tracker";
+
+/**
+ * Maps each feature slug to a Kenyan-context photorealistic hero image for the detail page only.
+ * Images are used only here; the feature grid keeps icon placeholders.
+ */
+const FEATURE_DETAIL_IMAGE_MAP: Record<string, string> = {
+  accounting: "/images/features/feature-accounting.jpg",
+  collections: "/images/features/feature-collections.jpg",
+  "tenant-experience": "/images/features/feature-tenant-experience.jpg",
+  maintenance: "/images/features/feature-maintenance.jpg",
+  "assets-management": "/images/features/feature-assets-management.jpg",
+  "expense-vendor-management": "/images/features/feature-expense-vendor-management.jpg",
+  etims: "/images/features/feature-etims.jpg",
+  tasks: "/images/features/feature-tasks.jpg",
+  tps: "/images/features/feature-tps.jpg",
+  communications: "/images/features/feature-communications.jpg",
+  crm: "/images/features/feature-crm.jpg",
+  "white-labeling": "/images/features/feature-white-labeling.jpg",
+  "calendar-scheduling": "/images/features/feature-calendar-scheduling.jpg",
+  webhooks: "/images/features/feature-webhooks.jpg",
+  listings: "/images/features/feature-listings.jpg",
+  visitors: "/images/features/feature-visitors.jpg",
+  reports: "/images/features/feature-reports.jpg",
+  "lease-applications": "/images/features/feature-lease-applications.jpg",
+  "smart-meters": "/images/features/feature-smart-meters.jpg",
+};
+
+/** Returns the hero image path for a feature detail page; fallback for unknown slug. */
+function getFeatureDetailImage(slug: string): string {
+  return FEATURE_DETAIL_IMAGE_MAP[slug] ?? "/images/features/feature-dashboard.jpg";
+}
 
 const features: Record<string, {
   title: string;
@@ -411,17 +443,18 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
         />
       </Section>
 
-      {/* Feature Screenshot Placeholder */}
+      {/* Feature hero image (Kenyan-context, photorealistic, relevant to this feature) */}
       <Section>
         <div className="max-w-5xl mx-auto mb-12">
-          <div className="aspect-video bg-slate-100 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-center shadow-lg">
-            <div className="text-center">
-              <div className="w-32 h-32 mx-auto mb-4 bg-slate-300 dark:bg-slate-700 rounded-lg flex items-center justify-center">
-                <div className="w-24 h-24 bg-slate-400 dark:bg-slate-600 rounded"></div>
-              </div>
-              {/* <p className="text-slate-700 dark:text-slate-300 font-medium mb-1">Feature Screenshot</p> */}
-              <p className="text-slate-600 dark:text-slate-400 text-sm">{feature.title} interface preview</p>
-            </div>
+          <div className="aspect-video relative rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-lg bg-slate-100 dark:bg-slate-900">
+            <Image
+              src={getFeatureDetailImage(slug)}
+              alt={`${feature.title} — Kenyan property management`}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 1024px"
+              priority
+            />
           </div>
         </div>
       </Section>
@@ -473,7 +506,7 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
             Schedule a demo to explore how this feature can help your property operations.
           </p>
           <Button size="lg" asChild>
-            <Link href="/contact" className="flex items-center gap-2">
+            <Link href="/request-demo" className="flex items-center gap-2">
               Request a Demo
               <CalendarDaysIcon className="h-4 w-4" />
             </Link>

@@ -27,7 +27,7 @@ const heroSlides = [
       "Modern tenant and owner experience with portals, mobile apps, and WhatsApp chatbot",
     ],
     ctaPrimary: "Request a demo",
-    ctaPrimaryHref: "/contact",
+    ctaPrimaryHref: "/request-demo",
     ctaSecondary: "Explore the platform",
     ctaSecondaryHref: "/product",
   },
@@ -42,7 +42,7 @@ const heroSlides = [
       "KRA eTIMS-ready invoicing and tax-compliant workflows",
     ],
     ctaPrimary: "Request a demo",
-    ctaPrimaryHref: "/contact",
+    ctaPrimaryHref: "/request-demo",
     ctaSecondary: "Explore the platform",
     ctaSecondaryHref: "/product",
   },
@@ -74,7 +74,7 @@ const heroSlides = [
     ctaPrimary: "Learn about accounting",
     ctaPrimaryHref: "/features/accounting",
     ctaSecondary: "Request a demo",
-    ctaSecondaryHref: "/contact",
+    ctaSecondaryHref: "/request-demo",
   },
   {
     id: 5,
@@ -89,7 +89,7 @@ const heroSlides = [
     ctaPrimary: "Explore tenant experience",
     ctaPrimaryHref: "/features/tenant-experience",
     ctaSecondary: "Request a demo",
-    ctaSecondaryHref: "/contact",
+    ctaSecondaryHref: "/request-demo",
   },
   {
     id: 6,
@@ -104,7 +104,7 @@ const heroSlides = [
     ctaPrimary: "View case studies",
     ctaPrimaryHref: "/resources",
     ctaSecondary: "Request a demo",
-    ctaSecondaryHref: "/contact",
+    ctaSecondaryHref: "/request-demo",
   },
 ];
 
@@ -198,7 +198,7 @@ export function HeroCarousel() {
               >
                 <Link href={currentSlideData.ctaPrimaryHref} className="flex items-center gap-2">
                   {currentSlideData.ctaPrimary}
-                  {currentSlideData.ctaPrimaryHref === "/contact" ? (
+                  {currentSlideData.ctaPrimaryHref === "/request-demo" ? (
                     <CalendarDaysIcon className="h-4 w-4" />
                   ) : currentSlideData.ctaPrimaryHref === "/product" ? (
                     <EyeIcon className="h-4 w-4" />
@@ -222,7 +222,7 @@ export function HeroCarousel() {
               >
                 <Link href={currentSlideData.ctaSecondaryHref} className="flex items-center gap-2">
                   {currentSlideData.ctaSecondary}
-                  {currentSlideData.ctaSecondaryHref === "/contact" ? (
+                  {currentSlideData.ctaSecondaryHref === "/request-demo" ? (
                     <CalendarDaysIcon className="h-4 w-4" />
                   ) : currentSlideData.ctaSecondaryHref === "/product" ? (
                     <EyeIcon className="h-4 w-4" />

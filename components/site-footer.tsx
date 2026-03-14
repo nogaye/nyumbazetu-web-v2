@@ -13,6 +13,7 @@ import {
   InstagramIcon,
 } from "@/components/social-icons";
 import { AppStoreBadge, GooglePlayBadge } from "@/components/app-store-badges";
+import { EXTERNAL_RESOURCES } from "@/lib/external-resources";
 import { useEffect, useState } from "react";
 
 const footerLinks = {
@@ -50,10 +51,21 @@ const footerLinks = {
     { label: "Blog", href: "/blogs" },
     { label: "FAQs", href: "/faqs" },
     { label: "Newsletters", href: "/newsletters" },
+    {
+      label: EXTERNAL_RESOURCES.status.label,
+      href: EXTERNAL_RESOURCES.status.href,
+      external: true,
+    },
+    {
+      label: EXTERNAL_RESOURCES.docs.label,
+      href: EXTERNAL_RESOURCES.docs.href,
+      external: true,
+    },
   ],
   company: [
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
+    { label: "Request a demo", href: "/request-demo" },
     { label: "Partnerships", href: "/partnerships" },
     { label: "Careers", href: "/careers" },
     { label: "Clients", href: "/clients" },
@@ -275,13 +287,32 @@ export function SiteFooter() {
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-slate-200 hover:text-primary transition-all duration-200 relative group"
-                  >
-                    <span className="relative z-10">{link.label}</span>
-                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
-                  </Link>
+                  {"external" in link && link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-slate-200 hover:text-primary transition-all duration-200 relative group inline-block"
+                      aria-label={
+                        link.label === EXTERNAL_RESOURCES.status.label
+                          ? `${link.label} – ${EXTERNAL_RESOURCES.status.description}`
+                          : link.label === EXTERNAL_RESOURCES.docs.label
+                            ? `${link.label} – ${EXTERNAL_RESOURCES.docs.description}`
+                            : undefined
+                      }
+                    >
+                      <span className="relative z-10">{link.label}</span>
+                      <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-sm text-slate-200 hover:text-primary transition-all duration-200 relative group"
+                    >
+                      <span className="relative z-10">{link.label}</span>
+                      <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -325,14 +356,20 @@ export function SiteFooter() {
               </Link>
             ))}
 
-            {/* System Status - text only (no /status page) */}
-            <div className="flex items-center gap-2 text-sm text-slate-400">
-              <div className="relative">
+            {/* System Status – links to status.nyumbazetu.com */}
+            <a
+              href={EXTERNAL_RESOURCES.status.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm text-slate-400 hover:text-primary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded"
+              aria-label="System Status – check platform uptime and incidents"
+            >
+              <div className="relative flex-shrink-0">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                 <div className="absolute inset-0 w-2 h-2 bg-green-500 rounded-full animate-ping opacity-75" />
               </div>
               <span className="text-xs">All Systems Operational</span>
-            </div>
+            </a>
           </div>
         </div>
       </div>

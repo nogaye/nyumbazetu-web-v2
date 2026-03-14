@@ -55,7 +55,7 @@ export function LegacyRequestDemo({ dark = true }: LegacyRequestDemoProps) {
             className="w-full sm:w-auto"
           >
             <Button size="lg" className="w-full sm:w-auto text-lg px-8 group" asChild>
-              <a href="/contact">
+              <a href="/request-demo">
                 Request a Demo
                 <ArrowRightIcon className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </a>

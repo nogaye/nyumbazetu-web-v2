@@ -7,6 +7,7 @@
 
 import { ListingFilters, ListingWithCoverImage, ListingsResponse, Property, SortOption } from "./types";
 import { getMockProperties, getPlaceholderImageUrl, getBlurDataURL, getPropertyBySlug } from "./mock-data";
+import { getListingCoverImageUrl } from "./listing-images";
 import { supabaseServer } from "@/lib/supabase/server";
 
 const PER_PAGE = 24;
@@ -240,15 +241,12 @@ async function fetchListingsFromMock(
     }
   });
 
-  // Get cover images for each property
-  const listings: ListingWithCoverImage[] = mockProperties.map((property) => {
-    const coverImagePath = `property-images/${property.id}/cover.webp`;
-    return {
-      ...property,
-      cover_image_url: getImageUrl(coverImagePath),
-      blur_data_url: getBlurDataURL(),
-    };
-  });
+  // Use location-matched cover images for mock listings when available
+  const listings: ListingWithCoverImage[] = mockProperties.map((property) => ({
+    ...property,
+    cover_image_url: getListingCoverImageUrl(property),
+    blur_data_url: getBlurDataURL(),
+  }));
 
   // Apply pagination
   const start = (page - 1) * PER_PAGE;

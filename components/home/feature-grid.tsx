@@ -380,7 +380,7 @@ export function FeatureGrid({
               className="bg-primary hover:bg-primary-600 text-primary-foreground"
               asChild
             >
-              <Link href="/contact" className="flex items-center gap-2">
+              <Link href="/request-demo" className="flex items-center gap-2">
                 Request a Demo
                 <ArrowRightIcon className="h-4 w-4" />
               </Link>

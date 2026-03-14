@@ -94,7 +94,7 @@ export default function ProductPage() {
             Schedule a demo with our team to explore how Nyumba Zetu can transform your property operations.
           </p>
           <Button size="lg" asChild>
-            <Link href="/contact" className="flex items-center gap-2">
+            <Link href="/request-demo" className="flex items-center gap-2">
               Request a Demo
               <CalendarDaysIcon className="h-4 w-4" />
             </Link>
