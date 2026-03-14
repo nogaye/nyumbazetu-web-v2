@@ -22,7 +22,7 @@ export function LegacyHeadline() {
         >
           <div className="w-full lg:w-2/3">
             <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-              The platform powering modern property management in Kenya
+              The platform powering modern property management in Africa
             </h1>
 
             <p className="text-white text-lg md:text-xl leading-relaxed opacity-90">

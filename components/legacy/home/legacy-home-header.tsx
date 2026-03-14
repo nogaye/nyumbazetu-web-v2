@@ -32,7 +32,7 @@ export function LegacyHomeHeader() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6"
             >
               <SparklesIcon className="h-4 w-4" />
-              <span>Kenya&apos;s Leading Property Management Platform</span>
+              <span>Africa&apos;s Leading Property Management Platform</span>
             </motion.div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-slate-50 mb-4 leading-tight">

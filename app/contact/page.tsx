@@ -163,8 +163,8 @@ export default function ContactPage() {
       </Section>
 
       <Section>
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
-          <div className="space-y-8">
+        <div className="max-w-2xl mx-auto flex flex-col items-center text-center md:text-left md:items-start">
+          <div className="space-y-8 w-full">
             <div>
               <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">
                 Get in Touch
@@ -223,10 +223,10 @@ export default function ContactPage() {
                           +254 741 382063
                         </a>
                         <a
-                          href="tel:+16143904422"
+                          href="tel:+254716988188"
                           className="block text-primary hover:underline transition-colors"
                         >
-                          +1 614 390 4422
+                          +254 716 988 188
                         </a>
                         <span className="block text-sm mt-2">
                           Mon - Fri, 8:00 - 17:00
@@ -279,6 +279,7 @@ export default function ContactPage() {
             </div>
           </div>
 
+          {/* Send a message form – commented out for now
           <Card className="shadow-lg">
             <CardHeader className="space-y-2 pb-4">
               <CardTitle className="text-2xl font-bold">
@@ -314,7 +315,6 @@ export default function ContactPage() {
               )}
 
               <form className="space-y-6" onSubmit={handleSubmit} noValidate>
-                {/* Personal Information Section */}
                 <div className="space-y-4">
                   <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
                     <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
@@ -418,7 +418,6 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                {/* Company Information Section */}
                 <div className="space-y-4">
                   <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
                     <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
@@ -473,7 +472,6 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                {/* Additional Information Section */}
                 <div className="space-y-4">
                   <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
                     <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
@@ -546,6 +544,7 @@ export default function ContactPage() {
               </form>
             </CardContent>
           </Card>
+          */}
         </div>
       </Section>
     </>

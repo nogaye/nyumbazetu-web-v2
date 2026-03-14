@@ -14,14 +14,14 @@ import { CalendarDaysIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 
 /** Credibility badge text; short trust statement above the headline. */
-const BADGE = "Built for Kenyan Property Managers";
+const BADGE = "Built for Modern Property Managers";
 
 /** Category-defining vision headline; signals platform/infrastructure positioning. */
-const HEADLINE = "The operating system for Kenyan real estate";
+const HEADLINE = "The operating system for African real estate";
 
 /** Clear product explanation: what the platform does (vision → explanation). */
 const SUBHEADLINE =
-  "Rent collection, property accounting, tenant communication, and reporting — all on one platform built for Kenya.";
+  "Rent collection, property accounting, tenant communication, and reporting — all on one platform.";
 
 /** Social proof line; increases trust below the CTAs. */
 const SOCIAL_PROOF = "Trusted by property managers, estates, and banks";

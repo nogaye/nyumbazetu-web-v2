@@ -66,7 +66,7 @@ export function LegacyTransactions() {
       icon: BuildingOfficeIcon,
       value: "500+",
       label: "Properties Managed",
-      description: "Trusted by property managers across Kenya",
+      description: "Trusted by property managers across Africa",
     },
     {
       icon: DocumentTextIcon,
@@ -80,7 +80,7 @@ export function LegacyTransactions() {
     <Section className="bg-slate-50 dark:bg-slate-900/50">
       <div className="container mx-auto px-4">
         <SectionHeader
-          title="Powering Property Managers Across Kenya"
+          title="Used by leading property managers and landlords"
           description="Join hundreds of property managers, landlords, and committees using Nyumba Zetu to streamline their operations"
         />
 
