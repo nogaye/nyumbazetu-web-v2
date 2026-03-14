@@ -181,3 +181,14 @@ body {
     opacity: 0;
   }
 }
+
+/* Platform screenshot carousel: sharper rendering without extra file size */
+.platform-screenshot-img-wrap {
+  contain: layout style paint;
+}
+.platform-screenshot-img {
+  /* Prefer crisp scaling for UI screenshots (WebKit/Blink) */
+  image-rendering: -webkit-optimize-contrast;
+  /* Slight contrast bump so text and edges read clearer */
+  filter: contrast(1.03);
+}

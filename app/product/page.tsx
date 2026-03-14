@@ -1,12 +1,13 @@
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { PlatformInfrastructureDiagram } from "@/components/product/platform-infrastructure-diagram";
 import { AutomatedWorkflow } from "@/components/product/automated-workflow";
 import { ManagementDashboard } from "@/components/product/management-dashboard";
+import { PlatformScreenshotsCarousel } from "@/components/home/platform-screenshots-carousel";
 
 export const metadata = {
   title: "Platform Overview | Nyumba Zetu",
@@ -42,6 +43,17 @@ export default function ProductPage() {
         </div>
         <div className="max-w-7xl mx-auto">
           <AutomatedWorkflow />
+        </div>
+      </Section>
+
+      {/* Platform screenshots carousel — real dashboard, analytics, amenities, tasks, smart meters */}
+      <Section className="bg-secondary">
+        <div className="max-w-7xl mx-auto">
+          <PlatformScreenshotsCarousel
+            title="The platform in action"
+            description="Dashboard overview, analytics and reports, amenities, task management, and smart meter readings—all in one place."
+            variant="dark"
+          />
         </div>
       </Section>
 

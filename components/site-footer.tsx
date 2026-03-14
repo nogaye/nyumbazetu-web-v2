@@ -51,6 +51,7 @@ const footerLinks = {
     { label: "Diaspora", href: "/solutions/diaspora" },
   ],
   resources: [
+    { label: "Resources", href: "/resources" },
     { label: "Blog", href: "/blogs" },
     { label: "FAQs", href: "/faqs" },
     { label: "Newsletters", href: "/newsletters" },
