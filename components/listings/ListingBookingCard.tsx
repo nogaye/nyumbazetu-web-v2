@@ -62,13 +62,19 @@ export interface ListingBookingCardProps {
   propertyId: string;
   /** Property slug for URLs. */
   propertySlug?: string;
-  /** Monthly rent in KES (or display currency). */
+  /** Listing purpose: short_stay shows check-in/out and nightly total; rent/buy show single price. */
+  listingPurpose?: string;
+  /** Monthly rent (used when listingPurpose is 'rent'). */
   monthlyRent: number;
+  /** Base price per night (short_stay) or sale price (buy). */
+  basePrice?: number;
+  /** ISO currency code for display (e.g. KES, USD). */
+  currencyCode?: string;
   /** City/area for "X nights in {location}" summary. */
   locationName: string;
-  /** Optional cancellation policy text. */
+  /** Optional cancellation policy text (typically for short_stay). */
   cancellationPolicy?: string;
-  /** Controlled check-in date (when provided, card displays this and does not own calendar state). */
+  /** Controlled check-in date (only shown when listingPurpose is short_stay). */
   checkIn?: Date;
   /** Controlled check-out date. */
   checkOut?: Date;
@@ -84,16 +90,19 @@ export interface ListingBookingCardProps {
 }
 
 /**
- * Renders a sticky reservation card with date range picker (two-month calendar),
- * guests selector, price summary, and Reserve (contact owner) CTA.
+ * Renders a sticky card: for short_stay shows nightly total, check-in/out, guests;
+ * for rent shows monthly price; for buy shows sale price. Always shows Reserve/Contact CTA.
  */
 export function ListingBookingCard({
   propertyTitle,
   propertyId,
   propertySlug,
+  listingPurpose = "rent",
   monthlyRent,
+  basePrice = monthlyRent,
+  currencyCode = "KES",
   locationName,
-  cancellationPolicy = "Free cancellation before check-in",
+  cancellationPolicy,
   checkIn: controlledCheckIn,
   checkOut: controlledCheckOut,
   guests: controlledGuests,
@@ -102,6 +111,9 @@ export function ListingBookingCard({
   onGuestsChange,
   className,
 }: ListingBookingCardProps) {
+  const isShortStay = listingPurpose === "short_stay";
+  const isBuy = listingPurpose === "buy";
+
   const today = useMemo(() => {
     const t = new Date();
     return new Date(t.getFullYear(), t.getMonth(), t.getDate());
@@ -132,14 +144,20 @@ export function ListingBookingCard({
     0,
     Math.ceil((checkOut.getTime() - checkIn.getTime()) / (24 * 60 * 60 * 1000)),
   );
-  const totalAmount = Math.round((monthlyRent / 30) * nights);
+  const nightlyTotal = isShortStay ? Math.round(basePrice * nights) : 0;
 
-  const formatPrice = (n: number) =>
+  const formatPrice = (n: number, currency = currencyCode) =>
     new Intl.NumberFormat("en-KE", {
       style: "currency",
-      currency: "KES",
+      currency,
       maximumFractionDigits: 0,
     }).format(n);
+
+  const priceLabel = isShortStay
+    ? `${formatPrice(nightlyTotal)} for ${nights} ${nights === 1 ? "night" : "nights"}`
+    : isBuy
+      ? formatPrice(basePrice)
+      : `${formatPrice(monthlyRent)}/mo`;
 
   return (
     <div
@@ -148,61 +166,63 @@ export function ListingBookingCard({
         className,
       )}
     >
-      <div className="rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary dark:bg-primary/20 mb-4 inline-block">
-        Prices include all fees
-      </div>
+      {isShortStay && (
+        <div className="rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary dark:bg-primary/20 mb-4 inline-block">
+          Prices include all fees
+        </div>
+      )}
 
       <div className="mb-4">
         <p className="text-2xl font-semibold text-slate-900 dark:text-slate-50">
-          {formatPrice(totalAmount)}
-          <span className="text-base font-normal text-slate-500 dark:text-slate-400">
-            {" "}
-            for {nights} {nights === 1 ? "night" : "nights"}
-          </span>
+          {priceLabel}
         </p>
       </div>
 
-      {/* Check-in / Check-out */}
-      <div className="grid grid-cols-2 gap-2 mb-4">
-        <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-600 dark:bg-slate-800/50">
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Check-in
-          </p>
-          <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
-            {formatDateForInput(checkIn)}
-          </p>
-        </div>
-        <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-600 dark:bg-slate-800/50">
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Checkout
-          </p>
-          <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
-            {formatDateForInput(checkOut)}
-          </p>
-        </div>
-      </div>
+      {/* Check-in / Check-out — only for short_stay */}
+      {isShortStay && (
+        <>
+          <div className="grid grid-cols-2 gap-2 mb-4">
+            <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-600 dark:bg-slate-800/50">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                Check-in
+              </p>
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                {formatDateForInput(checkIn)}
+              </p>
+            </div>
+            <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-600 dark:bg-slate-800/50">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                Checkout
+              </p>
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                {formatDateForInput(checkOut)}
+              </p>
+            </div>
+          </div>
 
-      {/* Guests */}
-      <div className="mb-4">
-        <label className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1">
-          Guests
-        </label>
-        <Select
-          value={String(guests)}
-          onValueChange={(v) => setGuests(Number(v))}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Guests" />
-          </SelectTrigger>
-          <SelectContent>
-            {[1, 2, 3, 4, 5, 6].map((n) => (
-              <SelectItem key={n} value={String(n)}>
-                {n} {n === 1 ? "guest" : "guests"}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+          {/* Guests — only for short_stay */}
+          <div className="mb-4">
+            <label className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1">
+              Guests
+            </label>
+            <Select
+              value={String(guests)}
+              onValueChange={(v) => setGuests(Number(v))}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Guests" />
+              </SelectTrigger>
+              <SelectContent>
+                {[1, 2, 3, 4, 5, 6].map((n) => (
+                  <SelectItem key={n} value={String(n)}>
+                    {n} {n === 1 ? "guest" : "guests"}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </>
+      )}
 
       {cancellationPolicy && (
         <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
@@ -214,7 +234,7 @@ export function ListingBookingCard({
         propertyTitle={propertyTitle}
         propertyId={propertyId}
         propertySlug={propertySlug}
-        buttonLabel="Reserve"
+        buttonLabel={isBuy ? "Contact" : "Reserve"}
       />
 
       <p className="mt-3 text-center text-sm text-slate-500 dark:text-slate-400">

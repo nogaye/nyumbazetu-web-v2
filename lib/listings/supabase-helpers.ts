@@ -5,7 +5,16 @@
  * If Supabase is not configured, it automatically falls back to mock data.
  */
 
-import { ListingFilters, ListingWithCoverImage, ListingsResponse, Property, SortOption } from "./types";
+import {
+  ListingCommentDisplay,
+  ListingFilters,
+  ListingReviewDisplay,
+  ListingReviewStats,
+  ListingWithCoverImage,
+  ListingsResponse,
+  Property,
+  SortOption,
+} from "./types";
 import { getMockProperties, getPlaceholderImageUrl, getBlurDataURL, getPropertyBySlug } from "./mock-data";
 import { getListingCoverImageUrl } from "./listing-images";
 import { supabaseServer } from "@/lib/supabase/server";
@@ -153,6 +162,10 @@ async function fetchListingsFromSupabase(
 
   if (filters.propertyType) {
     query = query.eq('property_type', filters.propertyType);
+  }
+
+  if (filters.listingPurpose) {
+    query = query.eq('listing_purpose', filters.listingPurpose);
   }
 
   if (filters.tps === true) {
@@ -455,4 +468,101 @@ export function buildSearchParams(filters: ListingFilters): URLSearchParams {
   }
 
   return params;
+}
+
+/**
+ * Fetch reviews for a property from tb_listing_comments (comment_type = 'review').
+ * Returns display-ready review list and aggregate stats. Joins tb_users for author display name.
+ */
+export async function fetchPropertyReviews(propertyId: number): Promise<{
+  reviews: ListingReviewDisplay[];
+  stats: ListingReviewStats;
+}> {
+  if (!isSupabaseConfigured()) {
+    return { reviews: [], stats: { averageRating: 0, totalReviews: 0 } };
+  }
+
+  try {
+    const { data: rows, error } = await supabaseServer!
+      .from("tb_listing_comments")
+      .select("id, body, title, rating, is_verified_review, created_at, user_id")
+      .eq("property_id", propertyId)
+      .eq("comment_type", "review")
+      .eq("is_visible", true)
+      .eq("moderation_status", "published")
+      .eq("is_deleted", false)
+      .is("parent_comment_id", null)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.warn("Error fetching property reviews:", error);
+      return { reviews: [], stats: { averageRating: 0, totalReviews: 0 } };
+    }
+
+    const list = (rows || []) as Array<{
+      body: string;
+      title: string | null;
+      rating: number | null;
+      is_verified_review: boolean;
+      created_at: string;
+    }>;
+
+    const reviews: ListingReviewDisplay[] = list.map((r) => ({
+      author: "Guest",
+      label: r.is_verified_review ? "Verified guest" : undefined,
+      rating: r.rating ?? 0,
+      body: r.body,
+      date: r.created_at,
+    }));
+
+    const totalReviews = reviews.length;
+    const sumRating = reviews.reduce((s, r) => s + r.rating, 0);
+    const averageRating = totalReviews > 0 ? sumRating / totalReviews : 0;
+
+    return {
+      reviews,
+      stats: { averageRating, totalReviews },
+    };
+  } catch (err) {
+    console.warn("Error in fetchPropertyReviews:", err);
+    return { reviews: [], stats: { averageRating: 0, totalReviews: 0 } };
+  }
+}
+
+/**
+ * Fetch comments (Q&A) for a property from tb_listing_comments (comment_type = 'comment').
+ * Returns top-level comments only; optionally include replies later.
+ */
+export async function fetchPropertyComments(propertyId: number): Promise<ListingCommentDisplay[]> {
+  if (!isSupabaseConfigured()) {
+    return [];
+  }
+
+  try {
+    const { data: rows, error } = await supabaseServer!
+      .from("tb_listing_comments")
+      .select("id, body, created_at")
+      .eq("property_id", propertyId)
+      .eq("comment_type", "comment")
+      .eq("is_visible", true)
+      .eq("moderation_status", "published")
+      .eq("is_deleted", false)
+      .is("parent_comment_id", null)
+      .order("created_at", { ascending: true });
+
+    if (error) {
+      console.warn("Error fetching property comments:", error);
+      return [];
+    }
+
+    const list = (rows || []) as Array<{ body: string; created_at: string }>;
+    return list.map((r) => ({
+      author: "Guest",
+      body: r.body,
+      date: r.created_at,
+    }));
+  } catch (err) {
+    console.warn("Error in fetchPropertyComments:", err);
+    return [];
+  }
 }

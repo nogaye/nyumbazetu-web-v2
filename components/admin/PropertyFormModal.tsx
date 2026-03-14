@@ -22,6 +22,14 @@ import {
 } from "@/components/ui/sheet";
 import { Property, PropertyType } from "@/lib/listings/types";
 import {
+  ListingPropertyType,
+  ListingPurpose,
+  ListingType,
+  LISTING_PROPERTY_TYPE_LABELS,
+  LISTING_PURPOSE_LABELS,
+  LISTING_TYPE_LABELS,
+} from "@/lib/listings/enums";
+import {
   ExclamationCircleIcon,
   CheckCircleIcon,
   PaperAirplaneIcon,
@@ -37,13 +45,24 @@ interface PropertyFormModalProps {
 }
 
 const PROPERTY_TYPES: { value: PropertyType; label: string }[] = [
-  { value: "apartment", label: "Apartment" },
-  { value: "maisonette", label: "Maisonette" },
-  { value: "bedsitter", label: "Bedsitter" },
-  { value: "house", label: "House" },
-  { value: "studio", label: "Studio" },
-  { value: "office", label: "Office" },
-  { value: "shop", label: "Shop" },
+  { value: ListingPropertyType.Apartment, label: LISTING_PROPERTY_TYPE_LABELS[ListingPropertyType.Apartment] },
+  { value: ListingPropertyType.House, label: LISTING_PROPERTY_TYPE_LABELS[ListingPropertyType.House] },
+  { value: ListingPropertyType.Villa, label: LISTING_PROPERTY_TYPE_LABELS[ListingPropertyType.Villa] },
+  { value: ListingPropertyType.Land, label: LISTING_PROPERTY_TYPE_LABELS[ListingPropertyType.Land] },
+  { value: ListingPropertyType.Office, label: LISTING_PROPERTY_TYPE_LABELS[ListingPropertyType.Office] },
+  { value: ListingPropertyType.Commercial, label: LISTING_PROPERTY_TYPE_LABELS[ListingPropertyType.Commercial] },
+];
+
+const LISTING_PURPOSES: { value: string; label: string }[] = [
+  { value: ListingPurpose.Rent, label: LISTING_PURPOSE_LABELS[ListingPurpose.Rent] },
+  { value: ListingPurpose.Buy, label: LISTING_PURPOSE_LABELS[ListingPurpose.Buy] },
+  { value: ListingPurpose.ShortStay, label: LISTING_PURPOSE_LABELS[ListingPurpose.ShortStay] },
+];
+
+const LISTING_TYPES: { value: string; label: string }[] = [
+  { value: ListingType.EntirePlace, label: LISTING_TYPE_LABELS[ListingType.EntirePlace] },
+  { value: ListingType.PrivateRoom, label: LISTING_TYPE_LABELS[ListingType.PrivateRoom] },
+  { value: ListingType.SharedRoom, label: LISTING_TYPE_LABELS[ListingType.SharedRoom] },
 ];
 
 export function PropertyFormModal({
@@ -58,10 +77,13 @@ export function PropertyFormModal({
     city: "",
     area: "",
     monthly_rent: "",
+    base_price: "",
     bedrooms: "",
     bathrooms: "",
     size_sqm: "",
-    property_type: "apartment" as PropertyType,
+    property_type: ListingPropertyType.Apartment as PropertyType,
+    listing_purpose: ListingPurpose.Rent,
+    listing_type: ListingType.EntirePlace,
     is_tps_available: false,
     is_verified: false,
   });
@@ -80,16 +102,18 @@ export function PropertyFormModal({
         city: property.city,
         area: property.area,
         monthly_rent: property.monthly_rent.toString(),
+        base_price: (property.base_price ?? property.monthly_rent).toString(),
         bedrooms: property.bedrooms.toString(),
         bathrooms: property.bathrooms.toString(),
         size_sqm: property.size_sqm?.toString() || "",
         property_type: property.property_type,
+        listing_purpose: (property.listing_purpose as string) || ListingPurpose.Rent,
+        listing_type: (property.listing_type as string) || ListingType.EntirePlace,
         is_tps_available: property.is_tps_available,
         is_verified: property.is_verified,
       });
       setSavedPropertyId(property.id);
     } else {
-      // Reset form for new property
       setFormData({
         title: "",
         slug: "",
@@ -97,10 +121,13 @@ export function PropertyFormModal({
         city: "",
         area: "",
         monthly_rent: "",
+        base_price: "",
         bedrooms: "",
         bathrooms: "",
         size_sqm: "",
-        property_type: "apartment",
+        property_type: ListingPropertyType.Apartment,
+        listing_purpose: ListingPurpose.Rent,
+        listing_type: ListingType.EntirePlace,
         is_tps_available: false,
         is_verified: false,
       });
@@ -166,9 +193,12 @@ export function PropertyFormModal({
         body: JSON.stringify({
           ...formData,
           monthly_rent: parseInt(formData.monthly_rent),
+          base_price: formData.base_price ? parseFloat(formData.base_price) : undefined,
           bedrooms: parseInt(formData.bedrooms),
           bathrooms: parseInt(formData.bathrooms),
           size_sqm: formData.size_sqm ? parseInt(formData.size_sqm) : null,
+          listing_purpose: formData.listing_purpose || ListingPurpose.Rent,
+          listing_type: formData.listing_type || ListingType.EntirePlace,
         }),
       });
 
@@ -410,6 +440,49 @@ export function PropertyFormModal({
                   </Select>
                 </div>
 
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="listing_purpose">Listing Purpose</Label>
+                    <Select
+                      value={formData.listing_purpose}
+                      onValueChange={(value) =>
+                        setFormData({ ...formData, listing_purpose: value })
+                      }
+                    >
+                      <SelectTrigger id="listing_purpose">
+                        <SelectValue placeholder="Rent / Buy / Short stay" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {LISTING_PURPOSES.map((p) => (
+                          <SelectItem key={p.value} value={p.value}>
+                            {p.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="listing_type">Listing Type</Label>
+                    <Select
+                      value={formData.listing_type}
+                      onValueChange={(value) =>
+                        setFormData({ ...formData, listing_type: value })
+                      }
+                    >
+                      <SelectTrigger id="listing_type">
+                        <SelectValue placeholder="Entire place / Room" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {LISTING_TYPES.map((t) => (
+                          <SelectItem key={t.value} value={t.value}>
+                            {t.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
                 <div className="grid gap-4 sm:grid-cols-3">
                   <div className="space-y-2">
                     <Label htmlFor="bedrooms">
@@ -482,31 +555,48 @@ export function PropertyFormModal({
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="monthly_rent">
-                    Monthly Rent (KES) *
-                  </Label>
-                  <Input
-                    id="monthly_rent"
-                    type="number"
-                    min="0"
-                    value={formData.monthly_rent}
-                    onChange={(e) =>
-                      setFormData({ ...formData, monthly_rent: e.target.value })
-                    }
-                    placeholder="85000"
-                    aria-invalid={errors.monthly_rent ? "true" : "false"}
-                    aria-describedby={errors.monthly_rent ? "monthly_rent-error" : undefined}
-                    className={cn(
-                      errors.monthly_rent && "border-red-500 dark:border-red-500 focus-visible:ring-red-500"
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="monthly_rent">
+                      Monthly Rent (KES) *
+                    </Label>
+                    <Input
+                      id="monthly_rent"
+                      type="number"
+                      min="0"
+                      value={formData.monthly_rent}
+                      onChange={(e) =>
+                        setFormData({ ...formData, monthly_rent: e.target.value })
+                      }
+                      placeholder="85000"
+                      aria-invalid={errors.monthly_rent ? "true" : "false"}
+                      aria-describedby={errors.monthly_rent ? "monthly_rent-error" : undefined}
+                      className={cn(
+                        errors.monthly_rent && "border-red-500 dark:border-red-500 focus-visible:ring-red-500"
+                      )}
+                    />
+                    {errors.monthly_rent && (
+                      <p id="monthly_rent-error" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1" role="alert">
+                        <ExclamationCircleIcon className="h-4 w-4" />
+                        {errors.monthly_rent}
+                      </p>
                     )}
-                  />
-                  {errors.monthly_rent && (
-                    <p id="monthly_rent-error" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1" role="alert">
-                      <ExclamationCircleIcon className="h-4 w-4" />
-                      {errors.monthly_rent}
-                    </p>
-                  )}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="base_price">
+                      Base price (nightly or sale, KES)
+                    </Label>
+                    <Input
+                      id="base_price"
+                      type="number"
+                      min="0"
+                      value={formData.base_price}
+                      onChange={(e) =>
+                        setFormData({ ...formData, base_price: e.target.value })
+                      }
+                      placeholder="Short stay nightly or buy price"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

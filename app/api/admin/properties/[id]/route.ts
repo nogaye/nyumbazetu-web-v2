@@ -46,6 +46,9 @@ export async function PATCH(
     if (body.bathrooms !== undefined) updateData.bathrooms = parseInt(body.bathrooms, 10);
     if (body.size_sqm !== undefined) updateData.size_sqm = body.size_sqm ? parseInt(body.size_sqm, 10) : null;
     if (body.property_type !== undefined) updateData.property_type = body.property_type;
+    if (body.listing_purpose !== undefined) updateData.listing_purpose = body.listing_purpose;
+    if (body.listing_type !== undefined) updateData.listing_type = body.listing_type;
+    if (body.base_price !== undefined) updateData.base_price = body.base_price != null && body.base_price !== "" ? parseFloat(body.base_price) : null;
     if (body.is_tps_available !== undefined) updateData.is_tps_available = body.is_tps_available;
     if (body.is_verified !== undefined) updateData.is_verified = body.is_verified;
 

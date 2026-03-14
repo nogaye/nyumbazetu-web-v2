@@ -101,10 +101,13 @@ export async function POST(request: NextRequest) {
       city,
       area,
       monthly_rent,
+      base_price,
       bedrooms,
       bathrooms,
       size_sqm,
       property_type,
+      listing_purpose,
+      listing_type,
       is_tps_available,
       is_verified,
     } = body;
@@ -133,23 +136,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const insertPayload: Record<string, unknown> = {
+      title,
+      slug,
+      description: description || null,
+      city,
+      area,
+      monthly_rent: parseInt(monthly_rent, 10),
+      bedrooms: parseInt(bedrooms, 10),
+      bathrooms: parseInt(bathrooms, 10),
+      size_sqm: size_sqm ? parseInt(size_sqm, 10) : null,
+      property_type,
+      listing_purpose: listing_purpose || "rent",
+      listing_type: listing_type || "entire_place",
+      is_tps_available: is_tps_available || false,
+      is_verified: is_verified || false,
+    };
+    if (base_price != null && base_price !== "") {
+      insertPayload.base_price = parseFloat(base_price);
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
     const { data, error } = await (supabaseAdmin as any)
       .from("tb_listing_properties")
-      .insert({
-        title,
-        slug,
-        description: description || null,
-        city,
-        area,
-        monthly_rent: parseInt(monthly_rent, 10),
-        bedrooms: parseInt(bedrooms, 10),
-        bathrooms: parseInt(bathrooms, 10),
-        size_sqm: size_sqm ? parseInt(size_sqm, 10) : null,
-        property_type,
-        is_tps_available: is_tps_available || false,
-        is_verified: is_verified || false,
-      })
+      .insert(insertPayload)
       .select()
       .single();
 
