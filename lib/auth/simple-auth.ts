@@ -1,9 +1,9 @@
 /**
  * Simple Authentication System
- * 
+ *
  * This is a basic authentication system using session cookies.
  * For production, consider using NextAuth.js or a more robust solution.
- * 
+ *
  * This implementation:
  * - Uses HTTP-only cookies for sessions
  * - Stores sessions in memory (for production, use Redis or database)
@@ -12,14 +12,24 @@
 
 import { cookies } from "next/headers";
 import { supabaseAdmin } from "@/lib/supabase/server";
-import crypto from "crypto";
 
-const SESSION_SECRET = process.env.SUPABASE_SESSION_SECRET || "change-this-in-production";
+/** Generates a cryptographically random session ID (hex). Uses Web Crypto so it works in both Node and Edge runtimes. */
+function randomSessionId(): string {
+  const bytes = new Uint8Array(32);
+  globalThis.crypto.getRandomValues(bytes);
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+const SESSION_SECRET =
+  process.env.SUPABASE_SESSION_SECRET || "change-this-in-production";
 const SESSION_COOKIE_NAME = "admin_session";
 const SESSION_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 // In-memory session store (use Redis in production)
-const sessions = new Map<string, { userId: string; email: string; role: string; expiresAt: number }>();
+const sessions = new Map<
+  string,
+  { userId: string; email: string; role: string; expiresAt: number }
+>();
 
 interface AdminUser {
   id: string;
@@ -34,7 +44,7 @@ interface AdminUser {
  */
 export async function verifyAdminCredentials(
   email: string,
-  password: string
+  password: string,
 ): Promise<AdminUser | null> {
   if (!supabaseAdmin) {
     console.error("Supabase not configured");
@@ -43,8 +53,7 @@ export async function verifyAdminCredentials(
 
   try {
     // Fetch admin user
-    const { data, error } = await (supabaseAdmin
-      .from("admin_users") as any)
+    const { data, error } = await (supabaseAdmin.from("admin_users") as any)
       .select("id, email, name, role, password_hash, is_active")
       .eq("email", email.toLowerCase())
       .eq("is_active", true)
@@ -90,7 +99,7 @@ export async function verifyAdminCredentials(
  * Create a session for an admin user
  */
 export async function createSession(user: AdminUser): Promise<string> {
-  const sessionId = crypto.randomBytes(32).toString("hex");
+  const sessionId = randomSessionId();
   const expiresAt = Date.now() + SESSION_DURATION;
 
   sessions.set(sessionId, {
@@ -187,5 +196,3 @@ export function cleanupExpiredSessions() {
     }
   }
 }
-
-

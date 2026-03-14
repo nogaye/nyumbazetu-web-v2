@@ -28,12 +28,15 @@ interface ContactOwnerButtonProps {
   propertyTitle: string;
   propertyId: string;
   propertySlug?: string;
+  /** Button label; defaults to "Contact Owner". Use "Reserve" for booking card context. */
+  buttonLabel?: string;
 }
 
 export function ContactOwnerButton({
   propertyTitle,
   propertyId,
   propertySlug,
+  buttonLabel = "Contact Owner",
 }: ContactOwnerButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -144,7 +147,7 @@ export function ContactOwnerButton({
   return (
     <>
       <Button className="w-full" size="lg" onClick={() => setIsOpen(true)}>
-        Contact Owner
+        {buttonLabel}
       </Button>
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetContent className="overflow-y-auto">

@@ -1,7 +1,13 @@
 "use client";
 
+/**
+ * Property image gallery with large hero + 2x2 thumbnail grid layout.
+ * Displays one main image on the left and up to four thumbnails on the right;
+ * "Show all photos" overlay on the last thumbnail opens fullscreen lightbox.
+ */
+
 import { useState, useEffect, useCallback } from "react";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Grid3X3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PropertyImage } from "@/components/listings/PropertyImage";
 import { cn } from "@/lib/utils";
@@ -17,182 +23,151 @@ interface PropertyImageGalleryProps {
   className?: string;
 }
 
+/**
+ * Returns the image index for the nth thumbnail (1–4) when the main image is at selectedIndex.
+ * Thumbnails show the next four indices wrapping around.
+ */
+function thumbnailIndex(selectedIndex: number, n: number, slot: 1 | 2 | 3 | 4): number {
+  return (selectedIndex + slot) % n;
+}
+
 export function PropertyImageGallery({
   images,
   propertyTitle,
   className,
 }: PropertyImageGalleryProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   if (images.length === 0) {
     return null;
   }
 
-  const currentImage = images[currentIndex];
+  const mainImage = images[selectedIndex];
 
   const goToPrevious = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+    setSelectedIndex((prev) => (prev - 1 + images.length) % images.length);
   }, [images.length]);
 
   const goToNext = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
+    setSelectedIndex((prev) => (prev + 1) % images.length);
   }, []);
 
   const goToImage = (index: number) => {
-    setCurrentIndex(index);
+    setSelectedIndex(index);
   };
 
-  // Keyboard navigation
+  // Keyboard navigation in fullscreen
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Only handle keyboard shortcuts when fullscreen is open
-      if (!isFullscreen) {
-        return;
-      }
-
+      if (!isFullscreen) return;
       switch (e.key) {
-        case 'ArrowLeft':
+        case "ArrowLeft":
           e.preventDefault();
           goToPrevious();
           break;
-        case 'ArrowRight':
+        case "ArrowRight":
           e.preventDefault();
           goToNext();
           break;
-        case 'Escape':
+        case "Escape":
           e.preventDefault();
           setIsFullscreen(false);
           break;
-        case 'Home':
+        case "Home":
           e.preventDefault();
-          setCurrentIndex(0);
+          setSelectedIndex(0);
           break;
-        case 'End':
+        case "End":
           e.preventDefault();
-          setCurrentIndex(images.length - 1);
+          setSelectedIndex(images.length - 1);
           break;
       }
     };
-
-    if (isFullscreen) {
-      window.addEventListener('keydown', handleKeyDown);
-    }
-    
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
+    if (isFullscreen) window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isFullscreen, images.length, goToPrevious, goToNext]);
+
+  const hasMultiple = images.length > 1;
+  const thumbSlots = Math.min(4, hasMultiple ? images.length : 0);
+  const showAllPhotosOverlay = images.length > 5;
 
   return (
     <>
-      {/* Main Gallery */}
-      <div className="relative mb-4">
-        {/* Main Image */}
-        <div
-          className={cn(
-            "relative aspect-video w-full overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-800",
-            className
-          )}
-        >
-          <PropertyImage
-            src={currentImage.url}
-            alt={currentImage.alt || propertyTitle}
-            fill
-            className="object-cover"
-            placeholder={currentImage.blurDataURL ? "blur" : "empty"}
-            blurDataURL={currentImage.blurDataURL}
-            priority={currentIndex === 0}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px"
-            objectFit="cover"
-          />
+      {/* Main gallery: large left image + 2x2 grid on the right */}
+      <div className={cn("relative overflow-hidden rounded-xl", className)}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          {/* Large main image (left on desktop) */}
+          <div
+            className={cn(
+              "relative w-full overflow-hidden bg-slate-200 dark:bg-slate-800",
+              thumbSlots > 0 ? "aspect-[4/3] md:aspect-auto md:min-h-[340px]" : "aspect-video"
+            )}
+          >
+            <button
+              type="button"
+              className="absolute inset-0 block w-full h-full focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
+              onClick={() => setIsFullscreen(true)}
+              aria-label="View fullscreen"
+            >
+              <PropertyImage
+                src={mainImage.url}
+                alt={mainImage.alt || propertyTitle}
+                fill
+                className="object-cover"
+                placeholder={mainImage.blurDataURL ? "blur" : "empty"}
+                blurDataURL={mainImage.blurDataURL}
+                priority={selectedIndex === 0}
+                sizes="(max-width: 768px) 100vw, 55vw"
+                objectFit="cover"
+              />
+            </button>
+          </div>
 
-          {/* Navigation Arrows */}
-          {images.length > 1 && (
-            <>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute left-4 top-1/2 h-10 w-10 -translate-y-1/2 rounded-full bg-white/90 shadow-lg backdrop-blur-sm hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-800"
-                onClick={goToPrevious}
-                aria-label="Previous image"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute right-4 top-1/2 h-10 w-10 -translate-y-1/2 rounded-full bg-white/90 shadow-lg backdrop-blur-sm hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-800"
-                onClick={goToNext}
-                aria-label="Next image"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </Button>
-            </>
-          )}
+          {/* 2x2 thumbnail grid (right on desktop) */}
+          {thumbSlots > 0 && (
+            <div className="grid grid-cols-2 gap-2 aspect-[4/3] md:aspect-auto md:min-h-[340px]">
+              {([1, 2, 3, 4] as const).slice(0, thumbSlots).map((slot) => {
+                const idx = thumbnailIndex(selectedIndex, images.length, slot);
+                const img = images[idx];
+                const isLastSlot = slot === 4;
+                const showOverlay = isLastSlot && showAllPhotosOverlay;
 
-          {/* Image Counter */}
-          {images.length > 1 && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/50 px-3 py-1.5 text-sm font-medium text-white backdrop-blur-sm">
-              {currentIndex + 1} / {images.length}
+                return (
+                  <button
+                    key={slot}
+                    type="button"
+                    className={cn(
+                      "relative overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-800 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset",
+                      selectedIndex === idx && "ring-2 ring-primary ring-offset-2 ring-offset-slate-100 dark:ring-offset-slate-900"
+                    )}
+                    onClick={() => (showOverlay ? setIsFullscreen(true) : goToImage(idx))}
+                    aria-label={showOverlay ? "Show all photos" : `View image ${idx + 1}`}
+                  >
+                    <PropertyImage
+                      src={img.url}
+                      alt={img.alt || `${propertyTitle} - Image ${idx + 1}`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 50vw, 27vw"
+                      loading="lazy"
+                      objectFit="cover"
+                    />
+                    {showOverlay && (
+                      <span className="absolute inset-0 flex items-center justify-center gap-1.5 bg-black/40 text-white text-sm font-medium rounded-lg">
+                        <Grid3X3 className="h-4 w-4" aria-hidden />
+                        Show all photos
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
             </div>
           )}
-
-          {/* Fullscreen Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-4 top-4 h-10 w-10 rounded-full bg-white/90 shadow-lg backdrop-blur-sm hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-800"
-            onClick={() => setIsFullscreen(true)}
-            aria-label="View fullscreen"
-          >
-            <svg
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
-              />
-            </svg>
-          </Button>
         </div>
-
-        {/* Thumbnail Navigation */}
-        {images.length > 1 && (
-          <div className="mt-4 flex gap-2 overflow-x-auto pb-2">
-            {images.map((image, index) => (
-              <button
-                key={index}
-                onClick={() => goToImage(index)}
-                className={cn(
-                  "relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border-2 transition-all",
-                  currentIndex === index
-                    ? "border-primary ring-2 ring-primary/20"
-                    : "border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600"
-                )}
-                aria-label={`View image ${index + 1}`}
-              >
-                <PropertyImage
-                  src={image.url}
-                  alt={`${propertyTitle} - Image ${index + 1}`}
-                  fill
-                  className="object-cover"
-                  sizes="80px"
-                  loading="lazy"
-                  objectFit="cover"
-                />
-              </button>
-            ))}
-          </div>
-        )}
       </div>
 
-      {/* Fullscreen Modal */}
+      {/* Fullscreen lightbox */}
       {isFullscreen && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm"
@@ -201,7 +176,7 @@ export function PropertyImageGallery({
           <Button
             variant="ghost"
             size="icon"
-            className="absolute right-4 top-4 h-10 w-10 rounded-full bg-white/10 text-white hover:bg-white/20"
+            className="absolute right-4 top-4 z-10 h-10 w-10 rounded-full bg-white/10 text-white hover:bg-white/20"
             onClick={() => setIsFullscreen(false)}
             aria-label="Close fullscreen"
           >
@@ -213,7 +188,7 @@ export function PropertyImageGallery({
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute left-4 top-1/2 h-12 w-12 -translate-y-1/2 rounded-full bg-white/10 text-white hover:bg-white/20"
+                className="absolute left-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 rounded-full bg-white/10 text-white hover:bg-white/20"
                 onClick={(e) => {
                   e.stopPropagation();
                   goToPrevious();
@@ -225,7 +200,7 @@ export function PropertyImageGallery({
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute right-4 top-1/2 h-12 w-12 -translate-y-1/2 rounded-full bg-white/10 text-white hover:bg-white/20"
+                className="absolute right-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 rounded-full bg-white/10 text-white hover:bg-white/20"
                 onClick={(e) => {
                   e.stopPropagation();
                   goToNext();
@@ -243,22 +218,21 @@ export function PropertyImageGallery({
           >
             <div className="relative h-full w-full">
               <PropertyImage
-                src={currentImage.url}
-                alt={currentImage.alt || propertyTitle}
+                src={mainImage.url}
+                alt={mainImage.alt || propertyTitle}
                 fill
                 className="object-contain"
-                placeholder={currentImage.blurDataURL ? "blur" : "empty"}
-                blurDataURL={currentImage.blurDataURL}
+                placeholder={mainImage.blurDataURL ? "blur" : "empty"}
+                blurDataURL={mainImage.blurDataURL}
                 sizes="100vw"
                 objectFit="contain"
               />
             </div>
           </div>
 
-          {/* Image Counter in Fullscreen */}
           {images.length > 1 && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/50 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm">
-              {currentIndex + 1} / {images.length}
+            <div className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 rounded-full bg-black/50 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm">
+              {selectedIndex + 1} / {images.length}
             </div>
           )}
         </div>
