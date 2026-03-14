@@ -8,6 +8,7 @@
 import Link from "next/link";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { SignalIcon } from "@heroicons/react/24/outline";
 import {
   TwitterIcon,
   LinkedInIcon,
@@ -366,7 +367,7 @@ export function SiteFooter() {
               </Link>
             ))}
 
-            {/* System Status – links to status.nyumbazetu.com */}
+            {/* System Status – links to status.nyumbazetu.com; status icon with throbbing green like operational indicator */}
             <a
               href={EXTERNAL_RESOURCES.status.href}
               target="_blank"
@@ -374,9 +375,9 @@ export function SiteFooter() {
               className="flex items-center gap-2 text-sm text-slate-400 hover:text-primary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded"
               aria-label="System Status – check platform uptime and incidents"
             >
-              <div className="relative flex-shrink-0">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <div className="absolute inset-0 w-2 h-2 bg-green-500 rounded-full animate-ping opacity-75" />
+              <div className="relative flex-shrink-0 flex items-center justify-center">
+                <span className="absolute inline-flex h-4 w-4 rounded-full bg-green-500/40 animate-ping" aria-hidden />
+                <SignalIcon className="h-4 w-4 text-green-500 animate-pulse stroke-[2.5]" aria-hidden />
               </div>
               <span className="text-xs">All Systems Operational</span>
             </a>
