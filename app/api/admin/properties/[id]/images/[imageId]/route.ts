@@ -17,7 +17,12 @@ export async function PATCH(
   try {
     // TODO: Add authentication check
 
-    const { id: propertyId, imageId } = await params;
+    const { id, imageId } = await params;
+    const propertyId = Number(id);
+    const imageIdNum = Number(imageId);
+    if (Number.isNaN(propertyId) || Number.isNaN(imageIdNum)) {
+      return NextResponse.json({ error: "Invalid property or image id" }, { status: 400 });
+    }
     const body = await request.json();
 
     if (!supabaseAdmin) {
@@ -32,7 +37,7 @@ export async function PATCH(
     const { data: image, error: imageError } = await (supabaseAdmin as any)
       .from("tb_listing_images")
       .select("*")
-      .eq("id", imageId)
+      .eq("id", imageIdNum)
       .eq("property_id", propertyId)
       .single();
 
@@ -53,7 +58,7 @@ export async function PATCH(
         .from("tb_listing_images")
         .update({ is_cover: false })
         .eq("property_id", propertyId)
-        .neq("id", imageId);
+        .neq("id", imageIdNum);
 
       updateData.is_cover = true;
     } else if (body.is_cover === false) {
@@ -76,7 +81,7 @@ export async function PATCH(
     const { data, error } = await (supabaseAdmin as any)
       .from("tb_listing_images")
       .update(updateData)
-      .eq("id", imageId)
+      .eq("id", imageIdNum)
       .select()
       .single();
 
@@ -121,7 +126,12 @@ export async function DELETE(
   try {
     // TODO: Add authentication check
 
-    const { id: propertyId, imageId } = await params;
+    const { id, imageId } = await params;
+    const propertyId = Number(id);
+    const imageIdNum = Number(imageId);
+    if (Number.isNaN(propertyId) || Number.isNaN(imageIdNum)) {
+      return NextResponse.json({ error: "Invalid property or image id" }, { status: 400 });
+    }
 
     if (!supabaseAdmin) {
       return NextResponse.json(
@@ -135,7 +145,7 @@ export async function DELETE(
     const { data: image, error: imageError } = await (supabaseAdmin as any)
       .from("tb_listing_images")
       .select("storage_path")
-      .eq("id", imageId)
+      .eq("id", imageIdNum)
       .eq("property_id", propertyId)
       .single();
 
@@ -161,7 +171,7 @@ export async function DELETE(
     const { error: dbError } = await (supabaseAdmin as any)
       .from("tb_listing_images")
       .delete()
-      .eq("id", imageId);
+      .eq("id", imageIdNum);
 
     if (dbError) {
       console.error("Error deleting image record:", dbError);

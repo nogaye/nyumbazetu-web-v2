@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "seed": "node scripts/seed-database.js",
     "seed:one": "node scripts/seed-one-property-with-images.js"
   },
   "dependencies": {

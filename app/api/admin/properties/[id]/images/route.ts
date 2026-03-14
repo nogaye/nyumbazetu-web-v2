@@ -21,7 +21,11 @@ export async function POST(
   try {
     // TODO: Add authentication check
 
-    const { id: propertyId } = await params;
+    const { id } = await params;
+    const propertyId = Number(id);
+    if (Number.isNaN(propertyId)) {
+      return NextResponse.json({ error: "Invalid property id" }, { status: 400 });
+    }
 
     if (!supabaseAdmin) {
       return NextResponse.json(
@@ -206,7 +210,11 @@ export async function GET(
   try {
     // TODO: Add authentication check
 
-    const { id: propertyId } = await params;
+    const { id } = await params;
+    const propertyId = Number(id);
+    if (Number.isNaN(propertyId)) {
+      return NextResponse.json({ error: "Invalid property id" }, { status: 400 });
+    }
 
     if (!supabaseAdmin) {
       return NextResponse.json(
@@ -231,7 +239,7 @@ export async function GET(
     }
 
     // Get public URLs for all images
-    const imagesWithUrls = (data || []).map((img: { storage_path: string; id: string }) => {
+    const imagesWithUrls = (data || []).map((img: { storage_path: string; id: number }) => {
       if (!supabaseAdmin) {
         return { ...img, url: "" };
       }

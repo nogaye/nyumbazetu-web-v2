@@ -22,7 +22,8 @@ export interface Database {
     Tables: {
       tb_listing_properties: {
         Row: {
-          id: string;
+          /** Primary key (BIGSERIAL). */
+          id: number;
           title: string;
           slug: string;
           description: string | null;
@@ -39,7 +40,8 @@ export interface Database {
           updated_at: string;
         };
         Insert: {
-          id?: string;
+          /** Omitted for insert; server assigns BIGSERIAL. */
+          id?: number;
           title: string;
           slug: string;
           description?: string | null;
@@ -56,7 +58,7 @@ export interface Database {
           updated_at?: string;
         };
         Update: {
-          id?: string;
+          id?: number;
           title?: string;
           slug?: string;
           description?: string | null;
@@ -75,24 +77,26 @@ export interface Database {
       };
       tb_listing_images: {
         Row: {
-          id: string;
-          property_id: string;
+          /** Primary key (BIGSERIAL). */
+          id: number;
+          /** Property this image belongs to (FK to tb_listing_properties.id). */
+          property_id: number;
           storage_path: string;
           is_cover: boolean;
           position: number;
           created_at: string;
         };
         Insert: {
-          id?: string;
-          property_id: string;
+          id?: number;
+          property_id: number;
           storage_path: string;
           is_cover?: boolean;
           position?: number;
           created_at?: string;
         };
         Update: {
-          id?: string;
-          property_id?: string;
+          id?: number;
+          property_id?: number;
           storage_path?: string;
           is_cover?: boolean;
           position?: number;
@@ -101,8 +105,10 @@ export interface Database {
       };
       tb_listing_inquiries: {
         Row: {
-          id: string;
-          property_id: string | null;
+          /** Primary key (BIGSERIAL). */
+          id: number;
+          /** Property the inquiry is about; NULL if property was deleted. */
+          property_id: number | null;
           property_slug: string | null;
           property_title: string | null;
           name: string;
@@ -116,8 +122,8 @@ export interface Database {
           updated_at: string;
         };
         Insert: {
-          id?: string;
-          property_id?: string | null;
+          id?: number;
+          property_id?: number | null;
           property_slug?: string | null;
           property_title?: string | null;
           name: string;
@@ -131,8 +137,8 @@ export interface Database {
           updated_at?: string;
         };
         Update: {
-          id?: string;
-          property_id?: string | null;
+          id?: number;
+          property_id?: number | null;
           property_slug?: string | null;
           property_title?: string | null;
           name?: string;

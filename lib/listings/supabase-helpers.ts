@@ -93,13 +93,16 @@ async function fetchListingsFromSupabase(
   const start = (page - 1) * PER_PAGE;
   const end = start + PER_PAGE - 1;
 
-  // Build the query
+  // Build the query: only active, published, non-deleted listings for public view
   let query = supabaseServer!
     .from('tb_listing_properties')
     .select(`
       *,
       tb_listing_images!left(storage_path, is_cover, position)
-    `, { count: 'exact' });
+    `, { count: 'exact' })
+    .eq('is_active', true)
+    .eq('is_published', true)
+    .eq('is_deleted', false);
 
   // Apply sorting
   const sortOption = filters.sort || 'recommended';
@@ -276,6 +279,9 @@ export async function fetchPropertyBySlug(slug: string): Promise<Property | null
       .from('tb_listing_properties')
       .select('*')
       .eq('slug', slug)
+      .eq('is_active', true)
+      .eq('is_published', true)
+      .eq('is_deleted', false)
       .single();
 
     if (error) {

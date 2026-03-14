@@ -54,7 +54,10 @@ export async function GET(request: NextRequest) {
     }
 
     if (propertyId) {
-      query = query.eq("property_id", propertyId);
+      const propertyIdNum = Number(propertyId);
+      if (!Number.isNaN(propertyIdNum)) {
+        query = query.eq("property_id", propertyIdNum);
+      }
     }
 
     const { data, error, count } = await query;
@@ -98,11 +101,15 @@ export async function PATCH(request: NextRequest) {
     const body = await request.json();
     const { id, status } = body;
 
-    if (!id || !status) {
+    if (id === undefined || id === null || !status) {
       return NextResponse.json(
         { error: "id and status are required" },
         { status: 400 }
       );
+    }
+    const idNum = Number(id);
+    if (Number.isNaN(idNum)) {
+      return NextResponse.json({ error: "Invalid inquiry id" }, { status: 400 });
     }
 
     const validStatuses = ["new", "contacted", "viewing_scheduled", "closed"];
@@ -124,7 +131,7 @@ export async function PATCH(request: NextRequest) {
     const { data, error } = await (supabaseAdmin as any)
       .from("tb_listing_inquiries")
       .update({ status })
-      .eq("id", id)
+      .eq("id", idNum)
       .select()
       .single();
 

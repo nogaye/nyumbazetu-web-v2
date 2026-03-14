@@ -330,9 +330,9 @@ export function ListingDateRangeCalendar({
           {name}
         </p>
         <div className="grid grid-cols-7 gap-1 text-center">
-          {WEEKDAYS.map((w) => (
+          {WEEKDAYS.map((w, i) => (
             <span
-              key={w}
+              key={`weekday-${i}`}
               className="text-xs text-slate-500 dark:text-slate-400"
             >
               {w}

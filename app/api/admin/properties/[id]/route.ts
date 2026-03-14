@@ -21,6 +21,10 @@ export async function PATCH(
     // TODO: Add authentication check
 
     const { id } = await params;
+    const idNum = Number(id);
+    if (Number.isNaN(idNum)) {
+      return NextResponse.json({ error: "Invalid property id" }, { status: 400 });
+    }
     const body = await request.json();
 
     if (!supabaseAdmin) {
@@ -49,7 +53,7 @@ export async function PATCH(
     const { data, error } = await (supabaseAdmin as any)
       .from("tb_listing_properties")
       .update(updateData)
-      .eq("id", id)
+      .eq("id", idNum)
       .select()
       .single();
 
@@ -86,6 +90,10 @@ export async function DELETE(
     // TODO: Add authentication check
 
     const { id } = await params;
+    const idNum = Number(id);
+    if (Number.isNaN(idNum)) {
+      return NextResponse.json({ error: "Invalid property id" }, { status: 400 });
+    }
 
     if (!supabaseAdmin) {
       return NextResponse.json(
@@ -98,7 +106,7 @@ export async function DELETE(
     const { error } = await (supabaseAdmin as any)
       .from("tb_listing_properties")
       .delete()
-      .eq("id", id);
+      .eq("id", idNum);
 
     if (error) {
       console.error("Error deleting property:", error);

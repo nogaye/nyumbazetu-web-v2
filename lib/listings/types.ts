@@ -16,7 +16,8 @@ export type PropertyType =
   | "studio";
 
 export interface Property {
-  id: string;
+  /** Primary key (BIGSERIAL). */
+  id: number;
   title: string;
   slug: string;
   description: string;
@@ -34,8 +35,10 @@ export interface Property {
 }
 
 export interface PropertyImage {
-  id: string;
-  property_id: string;
+  /** Primary key (BIGSERIAL). */
+  id: number;
+  /** Property this image belongs to (FK to tb_listing_properties.id). */
+  property_id: number;
   storage_path: string;
   is_cover: boolean;
   position: number;

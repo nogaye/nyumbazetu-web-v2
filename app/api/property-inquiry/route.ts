@@ -39,8 +39,12 @@ export async function POST(request: NextRequest) {
 
     // If Supabase is configured, store the inquiry
     if (supabaseAdmin) {
+      const propertyIdNum =
+        propertyId != null && propertyId !== ""
+          ? Number(propertyId)
+          : null;
       const inquiryData = {
-        property_id: propertyId || null,
+        property_id: propertyIdNum != null && !Number.isNaN(propertyIdNum) ? propertyIdNum : null,
         property_slug: propertySlug || null,
         property_title: propertyTitle || null,
         name: name.trim(),

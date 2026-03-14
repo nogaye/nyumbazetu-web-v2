@@ -31,8 +31,10 @@ import {
 } from "@heroicons/react/24/outline";
 
 interface Inquiry {
-  id: string;
-  property_id: string | null;
+  /** Primary key (BIGSERIAL). */
+  id: number;
+  /** Property the inquiry is about; null if deleted. */
+  property_id: number | null;
   property_title: string | null;
   name: string;
   email: string;
