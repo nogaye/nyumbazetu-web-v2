@@ -30,7 +30,7 @@ export async function PATCH(
     // Verify image belongs to property
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
     const { data: image, error: imageError } = await (supabaseAdmin as any)
-      .from("property_images")
+      .from("tb_listing_images")
       .select("*")
       .eq("id", imageId)
       .eq("property_id", propertyId)
@@ -50,7 +50,7 @@ export async function PATCH(
       // Unset all other cover images for this property
       // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
       await (supabaseAdmin as any)
-        .from("property_images")
+        .from("tb_listing_images")
         .update({ is_cover: false })
         .eq("property_id", propertyId)
         .neq("id", imageId);
@@ -74,7 +74,7 @@ export async function PATCH(
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
     const { data, error } = await (supabaseAdmin as any)
-      .from("property_images")
+      .from("tb_listing_images")
       .update(updateData)
       .eq("id", imageId)
       .select()
@@ -133,7 +133,7 @@ export async function DELETE(
     // Get image record to get storage path
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
     const { data: image, error: imageError } = await (supabaseAdmin as any)
-      .from("property_images")
+      .from("tb_listing_images")
       .select("storage_path")
       .eq("id", imageId)
       .eq("property_id", propertyId)
@@ -159,7 +159,7 @@ export async function DELETE(
     // Delete from database
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
     const { error: dbError } = await (supabaseAdmin as any)
-      .from("property_images")
+      .from("tb_listing_images")
       .delete()
       .eq("id", imageId);
 

@@ -33,7 +33,7 @@ export async function POST(
     // Verify property exists
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types infer as never with our Database shape
     const { data: property, error: propertyError } = await (supabaseAdmin as any)
-      .from("properties")
+      .from("tb_listing_properties")
       .select("id")
       .eq("id", propertyId)
       .single();
@@ -76,7 +76,7 @@ export async function POST(
     // Get current max position for this property
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
     const { data: existingImages } = await (supabaseAdmin as any)
-      .from("property_images")
+      .from("tb_listing_images")
       .select("position")
       .eq("property_id", propertyId)
       .order("position", { ascending: false })
@@ -90,7 +90,7 @@ export async function POST(
     // Check if there's already a cover image
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
     const { data: coverImage } = await (supabaseAdmin as any)
-      .from("property_images")
+      .from("tb_listing_images")
       .select("id")
       .eq("property_id", propertyId)
       .eq("is_cover", true)
@@ -132,7 +132,7 @@ export async function POST(
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
         const { data: imageRecord, error: dbError } = await (supabaseAdmin as any)
-          .from("property_images")
+          .from("tb_listing_images")
           .insert({
             property_id: propertyId,
             storage_path: storagePath,
@@ -217,7 +217,7 @@ export async function GET(
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
     const { data, error } = await (supabaseAdmin as any)
-      .from("property_images")
+      .from("tb_listing_images")
       .select("*")
       .eq("property_id", propertyId)
       .order("position", { ascending: true });

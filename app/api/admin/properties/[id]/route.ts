@@ -47,7 +47,7 @@ export async function PATCH(
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
     const { data, error } = await (supabaseAdmin as any)
-      .from("properties")
+      .from("tb_listing_properties")
       .update(updateData)
       .eq("id", id)
       .select()
@@ -96,7 +96,7 @@ export async function DELETE(
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
     const { error } = await (supabaseAdmin as any)
-      .from("properties")
+      .from("tb_listing_properties")
       .delete()
       .eq("id", id);
 

@@ -228,14 +228,14 @@ async function uploadImage(propertyId, imageName, source) {
  */
 async function deleteExistingBySlug(slug) {
   const { data: existing } = await supabase
-    .from('properties')
+    .from('tb_listing_properties')
     .select('id')
     .eq('slug', slug)
     .maybeSingle();
   if (!existing) return null;
   const id = existing.id;
   const { data: images } = await supabase
-    .from('property_images')
+    .from('tb_listing_images')
     .select('storage_path')
     .eq('property_id', id);
   const paths = (images || [])
@@ -245,14 +245,14 @@ async function deleteExistingBySlug(slug) {
   if (paths.length) {
     await supabase.storage.from('property-images').remove(paths);
   }
-  await supabase.from('property_images').delete().eq('property_id', id);
-  await supabase.from('properties').delete().eq('id', id);
+  await supabase.from('tb_listing_images').delete().eq('property_id', id);
+  await supabase.from('tb_listing_properties').delete().eq('id', id);
   console.log(`  🔄 Replaced existing property ${id} (slug: ${slug}).`);
   return id;
 }
 
 /**
- * Seed one listing: insert property, generate or fetch images, upload, insert property_images.
+ * Seed one listing: insert property, generate or fetch images, upload, insert tb_listing_images.
  * @param {typeof SEED_LISTINGS[0]} listing - Seed config (slug, record, prompts, useHd).
  * @param {import('openai').OpenAI | null} openai - OpenAI client when key is set.
  * @returns {Promise<{ propertyId: string; imagesInserted: number }>}
@@ -265,7 +265,7 @@ async function seedOneListing(listing, openai) {
 
   const insertPayload = { ...record, slug };
   const { data: property, error: insertError } = await supabase
-    .from('properties')
+    .from('tb_listing_properties')
     .insert(insertPayload)
     .select('id')
     .single();
@@ -305,8 +305,8 @@ async function seedOneListing(listing, openai) {
     position: index,
   }));
 
-  const { error: imagesError } = await supabase.from('property_images').insert(imageRows);
-  if (imagesError) throw new Error(`Failed to insert property_images: ${imagesError.message}`);
+  const { error: imagesError } = await supabase.from('tb_listing_images').insert(imageRows);
+  if (imagesError) throw new Error(`Failed to insert tb_listing_images: ${imagesError.message}`);
 
   console.log(`  ✅ Inserted ${imageRows.length} image records.`);
   return { propertyId, imagesInserted: imageRows.length };

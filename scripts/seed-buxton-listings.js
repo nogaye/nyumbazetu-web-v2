@@ -70,14 +70,14 @@ const BUXTON_UNITS = [
  */
 async function deleteExistingBySlug(slug) {
   const { data: existing } = await supabase
-    .from('properties')
+    .from('tb_listing_properties')
     .select('id')
     .eq('slug', slug)
     .maybeSingle();
   if (!existing) return null;
   const id = existing.id;
   const { data: images } = await supabase
-    .from('property_images')
+    .from('tb_listing_images')
     .select('storage_path')
     .eq('property_id', id);
   const paths = (images || [])
@@ -87,8 +87,8 @@ async function deleteExistingBySlug(slug) {
   if (paths.length) {
     await supabase.storage.from('property-images').remove(paths);
   }
-  await supabase.from('property_images').delete().eq('property_id', id);
-  await supabase.from('properties').delete().eq('id', id);
+  await supabase.from('tb_listing_images').delete().eq('property_id', id);
+  await supabase.from('tb_listing_properties').delete().eq('id', id);
   console.log(`  🔄 Replaced existing property ${id} (slug: ${slug}).`);
   return id;
 }
@@ -157,7 +157,7 @@ async function seedOneBuxtonUnit(config) {
   };
 
   const { data: property, error: insertError } = await supabase
-    .from('properties')
+    .from('tb_listing_properties')
     .insert(record)
     .select('id')
     .single();
@@ -187,8 +187,8 @@ async function seedOneBuxtonUnit(config) {
   }));
 
   if (imageRows.length) {
-    const { error: imagesError } = await supabase.from('property_images').insert(imageRows);
-    if (imagesError) throw new Error(`Failed to insert property_images: ${imagesError.message}`);
+    const { error: imagesError } = await supabase.from('tb_listing_images').insert(imageRows);
+    if (imagesError) throw new Error(`Failed to insert tb_listing_images: ${imagesError.message}`);
   }
 
   console.log(`  ✅ Inserted property + ${imageRows.length} image records.`);

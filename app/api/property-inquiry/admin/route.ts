@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
     let query = (supabaseAdmin as any)
-      .from("property_inquiries")
+      .from("tb_listing_inquiries")
       .select("*", { count: "exact" })
       .order("created_at", { ascending: false })
       .range(offset, offset + limit - 1);
@@ -122,7 +122,7 @@ export async function PATCH(request: NextRequest) {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase builder types
     const { data, error } = await (supabaseAdmin as any)
-      .from("property_inquiries")
+      .from("tb_listing_inquiries")
       .update({ status })
       .eq("id", id)
       .select()

@@ -95,10 +95,10 @@ async function fetchListingsFromSupabase(
 
   // Build the query
   let query = supabaseServer!
-    .from('properties')
+    .from('tb_listing_properties')
     .select(`
       *,
-      property_images!left(storage_path, is_cover, position)
+      tb_listing_images!left(storage_path, is_cover, position)
     `, { count: 'exact' });
 
   // Apply sorting
@@ -173,9 +173,9 @@ async function fetchListingsFromSupabase(
   // Transform to ListingWithCoverImage format
   const listings: ListingWithCoverImage[] = (data || []).map((property: any) => {
     // Find cover image (is_cover = true or position = 0)
-    const coverImage = property.property_images?.find(
+    const coverImage = property.tb_listing_images?.find(
       (img: any) => img.is_cover || img.position === 0
-    ) || property.property_images?.[0];
+    ) || property.tb_listing_images?.[0];
 
     const coverImagePath = coverImage?.storage_path || `property-images/${property.id}/cover.webp`;
 
@@ -273,7 +273,7 @@ export async function fetchPropertyBySlug(slug: string): Promise<Property | null
 
   try {
     const { data, error } = await supabaseServer!
-      .from('properties')
+      .from('tb_listing_properties')
       .select('*')
       .eq('slug', slug)
       .single();
@@ -310,7 +310,7 @@ export async function fetchPropertyImages(propertyId: string): Promise<Array<{
 
   try {
     const { data, error } = await supabaseServer!
-      .from('property_images')
+      .from('tb_listing_images')
       .select('storage_path, position')
       .eq('property_id', propertyId)
       .order('position', { ascending: true });

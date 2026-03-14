@@ -20,7 +20,7 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      properties: {
+      tb_listing_properties: {
         Row: {
           id: string;
           title: string;
@@ -73,7 +73,7 @@ export interface Database {
           updated_at?: string;
         };
       };
-      property_images: {
+      tb_listing_images: {
         Row: {
           id: string;
           property_id: string;
@@ -99,7 +99,7 @@ export interface Database {
           created_at?: string;
         };
       };
-      property_inquiries: {
+      tb_listing_inquiries: {
         Row: {
           id: string;
           property_id: string | null;

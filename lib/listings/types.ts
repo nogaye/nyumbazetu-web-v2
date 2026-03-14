@@ -2,8 +2,8 @@
  * TypeScript types for property listings
  * 
  * These types match the Supabase schema:
- * - properties table
- * - property_images table
+ * - tb_listing_properties table
+ * - tb_listing_images table
  */
 
 export type PropertyType =
