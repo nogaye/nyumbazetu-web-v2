@@ -4,11 +4,14 @@
  * Single hero section for the marketing homepage.
  * Implements a 5-layer SaaS hero: credibility badge, vision headline, product explanation,
  * two CTAs, and social proof. Used on the modern homepage for clear above-the-fold messaging.
+ * Uses staggered entrance animations and SparklesIcon from the legacy home header.
  */
 
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CalendarDaysIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { SparklesIcon } from "@heroicons/react/24/solid";
 
 /** Credibility badge text; short trust statement above the headline. */
 const BADGE = "Built for Kenyan Property Managers";
@@ -18,7 +21,7 @@ const HEADLINE = "The operating system for Kenyan real estate";
 
 /** Clear product explanation: what the platform does (vision → explanation). */
 const SUBHEADLINE =
-  "Rent collection, accounting, tenant experience, and reporting — all on one platform.";
+  "Rent collection, property accounting, tenant communication, and reporting — all on one platform built for Kenya.";
 
 /** Social proof line; increases trust below the CTAs. */
 const SOCIAL_PROOF = "Trusted by property managers, estates, and banks";
@@ -27,25 +30,56 @@ export function HeroSingleV2() {
   return (
     <section className="relative bg-white dark:bg-slate-950 overflow-hidden min-h-[500px] md:min-h-[560px] lg:min-h-[600px] flex items-center">
       <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900" />
-      <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-24 lg:py-28 w-full">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* 1. Credibility badge */}
-          <p className="inline-block text-sm font-semibold text-primary mb-6 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
-            {BADGE}
-          </p>
+      {/* Decorative background elements (from LegacyHomeHeader) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+      </div>
+      <div className="relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-24 lg:py-28 w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto text-center"
+        >
+          {/* 1. Credibility badge — SparklesIcon and stagger from LegacyHomeHeader */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-primary mb-6 px-4 py-2 rounded-full bg-primary/10 border border-primary/20"
+          >
+            <SparklesIcon className="h-4 w-4" aria-hidden />
+            <span>{BADGE}</span>
+          </motion.div>
 
           {/* 2. Big vision headline */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight text-slate-900 dark:text-slate-50">
+          <motion.h1
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight text-slate-900 dark:text-slate-50"
+          >
             {HEADLINE}
-          </h1>
+          </motion.h1>
 
           {/* 3. Clear product explanation */}
-          <p className="text-lg md:text-xl lg:text-2xl text-slate-700 dark:text-slate-200 mb-10 leading-relaxed max-w-3xl mx-auto">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            className="text-lg md:text-xl lg:text-2xl text-slate-700 dark:text-slate-200 mb-10 leading-relaxed max-w-3xl mx-auto"
+          >
             {SUBHEADLINE}
-          </p>
+          </motion.p>
 
           {/* 4. Call to action — exactly two CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8"
+          >
             <Button
               size="lg"
               className="bg-primary hover:bg-primary-600 text-primary-foreground font-medium shadow-sm hover:shadow-md transition-all duration-200 rounded-lg"
@@ -53,7 +87,7 @@ export function HeroSingleV2() {
             >
               <Link href="/request-demo" className="flex items-center gap-2">
                 Request a demo
-                <CalendarDaysIcon className="h-4 w-4" />
+                <CalendarDaysIcon className="h-4 w-4" aria-hidden />
               </Link>
             </Button>
             <Button
@@ -64,16 +98,21 @@ export function HeroSingleV2() {
             >
               <Link href="/product" className="flex items-center gap-2">
                 Explore the platform
-                <ArrowRightIcon className="h-4 w-4" />
+                <ArrowRightIcon className="h-4 w-4" aria-hidden />
               </Link>
             </Button>
-          </div>
+          </motion.div>
 
           {/* 5. Social proof */}
-          <p className="text-sm text-slate-600 dark:text-slate-400">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7, duration: 0.5 }}
+            className="text-sm text-slate-600 dark:text-slate-400"
+          >
             {SOCIAL_PROOF}
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
       </div>
     </section>
   );

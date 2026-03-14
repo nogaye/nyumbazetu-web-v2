@@ -78,7 +78,7 @@ export default function Home() {
   return (
     <>
       <HeroSingleV2 />
-      <LegacyHomeHeader />
+      {/* <LegacyHomeHeader /> */}
       <LegacyTransactions />
       <LegacyHeadline />
       <LegacyAwards />
