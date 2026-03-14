@@ -108,13 +108,14 @@ function FooterColumnsGrid() {
       animate={inView ? "visible" : "hidden"}
     >
       {/* Brand Column — minimal: brand, one tagline, app badges, social links */}
-      <motion.div className="sm:col-span-2 lg:col-span-1" variants={staggerChild}>
+      <motion.div
+        className="sm:col-span-2 lg:col-span-1"
+        variants={staggerChild}
+      >
         <Link href="/" className="block mb-3">
           <div className="text-2xl font-bold text-white">Nyumba Zetu</div>
         </Link>
-        <p className="text-sm text-slate-300 mb-4 leading-relaxed">
-          Property management infrastructure for modern Kenyan real estate.
-        </p>
+
         <div className="mb-4 flex flex-col gap-2">
           <Link
             href="https://apps.apple.com/us/app/nyumba-zetu/id6456750559"
