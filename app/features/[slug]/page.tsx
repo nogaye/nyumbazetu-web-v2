@@ -33,7 +33,7 @@ const FEATURE_DETAIL_IMAGE_MAP: Record<string, string> = {
   visitors: "/images/features/feature-visitors.jpg",
   reports: "/images/features/feature-reports.jpg",
   "lease-applications": "/images/features/feature-lease-applications.jpg",
-  "smart-meters": "/images/features/feature-smart-meters.jpg",
+  "smart-meters": "/images/features/feature-smart-meters-water.png",
 };
 
 /** Returns the hero image path for a feature detail page; fallback for unknown slug. */
