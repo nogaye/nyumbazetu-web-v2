@@ -26,7 +26,7 @@ import {
 export const metadata = {
   title: "Pricing | Nyumba Zetu",
   description:
-    "Start free with up to 3 units. Simple, transparent pricing that scales with your portfolio. Paid plans from KES 100 per unit per month.",
+    "Free for up to 3 units. Paid plans start at KES 100 per unit/month as your portfolio grows.",
 };
 
 /** Per-unit price in KES; free tier is 0. Used for display and example calculations. */
@@ -65,6 +65,13 @@ const FEATURES_BY_PLAN: FeaturePlanRow[] = [
       "Automated invoicing and payment tracking for any charge type; M-Pesa, bank, and wallet integrations.",
     plans: ["Free", "Standard", "Premier", "Enterprise"],
     freeTierLevel: "basic",
+  },
+  {
+    slug: "bank-integrations",
+    title: "Bank & Payment Integrations",
+    description:
+      "Bank feeds, M-Pesa, wallet integrations, and automated payment reconciliation.",
+    plans: ["Premier", "Enterprise"],
   },
   {
     slug: "accounting",
@@ -128,7 +135,7 @@ const FEATURES_BY_PLAN: FeaturePlanRow[] = [
     title: "Communication Hub",
     description:
       "Email, SMS, in-app messaging, WhatsApp, and AI-powered chatbot; bulk announcements, communication history.",
-    plans: ["Free", "Standard", "Premier", "Enterprise"],
+    plans: ["Free", "Premier", "Enterprise"],
     freeTierLevel: "basic",
   },
   {
@@ -150,7 +157,7 @@ const FEATURES_BY_PLAN: FeaturePlanRow[] = [
     title: "Calendar & Event Scheduling",
     description:
       "Scheduled invoicing, payment reminders, penalty automation, recurring tasks.",
-    plans: ["Standard", "Premier", "Enterprise"],
+    plans: ["Premier", "Enterprise"],
   },
   {
     slug: "webhooks",
@@ -182,6 +189,13 @@ const FEATURES_BY_PLAN: FeaturePlanRow[] = [
     freeTierLevel: "basic",
   },
   {
+    slug: "reports-advanced",
+    title: "Advanced Reports & Analytics",
+    description:
+      "Custom reports, dashboards, RAG (Ask Nyumba Zetu), and export options.",
+    plans: ["Premier", "Enterprise"],
+  },
+  {
     slug: "lease-applications",
     title: "Lease Applications",
     description:
@@ -205,6 +219,8 @@ interface PlanDef {
   name: string;
   /** Optional subtitle shown under the plan name (e.g. "Landlord Starter"). */
   subtitle?: string;
+  /** Short "who it's for" label shown under the plan name for quick identification. */
+  whoIsItFor?: string;
   price: string;
   priceSubline?: string;
   period: string;
@@ -222,7 +238,8 @@ interface PlanDef {
 const plans: PlanDef[] = [
   {
     name: "Free",
-    //subtitle: "Landlord Starter",
+    subtitle: "Landlord Starter",
+    whoIsItFor: "Individual landlords",
     price: "Free",
     //priceSubline: "forever",
     period: "",
@@ -244,17 +261,18 @@ const plans: PlanDef[] = [
       "No bulk messaging",
       "Limited support",
     ],
-    cta: "Get Started Free",
+    cta: "Book a Demo",
     popular: false,
     isFree: true,
   },
   {
     name: "Standard",
+    whoIsItFor: "Small property managers",
     price: "100",
     priceSubline: "per unit per month",
     period: "",
     description:
-      "Entry plan for landlords and small portfolios: core property management with bank integration.",
+      "Core property management: tenant portal, basic accounting, and payment tracking.",
     units: "Up to 3 admins",
     features: [
       "Automated invoicing & payment reconciliation",
@@ -265,16 +283,17 @@ const plans: PlanDef[] = [
       "Reports & analytics (basic)",
       "Accounting & general ledger (basic)",
     ],
-    cta: "Get Started",
+    cta: "Book a Demo",
     popular: false,
   },
   {
     name: "Premier",
+    whoIsItFor: "Growing portfolios",
     price: "150",
     priceSubline: "per unit per month",
     period: "",
     description:
-      "For property managers and growing portfolios with advanced tools.",
+      "Full toolkit: bank integrations, communication hub, automation, and advanced reporting.",
     units: "Up to 10 admins",
     features: [
       "Everything in Standard",
@@ -288,16 +307,16 @@ const plans: PlanDef[] = [
       "Lease applications & onboarding",
       "Tasks & projects",
       "CRM",
-      "Webhooks & API events",
       "Property listings",
       "Smart meters integration*",
       "Priority support",
     ],
-    cta: "Get Started",
+    cta: "Book a Demo",
     popular: true,
   },
   {
     name: "Enterprise",
+    whoIsItFor: "Large estates & institutions",
     price: "250",
     priceSubline: "per unit per month",
     period: "",
@@ -313,7 +332,7 @@ const plans: PlanDef[] = [
       "Webhooks & API events",
       "On-site training & SLA",
     ],
-    cta: "Contact Sales",
+    cta: "Book a Demo",
     popular: false,
   },
 ];
@@ -328,7 +347,7 @@ export default function PricingPage() {
       <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
         <SectionHeader
           title="Start free. Scale when you’re ready."
-          description="Free tier for up to 3 units. Paid plans from KES 100 per unit per month. No hidden fees—choose what fits your portfolio."
+          description="Free for up to 3 units. Paid plans start at KES 100 per unit/month as your portfolio grows."
         />
       </Section>
 
@@ -358,6 +377,11 @@ export default function PricingPage() {
                 <CardTitle className="text-2xl font-semibold text-slate-900 dark:text-slate-50">
                   {plan.name}
                 </CardTitle>
+                {plan.whoIsItFor && (
+                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 -mt-0.5">
+                    {plan.whoIsItFor}
+                  </p>
+                )}
                 {plan.subtitle && (
                   <p className="text-sm font-medium text-slate-600 dark:text-slate-400 -mt-1">
                     {plan.subtitle}
@@ -441,18 +465,58 @@ export default function PricingPage() {
                   size="lg"
                   asChild
                 >
-                  <Link href="/contact">{plan.cta}</Link>
+                  <Link href="/contact?book=demo">{plan.cta}</Link>
                 </Button>
               </CardFooter>
             </Card>
           ))}
         </div>
-        <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-8 max-w-2xl mx-auto">
-          Paid plans: e.g. 10 units on Premier = KES{" "}
-          {((10 * PRICE_PER_UNIT.premier) / 1).toLocaleString()}/month (
-          {PRICE_PER_UNIT.premier} × 10). You only pay for the units you manage.
-        </p>
-        <p className="text-center text-xs text-slate-500 dark:text-slate-400 mt-4 max-w-2xl mx-auto">
+        {/* Example portfolio pricing — reduces hesitation by showing real costs (Premier only). */}
+        <div className="mt-10 p-6 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 max-w-2xl mx-auto">
+          <p className="text-center text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4">
+            Example portfolio pricing (Premier)
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+            <div>
+              <p className="text-2xl font-bold text-slate-900 dark:text-slate-50">
+                KES {(10 * PRICE_PER_UNIT.premier).toLocaleString()}
+                <span className="text-sm font-normal text-slate-500 dark:text-slate-400">
+                  /month
+                </span>
+              </p>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5">
+                10 units
+              </p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-slate-900 dark:text-slate-50">
+                KES {(50 * PRICE_PER_UNIT.premier).toLocaleString()}
+                <span className="text-sm font-normal text-slate-500 dark:text-slate-400">
+                  /month
+                </span>
+              </p>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5">
+                50 units
+              </p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-slate-900 dark:text-slate-50">
+                KES {(200 * PRICE_PER_UNIT.premier).toLocaleString()}
+                <span className="text-sm font-normal text-slate-500 dark:text-slate-400">
+                  /month
+                </span>
+              </p>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5">
+                200 units
+              </p>
+            </div>
+          </div>
+          <p className="text-center text-xs text-slate-500 dark:text-slate-400 mt-3">
+            Based on Premier (KES 150 per unit/month). You only pay for the
+            units you manage.
+          </p>
+        </div>
+        <p className="text-center text-xs text-slate-500 dark:text-slate-400 mt-6 max-w-2xl mx-auto">
           * Custom integrations (e.g. bank, eTIMS, smart meters, etc.) are
           charged separately based on complexity, starting at KES 5,000 per
           integration.
@@ -614,21 +678,39 @@ export default function PricingPage() {
         </div>
       </Section>
 
-      {/* CTA */}
+      {/* CTA — strong conversion-focused actions. */}
       <Section>
         <div className="text-center">
           <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4 tracking-tight">
-            Need help choosing a plan?
+            Ready to get started?
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-            Talk to our team to find the right solution for your portfolio.
+            Start free, book a demo, or talk to sales—we’re here to help.
           </p>
-          <Button size="lg" variant="outline" asChild>
-            <Link href="/contact" className="flex items-center gap-2">
-              Contact Sales
-              <PhoneIcon className="h-4 w-4" />
-            </Link>
-          </Button>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button size="lg" asChild>
+              <Link
+                href="/contact?start=free"
+                className="inline-flex items-center gap-2"
+              >
+                Start Free
+              </Link>
+            </Button>
+            <Button size="lg" variant="secondary" asChild>
+              <Link
+                href="/contact?book=demo"
+                className="inline-flex items-center gap-2"
+              >
+                Book a Demo
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <Link href="/contact" className="inline-flex items-center gap-2">
+                Talk to Sales
+                <PhoneIcon className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </Section>
     </>
