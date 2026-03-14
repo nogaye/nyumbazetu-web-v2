@@ -485,7 +485,7 @@ export async function fetchPropertyReviews(propertyId: number): Promise<{
   try {
     const { data: rows, error } = await supabaseServer!
       .from("tb_listing_comments")
-      .select("id, body, title, rating, is_verified_review, created_at, user_id")
+      .select("id, body, title, rating, is_verified_review, created_at, user_id, tb_users(display_name)")
       .eq("property_id", propertyId)
       .eq("comment_type", "review")
       .eq("is_visible", true)
@@ -505,10 +505,11 @@ export async function fetchPropertyReviews(propertyId: number): Promise<{
       rating: number | null;
       is_verified_review: boolean;
       created_at: string;
+      tb_users: { display_name: string | null } | null;
     }>;
 
     const reviews: ListingReviewDisplay[] = list.map((r) => ({
-      author: "Guest",
+      author: r.tb_users?.display_name?.trim() || "Guest",
       label: r.is_verified_review ? "Verified guest" : undefined,
       rating: r.rating ?? 0,
       body: r.body,
@@ -530,6 +531,53 @@ export async function fetchPropertyReviews(propertyId: number): Promise<{
 }
 
 /**
+ * Fetch amenity names for a property from tb_listing_property_amenities and tb_listing_amenities.
+ * Returns display names of amenities assigned to the property; empty array when none or when Supabase is not configured.
+ */
+export async function fetchPropertyAmenities(propertyId: number): Promise<string[]> {
+  if (!isSupabaseConfigured()) {
+    return [];
+  }
+
+  try {
+    const { data: junctionRows, error: junctionError } = await supabaseServer!
+      .from("tb_listing_property_amenities")
+      .select("amenity_id")
+      .eq("property_id", propertyId)
+      .eq("is_active", true)
+      .eq("is_deleted", false);
+
+    if (junctionError || !junctionRows?.length) {
+      if (junctionError) console.warn("Error fetching property amenities junction:", junctionError);
+      return [];
+    }
+
+    const amenityIds = junctionRows.map((r: { amenity_id: number }) => r.amenity_id);
+    const { data: amenityRows, error: amenityError } = await supabaseServer!
+      .from("tb_listing_amenities")
+      .select("id, name, sort_order")
+      .in("id", amenityIds)
+      .eq("is_active", true)
+      .eq("is_deleted", false)
+      .order("sort_order", { ascending: true });
+
+    if (amenityError) {
+      console.warn("Error fetching amenities:", amenityError);
+      return [];
+    }
+
+    const orderById = Object.fromEntries(amenityIds.map((id, i) => [id, i]));
+    const sorted = (amenityRows || []).sort(
+      (a: { id: number }, b: { id: number }) => (orderById[a.id] ?? 0) - (orderById[b.id] ?? 0)
+    );
+    return sorted.map((r: { name: string }) => r.name);
+  } catch (err) {
+    console.warn("Error in fetchPropertyAmenities:", err);
+    return [];
+  }
+}
+
+/**
  * Fetch comments (Q&A) for a property from tb_listing_comments (comment_type = 'comment').
  * Returns top-level comments only; optionally include replies later.
  */
@@ -541,7 +589,7 @@ export async function fetchPropertyComments(propertyId: number): Promise<Listing
   try {
     const { data: rows, error } = await supabaseServer!
       .from("tb_listing_comments")
-      .select("id, body, created_at")
+      .select("id, body, created_at, tb_users(display_name)")
       .eq("property_id", propertyId)
       .eq("comment_type", "comment")
       .eq("is_visible", true)
@@ -555,9 +603,13 @@ export async function fetchPropertyComments(propertyId: number): Promise<Listing
       return [];
     }
 
-    const list = (rows || []) as Array<{ body: string; created_at: string }>;
+    const list = (rows || []) as Array<{
+      body: string;
+      created_at: string;
+      tb_users: { display_name: string | null } | null;
+    }>;
     return list.map((r) => ({
-      author: "Guest",
+      author: r.tb_users?.display_name?.trim() || "Guest",
       body: r.body,
       date: r.created_at,
     }));

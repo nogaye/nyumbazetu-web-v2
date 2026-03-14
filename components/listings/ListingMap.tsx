@@ -1,7 +1,7 @@
 /**
  * Listing map section: embeds an OpenStreetMap view centered on the listing location.
- * Uses area and city to build a search query (no API key required). For precise pins,
- * add latitude/longitude to the property schema and use them here.
+ * Uses area and city for display; when latitude/longitude are provided, the embed is
+ * centered on that point. Map data is sourced from the property (database).
  */
 
 export interface ListingMapProps {
@@ -9,8 +9,12 @@ export interface ListingMapProps {
   area: string;
   /** City (e.g. Nairobi). */
   city: string;
-  /** Optional full address line for the embed query. */
-  address?: string;
+  /** Optional full address line for the embed query and "View larger map" link. */
+  address?: string | null;
+  /** Optional latitude (decimal degrees) to center the map. */
+  latitude?: number | null;
+  /** Optional longitude (decimal degrees) to center the map. */
+  longitude?: number | null;
   /** Optional listing title for iframe title attribute. */
   listingTitle?: string;
   /** Height of the map container in pixels. */
@@ -20,30 +24,55 @@ export interface ListingMapProps {
 
 /**
  * Builds an OpenStreetMap search URL for the location (area, city or full address).
- * Used for the "View larger map" link; embed uses a fixed bbox since OSM embed has no search param.
+ * Used for the "View larger map" link.
  */
-function buildMapSearchUrl(area: string, city: string, address?: string): string {
+function buildMapSearchUrl(area: string, city: string, address?: string | null): string {
   const query = address?.trim() || `${area}, ${city}`;
   return `https://www.openstreetmap.org/search?query=${encodeURIComponent(query)}`;
 }
 
-/** Default Nairobi-area bbox for embed when no coordinates are stored (lon,lat,lon,lat). */
+/** Default Nairobi-area bbox for embed when no coordinates are stored (minLon,minLat,maxLon,maxLat). */
 const DEFAULT_NAIROBI_BBOX = "36.75,-1.35,37.05,-1.25";
 
+/** Delta used to build a small bbox around a lat/lng point (degrees). */
+const BBOX_DELTA = 0.008;
+
 /**
- * Renders an iframe embedding OpenStreetMap showing the listing area.
- * Uses a default Nairobi bbox; when property has lat/lng, pass them for a precise pin.
+ * Builds OSM embed bbox string from a center point.
+ * @param lat - Latitude in decimal degrees.
+ * @param lon - Longitude in decimal degrees.
+ * @returns bbox string minLon,minLat,maxLon,maxLat.
+ */
+function bboxFromCenter(lat: number, lon: number): string {
+  const minLon = lon - BBOX_DELTA;
+  const minLat = lat - BBOX_DELTA;
+  const maxLon = lon + BBOX_DELTA;
+  const maxLat = lat + BBOX_DELTA;
+  return `${minLon},${minLat},${maxLon},${maxLat}`;
+}
+
+/**
+ * Renders an iframe embedding OpenStreetMap showing the listing location.
+ * Uses latitude/longitude from the database when present; otherwise falls back to default Nairobi bbox.
  */
 export function ListingMap({
   area,
   city,
   address,
+  latitude,
+  longitude,
   listingTitle,
   height = 280,
   className,
 }: ListingMapProps) {
   const searchUrl = buildMapSearchUrl(area, city, address);
-  const embedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(DEFAULT_NAIROBI_BBOX)}&layer=mapnik`;
+  const hasCoords =
+    typeof latitude === "number" &&
+    typeof longitude === "number" &&
+    !Number.isNaN(latitude) &&
+    !Number.isNaN(longitude);
+  const embedBbox = hasCoords ? bboxFromCenter(latitude, longitude) : DEFAULT_NAIROBI_BBOX;
+  const embedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(embedBbox)}&layer=mapnik`;
 
   return (
     <section

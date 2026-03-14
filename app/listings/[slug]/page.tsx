@@ -13,9 +13,11 @@ import {
   fetchPropertyImages,
   fetchPropertyReviews,
   fetchPropertyComments,
+  fetchPropertyAmenities,
 } from "@/lib/listings/supabase-helpers";
 import { PropertyImageGallery } from "@/components/listings/PropertyImageGallery";
 import { ListingDetailBookingSection } from "@/components/listings/ListingDetailBookingSection";
+import { ListingAmenities } from "@/components/listings/ListingAmenities";
 import { ListingMap } from "@/components/listings/ListingMap";
 import { ListingReviews } from "@/components/listings/ListingReviews";
 import { ListingComments } from "@/components/listings/ListingComments";
@@ -27,45 +29,6 @@ import {
   LISTING_TYPE_LABELS,
   ListingPurpose,
 } from "@/lib/listings/enums";
-
-/** Sample reviews for display when no DB reviews exist. */
-const SAMPLE_REVIEWS: ListingReviewDisplay[] = [
-  {
-    author: "Grace M.",
-    label: "Verified guest",
-    rating: 5,
-    body: "Great location and very clean. The host was responsive and check-in was smooth. Would stay again.",
-    date: "2025-02-10",
-  },
-  {
-    author: "James K.",
-    label: "Verified guest",
-    rating: 4,
-    body: "Spacious and quiet. Minor issue with hot water on the first day but it was fixed quickly.",
-    date: "2025-01-28",
-  },
-  {
-    author: "Mary W.",
-    rating: 5,
-    body: "Perfect for a family stay. Safe neighbourhood and close to shops and transport.",
-    date: "2025-01-15",
-  },
-];
-
-/** Sample comments for display when no DB comments exist. */
-const SAMPLE_COMMENTS: ListingCommentDisplay[] = [
-  {
-    author: "Host",
-    label: "Host",
-    body: "Check-in is from 2 PM. We'll send you the key collection details after booking.",
-    date: "2025-02-01T10:00:00Z",
-  },
-  {
-    author: "Peter N.",
-    body: "Is parking available on site?",
-    date: "2025-01-20T14:30:00Z",
-  },
-];
 
 async function getListing(slug: string): Promise<Property | null> {
   return fetchPropertyBySlug(slug);
@@ -125,14 +88,15 @@ export default async function ListingDetailPage({
       ? (LISTING_TYPE_LABELS[listing.listing_type as keyof typeof LISTING_TYPE_LABELS] ?? listing.listing_type)
       : null;
 
-  const propertyImages = await fetchPropertyImages(listing.id);
+  const propertyImages = await fetchPropertyImages(String(listing.id));
   const { reviews: dbReviews, stats: reviewStats } = await fetchPropertyReviews(listing.id);
   const dbComments = await fetchPropertyComments(listing.id);
+  const amenities = await fetchPropertyAmenities(listing.id);
 
-  const reviews = dbReviews.length > 0 ? dbReviews : SAMPLE_REVIEWS;
-  const comments = dbComments.length > 0 ? dbComments : SAMPLE_COMMENTS;
-  const averageRating = dbReviews.length > 0 ? reviewStats.averageRating : 4.7;
-  const totalReviews = dbReviews.length > 0 ? reviewStats.totalReviews : SAMPLE_REVIEWS.length;
+  const reviews = dbReviews;
+  const comments = dbComments;
+  const averageRating = reviewStats.averageRating;
+  const totalReviews = reviewStats.totalReviews;
 
   const locationName = `${listing.area}, ${listing.city}`;
 
@@ -232,7 +196,13 @@ export default async function ListingDetailPage({
           </div>
         </div>
 
-        {/* Amenities; calendar + check-in/out only when listing_purpose is short_stay */}
+        {/* What this place offers: amenities from database */}
+        <ListingAmenities
+          amenities={amenities}
+          className="mt-10 mb-8"
+        />
+
+        {/* Booking; calendar + check-in/out only when listing_purpose is short_stay */}
         <ListingDetailBookingSection
           propertyTitle={listing.title}
           propertyId={String(listing.id)}
@@ -259,10 +229,13 @@ export default async function ListingDetailPage({
           </p>
         </section>
 
-        {/* Map: location */}
+        {/* Map: location (area, city, address and lat/lng from database) */}
         <ListingMap
           area={listing.area}
           city={listing.city}
+          address={listing.address_line_1}
+          latitude={listing.latitude}
+          longitude={listing.longitude}
           listingTitle={listing.title}
           height={280}
           className="mt-10 mb-8"

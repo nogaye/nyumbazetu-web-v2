@@ -27,6 +27,12 @@ export interface Property {
   description: string;
   city: string;
   area: string;
+  /** First line of street address; used for map search and display. */
+  address_line_1?: string | null;
+  /** Latitude in decimal degrees for map pin/embed. */
+  latitude?: number | null;
+  /** Longitude in decimal degrees for map pin/embed. */
+  longitude?: number | null;
   /** Monthly rent (used when listing_purpose is 'rent'). */
   monthly_rent: number;
   /** Default price per night or sale price (used for short_stay or buy). */
