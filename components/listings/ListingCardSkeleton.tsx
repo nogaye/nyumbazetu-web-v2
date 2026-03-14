@@ -1,37 +1,25 @@
 import { cn } from "@/lib/utils";
 
+/**
+ * Skeleton for ListingCard: same layout (image + copy block) for loading states.
+ */
 export function ListingCardSkeleton() {
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-2xl border border-slate-100 bg-white",
-        "dark:border-slate-800 dark:bg-slate-900"
+        "overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200/80",
+        "dark:bg-slate-900/50 dark:ring-slate-700/80"
       )}
     >
-      {/* Image Skeleton */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-200 dark:bg-slate-800">
-        <div className="h-full w-full animate-pulse bg-slate-300 dark:bg-slate-700" />
+      <div className="aspect-[4/3] w-full bg-slate-200 dark:bg-slate-800">
+        <div className="h-full w-full animate-pulse bg-slate-300/80 dark:bg-slate-700/80" />
       </div>
-
-      {/* Text Section Skeleton */}
-      <div className="p-4">
-        {/* Title and Price */}
-        <div className="mb-2 flex items-start justify-between gap-2">
-          <div className="h-5 flex-1 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
-          <div className="h-5 w-20 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
-        </div>
-
-        {/* Meta */}
-        <div className="mb-2 flex items-center gap-2">
-          <div className="h-4 w-16 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
-          <div className="h-4 w-16 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
-          <div className="h-4 w-16 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
-        </div>
-
-        {/* Location */}
-        <div className="h-3 w-32 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
+      <div className="space-y-2 p-3.5">
+        <div className="h-4 w-3/4 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
+        <div className="h-3 w-1/2 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
+        <div className="h-3 w-1/3 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
+        <div className="mt-2 h-5 w-20 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
       </div>
     </div>
   );
 }
-

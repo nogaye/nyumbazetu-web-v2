@@ -14,10 +14,13 @@ import {
 } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet";
 import { ListingFilters, PropertyType } from "@/lib/listings/types";
+import { ListingsFilterForm } from "@/components/listings/ListingsFilterForm";
 import { cn } from "@/lib/utils";
 
+/** "bar" = horizontal sticky bar (default). "sidebar" = vertical sidebar on desktop + mobile sheet. */
 interface ListingsFilterBarProps {
   filters: ListingFilters;
+  layout?: "bar" | "sidebar";
 }
 
 const PROPERTY_TYPES: { value: PropertyType; label: string }[] = [
@@ -37,7 +40,10 @@ const BEDROOM_OPTIONS = [
   { value: "3+", label: "3+ Bedrooms" },
 ];
 
-export function ListingsFilterBar({ filters }: ListingsFilterBarProps) {
+export function ListingsFilterBar({
+  filters,
+  layout = "bar",
+}: ListingsFilterBarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -76,6 +82,55 @@ export function ListingsFilterBar({ filters }: ListingsFilterBarProps) {
   const hasActiveFilters = Object.keys(filters).some(
     (key) => key !== "page" && filters[key as keyof ListingFilters] !== undefined
   );
+
+  /** Sidebar layout: aside with form on desktop, Filters button + sheet on mobile. */
+  if (layout === "sidebar") {
+    return (
+      <div className="contents">
+        <aside
+          className={cn(
+            "hidden lg:block w-64 shrink-0 border-r border-slate-200/80 bg-white/80 dark:border-slate-800 dark:bg-slate-950/80",
+            "sticky top-16 self-start overflow-y-auto"
+          )}
+          aria-label="Filter listings"
+        >
+          <div className="p-4">
+            <ListingsFilterForm filters={filters} variant="compact" />
+          </div>
+        </aside>
+        <div className="lg:hidden w-full shrink-0 border-b border-slate-200/80 bg-white/80 dark:border-slate-800 dark:bg-slate-950/80 px-4 py-3">
+          <Button
+            variant="outline"
+            onClick={() => setMobileFiltersOpen(true)}
+            className="w-full justify-between text-sm font-medium"
+          >
+            <span className="flex items-center gap-2">
+              <Filter className="h-4 w-4" />
+              Filters
+              {hasActiveFilters && (
+                <span className="rounded-full bg-primary px-2 py-0.5 text-xs text-primary-foreground">
+                  {Object.keys(filters).filter(
+                    (k) => k !== "page" && filters[k as keyof ListingFilters] !== undefined
+                  ).length}
+                </span>
+              )}
+            </span>
+          </Button>
+        </div>
+        <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
+          <SheetContent className="flex flex-col w-full max-w-sm overflow-y-auto">
+            <SheetClose onClick={() => setMobileFiltersOpen(false)} />
+            <SheetHeader>
+              <SheetTitle>Filters</SheetTitle>
+            </SheetHeader>
+            <div className="p-6 flex-1 overflow-y-auto">
+              <ListingsFilterForm filters={filters} />
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+    );
+  }
 
   const FilterContent = () => (
     <div className="space-y-4">
