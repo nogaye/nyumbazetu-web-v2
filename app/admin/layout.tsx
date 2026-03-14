@@ -16,6 +16,7 @@ import {
   FolderOpen,
   BookOpen,
 } from "lucide-react";
+import { AdminAuthGuard } from "@/components/admin/AdminAuthGuard";
 import { AdminLayoutWrapper } from "@/components/admin/AdminLayoutWrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,8 +25,8 @@ import { cn } from "@/lib/utils";
 /**
  * Admin Layout
  *
- * Login page is excluded from sidebar via AdminLayoutWrapper.
- * Authentication is currently disabled; admin is open access.
+ * Protected by middleware and AdminAuthGuard component.
+ * Login page is excluded from sidebar and auth guard via AdminLayoutWrapper.
  */
 
 export default function AdminLayout({
@@ -195,7 +196,9 @@ export default function AdminLayout({
 
       {/* Main Content */}
       <main className="flex-1 bg-slate-50 dark:bg-slate-950">
-        <div className="p-8">{children}</div>
+        <div className="p-8">
+          <AdminAuthGuard>{children}</AdminAuthGuard>
+        </div>
       </main>
     </div>
   );
