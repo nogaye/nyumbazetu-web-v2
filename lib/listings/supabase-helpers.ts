@@ -1,8 +1,6 @@
 /**
- * Supabase helper utilities for property listings
- * 
- * This module supports both real Supabase queries and mock data fallback.
- * If Supabase is not configured, it automatically falls back to mock data.
+ * Supabase helper utilities for property listings.
+ * All listing and property data comes from Supabase; no mock fallback.
  */
 
 import {
@@ -15,11 +13,14 @@ import {
   Property,
   SortOption,
 } from "./types";
-import { getMockProperties, getPlaceholderImageUrl, getBlurDataURL, getPropertyBySlug } from "./mock-data";
+import { getPlaceholderImageUrl, getBlurDataURL } from "./mock-data";
 import { getListingCoverImageUrl } from "./listing-images";
-import { supabaseServer } from "@/lib/supabase/server";
+import { supabaseServer, supabaseAdmin } from "@/lib/supabase/server";
 
 const PER_PAGE = 24;
+
+/** Client for server-side reads that may be behind RLS (e.g. amenities); prefers admin to bypass RLS when available. */
+const supabaseForListingRead = supabaseAdmin ?? supabaseServer;
 
 /**
  * Check if Supabase is configured and available
@@ -73,23 +74,38 @@ export function getImageUrl(storagePath: string): string {
 }
 
 /**
- * Fetch listings from Supabase with filters
- * Falls back to mock data if Supabase is not configured
+ * Fetch listings from Supabase with filters.
+ * Returns empty result when Supabase is not configured or on error; no mock fallback.
+ *
+ * @param filters - Listing filters (city, area, price, etc.)
+ * @returns Listings response with listings array and pagination; empty on failure.
  */
 export async function fetchListings(
   filters: ListingFilters
 ): Promise<ListingsResponse> {
-  // If Supabase is not configured, use mock data
   if (!isSupabaseConfigured()) {
-    return fetchListingsFromMock(filters);
+    return emptyListingsResponse(filters.page || 1);
   }
 
   try {
     return await fetchListingsFromSupabase(filters);
   } catch (error) {
-    console.error('Error fetching listings from Supabase, falling back to mock data:', error);
-    return fetchListingsFromMock(filters);
+    console.error("Error fetching listings from Supabase:", error);
+    return emptyListingsResponse(filters.page || 1);
   }
+}
+
+/**
+ * Build an empty ListingsResponse for a given page (used when DB is unavailable or errors).
+ */
+function emptyListingsResponse(page: number): ListingsResponse {
+  return {
+    listings: [],
+    total: 0,
+    page,
+    perPage: PER_PAGE,
+    totalPages: 0,
+  };
 }
 
 /**
@@ -214,77 +230,15 @@ async function fetchListingsFromSupabase(
 }
 
 /**
- * Fetch listings from mock data (fallback)
- */
-async function fetchListingsFromMock(
-  filters: ListingFilters
-): Promise<ListingsResponse> {
-  // Simulate network delay
-  await new Promise((resolve) => setTimeout(resolve, 300));
-
-  const page = filters.page || 1;
-  let mockProperties = getMockProperties(filters);
-
-  // Apply search filter if provided
-  if (filters.search) {
-    const searchLower = filters.search.toLowerCase();
-    mockProperties = mockProperties.filter(
-      (p) =>
-        p.title.toLowerCase().includes(searchLower) ||
-        p.description.toLowerCase().includes(searchLower)
-    );
-  }
-
-  // Apply sorting
-  const sortOption = filters.sort || 'recommended';
-  mockProperties = [...mockProperties].sort((a, b) => {
-    switch (sortOption) {
-      case 'price-low':
-        return a.monthly_rent - b.monthly_rent;
-      case 'price-high':
-        return b.monthly_rent - a.monthly_rent;
-      case 'newest':
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-      case 'oldest':
-        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
-      case 'recommended':
-      default:
-        // Verified first, then by creation date
-        if (a.is_verified !== b.is_verified) {
-          return a.is_verified ? -1 : 1;
-        }
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-    }
-  });
-
-  // Use location-matched cover images for mock listings when available
-  const listings: ListingWithCoverImage[] = mockProperties.map((property) => ({
-    ...property,
-    cover_image_url: getListingCoverImageUrl(property),
-    blur_data_url: getBlurDataURL(),
-  }));
-
-  // Apply pagination
-  const start = (page - 1) * PER_PAGE;
-  const end = start + PER_PAGE;
-  const paginatedListings = listings.slice(start, end);
-
-  return {
-    listings: paginatedListings,
-    total: listings.length,
-    page,
-    perPage: PER_PAGE,
-    totalPages: Math.ceil(listings.length / PER_PAGE),
-  };
-}
-
-/**
- * Fetch a single property by slug
- * Falls back to mock data if Supabase is not configured
+ * Fetch a single property by slug from Supabase.
+ * Returns null when not configured, not found, or on error; no mock fallback.
+ *
+ * @param slug - Listing slug
+ * @returns Property or null
  */
 export async function fetchPropertyBySlug(slug: string): Promise<Property | null> {
   if (!isSupabaseConfigured()) {
-    return getPropertyBySlug(slug);
+    return null;
   }
 
   try {
@@ -299,7 +253,6 @@ export async function fetchPropertyBySlug(slug: string): Promise<Property | null
 
     if (error) {
       if (error.code === 'PGRST116') {
-        // No rows returned
         return null;
       }
       throw error;
@@ -307,14 +260,17 @@ export async function fetchPropertyBySlug(slug: string): Promise<Property | null
 
     return data as Property;
   } catch (error) {
-    console.error('Error fetching property from Supabase, falling back to mock data:', error);
-    return getPropertyBySlug(slug);
+    console.error("Error fetching property from Supabase:", error);
+    return null;
   }
 }
 
 /**
- * Fetch all images for a property
- * Falls back to mock data if Supabase is not configured
+ * Fetch all images for a property from Supabase.
+ * Returns empty array when not configured or on error; no mock fallback.
+ *
+ * @param propertyId - Property ID
+ * @returns Array of image objects with url, alt, and optional blurDataURL
  */
 export async function fetchPropertyImages(propertyId: string): Promise<Array<{
   url: string;
@@ -322,9 +278,7 @@ export async function fetchPropertyImages(propertyId: string): Promise<Array<{
   blurDataURL?: string;
 }>> {
   if (!isSupabaseConfigured()) {
-    // Use mock data function
-    const { getPropertyImages } = await import('./mock-data');
-    return getPropertyImages(propertyId);
+    return [];
   }
 
   try {
@@ -344,9 +298,8 @@ export async function fetchPropertyImages(propertyId: string): Promise<Array<{
       blurDataURL: getBlurDataURL(), // TODO: Generate real blur
     }));
   } catch (error) {
-    console.error('Error fetching property images from Supabase, falling back to mock data:', error);
-    const { getPropertyImages } = await import('./mock-data');
-    return getPropertyImages(propertyId);
+    console.error("Error fetching property images from Supabase:", error);
+    return [];
   }
 }
 
@@ -535,12 +488,13 @@ export async function fetchPropertyReviews(propertyId: number): Promise<{
  * Returns display names of amenities assigned to the property; empty array when none or when Supabase is not configured.
  */
 export async function fetchPropertyAmenities(propertyId: number): Promise<string[]> {
-  if (!isSupabaseConfigured()) {
+  const client = supabaseForListingRead ?? supabaseServer;
+  if (!client) {
     return [];
   }
 
   try {
-    const { data: junctionRows, error: junctionError } = await supabaseServer!
+    const { data: junctionRows, error: junctionError } = await client
       .from("tb_listing_property_amenities")
       .select("amenity_id")
       .eq("property_id", propertyId)
@@ -553,7 +507,7 @@ export async function fetchPropertyAmenities(propertyId: number): Promise<string
     }
 
     const amenityIds = junctionRows.map((r: { amenity_id: number }) => r.amenity_id);
-    const { data: amenityRows, error: amenityError } = await supabaseServer!
+    const { data: amenityRows, error: amenityError } = await client
       .from("tb_listing_amenities")
       .select("id, name, sort_order")
       .in("id", amenityIds)

@@ -17,7 +17,6 @@ import {
 } from "@/lib/listings/supabase-helpers";
 import { PropertyImageGallery } from "@/components/listings/PropertyImageGallery";
 import { ListingDetailBookingSection } from "@/components/listings/ListingDetailBookingSection";
-import { ListingAmenities } from "@/components/listings/ListingAmenities";
 import { ListingMap } from "@/components/listings/ListingMap";
 import { ListingReviews } from "@/components/listings/ListingReviews";
 import { ListingComments } from "@/components/listings/ListingComments";
@@ -196,13 +195,7 @@ export default async function ListingDetailPage({
           </div>
         </div>
 
-        {/* What this place offers: amenities from database */}
-        <ListingAmenities
-          amenities={amenities}
-          className="mt-10 mb-8"
-        />
-
-        {/* Booking; calendar + check-in/out only when listing_purpose is short_stay */}
+        {/* Booking (includes amenities from DB + calendar when short_stay) */}
         <ListingDetailBookingSection
           propertyTitle={listing.title}
           propertyId={String(listing.id)}
@@ -212,6 +205,7 @@ export default async function ListingDetailPage({
           basePrice={listing.base_price ?? listing.monthly_rent}
           currencyCode={listing.currency_code ?? "KES"}
           locationName={listing.city}
+          amenities={amenities}
           cancellationPolicy={
             purpose === ListingPurpose.ShortStay
               ? "$0 today – Free cancellation before check-in"

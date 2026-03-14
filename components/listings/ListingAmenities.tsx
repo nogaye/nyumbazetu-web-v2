@@ -56,40 +56,25 @@ function getAmenityIcon(label: string): LucideIcon {
 }
 
 export interface ListingAmenitiesProps {
-  /** List of amenity display names. If not provided, a default set is used. */
+  /** List of amenity display names from the database. Pass [] when none; no default list is shown. */
   amenities?: string[];
   /** Max number of amenities to show before "Show all X amenities". Default 10. */
   initialCount?: number;
   className?: string;
 }
 
-const DEFAULT_AMENITIES = [
-  "Wifi",
-  "Free parking on premises",
-  "Kitchen",
-  "Dedicated workspace",
-  "TV",
-  "Air conditioning",
-  "Hot water",
-  "Security cameras",
-  "Pets allowed",
-  "Garden or backyard",
-  "24/7 security",
-  "Waterfront",
-  "Private pool",
-];
-
 /**
- * Renders a "What this place offers" section with amenities in two columns,
- * each row with an icon and label. Optional "Show all X amenities" expand.
+ * Renders a "What this place offers" section with amenities from the database only.
+ * Uses only the passed list; empty or undefined shows no section (no default amenities).
  */
 export function ListingAmenities({
-  amenities = DEFAULT_AMENITIES,
+  amenities,
   initialCount = 10,
   className,
 }: ListingAmenitiesProps) {
   const [showAll, setShowAll] = useState(false);
-  const total = amenities.length;
+  const list = amenities ?? [];
+  const total = list.length;
   const visible = showAll ? total : Math.min(initialCount, total);
   const hasMore = total > initialCount;
 
@@ -104,7 +89,7 @@ export function ListingAmenities({
         What this place offers
       </h2>
       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
-        {amenities.slice(0, visible).map((label, i) => {
+        {list.slice(0, visible).map((label, i) => {
           const Icon = getAmenityIcon(label);
           return (
             <li
