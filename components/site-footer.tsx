@@ -107,19 +107,13 @@ function FooterColumnsGrid() {
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
     >
-      {/* Brand Column */}
+      {/* Brand Column — minimal: brand, one tagline, app badges, social links */}
       <motion.div className="sm:col-span-2 lg:col-span-1" variants={staggerChild}>
-        <Link href="/" className="block mb-4">
+        <Link href="/" className="block mb-3">
           <div className="text-2xl font-bold text-white">Nyumba Zetu</div>
         </Link>
-        <p className="text-sm text-slate-200 mb-2 leading-relaxed">
+        <p className="text-sm text-slate-300 mb-4 leading-relaxed">
           Property management infrastructure for modern Kenyan real estate.
-        </p>
-        <p className="text-xs text-slate-300 mb-2">
-          🇰🇪 Proudly built in Kenya for African real estate.
-        </p>
-        <p className="text-xs text-slate-400 mb-4">
-          Award-winning property technology.
         </p>
         <div className="mb-4 flex flex-col gap-2">
           <Link
