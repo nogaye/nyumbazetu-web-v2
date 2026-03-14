@@ -8,7 +8,7 @@
 import Link from "next/link";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { SignalIcon } from "@heroicons/react/24/outline";
+import { SignalIcon, BookOpenIcon } from "@heroicons/react/24/outline";
 import {
   TwitterIcon,
   LinkedInIcon,
@@ -380,6 +380,17 @@ export function SiteFooter() {
                 <SignalIcon className="h-4 w-4 text-green-500 animate-pulse stroke-[2.5]" aria-hidden />
               </div>
               <span className="text-xs">All Systems Operational</span>
+            </a>
+            {/* Documentation – links to docs.nyumbazetu.com */}
+            <a
+              href={EXTERNAL_RESOURCES.docs.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm text-slate-400 hover:text-primary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded"
+              aria-label={`${EXTERNAL_RESOURCES.docs.label} – ${EXTERNAL_RESOURCES.docs.description}`}
+            >
+              <BookOpenIcon className="h-4 w-4 flex-shrink-0" aria-hidden />
+              <span className="text-xs">Docs</span>
             </a>
           </div>
         </div>

@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { dropdownVariants, staggerContainer, staggerChild, tweenTransition } from "@/lib/motion";
 import {
   Bars3Icon,
-  BookOpenIcon,
   ChevronDownIcon,
   CalendarDaysIcon,
   CurrencyDollarIcon,
@@ -28,7 +27,6 @@ import {
   BanknotesIcon,
   CubeIcon,
   GlobeAltIcon,
-  SignalIcon,
   Squares2X2Icon,
   PuzzlePieceIcon,
   SquaresPlusIcon,
@@ -41,7 +39,6 @@ import {
   SheetContent,
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { EXTERNAL_RESOURCES } from "@/lib/external-resources";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -319,26 +316,6 @@ export function MainNav() {
 
           <div className="hidden lg:flex lg:items-center lg:gap-2 lg:space-x-0">
             <ThemeToggle />
-            <a
-              href={EXTERNAL_RESOURCES.status.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-              aria-label={`${EXTERNAL_RESOURCES.status.label} – ${EXTERNAL_RESOURCES.status.description}`}
-            >
-              <SignalIcon className="h-4 w-4 flex-shrink-0" aria-hidden />
-              <span className="hidden sm:inline">Status</span>
-            </a>
-            <a
-              href={EXTERNAL_RESOURCES.docs.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-              aria-label={`${EXTERNAL_RESOURCES.docs.label} – ${EXTERNAL_RESOURCES.docs.description}`}
-            >
-              <BookOpenIcon className="h-4 w-4 flex-shrink-0" aria-hidden />
-              <span className="hidden sm:inline">Docs</span>
-            </a>
             <Button variant="ghost" asChild>
               <Link
                 href="https://app.nyumbazetu.com/"
@@ -463,34 +440,6 @@ export function MainNav() {
             <div className="flex justify-center pb-2">
               <ThemeToggle />
             </div>
-            <a
-              href={EXTERNAL_RESOURCES.status.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex w-full items-start gap-3 rounded-lg px-4 py-3 text-left hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-              onClick={() => setMobileMenuOpen(false)}
-              aria-label={`${EXTERNAL_RESOURCES.status.label} – ${EXTERNAL_RESOURCES.status.description}`}
-            >
-              <SignalIcon className="h-5 w-5 text-slate-500 dark:text-slate-400 flex-shrink-0 mt-0.5" aria-hidden />
-              <span className="flex flex-col">
-                <span className="text-sm font-medium text-slate-900 dark:text-slate-50">{EXTERNAL_RESOURCES.status.label}</span>
-                <span className="text-xs text-slate-500 dark:text-slate-400">{EXTERNAL_RESOURCES.status.description}</span>
-              </span>
-            </a>
-            <a
-              href={EXTERNAL_RESOURCES.docs.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex w-full items-start gap-3 rounded-lg px-4 py-3 text-left hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-              onClick={() => setMobileMenuOpen(false)}
-              aria-label={`${EXTERNAL_RESOURCES.docs.label} – ${EXTERNAL_RESOURCES.docs.description}`}
-            >
-              <BookOpenIcon className="h-5 w-5 text-slate-500 dark:text-slate-400 flex-shrink-0 mt-0.5" aria-hidden />
-              <span className="flex flex-col">
-                <span className="text-sm font-medium text-slate-900 dark:text-slate-50">{EXTERNAL_RESOURCES.docs.label}</span>
-                <span className="text-xs text-slate-500 dark:text-slate-400">{EXTERNAL_RESOURCES.docs.description}</span>
-              </span>
-            </a>
             <Button variant="outline" className="w-full" asChild>
               <Link
                 href="https://app.nyumbazetu.com/"
