@@ -35,7 +35,7 @@ export function HeroSingleV2() {
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
       </div>
-      <div className="relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-24 lg:py-28 w-full">
+      <div className="relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-16 md:pt-24 lg:pt-28 pb-12 md:pb-16 lg:pb-20 w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

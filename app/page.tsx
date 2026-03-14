@@ -9,6 +9,7 @@ import { LegacyRequestDemo } from "@/components/legacy/home/legacy-request-demo"
 import { SecurityReliabilitySection } from "@/components/home/security-reliability-section";
 import { NewsletterSection } from "@/components/home/newsletter-section";
 import { HeroSingleV2 } from "@/components/home/hero-single-v2";
+import { SectionTransition } from "@/components/home/section-transition";
 
 // Lazy load below-the-fold components for better performance
 const AsSeenOn = dynamic(
@@ -78,6 +79,7 @@ export default function Home() {
   return (
     <>
       <HeroSingleV2 />
+      <SectionTransition />
       {/* <LegacyHomeHeader /> */}
       <LegacyTransactions />
       <LegacyHeadline />
