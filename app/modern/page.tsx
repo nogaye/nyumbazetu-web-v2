@@ -2,6 +2,9 @@ import dynamic from "next/dynamic";
 import { HeroSingle } from "@/components/home/hero-single";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { Section } from "@/components/section";
+import { HeroSingleV2 } from "@/components/home/hero-single-v2";
+import { HeroCarousel2 } from "@/components/home/hero-carousel2";
+import { HeroCarousel } from "@/components/home/hero-carousel";
 
 // Lazy load below-the-fold components for better performance
 const AsSeenOn = dynamic(
@@ -67,7 +70,9 @@ export default function ModernHome() {
   return (
     <>
       <HeroSingle />
-      <AsSeenOn />
+      <HeroSingleV2 />
+      <HeroCarousel2 />
+      <HeroCarousel />
       <MetricsStrip />
       <ProductVideo />
 

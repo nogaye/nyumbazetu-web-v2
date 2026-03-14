@@ -8,6 +8,7 @@ import { FeatureGrid } from "@/components/home/feature-grid";
 import { LegacyRequestDemo } from "@/components/legacy/home/legacy-request-demo";
 import { SecurityReliabilitySection } from "@/components/home/security-reliability-section";
 import { NewsletterSection } from "@/components/home/newsletter-section";
+import { HeroSingleV2 } from "@/components/home/hero-single-v2";
 
 // Lazy load below-the-fold components for better performance
 const AsSeenOn = dynamic(
@@ -76,6 +77,7 @@ export const metadata = {
 export default function Home() {
   return (
     <>
+      <HeroSingleV2 />
       <LegacyHomeHeader />
       <LegacyTransactions />
       <LegacyHeadline />
