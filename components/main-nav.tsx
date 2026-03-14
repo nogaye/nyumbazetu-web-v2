@@ -3,7 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { dropdownVariants, staggerContainer, staggerChild, tweenTransition } from "@/lib/motion";
 import {
   Bars3Icon,
   BookOpenIcon,
@@ -207,6 +209,8 @@ export function MainNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   /** Tracks which mobile menu sections (e.g. Solutions, Features) are expanded. */
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
+  /** Tracks which desktop dropdown is hover-open for AnimatePresence exit animation. */
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const toggleSection = (label: string) => {
     setExpandedSections((prev) => {
@@ -245,50 +249,69 @@ export function MainNav() {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex lg:items-center lg:space-x-8">
             {navItems.map((item) => (
-              <div key={item.label} className="relative group">
+              <div
+                key={item.label}
+                className="relative group"
+                onMouseEnter={() => item.children && setOpenDropdown(item.label)}
+                onMouseLeave={() => setOpenDropdown(null)}
+              >
                 <Link
                   href={item.href}
-                  className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-primary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md px-2 py-1"
+                  className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-primary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md px-2 py-1 inline-block"
                   aria-haspopup={item.children ? "true" : undefined}
-                  aria-expanded={item.children ? "false" : undefined}
+                  aria-expanded={openDropdown === item.label}
                 >
-                  {item.label}
+                  <motion.span
+                    className="inline-block"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    {item.label}
+                  </motion.span>
                 </Link>
                 {item.children && (
-                  <div className="absolute left-0 mt-2 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50 transform group-hover:translate-y-0 translate-y-[-10px]">
-                    <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 py-2">
-                      {item.children.map((child) => {
-                        const Icon =
-                          "icon" in child && child.icon ? child.icon : null;
-                        return (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            className="block px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 group/item transform hover:translate-x-1"
-                          >
-                            <div className="flex items-start gap-3">
-                              {Icon && (
-                                <Icon className="h-5 w-5 text-slate-400 dark:text-slate-500 group-hover/item:text-primary transition-colors duration-200 flex-shrink-0 mt-0.5" />
-                              )}
-                              <div className="flex-1 min-w-0">
-                                <div className="font-medium text-slate-900 dark:text-slate-50 group-hover/item:text-primary transition-colors duration-200">
-                                  {child.label}
-                                </div>
-                                {/* Descriptions commented out for cleaner menu
-                                {"description" in child &&
-                                  child.description && (
-                                    <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                                      {child.description}
+                  <AnimatePresence>
+                    {openDropdown === item.label && (
+                      <motion.div
+                        className="absolute left-0 mt-2 w-80 z-50"
+                        initial="closed"
+                        animate="open"
+                        exit="closed"
+                        variants={dropdownVariants}
+                        transition={tweenTransition}
+                      >
+                        <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 py-2">
+                          {item.children.map((child) => {
+                            const Icon =
+                              "icon" in child && child.icon ? child.icon : null;
+                            return (
+                              <motion.div
+                                key={child.href}
+                                whileHover={{ x: 4 }}
+                                transition={tweenTransition}
+                              >
+                                <Link
+                                  href={child.href}
+                                  className="block px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors duration-200 group/item"
+                                >
+                                  <div className="flex items-start gap-3">
+                                    {Icon && (
+                                      <Icon className="h-5 w-5 text-slate-400 dark:text-slate-500 group-hover/item:text-primary transition-colors duration-200 flex-shrink-0 mt-0.5" />
+                                    )}
+                                    <div className="flex-1 min-w-0">
+                                      <div className="font-medium text-slate-900 dark:text-slate-50 group-hover/item:text-primary transition-colors duration-200">
+                                        {child.label}
+                                      </div>
                                     </div>
-                                  )}
-                                */}
-                              </div>
-                            </div>
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </div>
+                                  </div>
+                                </Link>
+                              </motion.div>
+                            );
+                          })}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 )}
               </div>
             ))}
@@ -355,9 +378,14 @@ export function MainNav() {
           <SheetHeader>
             <SheetTitle>Menu</SheetTitle>
           </SheetHeader>
-          <div className="flex flex-col space-y-1 p-6 flex-1 overflow-y-auto">
+          <motion.div
+            className="flex flex-col space-y-1 p-6 flex-1 overflow-y-auto"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+          >
           {navItems.map((item) => (
-            <div key={item.label}>
+            <motion.div key={item.label} variants={staggerChild}>
               {item.children ? (
                 <>
                   <button
@@ -428,8 +456,9 @@ export function MainNav() {
                   {item.label}
                 </Link>
               )}
-            </div>
+            </motion.div>
           ))}
+          </motion.div>
           <div className="pt-4 space-y-2 border-t border-slate-200 dark:border-slate-800">
             <div className="flex justify-center pb-2">
               <ThemeToggle />
@@ -478,7 +507,6 @@ export function MainNav() {
               </Link>
             </Button>
           </div>
-        </div>
         </SheetContent>
       </Sheet>
     </nav>

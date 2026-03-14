@@ -6,10 +6,8 @@ import { LegacyAwards } from "@/components/legacy/home/legacy-awards";
 import { LegacyPortfolio } from "@/components/legacy/home/legacy-portfolio";
 import { FeatureGrid } from "@/components/home/feature-grid";
 import { LegacyRequestDemo } from "@/components/legacy/home/legacy-request-demo";
-import { NewsletterSignup } from "@/components/newsletter-signup";
-import { Section } from "@/components/section";
-import { SectionHeader } from "@/components/section-header";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SecurityReliabilitySection } from "@/components/home/security-reliability-section";
+import { NewsletterSection } from "@/components/home/newsletter-section";
 
 // Lazy load below-the-fold components for better performance
 const AsSeenOn = dynamic(
@@ -94,52 +92,12 @@ export default function Home() {
       <Partnerships />
 
       {/* Security & Reliability */}
-      <Section>
-        <SectionHeader
-          title="Security & Reliability"
-          description="Built for institutions that require enterprise-grade security and uptime."
-        />
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {[
-            {
-              title: "Role-Based Access Control",
-              description: "Granular permissions for managers, accountants, owners, and tenants.",
-            },
-            {
-              title: "Audit Logs",
-              description: "Complete transaction history with full audit trails for compliance.",
-            },
-            {
-              title: "Data Protection",
-              description: "Encrypted data storage, regular backups, and GDPR-compliant practices.",
-            },
-          ].map((item, idx) => (
-            <Card key={idx}>
-              <CardHeader>
-                <CardTitle>{item.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-slate-600 dark:text-slate-400">{item.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </Section>
+      <SecurityReliabilitySection />
 
       <LegacyReferralLazy />
 
       {/* Stay updated — newsletter signup */}
-      <Section className="bg-slate-50 dark:bg-slate-900">
-        <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">
-            Stay updated
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 mb-8">
-            Guides, case studies, and industry news—in your inbox.
-          </p>
-          <NewsletterSignup />
-        </div>
-      </Section>
+      <NewsletterSection />
     </>
   );
 }

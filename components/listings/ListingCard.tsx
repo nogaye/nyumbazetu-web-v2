@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { Heart } from "lucide-react";
+import { motion } from "framer-motion";
 import { ListingWithCoverImage } from "@/lib/listings/types";
 import { Button } from "@/components/ui/button";
 import { PropertyImage } from "@/components/listings/PropertyImage";
 import { cn } from "@/lib/utils";
+import { fadeInUp, springTransition } from "@/lib/motion";
 
 interface ListingCardProps {
   listing: ListingWithCoverImage;
@@ -28,14 +30,22 @@ export function ListingCard({ listing }: ListingCardProps) {
   };
 
   return (
-    <Link href={`/listings/${listing.slug}`} className="group block">
-      <article
-        className={cn(
-          "relative overflow-hidden rounded-2xl border border-slate-100 bg-white",
-          "transition-all duration-300 hover:shadow-md",
-          "dark:border-slate-800 dark:bg-slate-900"
-        )}
-      >
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={fadeInUp}
+      transition={springTransition}
+      whileHover={{ y: -4, transition: springTransition }}
+    >
+      <Link href={`/listings/${listing.slug}`} className="group block">
+        <article
+          className={cn(
+            "relative overflow-hidden rounded-2xl border border-slate-100 bg-white",
+            "transition-shadow duration-300 hover:shadow-lg",
+            "dark:border-slate-800 dark:bg-slate-900"
+          )}
+        >
         {/* Image Section */}
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
           <PropertyImage
@@ -112,8 +122,9 @@ export function ListingCard({ listing }: ListingCardProps) {
             {listing.area}, {listing.city}
           </p>
         </div>
-      </article>
-    </Link>
+        </article>
+      </Link>
+    </motion.div>
   );
 }
 
