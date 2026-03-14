@@ -1,6 +1,6 @@
 /**
- * Pricing page: displays plan tiers (Standard, Premier, Enterprise) with per-unit
- * pricing, feature lists, and FAQs. Used as the main marketing pricing view.
+ * Pricing page: displays plan tiers (Free, Standard, Premier, Enterprise) with per-unit
+ * pricing, feature lists, and FAQs. Free tier targets small landlords; paid plans scale by portfolio.
  */
 
 import { Section } from "@/components/section";
@@ -14,32 +14,35 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import {
   ArrowRightIcon,
   CheckIcon,
+  XMarkIcon,
   PhoneIcon,
 } from "@heroicons/react/24/outline";
 
 export const metadata = {
   title: "Pricing | Nyumba Zetu",
   description:
-    "Simple, transparent pricing that scales with your portfolio. Plans from KES 100 per unit per month. Choose the plan that fits your property management needs.",
+    "Start free with up to 3 units. Simple, transparent pricing that scales with your portfolio. Paid plans from KES 100 per unit per month.",
 };
 
-/** Per-unit price in KES; used for display and example calculations. */
+/** Per-unit price in KES; free tier is 0. Used for display and example calculations. */
 const PRICE_PER_UNIT = {
+  free: 0,
   standard: 100,
   premier: 150,
   enterprise: 250,
 } as const;
 
 /** Plan IDs used in the feature matrix; must match plan names in plans[]. */
-const PLAN_IDS = ["Standard", "Premier", "Enterprise"] as const;
+const PLAN_IDS = ["Free", "Standard", "Premier", "Enterprise"] as const;
 
 /**
- * Feature definition aligned with /features page. plans lists which tiers include this feature
- * (inclusive: e.g. ["Standard","Premier","Enterprise"] means all paid plans).
+ * Feature definition aligned with /features page. plans lists which tiers include this feature.
+ * freeTierLevel: when "Free" is in plans, "basic" shows "Basic" in the Free column; otherwise checkmark.
  */
 interface FeaturePlanRow {
   slug: string;
@@ -47,6 +50,8 @@ interface FeaturePlanRow {
   description: string;
   /** Plans that include this feature (at least one). */
   plans: readonly (typeof PLAN_IDS)[number][];
+  /** When Free is in plans: "basic" = show "Basic" in Free column; omitted = full checkmark. */
+  freeTierLevel?: "basic";
 }
 
 /**
@@ -58,7 +63,8 @@ const FEATURES_BY_PLAN: FeaturePlanRow[] = [
     title: "Automated Invoicing & Payment Reconciliation",
     description:
       "Automated invoicing and payment tracking for any charge type; M-Pesa, bank, and wallet integrations.",
-    plans: ["Standard", "Premier", "Enterprise"],
+    plans: ["Free", "Standard", "Premier", "Enterprise"],
+    freeTierLevel: "basic",
   },
   {
     slug: "accounting",
@@ -72,7 +78,8 @@ const FEATURES_BY_PLAN: FeaturePlanRow[] = [
     title: "Tenant & Owner Experience",
     description:
       "Self-service portals, mobile apps, WhatsApp chatbot; owner portals on Premier+.",
-    plans: ["Standard", "Premier", "Enterprise"],
+    plans: ["Free", "Standard", "Premier", "Enterprise"],
+    freeTierLevel: "basic",
   },
   {
     slug: "maintenance",
@@ -121,7 +128,8 @@ const FEATURES_BY_PLAN: FeaturePlanRow[] = [
     title: "Communication Hub",
     description:
       "Email, SMS, in-app messaging, WhatsApp, and AI-powered chatbot; bulk announcements, communication history.",
-    plans: ["Standard", "Premier", "Enterprise"],
+    plans: ["Free", "Standard", "Premier", "Enterprise"],
+    freeTierLevel: "basic",
   },
   {
     slug: "crm",
@@ -170,7 +178,8 @@ const FEATURES_BY_PLAN: FeaturePlanRow[] = [
     title: "Reports & Analytics",
     description:
       "Landlord statements, tenant ledgers, trial balance, P&L, Ask Nyumba Zetu (RAG).",
-    plans: ["Standard", "Premier", "Enterprise"],
+    plans: ["Free", "Standard", "Premier", "Enterprise"],
+    freeTierLevel: "basic",
   },
   {
     slug: "lease-applications",
@@ -190,21 +199,55 @@ const FEATURES_BY_PLAN: FeaturePlanRow[] = [
 
 /**
  * Plan definition for the pricing grid. price and priceSubline drive the main display;
- * units and features describe scope and inclusions. Feature bullets align with FEATURES_BY_PLAN.
+ * units and features describe scope and inclusions. restrictions (e.g. Free tier limits) are optional.
  */
 interface PlanDef {
   name: string;
+  /** Optional subtitle shown under the plan name (e.g. "Landlord Starter"). */
+  subtitle?: string;
   price: string;
   priceSubline?: string;
   period: string;
   description: string;
   units: string;
   features: string[];
+  /** Optional list of "not included" items for the Free tier. */
+  restrictions?: string[];
   cta: string;
   popular: boolean;
+  /** When true, card uses free-tier styling and no "KES" prefix on price. */
+  isFree?: boolean;
 }
 
 const plans: PlanDef[] = [
+  {
+    name: "Free",
+    //subtitle: "Landlord Starter",
+    price: "Free",
+    //priceSubline: "forever",
+    period: "",
+    description:
+      "Perfect for landlords and managers starting out: manage up to 3 units with essential tools.",
+    units: "One admin and up to 3 units",
+    features: [
+      "Basic tenant management",
+      "Rent tracking",
+      "Payment recording",
+      "Tenant statements",
+      "Basic reports",
+      "Email notifications",
+    ],
+    restrictions: [
+      "No advanced accounting",
+      "No automation",
+      "No integrations",
+      "No bulk messaging",
+      "Limited support",
+    ],
+    cta: "Get Started Free",
+    popular: false,
+    isFree: true,
+  },
   {
     name: "Standard",
     price: "100",
@@ -214,7 +257,7 @@ const plans: PlanDef[] = [
       "Entry plan for landlords and small portfolios: core property management with bank integration.",
     units: "Up to 3 admins",
     features: [
-      "Collections (invoicing for any charge type; M-Pesa, daily settlements)",
+      "Automated invoicing & payment reconciliation",
       "Bank integrations*",
       "Tenant Portal",
       "Communication hub (email, SMS, WhatsApp, AI-powered chatbot, in-app messaging)",
@@ -284,19 +327,29 @@ export default function PricingPage() {
     <>
       <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
         <SectionHeader
-          title="Simple, transparent pricing that scales with your portfolio."
-          description="Plans from KES 100 per unit per month. No hidden fees—choose the plan that fits your needs."
+          title="Start free. Scale when you’re ready."
+          description="Free tier for up to 3 units. Paid plans from KES 100 per unit per month. No hidden fees—choose what fits your portfolio."
         />
       </Section>
 
       <Section>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8">
           {plans.map((plan, idx) => (
             <Card
               key={idx}
-              className={`${plan.popular ? "border-2 border-primary relative" : ""} hover:shadow-md transition-all duration-200 flex flex-col`}
+              className={`${plan.popular ? "border-2 border-primary relative" : ""} ${plan.isFree ? "border-emerald-200 dark:border-emerald-800/60 bg-emerald-50/30 dark:bg-slate-900/50" : ""} hover:shadow-md transition-all duration-200 flex flex-col`}
             >
-              {plan.popular && (
+              {plan.isFree && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                  <Badge
+                    variant="secondary"
+                    className="bg-emerald-600 text-white border-0 px-4 py-1.5 text-sm font-semibold shadow-sm"
+                  >
+                    Start free
+                  </Badge>
+                </div>
+              )}
+              {plan.popular && !plan.isFree && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">
                   Most Popular
                 </div>
@@ -305,15 +358,20 @@ export default function PricingPage() {
                 <CardTitle className="text-2xl font-semibold text-slate-900 dark:text-slate-50">
                   {plan.name}
                 </CardTitle>
+                {plan.subtitle && (
+                  <p className="text-sm font-medium text-slate-600 dark:text-slate-400 -mt-1">
+                    {plan.subtitle}
+                  </p>
+                )}
                 <CardDescription className="text-slate-600 dark:text-slate-400">
                   {plan.description}
                 </CardDescription>
                 <div className="mt-4">
                   <div className="flex items-baseline gap-1.5 flex-wrap">
                     <span className="text-4xl font-bold text-slate-900 dark:text-slate-50">
-                      KES {plan.price}
+                      {plan.isFree ? plan.price : `KES ${plan.price}`}
                     </span>
-                    {plan.priceSubline && (
+                    {plan.priceSubline && !plan.isFree && (
                       <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
                         /unit
                       </span>
@@ -348,11 +406,38 @@ export default function PricingPage() {
                     </li>
                   ))}
                 </ul>
+                {plan.restrictions && plan.restrictions.length > 0 && (
+                  <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+                      Not included
+                    </p>
+                    <ul className="space-y-2">
+                      {plan.restrictions.map((r, rIdx) => (
+                        <li
+                          key={rIdx}
+                          className="flex items-start space-x-2.5 text-slate-500 dark:text-slate-400"
+                        >
+                          <XMarkIcon
+                            className="h-4 w-4 flex-shrink-0 mt-0.5 opacity-70"
+                            aria-hidden
+                          />
+                          <span className="text-sm leading-relaxed">{r}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </CardContent>
               <CardFooter>
                 <Button
                   className="w-full"
-                  variant={plan.popular ? "default" : "outline"}
+                  variant={
+                    plan.popular
+                      ? "default"
+                      : plan.isFree
+                        ? "default"
+                        : "outline"
+                  }
                   size="lg"
                   asChild
                 >
@@ -363,7 +448,7 @@ export default function PricingPage() {
           ))}
         </div>
         <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-8 max-w-2xl mx-auto">
-          Example: 10 units on Premier = KES{" "}
+          Paid plans: e.g. 10 units on Premier = KES{" "}
           {((10 * PRICE_PER_UNIT.premier) / 1).toLocaleString()}/month (
           {PRICE_PER_UNIT.premier} × 10). You only pay for the units you manage.
         </p>
@@ -386,11 +471,14 @@ export default function PricingPage() {
           </p>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[640px] border-collapse text-left">
+          <table className="w-full min-w-[720px] border-collapse text-left">
             <thead>
               <tr className="border-b border-slate-200 dark:border-slate-700">
                 <th className="py-4 px-4 font-semibold text-slate-900 dark:text-slate-50 w-[min(220px,30%)]">
                   Feature
+                </th>
+                <th className="py-4 px-3 font-semibold text-slate-700 dark:text-slate-300 text-center w-[72px]">
+                  Free
                 </th>
                 <th className="py-4 px-3 font-semibold text-slate-700 dark:text-slate-300 text-center w-[72px]">
                   Standard
@@ -423,7 +511,30 @@ export default function PricingPage() {
                   </td>
                   {PLAN_IDS.map((planId) => (
                     <td key={planId} className="py-4 px-3 text-center">
-                      {row.plans.includes(planId) ? (
+                      {planId === "Free" ? (
+                        row.plans.includes("Free") ? (
+                          row.freeTierLevel === "basic" ? (
+                            <span
+                              className="text-xs font-medium text-slate-600 dark:text-slate-400"
+                              title="Basic / limited"
+                            >
+                              Basic
+                            </span>
+                          ) : (
+                            <CheckIcon
+                              className="h-6 w-6 text-tertiary mx-auto"
+                              aria-hidden
+                            />
+                          )
+                        ) : (
+                          <span
+                            className="text-slate-300 dark:text-slate-600"
+                            aria-label="Not included"
+                          >
+                            —
+                          </span>
+                        )
+                      ) : row.plans.includes(planId) ? (
                         <CheckIcon
                           className="h-6 w-6 text-tertiary mx-auto"
                           aria-hidden
@@ -466,16 +577,20 @@ export default function PricingPage() {
         <div className="max-w-3xl mx-auto space-y-6">
           {[
             {
+              q: "What’s included in the Free tier?",
+              a: "The Free (Landlord Starter) plan lets you manage up to 3 units with basic tenant management, rent tracking, payment recording, tenant statements, basic reports, and email notifications. No credit card required. Upgrade anytime for advanced accounting, automation, integrations, and full support.",
+            },
+            {
               q: "How does per-unit pricing work?",
               a: "Standard is KES 100 per unit per month, Premier is KES 150 per unit, and Enterprise is KES 250 per unit. You're billed only for the number of units you manage. For example, 20 units on Premier = KES 3,000/month.",
             },
             {
               q: "Can I change plans later?",
-              a: "Yes, you can upgrade or downgrade your plan at any time. When you add or remove units, your bill updates accordingly. Changes take effect at the start of your next billing cycle.",
+              a: "Yes. Start free and upgrade when you need more units or features. You can also downgrade a paid plan. When you add or remove units, your bill updates accordingly. Changes take effect at the start of your next billing cycle.",
             },
             {
               q: "Are there setup fees?",
-              a: "No setup fees for Standard and Premier. Enterprise may include implementation or training services depending on your needs.",
+              a: "No setup fees for the Free tier, Standard, or Premier. Enterprise may include implementation or training services depending on your needs.",
             },
             {
               q: "What payment methods do you accept?",
