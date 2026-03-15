@@ -18,7 +18,8 @@ import {
 } from "@/components/ui/select";
 import { ListingFilters, PropertyType } from "@/lib/listings/types";
 
-const PROPERTY_TYPES: { value: PropertyType; label: string }[] = [
+/** Filter options for property type (includes display-only types beyond strict DB enum). */
+const PROPERTY_TYPES: { value: string; label: string }[] = [
   { value: "apartment", label: "Apartment" },
   { value: "maisonette", label: "Maisonette" },
   { value: "bedsitter", label: "Bedsitter" },

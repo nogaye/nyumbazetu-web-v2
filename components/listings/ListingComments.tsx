@@ -123,7 +123,7 @@ function CommentForm({ onSubmit }: { onSubmit: (body: string) => void }) {
         const body = textarea?.value?.trim();
         if (body) {
           onSubmit(body);
-          textarea.value = "";
+          if (textarea) textarea.value = "";
         }
       }}
     >

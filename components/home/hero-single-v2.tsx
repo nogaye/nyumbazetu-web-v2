@@ -96,8 +96,8 @@ export function HeroSingleV2() {
               className="border border-slate-300 dark:border-slate-600 bg-transparent text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 font-medium rounded-lg"
               asChild
             >
-              <Link href="/product" className="flex items-center gap-2">
-                Explore the platform
+              <Link href="/features" className="flex items-center gap-2">
+                Explore Features
                 <ArrowRightIcon className="h-4 w-4" aria-hidden />
               </Link>
             </Button>

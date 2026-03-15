@@ -60,7 +60,7 @@ export function Hero() {
                 <Link href="/request-demo">Request a demo</Link>
               </Button>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10" asChild>
-                <Link href="/product">Explore the platform</Link>
+                <Link href="/features">Explore Features</Link>
               </Button>
             </div>
 

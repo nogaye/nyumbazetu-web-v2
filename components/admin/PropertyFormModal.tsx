@@ -114,12 +114,12 @@ export function PropertyFormModal({
         bathrooms: property.bathrooms.toString(),
         size_sqm: property.size_sqm?.toString() || "",
         property_type: property.property_type,
-        listing_purpose: (property.listing_purpose as string) || ListingPurpose.Rent,
-        listing_type: (property.listing_type as string) || ListingType.EntirePlace,
+        listing_purpose: ((property.listing_purpose ?? ListingPurpose.Rent) as ListingPurpose),
+        listing_type: ((property.listing_type ?? ListingType.EntirePlace) as ListingType),
         is_tps_available: property.is_tps_available,
         is_verified: property.is_verified,
       });
-      setSavedPropertyId(property.id);
+      setSavedPropertyId(String(property.id));
     } else {
       setFormData({
         title: "",
@@ -171,10 +171,10 @@ export function PropertyFormModal({
     ])
       .then(([assignedRes, allRes]) => {
         const assigned = assignedRes.assigned ?? [];
-        setAssignedAmenities(assigned.map((a: { id?: number; name: string; amenity_id: number }) => ({
-          id: a.assignment_id ?? a.id,
+        setAssignedAmenities(assigned.map((a: { assignment_id?: number; id?: number; name: string; amenity_id: number }) => ({
+          id: a.assignment_id ?? a.id ?? 0,
           name: a.name,
-          amenity_id: a.amenity_id ?? a.id,
+          amenity_id: a.amenity_id ?? a.id ?? 0,
         })));
         setAllAmenities(allRes.amenities ?? []);
       })
@@ -287,7 +287,7 @@ export function PropertyFormModal({
         setSubmitStatus("success");
         // Set the property ID for image upload (new or existing)
         if (data.property?.id) {
-          setSavedPropertyId(data.property.id);
+          setSavedPropertyId(String(data.property.id));
         }
         setTimeout(() => {
           onClose();
@@ -525,7 +525,7 @@ export function PropertyFormModal({
                     <Select
                       value={formData.listing_purpose}
                       onValueChange={(value) =>
-                        setFormData({ ...formData, listing_purpose: value })
+                        setFormData({ ...formData, listing_purpose: value as ListingPurpose })
                       }
                     >
                       <SelectTrigger id="listing_purpose">
@@ -545,7 +545,7 @@ export function PropertyFormModal({
                     <Select
                       value={formData.listing_type}
                       onValueChange={(value) =>
-                        setFormData({ ...formData, listing_type: value })
+                        setFormData({ ...formData, listing_type: value as ListingType })
                       }
                     >
                       <SelectTrigger id="listing_type">
@@ -724,7 +724,7 @@ export function PropertyFormModal({
 
             {/* Images Section */}
             <div className="space-y-4">
-              <PropertyImageUpload propertyId={savedPropertyId || property?.id || null} />
+              <PropertyImageUpload propertyId={savedPropertyId ?? (property?.id != null ? String(property.id) : null)} />
             </div>
 
             {/* Amenities Section — show when property exists or has been saved */}

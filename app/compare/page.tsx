@@ -616,8 +616,8 @@ export default function ComparePage() {
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link href="/product" className="flex items-center gap-2">
-                Explore the Platform
+              <Link href="/features" className="flex items-center gap-2">
+                Explore Features
                 <EyeIcon className="h-4 w-4" />
               </Link>
             </Button>

@@ -28,7 +28,7 @@ import { cn } from "@/lib/utils";
 /**
  * Admin Layout
  *
- * Protected by middleware and AdminAuthGuard component.
+ * Protected by proxy (request gateway) and AdminAuthGuard component.
  * Login page is excluded from sidebar and auth guard via AdminLayoutWrapper.
  */
 

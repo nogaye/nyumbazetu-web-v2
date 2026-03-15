@@ -29,8 +29,8 @@ export function FinalCTA() {
             </Link>
           </Button>
           <Button size="lg" variant="outline" className="border-white/30 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 hover:border-white/50" asChild>
-            <Link href="/product" className="flex items-center gap-2">
-              Explore the platform
+            <Link href="/features" className="flex items-center gap-2">
+              Explore Features
               <ArrowRightIcon className="h-4 w-4" />
             </Link>
           </Button>
