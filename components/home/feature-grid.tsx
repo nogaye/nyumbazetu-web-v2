@@ -48,14 +48,48 @@ const DEFAULT_TITLE =
 const DEFAULT_DESCRIPTION =
   "From rent collection to accounting, tenant experience to compliance—everything you need in one integrated system.";
 
-/** Renders a single feature card; shared by flat and grouped layouts. */
+/** Renders a single feature card; compact for homepage, full for /features page. */
 function FeatureCard({
   feature,
   index,
+  compact = false,
 }: {
   feature: FeatureGridItem;
   index: number;
+  compact?: boolean;
 }) {
+  if (compact) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: index * 0.04 }}
+      >
+        <Link
+          href={feature.href}
+          className="group flex items-start gap-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/50 p-5 transition-all duration-200 hover:border-primary/30 hover:shadow-md hover:-translate-y-0.5"
+        >
+          <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 text-primary">
+            <feature.icon className="h-5 w-5" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-semibold text-slate-900 dark:text-slate-50 group-hover:text-primary transition-colors">
+              {feature.title}
+            </h3>
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
+              {feature.description}
+            </p>
+            <span className="mt-2 inline-flex items-center text-sm font-medium text-primary group-hover:underline">
+              Learn more
+              <ArrowRightIcon className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </span>
+          </div>
+        </Link>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -138,20 +172,32 @@ export function FeatureGrid({
             ))}
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div
+            className={
+              limit != null
+                ? "grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6"
+                : "grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+            }
+          >
             {features.map((feature, idx) => (
-              <FeatureCard key={feature.href} feature={feature} index={idx} />
+              <FeatureCard
+                key={feature.href}
+                feature={feature}
+                index={idx}
+                compact={limit != null}
+              />
             ))}
           </div>
         )}
         {showViewMore && limit != null && (
-          <div className="mt-10 text-center">
-            <Button variant="outline" size="lg" asChild>
-              <Link href="/features" className="inline-flex items-center gap-2">
-                View all features
-                <ArrowRightIcon className="h-4 w-4" />
-              </Link>
-            </Button>
+          <div className="mt-8 flex justify-center">
+            <Link
+              href="/features"
+              className="inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium text-primary hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors"
+            >
+              View all features
+              <ArrowRightIcon className="h-4 w-4" />
+            </Link>
           </div>
         )}
       </Section>
