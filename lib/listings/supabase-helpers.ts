@@ -426,19 +426,21 @@ export function buildSearchParams(filters: ListingFilters): URLSearchParams {
 /**
  * Fetch reviews for a property from tb_listing_comments (comment_type = 'review').
  * Returns display-ready review list and aggregate stats. Joins tb_users for author display name.
+ * Uses supabaseForListingRead so RLS does not block when service role is available.
  */
 export async function fetchPropertyReviews(propertyId: number): Promise<{
   reviews: ListingReviewDisplay[];
   stats: ListingReviewStats;
 }> {
-  if (!isSupabaseConfigured()) {
+  const client = supabaseForListingRead ?? supabaseServer;
+  if (!client) {
     return { reviews: [], stats: { averageRating: 0, totalReviews: 0 } };
   }
 
   try {
-    const { data: rows, error } = await supabaseServer!
+    const { data: rows, error } = await client
       .from("tb_listing_comments")
-      .select("id, body, title, rating, is_verified_review, created_at, user_id, tb_users(display_name)")
+      .select("id, body, title, rating, is_verified_review, created_at")
       .eq("property_id", propertyId)
       .eq("comment_type", "review")
       .eq("is_visible", true)
@@ -458,11 +460,10 @@ export async function fetchPropertyReviews(propertyId: number): Promise<{
       rating: number | null;
       is_verified_review: boolean;
       created_at: string;
-      tb_users: { display_name: string | null } | null;
     }>;
 
     const reviews: ListingReviewDisplay[] = list.map((r) => ({
-      author: r.tb_users?.display_name?.trim() || "Guest",
+      author: "Guest",
       label: r.is_verified_review ? "Verified guest" : undefined,
       rating: r.rating ?? 0,
       body: r.body,
@@ -533,17 +534,18 @@ export async function fetchPropertyAmenities(propertyId: number): Promise<string
 
 /**
  * Fetch comments (Q&A) for a property from tb_listing_comments (comment_type = 'comment').
- * Returns top-level comments only; optionally include replies later.
+ * Returns top-level comments only. Uses supabaseForListingRead so RLS does not block when service role is available.
  */
 export async function fetchPropertyComments(propertyId: number): Promise<ListingCommentDisplay[]> {
-  if (!isSupabaseConfigured()) {
+  const client = supabaseForListingRead ?? supabaseServer;
+  if (!client) {
     return [];
   }
 
   try {
-    const { data: rows, error } = await supabaseServer!
+    const { data: rows, error } = await client
       .from("tb_listing_comments")
-      .select("id, body, created_at, tb_users(display_name)")
+      .select("id, body, created_at")
       .eq("property_id", propertyId)
       .eq("comment_type", "comment")
       .eq("is_visible", true)
@@ -557,13 +559,9 @@ export async function fetchPropertyComments(propertyId: number): Promise<Listing
       return [];
     }
 
-    const list = (rows || []) as Array<{
-      body: string;
-      created_at: string;
-      tb_users: { display_name: string | null } | null;
-    }>;
+    const list = (rows || []) as Array<{ body: string; created_at: string }>;
     return list.map((r) => ({
-      author: r.tb_users?.display_name?.trim() || "Guest",
+      author: "Guest",
       body: r.body,
       date: r.created_at,
     }));
