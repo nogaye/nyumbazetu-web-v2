@@ -1,8 +1,12 @@
 import { MetadataRoute } from 'next'
+import { getAllFeatureSlugs } from '@/lib/features'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://nyumbazetu.com'
-  
+
+  /** Feature detail page routes from central registry. */
+  const featureRoutes = getAllFeatureSlugs().map((slug) => `/features/${slug}`)
+
   const routes = [
     '',
     '/product',
@@ -29,20 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/solutions/banks',
     '/solutions/diaspora',
     '/features',
-    '/features/accounting',
-    '/features/collections',
-    '/features/tenant-experience',
-    '/features/maintenance',
-    '/features/assets-management',
-    '/features/expense-vendor-management',
-    '/features/tasks',
-    '/features/etims',
-    '/features/tps',
-    '/features/communications',
-    '/features/crm',
-    '/features/white-labeling',
-    '/features/calendar-scheduling',
-    '/features/webhooks',
+    ...featureRoutes,
     '/partnerships',
     '/partnerships/ncba',
     '/partnerships/boma-yangu',

@@ -14,6 +14,7 @@ import {
   LinkedInIcon,
   FacebookIcon,
   InstagramIcon,
+  YouTubeIcon,
 } from "@/components/social-icons";
 import { AppStoreBadge, GooglePlayBadge } from "@/components/app-store-badges";
 import { EXTERNAL_RESOURCES } from "@/lib/external-resources";
@@ -132,25 +133,7 @@ function FooterColumnsGrid() {
         </div>
         <div className="flex items-center gap-4">
           <a
-            href="https://twitter.com/nyumbazetu"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-slate-300 hover:text-primary transition-all duration-200 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
-            aria-label="Follow us on Twitter"
-          >
-            <TwitterIcon className="h-5 w-5" />
-          </a>
-          <a
-            href="https://linkedin.com/company/nyumbazetu"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-slate-300 hover:text-primary transition-all duration-200 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
-            aria-label="Follow us on LinkedIn"
-          >
-            <LinkedInIcon className="h-5 w-5" />
-          </a>
-          <a
-            href="https://facebook.com/nyumbazetu"
+            href="https://www.facebook.com/nyumbazetu.ke/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-slate-300 hover:text-primary transition-all duration-200 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
@@ -159,13 +142,40 @@ function FooterColumnsGrid() {
             <FacebookIcon className="h-5 w-5" />
           </a>
           <a
-            href="https://instagram.com/nyumbazetu"
+            href="https://www.twitter.com/nyumbazetu/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-slate-300 hover:text-primary transition-all duration-200 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
+            aria-label="Follow us on Twitter"
+          >
+            <TwitterIcon className="h-5 w-5" />
+          </a>
+          <a
+            href="https://www.instagram.com/nyumbazetu/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-slate-300 hover:text-primary transition-all duration-200 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
             aria-label="Follow us on Instagram"
           >
             <InstagramIcon className="h-5 w-5" />
+          </a>
+          <a
+            href="https://www.linkedin.com/company/nyumba-zetu/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-slate-300 hover:text-primary transition-all duration-200 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
+            aria-label="Follow us on LinkedIn"
+          >
+            <LinkedInIcon className="h-5 w-5" />
+          </a>
+          <a
+            href="https://www.youtube.com/@nyumbazetu/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-slate-300 hover:text-primary transition-all duration-200 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
+            aria-label="Subscribe on YouTube"
+          >
+            <YouTubeIcon className="h-5 w-5" />
           </a>
         </div>
       </motion.div>

@@ -12,9 +12,11 @@ export function StructuredData() {
       addressLocality: "Nairobi",
     },
     sameAs: [
-      // Add social media links when available
-      // "https://twitter.com/nyumbazetu",
-      // "https://linkedin.com/company/nyumbazetu",
+      "https://www.facebook.com/nyumbazetu.ke/",
+      "https://www.twitter.com/nyumbazetu/",
+      "https://www.instagram.com/nyumbazetu/",
+      "https://www.linkedin.com/company/nyumba-zetu/",
+      "https://www.youtube.com/@nyumbazetu/",
     ],
     contactPoint: {
       "@type": "ContactPoint",

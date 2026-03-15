@@ -86,7 +86,7 @@ export default function Home() {
       <LegacyAwards />
       <AsSeenOn />
       <LegacyPortfolio />
-      <FeatureGrid />
+      <FeatureGrid limit={6} showViewMore />
       <LegacyScreenshotsLazy />
       <Integrations />
       <LegacyTestimonialsLazy />

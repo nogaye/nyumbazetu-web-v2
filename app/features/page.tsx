@@ -16,6 +16,7 @@ export default function FeaturesPage() {
       <FeatureGrid
         title="Complete Property Management Platform"
         description="Everything you need to manage properties, accounting, and tenant relationships in one integrated platform."
+        grouped
         showCta
       />
     </>

@@ -10,26 +10,12 @@ import {
   Bars3Icon,
   ChevronDownIcon,
   CalendarDaysIcon,
-  CurrencyDollarIcon,
-  CalculatorIcon,
-  UserGroupIcon,
-  WrenchScrewdriverIcon,
-  ClipboardDocumentListIcon,
-  ShieldCheckIcon,
   HomeIcon,
-  ChatBubbleLeftRightIcon,
-  UserCircleIcon,
-  PaintBrushIcon,
-  BoltIcon,
   BuildingOfficeIcon,
   UsersIcon,
   BuildingOffice2Icon,
   BanknotesIcon,
-  CubeIcon,
   GlobeAltIcon,
-  Squares2X2Icon,
-  PuzzlePieceIcon,
-  SquaresPlusIcon,
 } from "@heroicons/react/24/outline";
 import {
   Sheet,
@@ -40,8 +26,29 @@ import {
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
+import { getFeaturesForNavGrouped } from "@/lib/features";
+import type { FeatureNavGroup } from "@/lib/features/types";
 
-const navItems = [
+/** Single nav link for dropdown (e.g. Solutions). */
+interface NavChild {
+  label: string;
+  href: string;
+  description?: string;
+  icon?: React.ComponentType<{ className?: string }>;
+}
+
+/** Nav item: either flat children (Solutions) or grouped children (Features). */
+interface NavItem {
+  label: string;
+  href: string;
+  children?: NavChild[];
+  childGroups?: FeatureNavGroup[];
+}
+
+/** Features dropdown: grouped by category for multi-column layout. Solutions and other nav items stay static. */
+const featuresNavGroups = getFeaturesForNavGrouped();
+
+const navItems: NavItem[] = [
   // { label: "Home", href: "/modern" },
 
   // {
@@ -105,102 +112,14 @@ const navItems = [
   {
     label: "Features",
     href: "/features",
-    children: [
-      {
-        label: "Automated Invoicing & Payment Reconciliation",
-        href: "/features/collections",
-        description: "Invoicing and payment reconciliation for any charge type",
-        icon: CurrencyDollarIcon,
-      },
-      {
-        label: "Accounting & General Ledger",
-        href: "/features/accounting",
-        description: "Full double-entry accounting system",
-        icon: CalculatorIcon,
-      },
-      {
-        label: "Tenant & Owner Experience",
-        href: "/features/tenant-experience",
-        description: "Portals, mobile apps, and WhatsApp chatbot",
-        icon: UserGroupIcon,
-      },
-      {
-        label: "Maintenance and Service Requests",
-        href: "/features/maintenance",
-        description: "Maintenance and service requests, work orders",
-        icon: WrenchScrewdriverIcon,
-      },
-      {
-        label: "Assets Management",
-        href: "/features/assets-management",
-        description: "Asset register, tracking, and depreciation",
-        icon: CubeIcon,
-      },
-      {
-        label: "Expense & Vendor Management",
-        href: "/features/expense-vendor-management",
-        description: "Expenses, vendors, contracts, and payments",
-        icon: BanknotesIcon,
-      },
-      {
-        label: "Tasks & Projects",
-        href: "/features/tasks",
-        description: "Project management for developments",
-        icon: ClipboardDocumentListIcon,
-      },
-      {
-        label: "KRA eTIMS & Compliance",
-        href: "/features/etims",
-        description: "eTIMS-ready invoicing and tax compliance",
-        icon: ShieldCheckIcon,
-      },
-      {
-        label: "TPS & Rent-to-Own",
-        href: "/features/tps",
-        description: "Tenant Purchase Scheme tracking",
-        icon: HomeIcon,
-      },
-      {
-        label: "Communication Hub",
-        href: "/features/communications",
-        description: "Email, SMS, WhatsApp, and AI-powered chatbot",
-        icon: ChatBubbleLeftRightIcon,
-      },
-      {
-        label: "CRM",
-        href: "/features/crm",
-        description: "CRM for tenants and prospects.",
-        icon: UserCircleIcon,
-      },
-      {
-        label: "White Labeling",
-        href: "/features/white-labeling",
-        description: "Fully customizable white-label solution",
-        icon: PaintBrushIcon,
-      },
-      {
-        label: "Calendar & Event Scheduling",
-        href: "/features/calendar-scheduling",
-        description: "Automated scheduling for invoices and reminders",
-        icon: CalendarDaysIcon,
-      },
-      {
-        label: "Webhooks & API Events",
-        href: "/features/webhooks",
-        description: "Real-time event notifications and system integrations",
-        icon: BoltIcon,
-      },
-      {
-        label: "Property Listings",
-        href: "/features/listings",
-        description: "Browse and search verified properties across Kenya",
-        icon: BuildingOffice2Icon,
-      },
-    ],
+    childGroups: featuresNavGroups,
   },
   { label: "Property Listings", href: "/listings" },
   { label: "Pricing", href: "/pricing" },
 ];
+
+/** Initial desktop feature groups expanded state: all collapsed so user expands as needed. */
+const initialFeatureGroupsExpanded = new Set<string>();
 
 export function MainNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -208,12 +127,26 @@ export function MainNav() {
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
   /** Tracks which desktop dropdown is hover-open for AnimatePresence exit animation. */
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  /** Tracks which feature groups are expanded in the desktop Features dropdown (collapsible sections). */
+  const [expandedFeatureGroups, setExpandedFeatureGroups] = useState<Set<string>>(
+    initialFeatureGroupsExpanded
+  );
 
   const toggleSection = (label: string) => {
     setExpandedSections((prev) => {
       const next = new Set(prev);
       if (next.has(label)) next.delete(label);
       else next.add(label);
+      return next;
+    });
+  };
+
+  /** Toggles a single feature group in the desktop Features dropdown. */
+  const toggleFeatureGroup = (groupId: string) => {
+    setExpandedFeatureGroups((prev) => {
+      const next = new Set(prev);
+      if (next.has(groupId)) next.delete(groupId);
+      else next.add(groupId);
       return next;
     });
   };
@@ -249,13 +182,13 @@ export function MainNav() {
               <div
                 key={item.label}
                 className="relative group"
-                onMouseEnter={() => item.children && setOpenDropdown(item.label)}
+                onMouseEnter={() => (item.children || item.childGroups) && setOpenDropdown(item.label)}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
                 <Link
                   href={item.href}
                   className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-primary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md px-2 py-1 inline-block"
-                  aria-haspopup={item.children ? "true" : undefined}
+                  aria-haspopup={item.children || item.childGroups ? "true" : undefined}
                   aria-expanded={openDropdown === item.label}
                 >
                   <motion.span
@@ -266,45 +199,115 @@ export function MainNav() {
                     {item.label}
                   </motion.span>
                 </Link>
-                {item.children && (
+                {(item.children || item.childGroups) && (
                   <AnimatePresence>
                     {openDropdown === item.label && (
                       <motion.div
-                        className="absolute left-0 mt-2 w-80 z-50"
+                        className={cn(
+                          "absolute left-0 mt-1.5 z-50",
+                          item.childGroups ? "w-80 min-w-[320px]" : "w-80"
+                        )}
                         initial="closed"
                         animate="open"
                         exit="closed"
                         variants={dropdownVariants}
                         transition={tweenTransition}
                       >
-                        <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 py-2">
-                          {item.children.map((child) => {
-                            const Icon =
-                              "icon" in child && child.icon ? child.icon : null;
-                            return (
-                              <motion.div
-                                key={child.href}
-                                whileHover={{ x: 4 }}
-                                transition={tweenTransition}
-                              >
-                                <Link
-                                  href={child.href}
-                                  className="block px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors duration-200 group/item"
-                                >
-                                  <div className="flex items-start gap-3">
-                                    {Icon && (
-                                      <Icon className="h-5 w-5 text-slate-400 dark:text-slate-500 group-hover/item:text-primary transition-colors duration-200 flex-shrink-0 mt-0.5" />
-                                    )}
-                                    <div className="flex-1 min-w-0">
-                                      <div className="font-medium text-slate-900 dark:text-slate-50 group-hover/item:text-primary transition-colors duration-200">
-                                        {child.label}
-                                      </div>
+                        <div className="bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200/80 dark:border-slate-700/80 overflow-hidden">
+                          {item.childGroups ? (
+                            <nav
+                              className="py-2"
+                              aria-label="Features by category"
+                            >
+                              {item.childGroups.map((grp) => {
+                                const isExpanded = expandedFeatureGroups.has(grp.groupId);
+                                return (
+                                  <div
+                                    key={grp.groupId}
+                                    className="border-b border-slate-100 dark:border-slate-800 last:border-b-0"
+                                  >
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        toggleFeatureGroup(grp.groupId);
+                                      }}
+                                      className="flex w-full items-center justify-between gap-3 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                                      aria-expanded={isExpanded}
+                                      aria-controls={`nav-feature-group-${grp.groupId}`}
+                                    >
+                                      <span>{grp.groupLabel}</span>
+                                      <ChevronDownIcon
+                                        className={cn(
+                                          "h-4 w-4 flex-shrink-0 transition-transform duration-200",
+                                          isExpanded ? "rotate-0" : "-rotate-90"
+                                        )}
+                                        aria-hidden
+                                      />
+                                    </button>
+                                    <div
+                                      id={`nav-feature-group-${grp.groupId}`}
+                                      role="region"
+                                      aria-label={`${grp.groupLabel} features`}
+                                      className={cn(
+                                        "overflow-hidden transition-[max-height] duration-200 ease-out",
+                                        isExpanded ? "max-h-[500px]" : "max-h-0"
+                                      )}
+                                    >
+                                      <ul className="space-y-1 pb-3 pt-1">
+                                        {grp.items.map((child) => {
+                                          const Icon = child.icon ?? null;
+                                          return (
+                                            <li key={child.href}>
+                                              <Link
+                                                href={child.href}
+                                                className="flex items-start gap-3 py-2.5 px-5 pl-6 text-sm text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group/item"
+                                              >
+                                                {Icon && (
+                                                  <Icon className="h-4 w-4 text-slate-400 dark:text-slate-500 group-hover/item:text-primary transition-colors flex-shrink-0 mt-0.5" />
+                                                )}
+                                                <span className="font-medium break-words min-w-0">
+                                                  {child.label}
+                                                </span>
+                                              </Link>
+                                            </li>
+                                          );
+                                        })}
+                                      </ul>
                                     </div>
                                   </div>
-                                </Link>
-                              </motion.div>
-                            );
-                          })}
+                                );
+                              })}
+                            </nav>
+                          ) : (
+                            item.children?.map((child) => {
+                              const Icon =
+                                "icon" in child && child.icon ? child.icon : null;
+                              return (
+                                <motion.div
+                                  key={child.href}
+                                  whileHover={{ x: 4 }}
+                                  transition={tweenTransition}
+                                >
+                                  <Link
+                                    href={child.href}
+                                    className="block px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors duration-200 group/item"
+                                  >
+                                    <div className="flex items-start gap-3">
+                                      {Icon && (
+                                        <Icon className="h-5 w-5 text-slate-400 dark:text-slate-500 group-hover/item:text-primary transition-colors duration-200 flex-shrink-0 mt-0.5" />
+                                      )}
+                                      <div className="flex-1 min-w-0">
+                                        <div className="font-medium text-slate-900 dark:text-slate-50 group-hover/item:text-primary transition-colors duration-200">
+                                          {child.label}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </Link>
+                                </motion.div>
+                              );
+                            })
+                          )}
                         </div>
                       </motion.div>
                     )}
@@ -363,7 +366,7 @@ export function MainNav() {
           >
           {navItems.map((item) => (
             <motion.div key={item.label} variants={staggerChild}>
-              {item.children ? (
+              {item.children || item.childGroups ? (
                 <>
                   <button
                     type="button"
@@ -390,37 +393,57 @@ export function MainNav() {
                     role="region"
                     aria-label={`${item.label} submenu`}
                   >
-                    <div className="ml-2 pl-2 border-l border-slate-200 dark:border-slate-700 space-y-1 pb-2">
-                      {item.children.map((child) => {
-                        const Icon =
-                          "icon" in child && child.icon ? child.icon : null;
-                        return (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            className="block py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 px-2 -ml-2"
-                            onClick={() => setMobileMenuOpen(false)}
-                          >
-                            <div className="flex items-start gap-3">
-                              {Icon && (
-                                <Icon className="h-5 w-5 text-slate-400 dark:text-slate-500 flex-shrink-0 mt-0.5" />
-                              )}
-                              <div className="flex-1 min-w-0">
-                                <div className="text-sm font-medium text-slate-900 dark:text-slate-50">
-                                  {child.label}
-                                </div>
-                                {/* Descriptions commented out for cleaner menu
-                                {"description" in child && child.description && (
-                                  <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-                                    {child.description}
-                                  </div>
-                                )}
-                                */}
+                    <div className="ml-2 pl-3 border-l border-slate-200 dark:border-slate-700 space-y-4 pb-2">
+                      {item.childGroups
+                        ? item.childGroups.map((grp) => (
+                            <div key={grp.groupId}>
+                              <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400 dark:text-slate-500 pt-0.5">
+                                {grp.groupLabel}
                               </div>
+                              <ul className="space-y-0.5 mt-1.5">
+                                {grp.items.map((child) => {
+                                  const Icon = child.icon ?? null;
+                                  return (
+                                    <li key={child.href}>
+                                      <Link
+                                        href={child.href}
+                                        className="flex items-center gap-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary px-2 -ml-2 transition-colors duration-150"
+                                        onClick={() => setMobileMenuOpen(false)}
+                                      >
+                                        {Icon && (
+                                          <Icon className="h-4 w-4 text-slate-400 dark:text-slate-500 flex-shrink-0" />
+                                        )}
+                                        <span>{child.label}</span>
+                                      </Link>
+                                    </li>
+                                  );
+                                })}
+                              </ul>
                             </div>
-                          </Link>
-                        );
-                      })}
+                          ))
+                        : item.children?.map((child) => {
+                            const Icon =
+                              "icon" in child && child.icon ? child.icon : null;
+                            return (
+                              <Link
+                                key={child.href}
+                                href={child.href}
+                                className="block py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 px-2 -ml-2"
+                                onClick={() => setMobileMenuOpen(false)}
+                              >
+                                <div className="flex items-start gap-3">
+                                  {Icon && (
+                                    <Icon className="h-5 w-5 text-slate-400 dark:text-slate-500 flex-shrink-0 mt-0.5" />
+                                  )}
+                                  <div className="flex-1 min-w-0">
+                                    <div className="text-sm font-medium text-slate-900 dark:text-slate-50">
+                                      {child.label}
+                                    </div>
+                                  </div>
+                                </div>
+                              </Link>
+                            );
+                          })}
                     </div>
                   </div>
                 </>
