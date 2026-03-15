@@ -64,7 +64,7 @@ export function PropertiesAdminList(_props: PropertiesAdminListProps) {
     }
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this property?")) {
       return;
     }

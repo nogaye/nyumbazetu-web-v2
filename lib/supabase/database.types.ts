@@ -169,6 +169,118 @@ export interface Database {
           updated_at?: string;
         };
       };
+      /** Amenity definitions (e.g. WiFi, pool); global (org_id NULL) or tenant-scoped. */
+      tb_listing_amenities: {
+        Row: {
+          id: number;
+          uuid: string;
+          org_id: number | null;
+          branch_id: number | null;
+          name: string;
+          code: string | null;
+          icon: string | null;
+          category: string | null;
+          description: string | null;
+          sort_order: number;
+          is_active: boolean;
+          created_at: string;
+          created_by: number | null;
+          updated_at: string;
+          updated_by: number | null;
+          deleted_at: string | null;
+          deleted_by: number | null;
+          is_deleted: boolean;
+        };
+        Insert: {
+          id?: number;
+          uuid?: string;
+          org_id?: number | null;
+          branch_id?: number | null;
+          name: string;
+          code?: string | null;
+          icon?: string | null;
+          category?: string | null;
+          description?: string | null;
+          sort_order?: number;
+          is_active?: boolean;
+          created_at?: string;
+          created_by?: number | null;
+          updated_at?: string;
+          updated_by?: number | null;
+          deleted_at?: string | null;
+          deleted_by?: number | null;
+          is_deleted?: boolean;
+        };
+        Update: {
+          id?: number;
+          uuid?: string;
+          org_id?: number | null;
+          branch_id?: number | null;
+          name?: string;
+          code?: string | null;
+          icon?: string | null;
+          category?: string | null;
+          description?: string | null;
+          sort_order?: number;
+          is_active?: boolean;
+          updated_at?: string;
+          updated_by?: number | null;
+          deleted_at?: string | null;
+          deleted_by?: number | null;
+          is_deleted?: boolean;
+        };
+      };
+      /** Junction: properties to amenities; one row per property-amenity pair. */
+      tb_listing_property_amenities: {
+        Row: {
+          id: number;
+          uuid: string;
+          org_id: number | null;
+          branch_id: number | null;
+          property_id: number;
+          amenity_id: number;
+          notes: string | null;
+          is_active: boolean;
+          created_at: string;
+          created_by: number | null;
+          updated_at: string;
+          updated_by: number | null;
+          deleted_at: string | null;
+          deleted_by: number | null;
+          is_deleted: boolean;
+        };
+        Insert: {
+          id?: number;
+          uuid?: string;
+          org_id?: number | null;
+          branch_id?: number | null;
+          property_id: number;
+          amenity_id: number;
+          notes?: string | null;
+          is_active?: boolean;
+          created_at?: string;
+          created_by?: number | null;
+          updated_at?: string;
+          updated_by?: number | null;
+          deleted_at?: string | null;
+          deleted_by?: number | null;
+          is_deleted?: boolean;
+        };
+        Update: {
+          id?: number;
+          org_id?: number | null;
+          branch_id?: number | null;
+          property_id?: number;
+          amenity_id?: number;
+          notes?: string | null;
+          is_active?: boolean;
+          updated_at?: string;
+          updated_by?: number | null;
+          deleted_at?: string | null;
+          deleted_by?: number | null;
+          is_deleted?: boolean;
+        };
+      };
       /** Unified comments and reviews for listings; comment_type 'comment' | 'review'. */
       tb_listing_comments: {
         Row: {

@@ -15,6 +15,9 @@ import {
   BarChart3,
   FolderOpen,
   BookOpen,
+  Sparkles,
+  MessageSquare,
+  Star,
 } from "lucide-react";
 import { AdminAuthGuard } from "@/components/admin/AdminAuthGuard";
 import { AdminLayoutWrapper } from "@/components/admin/AdminLayoutWrapper";
@@ -70,6 +73,24 @@ export default function AdminLayout({
                 icon={<Bell className="h-5 w-5" />}
               >
                 Inquiries
+              </NavLink>
+              <NavLink
+                href="/admin/amenities"
+                icon={<Sparkles className="h-5 w-5" />}
+              >
+                Amenities
+              </NavLink>
+              <NavLink
+                href="/admin/comments"
+                icon={<MessageSquare className="h-5 w-5" />}
+              >
+                Comments
+              </NavLink>
+              <NavLink
+                href="/admin/reviews"
+                icon={<Star className="h-5 w-5" />}
+              >
+                Reviews
               </NavLink>
               <NavLink
                 href="/admin/analytics"

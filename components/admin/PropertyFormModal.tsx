@@ -33,6 +33,7 @@ import {
   ExclamationCircleIcon,
   CheckCircleIcon,
   PaperAirplaneIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { cn } from "@/lib/utils";
@@ -92,6 +93,12 @@ export function PropertyFormModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [savedPropertyId, setSavedPropertyId] = useState<string | null>(null);
+  /** Assigned amenities for the current property (when editing or after save). */
+  const [assignedAmenities, setAssignedAmenities] = useState<Array<{ id: number; name: string; amenity_id: number }>>([]);
+  /** All amenities for the add dropdown. */
+  const [allAmenities, setAllAmenities] = useState<Array<{ id: number; name: string }>>([]);
+  const [amenitiesLoading, setAmenitiesLoading] = useState(false);
+  const [selectedAmenityToAdd, setSelectedAmenityToAdd] = useState<string>("");
 
   useEffect(() => {
     if (property) {
@@ -147,6 +154,78 @@ export function PropertyFormModal({
       setFormData((prev) => ({ ...prev, slug }));
     }
   }, [formData.title, property]);
+
+  /** Property id for amenities (saved or editing). */
+  const propertyIdForAmenities = savedPropertyId != null ? Number(savedPropertyId) : property?.id;
+
+  // Fetch assigned and all amenities when we have a property id and modal is open
+  useEffect(() => {
+    if (!isOpen || propertyIdForAmenities == null || Number.isNaN(propertyIdForAmenities)) {
+      setAssignedAmenities([]);
+      return;
+    }
+    setAmenitiesLoading(true);
+    Promise.all([
+      fetch(`/api/admin/properties/${propertyIdForAmenities}/amenities`).then((r) => r.json()),
+      fetch("/api/admin/amenities").then((r) => r.json()),
+    ])
+      .then(([assignedRes, allRes]) => {
+        const assigned = assignedRes.assigned ?? [];
+        setAssignedAmenities(assigned.map((a: { id?: number; name: string; amenity_id: number }) => ({
+          id: a.assignment_id ?? a.id,
+          name: a.name,
+          amenity_id: a.amenity_id ?? a.id,
+        })));
+        setAllAmenities(allRes.amenities ?? []);
+      })
+      .catch(() => {
+        setAssignedAmenities([]);
+        setAllAmenities([]);
+      })
+      .finally(() => setAmenitiesLoading(false));
+  }, [isOpen, propertyIdForAmenities]);
+
+  const handleAddAmenity = async () => {
+    const amenityId = selectedAmenityToAdd ? parseInt(selectedAmenityToAdd, 10) : NaN;
+    if (Number.isNaN(amenityId) || propertyIdForAmenities == null) return;
+    try {
+      const res = await fetch(`/api/admin/properties/${propertyIdForAmenities}/amenities`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amenity_id: amenityId }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setAssignedAmenities((prev) => {
+          const added = allAmenities.find((a) => a.id === amenityId);
+          return added ? [...prev, { id: data.assignment?.id ?? amenityId, name: added.name, amenity_id: amenityId }] : prev;
+        });
+        setSelectedAmenityToAdd("");
+      } else {
+        alert(data.error ?? "Failed to add amenity");
+      }
+    } catch {
+      alert("Network error");
+    }
+  };
+
+  const handleRemoveAmenity = async (amenityId: number) => {
+    if (propertyIdForAmenities == null) return;
+    try {
+      const res = await fetch(
+        `/api/admin/properties/${propertyIdForAmenities}/amenities?amenity_id=${amenityId}`,
+        { method: "DELETE" },
+      );
+      if (res.ok) {
+        setAssignedAmenities((prev) => prev.filter((a) => a.amenity_id !== amenityId));
+      } else {
+        const data = await res.json();
+        alert(data.error ?? "Failed to remove amenity");
+      }
+    } catch {
+      alert("Network error");
+    }
+  };
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -647,6 +726,73 @@ export function PropertyFormModal({
             <div className="space-y-4">
               <PropertyImageUpload propertyId={savedPropertyId || property?.id || null} />
             </div>
+
+            {/* Amenities Section — show when property exists or has been saved */}
+            {propertyIdForAmenities != null && (
+              <div className="space-y-4">
+                <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
+                  <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
+                    Amenities
+                  </h3>
+                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                    Assign amenities to this property. Manage global amenities in Admin → Amenities.
+                  </p>
+                </div>
+                {amenitiesLoading ? (
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Loading amenities…</p>
+                ) : (
+                  <>
+                    <div className="flex flex-wrap gap-2">
+                      {assignedAmenities.map((a) => (
+                        <span
+                          key={a.amenity_id}
+                          className="inline-flex items-center gap-1 rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-sm font-medium text-slate-700 dark:text-slate-300"
+                        >
+                          {a.name}
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveAmenity(a.amenity_id)}
+                            className="rounded-full p-0.5 hover:bg-slate-200 dark:hover:bg-slate-700"
+                            aria-label={`Remove ${a.name}`}
+                          >
+                            <TrashIcon className="h-3.5 w-3.5 text-slate-500" />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex gap-2">
+                      <Select value={selectedAmenityToAdd} onValueChange={setSelectedAmenityToAdd}>
+                        <SelectTrigger className="flex-1 min-w-[140px]">
+                          <SelectValue placeholder="Add amenity" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {allAmenities
+                            .filter((opt) => !assignedAmenities.some((x) => x.amenity_id === opt.id))
+                            .map((opt) => (
+                              <SelectItem key={opt.id} value={String(opt.id)}>
+                                {opt.name}
+                              </SelectItem>
+                            ))}
+                          {allAmenities.filter((opt) => !assignedAmenities.some((x) => x.amenity_id === opt.id)).length === 0 && (
+                            <SelectItem value="" disabled>
+                              All amenities assigned
+                            </SelectItem>
+                          )}
+                        </SelectContent>
+                      </Select>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={handleAddAmenity}
+                        disabled={!selectedAmenityToAdd}
+                      >
+                        Add
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
 
             <div className="pt-4 space-y-3">
               <Button
