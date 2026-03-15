@@ -40,6 +40,15 @@ import {
 } from "@heroicons/react/24/outline";
 import { trackFormSubmit } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+import {
+  CONTACT_EMAIL,
+  CONTACT_EMAIL_MAILTO,
+  CONTACT_PHONE_PRIMARY_TEL,
+  CONTACT_PHONE_SECONDARY_TEL,
+  CONTACT_PHONE_PRIMARY_DISPLAY,
+  CONTACT_PHONE_SECONDARY_DISPLAY,
+  CONTACT_BUSINESS_HOURS,
+} from "@/lib/constants/contact";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -217,19 +226,19 @@ export default function ContactPage() {
                       </h3>
                       <p className="text-slate-600 dark:text-slate-400 space-y-1">
                         <a
-                          href="tel:+254741382063"
+                          href={CONTACT_PHONE_PRIMARY_TEL}
                           className="block text-primary hover:underline transition-colors"
                         >
-                          +254 741 382063
+                          {CONTACT_PHONE_PRIMARY_DISPLAY}
                         </a>
                         <a
-                          href="tel:+254716988188"
+                          href={CONTACT_PHONE_SECONDARY_TEL}
                           className="block text-primary hover:underline transition-colors"
                         >
-                          +254 716 988 188
+                          {CONTACT_PHONE_SECONDARY_DISPLAY}
                         </a>
                         <span className="block text-sm mt-2">
-                          Mon - Fri, 8:00 - 17:00
+                          {CONTACT_BUSINESS_HOURS}
                         </span>
                       </p>
                     </div>
@@ -248,10 +257,10 @@ export default function ContactPage() {
                         Email us
                       </h3>
                       <a
-                        href="mailto:admin@nyumbazetu.com"
+                        href={CONTACT_EMAIL_MAILTO}
                         className="text-primary hover:underline transition-colors block"
                       >
-                        admin@nyumbazetu.com
+                        {CONTACT_EMAIL}
                       </a>
                     </div>
                   </div>
@@ -308,8 +317,8 @@ export default function ContactPage() {
                   <ExclamationCircleIcon className="h-5 w-5" />
                   <AlertTitle>Something went wrong</AlertTitle>
                   <AlertDescription>
-                    Please try again or contact us directly at
-                    admin@nyumbazetu.com
+                    Please try again or contact us directly at{" "}
+                    {CONTACT_EMAIL}
                   </AlertDescription>
                 </Alert>
               )}
@@ -394,7 +403,7 @@ export default function ContactPage() {
                         value={formData.phone}
                         onChange={handleChange}
                         required
-                        placeholder="+254 700 000 000"
+                        placeholder={CONTACT_PHONE_PRIMARY_DISPLAY}
                         aria-invalid={errors.phone ? "true" : "false"}
                         aria-describedby={
                           errors.phone ? "phone-error" : undefined

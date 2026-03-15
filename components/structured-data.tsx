@@ -1,3 +1,16 @@
+/**
+ * Structured data (JSON-LD) for the marketing site. Exports StructuredData component
+ * used in the root layout for Organization and SoftwareApplication schemas.
+ */
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE_PRIMARY,
+} from "@/lib/constants/contact";
+
+/**
+ * Renders JSON-LD structured data for the site: Organization (with contact point)
+ * and SoftwareApplication schemas for SEO and rich results.
+ */
 export function StructuredData() {
   const organizationSchema = {
     "@context": "https://schema.org",
@@ -21,9 +34,16 @@ export function StructuredData() {
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "Customer Service",
-      email: "admin@nyumbazetu.com",
+      email: CONTACT_EMAIL,
+      telephone: CONTACT_PHONE_PRIMARY,
       areaServed: "KE",
       availableLanguage: ["en"],
+      hoursAvailable: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "08:00",
+        closes: "17:00",
+      },
     },
   };
 

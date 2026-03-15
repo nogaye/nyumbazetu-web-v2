@@ -23,6 +23,12 @@ import {
   ExclamationCircleIcon,
 } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/utils";
+import {
+  CONTACT_EMAIL_MAILTO,
+  CONTACT_PHONE_PRIMARY_TEL,
+  CONTACT_WHATSAPP_URL,
+  CONTACT_PHONE_PRIMARY_DISPLAY,
+} from "@/lib/constants/contact";
 
 interface ContactOwnerButtonProps {
   propertyTitle: string;
@@ -253,7 +259,7 @@ export function ContactOwnerButton({
                     type="tel"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="+254 700 000 000"
+                    placeholder={CONTACT_PHONE_PRIMARY_DISPLAY}
                   />
                   <p className="text-xs text-slate-500 dark:text-slate-400">
                     Optional: Help us reach you faster
@@ -327,7 +333,7 @@ export function ContactOwnerButton({
                   className="w-full justify-start h-11"
                   asChild
                 >
-                  <a href="mailto:info@nyumbazetu.com" className="flex items-center">
+                  <a href={CONTACT_EMAIL_MAILTO} className="flex items-center">
                     <EnvelopeIcon className="mr-2 h-5 w-5" />
                     Email Us
                   </a>
@@ -338,7 +344,7 @@ export function ContactOwnerButton({
                   className="w-full justify-start h-11"
                   asChild
                 >
-                  <a href="tel:+254700000000" className="flex items-center">
+                  <a href={CONTACT_PHONE_PRIMARY_TEL} className="flex items-center">
                     <PhoneIcon className="mr-2 h-5 w-5" />
                     Call Us
                   </a>
@@ -350,7 +356,7 @@ export function ContactOwnerButton({
                   asChild
                 >
                   <a
-                    href="https://wa.me/254700000000"
+                    href={CONTACT_WHATSAPP_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center"

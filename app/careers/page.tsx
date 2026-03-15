@@ -2,6 +2,7 @@ import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { CONTACT_EMAIL, CONTACT_EMAIL_MAILTO } from "@/lib/constants/contact";
 
 export const metadata = {
   title: "Careers - Nyumba Zetu",
@@ -26,11 +27,11 @@ export default function CareersPage() {
                 Send your resume to{" "}
                 <a
                   className="text-primary hover:underline font-medium"
-                  href="mailto:admin@nyumbazetu.com"
+                  href={CONTACT_EMAIL_MAILTO}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  admin@nyumbazetu.com
+                  {CONTACT_EMAIL}
                 </a>
               </>
             }
@@ -56,7 +57,7 @@ export default function CareersPage() {
               </p>
               <div className="mt-6">
                 <Button size="lg" asChild>
-                  <a href="mailto:admin@nyumbazetu.com">Send Your Resume</a>
+                  <a href={CONTACT_EMAIL_MAILTO}>Send Your Resume</a>
                 </Button>
               </div>
             </CardContent>
