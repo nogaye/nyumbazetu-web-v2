@@ -10,13 +10,6 @@
 import { motion } from "framer-motion";
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
@@ -92,45 +85,40 @@ function FeatureCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.05 }}
+      transition={{ delay: index * 0.04 }}
     >
-      <Card className="h-full hover:shadow-md transition-all duration-200 hover:-translate-y-1">
-        <CardHeader className="pb-4">
-          <div className="mb-4 aspect-video bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center">
-            <div className="text-center">
-              <feature.icon className="h-8 w-8 text-primary mx-auto mb-2" />
-            </div>
-          </div>
-          <CardTitle className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-2">
-            {feature.title}
-          </CardTitle>
-          <CardDescription className="text-slate-600 dark:text-slate-400 leading-relaxed">
-            {feature.description}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <ul className="space-y-2.5 mb-6">
-            {feature.bullets.map((bullet, bulletIdx) => (
-              <li
-                key={bulletIdx}
-                className="text-sm text-slate-700 dark:text-slate-300 flex items-start leading-relaxed"
-              >
-                <span className="text-tertiary mr-2.5 flex-shrink-0 mt-0.5">•</span>
-                <span>{bullet}</span>
-              </li>
-            ))}
-          </ul>
-          <Link
-            href={feature.href}
-            className="text-sm font-medium text-primary hover:text-primary-600 dark:text-primary dark:hover:text-primary-400 hover:underline inline-flex items-center transition-colors"
-          >
-            Learn more →
-          </Link>
-        </CardContent>
-      </Card>
+      <Link
+        href={feature.href}
+        className="group flex h-full flex-col rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/50 p-6 transition-all duration-200 hover:border-primary/30 hover:shadow-lg hover:-translate-y-0.5"
+      >
+        <div className="mb-4 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10 dark:bg-primary/20 text-primary">
+          <feature.icon className="h-6 w-6" />
+        </div>
+        <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-50 group-hover:text-primary transition-colors">
+          {feature.title}
+        </h3>
+        <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          {feature.description}
+        </p>
+        <ul className="mt-4 space-y-2 flex-1">
+          {feature.bullets.map((bullet, bulletIdx) => (
+            <li
+              key={bulletIdx}
+              className="text-sm text-slate-700 dark:text-slate-300 flex items-start gap-2 leading-relaxed"
+            >
+              <span className="text-primary mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-current" />
+              <span>{bullet}</span>
+            </li>
+          ))}
+        </ul>
+        <span className="mt-4 inline-flex items-center text-sm font-medium text-primary group-hover:underline">
+          Learn more
+          <ArrowRightIcon className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+        </span>
+      </Link>
     </motion.div>
   );
 }
@@ -157,18 +145,25 @@ export function FeatureGrid({
       <Section>
         <SectionHeader title={title} description={description} />
         {useGrouped && groups ? (
-          <div className="space-y-12">
+          <div className="space-y-14">
             {groups.map((grp) => (
-              <div key={grp.groupId}>
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-50 mb-4 pb-2 border-b border-slate-200 dark:border-slate-700">
+              <section
+                key={grp.groupId}
+                className="rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50/50 dark:bg-slate-800/30 p-6 sm:p-8"
+                aria-labelledby={`feature-group-${grp.groupId}`}
+              >
+                <h2
+                  id={`feature-group-${grp.groupId}`}
+                  className="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-6"
+                >
                   {grp.groupLabel}
-                </h3>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                </h2>
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                   {grp.items.map((feature, idx) => (
                     <FeatureCard key={feature.href} feature={feature} index={idx} />
                   ))}
                 </div>
-              </div>
+              </section>
             ))}
           </div>
         ) : (
