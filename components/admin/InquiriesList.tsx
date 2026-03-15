@@ -82,7 +82,7 @@ export function InquiriesList({ limit = 50 }: InquiriesListProps) {
     }
   };
 
-  const updateStatus = async (id: string, newStatus: string) => {
+  const updateStatus = async (id: number, newStatus: string) => {
     try {
       const response = await fetch("/api/property-inquiry/admin", {
         method: "PATCH",
