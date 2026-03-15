@@ -79,7 +79,7 @@ export default function Home() {
   return (
     <>
       <HeroSingleV2 />
-      <SectionTransition />
+      <SectionTransition id="how-it-works" />
       {/* <LegacyHomeHeader /> */}
       <LegacyTransactions />
       <LegacyHeadline />

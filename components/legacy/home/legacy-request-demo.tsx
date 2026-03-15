@@ -40,7 +40,7 @@ export function LegacyRequestDemo({ dark = true }: LegacyRequestDemoProps) {
               <span>The Future of Property Management</span>
             </div>
             <h3
-              className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-6 leading-tight ${
+              className={`font-display text-2xl md:text-3xl lg:text-4xl font-bold mb-6 leading-tight tracking-tight ${
                 dark ? "text-white" : "text-slate-900 dark:text-slate-50"
               }`}
             >

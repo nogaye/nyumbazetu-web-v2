@@ -97,12 +97,34 @@ const config: Config = {
             },
             fontFamily: {
               sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+              display: ["var(--font-display)", "var(--font-geist-sans)", "system-ui", "sans-serif"],
               mono: ["var(--font-geist-mono)", "monospace"],
             },
             boxShadow: {
               card: "0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04)",
               "card-hover": "0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.04)",
               dropdown: "0 10px 15px -3px rgb(0 0 0 / 0.06), 0 4px 6px -4px rgb(0 0 0 / 0.04)",
+              glow: "0 0 40px -8px rgb(185 128 54 / 0.35)",
+              "glow-lg": "0 0 60px -12px rgb(185 128 54 / 0.4)",
+            },
+            animation: {
+              "gradient-mesh": "gradient-mesh 18s ease-in-out infinite",
+              "fade-in-up": "fade-in-up 0.6s ease-out forwards",
+              "scroll-bounce": "scroll-bounce 2s ease-in-out infinite",
+            },
+            keyframes: {
+              "gradient-mesh": {
+                "0%, 100%": { opacity: "1", transform: "scale(1) rotate(0deg)" },
+                "50%": { opacity: "0.85", transform: "scale(1.05) rotate(2deg)" },
+              },
+              "fade-in-up": {
+                "0%": { opacity: "0", transform: "translateY(12px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              "scroll-bounce": {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(6px)" },
+              },
             },
             container: {
               center: true,

@@ -2,6 +2,7 @@
 
 /**
  * Home page "Security & Reliability" block with scroll-triggered section and staggered cards.
+ * Reinforces trust with clear headings and hover treatment.
  */
 
 import { motion } from "framer-motion";
@@ -30,10 +31,11 @@ const securityItems = [
 
 export function SecurityReliabilitySection() {
   return (
-    <AnimatedSection>
+    <AnimatedSection className="bg-white dark:bg-slate-950/50">
       <SectionHeader
         title="Security & Reliability"
         description="Built for institutions that require enterprise-grade security and uptime."
+        titleClassName="font-display tracking-tight"
       />
       <motion.div
         className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto"
@@ -44,12 +46,14 @@ export function SecurityReliabilitySection() {
       >
         {securityItems.map((item, idx) => (
           <motion.div key={idx} variants={staggerChild}>
-            <Card className="h-full transition-shadow duration-200 hover:shadow-md">
+            <Card className="h-full transition-all duration-300 hover:shadow-glow hover:border-primary/20 dark:hover:border-primary/20">
               <CardHeader>
-                <CardTitle>{item.title}</CardTitle>
+                <CardTitle className="font-display font-semibold">
+                  {item.title}
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-slate-600 dark:text-slate-400">
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
                   {item.description}
                 </p>
               </CardContent>

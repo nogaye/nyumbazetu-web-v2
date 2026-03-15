@@ -149,6 +149,36 @@
   animation: gradient-shift 25s ease-in-out infinite;
 }
 
+/* Hero gradient mesh: slow morph for depth without distraction */
+@keyframes hero-mesh {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1) translate(0%, 0%);
+  }
+  33% {
+    opacity: 0.8;
+    transform: scale(1.1) translate(2%, -2%);
+  }
+  66% {
+    opacity: 0.5;
+    transform: scale(0.95) translate(-1%, 1%);
+  }
+}
+
+.hero-mesh-orb {
+  animation: hero-mesh 20s ease-in-out infinite;
+}
+
+/* Subtle grain overlay for premium texture (optional, use .grain on a pseudo-element) */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
 /* Platform screenshot carousel: sharper rendering without extra file size */
 .platform-screenshot-img-wrap {
   contain: layout style paint;

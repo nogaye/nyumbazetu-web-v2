@@ -54,26 +54,26 @@ function FeatureCard({
   if (compact) {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: index * 0.04 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ delay: index * 0.05, duration: 0.4 }}
       >
         <Link
           href={feature.href}
-          className="group flex items-start gap-4 rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white dark:bg-slate-900/50 p-5 shadow-card transition-all duration-200 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-card-hover hover:-translate-y-0.5"
+          className="group flex items-start gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-white dark:bg-slate-900/50 p-6 shadow-card transition-all duration-300 hover:border-primary/30 dark:hover:border-primary/30 hover:shadow-glow hover:-translate-y-1"
         >
-          <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 text-primary">
-            <feature.icon className="h-5 w-5" />
+          <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10 dark:bg-primary/20 text-primary transition-colors group-hover:bg-primary/20 dark:group-hover:bg-primary/30">
+            <feature.icon className="h-6 w-6" />
           </div>
           <div className="min-w-0 flex-1">
-            <h3 className="font-semibold text-slate-900 dark:text-slate-50 group-hover:text-primary transition-colors">
+            <h3 className="font-display font-semibold text-lg text-slate-900 dark:text-slate-50 group-hover:text-primary transition-colors">
               {feature.title}
             </h3>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
+            <p className="mt-1.5 text-sm text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
               {feature.description}
             </p>
-            <span className="mt-2 inline-flex items-center text-sm font-medium text-primary group-hover:underline">
+            <span className="mt-3 inline-flex items-center text-sm font-medium text-primary group-hover:underline">
               Learn more
               <ArrowRightIcon className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </span>
@@ -85,19 +85,19 @@ function FeatureCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.04 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ delay: index * 0.05, duration: 0.4 }}
     >
       <Link
         href={feature.href}
-        className="group flex h-full flex-col rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white dark:bg-slate-900/50 p-6 shadow-card transition-all duration-200 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-card-hover hover:-translate-y-0.5"
+        className="group flex h-full flex-col rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-white dark:bg-slate-900/50 p-6 shadow-card transition-all duration-300 hover:border-primary/30 dark:hover:border-primary/30 hover:shadow-glow hover:-translate-y-1"
       >
-        <div className="mb-4 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10 dark:bg-primary/20 text-primary">
+        <div className="mb-4 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10 dark:bg-primary/20 text-primary transition-colors group-hover:bg-primary/20 dark:group-hover:bg-primary/30">
           <feature.icon className="h-6 w-6" />
         </div>
-        <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-50 group-hover:text-primary transition-colors">
+        <h3 className="font-display text-lg font-semibold text-slate-900 dark:text-slate-50 group-hover:text-primary transition-colors">
           {feature.title}
         </h3>
         <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -142,8 +142,12 @@ export function FeatureGrid({
 
   return (
     <>
-      <Section>
-        <SectionHeader title={title} description={description} />
+      <Section className="bg-slate-50/50 dark:bg-slate-900/30">
+        <SectionHeader
+          title={title}
+          description={description}
+          titleClassName="font-display tracking-tight"
+        />
         {useGrouped && groups ? (
           <div className="space-y-14">
             {groups.map((grp) => (
@@ -200,16 +204,16 @@ export function FeatureGrid({
       {showCta && (
         <Section className="bg-secondary">
           <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
               See all features in action
             </h2>
-            <p className="text-lg text-white mb-8 leading-relaxed">
+            <p className="text-lg text-white/90 mb-8 leading-relaxed">
               Schedule a demo to explore how these features work together to
               transform your property operations.
             </p>
             <Button
               size="lg"
-              className="bg-primary hover:bg-primary-600 text-primary-foreground"
+              className="bg-primary hover:bg-primary-600 text-primary-foreground font-semibold shadow-lg hover:shadow-glow transition-shadow rounded-xl"
               asChild
             >
               <Link href="/request-demo" className="flex items-center gap-2">

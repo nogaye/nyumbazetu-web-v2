@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -122,7 +123,10 @@ const navItems: NavItem[] = [
 const initialFeatureGroupsExpanded = new Set<string>();
 
 export function MainNav() {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  /** When true, hero is in view — nav uses transparent/dark style to blend with hero. */
+  const [isOverHero, setIsOverHero] = useState(false);
   /** Tracks which mobile menu sections (e.g. Solutions, Features) are expanded. */
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
   /** Tracks which desktop dropdown is hover-open for AnimatePresence exit animation. */
@@ -131,6 +135,17 @@ export function MainNav() {
   const [expandedFeatureGroups, setExpandedFeatureGroups] = useState<Set<string>>(
     initialFeatureGroupsExpanded
   );
+
+  useEffect(() => {
+    if (pathname !== "/") {
+      setIsOverHero(false);
+      return;
+    }
+    const onScroll = () => setIsOverHero(window.scrollY < 420);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [pathname]);
 
   const toggleSection = (label: string) => {
     setExpandedSections((prev) => {
@@ -151,9 +166,16 @@ export function MainNav() {
     });
   };
 
+  const navOverHero = pathname === "/" && isOverHero;
+
   return (
     <nav
-      className="sticky top-0 z-50 w-full border-b border-slate-200/90 dark:border-slate-800/90 bg-white/98 dark:bg-slate-950/98 backdrop-blur-md supports-[backdrop-filter]:bg-white/90 dark:supports-[backdrop-filter]:bg-slate-950/90"
+      className={cn(
+        "sticky top-0 z-50 w-full border-b backdrop-blur-md transition-colors duration-300",
+        navOverHero
+          ? "border-white/15 bg-slate-950/80 text-white"
+          : "border-slate-200/90 dark:border-slate-800/90 bg-white/98 dark:bg-slate-950/98 supports-[backdrop-filter]:bg-white/90 dark:supports-[backdrop-filter]:bg-slate-950/90"
+      )}
       role="navigation"
       aria-label="Main navigation"
     >
@@ -171,7 +193,12 @@ export function MainNav() {
               height={36}
               className="h-9 w-9 flex-shrink-0"
             />
-            <span className="text-xl font-bold text-secondary dark:text-slate-50">
+            <span
+              className={cn(
+                "text-xl font-bold transition-colors",
+                navOverHero ? "text-white" : "text-secondary dark:text-slate-50"
+              )}
+            >
               Nyumba Zetu
             </span>
           </Link>
@@ -187,7 +214,10 @@ export function MainNav() {
               >
                 <Link
                   href={item.href}
-                  className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-primary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md px-2 py-1 inline-block"
+                  className={cn(
+                  "text-sm font-medium hover:text-primary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md px-2 py-1 inline-block",
+                  navOverHero ? "text-white hover:text-primary" : "text-slate-700 dark:text-slate-300"
+                )}
                   aria-haspopup={item.children || item.childGroups ? "true" : undefined}
                   aria-expanded={openDropdown === item.label}
                 >
@@ -319,7 +349,11 @@ export function MainNav() {
 
           <div className="hidden lg:flex lg:items-center lg:gap-2 lg:space-x-0">
             <ThemeToggle />
-            <Button variant="ghost" asChild>
+            <Button
+              variant="ghost"
+              asChild
+              className={cn(navOverHero && "text-white hover:text-primary hover:bg-white/10")}
+            >
               <Link
                 href="https://app.nyumbazetu.com/"
                 target="_blank"
@@ -328,7 +362,14 @@ export function MainNav() {
                 Login
               </Link>
             </Button>
-            <Button asChild>
+            <Button
+              asChild
+              variant={navOverHero ? "outline" : "default"}
+              className={cn(
+                navOverHero &&
+                  "border-2 border-white bg-primary text-white hover:bg-primary-600 hover:border-primary-500 hover:text-white"
+              )}
+            >
               <Link href="/request-demo" className="flex items-center gap-2">
                 Request a demo
                 <CalendarDaysIcon className="h-4 w-4" />
@@ -341,7 +382,7 @@ export function MainNav() {
             type="button"
             variant="ghost"
             size="icon"
-            className="lg:hidden"
+            className={cn("lg:hidden", navOverHero && "text-white hover:bg-white/10")}
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
             aria-expanded={mobileMenuOpen}
