@@ -9,6 +9,7 @@ import { ListingsFilterBar } from "@/components/listings/ListingsFilterBar";
 import { ListingsHeaderStrip } from "@/components/listings/ListingsHeaderStrip";
 import { ListingCard } from "@/components/listings/ListingCard";
 import { ListingCardSkeleton } from "@/components/listings/ListingCardSkeleton";
+import { ActiveFilterChips } from "@/components/listings/ActiveFilterChips";
 import { Button } from "@/components/ui/button";
 import { fetchListings, parseFilters } from "@/lib/listings/supabase-helpers";
 import { ListingFilters } from "@/lib/listings/types";
@@ -56,6 +57,21 @@ async function ListingsContent({
     return "Kenya";
   };
 
+  /** Builds query string for pagination (all current filters, no page). */
+  const baseQuery: Record<string, string> = {};
+  for (const [k, v] of Object.entries(filters)) {
+    if (k === "page" || v === undefined || v === null) continue;
+    baseQuery[k] = String(v);
+  }
+  const prevPageHref =
+    page > 1
+      ? `/listings?${new URLSearchParams({ ...baseQuery, page: (page - 1).toString() }).toString()}`
+      : null;
+  const nextPageHref =
+    page < totalPages
+      ? `/listings?${new URLSearchParams({ ...baseQuery, page: (page + 1).toString() }).toString()}`
+      : null;
+
   return (
     <div className="min-h-screen bg-slate-100/70 dark:bg-slate-900/50">
       {/* Compact header: headline + search + sort */}
@@ -69,115 +85,106 @@ async function ListingsContent({
       <div className="mx-auto flex max-w-[1600px] flex-col lg:flex-row">
         <ListingsFilterBar filters={filters} layout="sidebar" />
 
-        <div className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8">
-          {/* Result count — minimal */}
-          <div className="mb-4 flex items-baseline justify-between gap-4">
-            <p className="text-sm text-slate-600 dark:text-slate-400">
-              {total === 0 ? (
-                "No places found"
-              ) : (
-                <>
-                  <span className="font-medium text-slate-900 dark:text-slate-50">
-                    {total}
-                  </span>{" "}
-                  {total === 1 ? "place" : "places"} in {getLocationText()}
-                  {totalPages > 1 && (
-                    <span className="ml-1">
-                      · Page {page} of {totalPages}
-                    </span>
-                  )}
-                </>
-              )}
-            </p>
+        <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8" aria-label="Property listings">
+          {/* Active filter chips: show when filters applied and we have results or zero results */}
+          <div className="mb-4">
+            <ActiveFilterChips filters={filters} />
           </div>
 
-          {/* Empty state */}
-          {total === 0 && (
-            <div className="flex flex-col items-center justify-center py-20 text-center">
-              <p className="mb-4 text-slate-600 dark:text-slate-400">
-                Try different filters or areas.
-              </p>
-              <Link href="/listings">
-                <Button variant="outline" size="sm">
-                  Clear filters
-                </Button>
-              </Link>
+          {/* Location + page context when we have results */}
+          {total > 0 && (
+            <div className="mb-4 flex flex-wrap items-baseline gap-2 text-sm text-slate-600 dark:text-slate-400">
+              <span>in {getLocationText()}</span>
+              {totalPages > 1 && (
+                <span aria-label={`Page ${page} of ${totalPages}`}>
+                  · Page {page} of {totalPages}
+                </span>
+              )}
             </div>
           )}
 
-          {/* Grid */}
+          {/* Empty / no-results state */}
+          {total === 0 && (
+            <div
+              className="flex flex-col items-center justify-center rounded-2xl border border-slate-200/80 bg-white py-16 text-center dark:border-slate-700/80 dark:bg-slate-900/50 sm:py-20"
+              role="status"
+              aria-live="polite"
+            >
+              <p className="text-base font-medium text-slate-900 dark:text-slate-50">
+                No properties match your filters
+              </p>
+              <p className="mt-2 max-w-sm text-sm text-slate-600 dark:text-slate-400">
+                Try adjusting location, price range, or property type — or browse all listings.
+              </p>
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                <Button asChild size="default">
+                  <Link href="/listings">Clear filters</Link>
+                </Button>
+                <Button asChild variant="outline" size="default">
+                  <Link href="/listings?city=nairobi">Browse Nairobi</Link>
+                </Button>
+                <Button asChild variant="outline" size="default">
+                  <Link href="/listings?city=mombasa">Browse Mombasa</Link>
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* Listing grid */}
           {total > 0 && (
             <>
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                 {listings.map((listing) => (
                   <ListingCard key={listing.id} listing={listing} />
                 ))}
               </div>
 
-              {/* Pagination — minimal */}
+              {/* Pagination */}
               {totalPages > 1 && (
                 <nav
-                  className="mt-12 flex items-center justify-center gap-3"
+                  className="mt-14 flex flex-wrap items-center justify-center gap-2 sm:gap-3"
                   aria-label="Pagination"
                 >
-                  <Link
-                    href={
-                      page > 1
-                        ? `/listings?${new URLSearchParams({
-                            ...Object.fromEntries(
-                              Object.entries(filters).filter(
-                                ([_k, v]) => v !== undefined
-                              )
-                            ),
-                            page: (page - 1).toString(),
-                          } as Record<string, string>).toString()}`
-                        : "#"
-                    }
-                    aria-disabled={page === 1}
-                  >
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      disabled={page === 1}
-                      className="gap-1.5"
-                    >
-                      <ChevronLeft className="h-4 w-4" />
+                  <span className="sr-only">
+                    Page {page} of {totalPages}
+                  </span>
+                  {page > 1 && prevPageHref ? (
+                    <Button variant="outline" size="default" className="gap-2" asChild>
+                      <Link href={prevPageHref} aria-label="Previous page">
+                        <ChevronLeft className="h-4 w-4" aria-hidden />
+                        Previous
+                      </Link>
+                    </Button>
+                  ) : (
+                    <Button variant="outline" size="default" className="gap-2" disabled>
+                      <ChevronLeft className="h-4 w-4" aria-hidden />
                       Previous
                     </Button>
-                  </Link>
-                  <span className="text-sm text-slate-500 dark:text-slate-400">
-                    {page} / {totalPages}
-                  </span>
-                  <Link
-                    href={
-                      page < totalPages
-                        ? `/listings?${new URLSearchParams({
-                            ...Object.fromEntries(
-                              Object.entries(filters).filter(
-                                ([_k, v]) => v !== undefined
-                              )
-                            ),
-                            page: (page + 1).toString(),
-                          } as Record<string, string>).toString()}`
-                        : "#"
-                    }
-                    aria-disabled={page >= totalPages}
+                  )}
+                  <span
+                    className="min-w-[4rem] text-center text-sm font-medium text-slate-700 dark:text-slate-300"
+                    aria-current="page"
                   >
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      disabled={page >= totalPages}
-                      className="gap-1.5"
-                    >
-                      Next
-                      <ChevronRight className="h-4 w-4" />
+                    {page} of {totalPages}
+                  </span>
+                  {page < totalPages && nextPageHref ? (
+                    <Button variant="outline" size="default" className="gap-2" asChild>
+                      <Link href={nextPageHref} aria-label="Next page">
+                        Next
+                        <ChevronRight className="h-4 w-4" aria-hidden />
+                      </Link>
                     </Button>
-                  </Link>
+                  ) : (
+                    <Button variant="outline" size="default" className="gap-2" disabled>
+                      Next
+                      <ChevronRight className="h-4 w-4" aria-hidden />
+                    </Button>
+                  )}
                 </nav>
               )}
             </>
           )}
-        </div>
+        </main>
       </div>
     </div>
   );

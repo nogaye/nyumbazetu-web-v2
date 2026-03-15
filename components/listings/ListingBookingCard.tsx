@@ -74,6 +74,8 @@ export interface ListingBookingCardProps {
   locationName: string;
   /** Optional cancellation policy text (typically for short_stay). */
   cancellationPolicy?: string;
+  /** Optional primary CTA label (e.g. "Schedule a viewing"). When not set, uses "Reserve" or "Contact" for buy. */
+  buttonLabel?: string;
   /** Controlled check-in date (only shown when listingPurpose is short_stay). */
   checkIn?: Date;
   /** Controlled check-out date. */
@@ -103,6 +105,7 @@ export function ListingBookingCard({
   currencyCode = "KES",
   locationName,
   cancellationPolicy,
+  buttonLabel: customButtonLabel,
   checkIn: controlledCheckIn,
   checkOut: controlledCheckOut,
   guests: controlledGuests,
@@ -113,6 +116,7 @@ export function ListingBookingCard({
 }: ListingBookingCardProps) {
   const isShortStay = listingPurpose === "short_stay";
   const isBuy = listingPurpose === "buy";
+  const ctaLabel = customButtonLabel ?? (isBuy ? "Contact" : "Reserve");
 
   const today = useMemo(() => {
     const t = new Date();
@@ -234,7 +238,7 @@ export function ListingBookingCard({
         propertyTitle={propertyTitle}
         propertyId={propertyId}
         propertySlug={propertySlug}
-        buttonLabel={isBuy ? "Contact" : "Reserve"}
+        buttonLabel={ctaLabel}
       />
 
       <p className="mt-3 text-center text-sm text-slate-500 dark:text-slate-400">

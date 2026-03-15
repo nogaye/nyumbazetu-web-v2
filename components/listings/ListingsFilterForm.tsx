@@ -254,7 +254,7 @@ export function ListingsFilterForm({
             className="flex-1"
             size={isCompact ? "sm" : "default"}
           >
-            Apply
+            Apply filters
           </Button>
           {hasActiveFilters && (
             <Button
@@ -262,7 +262,7 @@ export function ListingsFilterForm({
               size={isCompact ? "sm" : "default"}
               onClick={clearFilters}
             >
-              Clear
+              Clear all
             </Button>
           )}
         </div>

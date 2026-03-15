@@ -41,6 +41,8 @@ export interface ListingDetailBookingSectionProps {
   amenities?: string[];
   /** Optional cancellation policy text (typically for short_stay). */
   cancellationPolicy?: string;
+  /** Optional primary CTA label (e.g. "Schedule a viewing", "Request to book"). */
+  buttonLabel?: string;
   className?: string;
 }
 
@@ -59,6 +61,7 @@ export function ListingDetailBookingSection({
   locationName,
   amenities,
   cancellationPolicy,
+  buttonLabel,
   className,
 }: ListingDetailBookingSectionProps) {
   const isShortStay = listingPurpose === ListingPurpose.ShortStay;
@@ -104,6 +107,7 @@ export function ListingDetailBookingSection({
               currencyCode={currencyCode}
               locationName={locationName}
               cancellationPolicy={cancellationPolicy}
+              buttonLabel={buttonLabel}
               checkIn={checkIn}
               checkOut={checkOut}
               guests={guests}
