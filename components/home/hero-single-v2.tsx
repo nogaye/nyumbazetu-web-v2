@@ -10,7 +10,11 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { CalendarDaysIcon, ArrowRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import {
+  CalendarDaysIcon,
+  ArrowRightIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/24/outline";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 
 /** Credibility badge text; short trust statement above the headline. */
@@ -29,9 +33,13 @@ const SOCIAL_PROOF = "Trusted by property managers, estates, and banks";
 /** Stats shown in the hero for credibility and quick scanning. */
 const HERO_STATS = [
   { value: "500+", label: "Properties managed" },
-  { value: "98%", label: "Collection rate" },
-  { value: "eTIMS", label: "Ready" },
+  { value: "95.3%", label: "Collection rate" },
+  //{ value: "KES 20B+", label: "Processed" },
 ];
+
+/** Footnote clarifying that the collection rate is an average across the platform. */
+const COLLECTION_RATE_FOOTNOTE =
+  "95.3% is the average rent collection rate across all properties on Nyumba Zetu.";
 
 /** Scroll indicator target (first section after hero). */
 const SCROLL_TARGET_ID = "how-it-works";
@@ -43,8 +51,14 @@ export function HeroSingleV2() {
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900" />
         <div className="hero-mesh-orb absolute -top-[40%] -right-[20%] w-[80vw] max-w-[800px] h-[80vw] max-h-[800px] rounded-full bg-primary/20 blur-[120px]" />
-        <div className="hero-mesh-orb absolute -bottom-[30%] -left-[15%] w-[60vw] max-w-[600px] h-[60vw] max-h-[600px] rounded-full bg-secondary/15 blur-[100px]" style={{ animationDelay: "-7s" }} />
-        <div className="hero-mesh-orb absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] max-w-[400px] h-[40vw] max-h-[400px] rounded-full bg-tertiary/10 blur-[80px]" style={{ animationDelay: "-3s" }} />
+        <div
+          className="hero-mesh-orb absolute -bottom-[30%] -left-[15%] w-[60vw] max-w-[600px] h-[60vw] max-h-[600px] rounded-full bg-secondary/15 blur-[100px]"
+          style={{ animationDelay: "-7s" }}
+        />
+        <div
+          className="hero-mesh-orb absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] max-w-[400px] h-[40vw] max-h-[400px] rounded-full bg-tertiary/10 blur-[80px]"
+          style={{ animationDelay: "-3s" }}
+        />
         <div className="absolute inset-0 grain" aria-hidden />
       </div>
 
@@ -70,7 +84,11 @@ export function HeroSingleV2() {
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              delay: 0.25,
+              duration: 0.6,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-[1.08] tracking-[-0.03em] text-white"
           >
             {HEADLINE}
@@ -130,10 +148,22 @@ export function HeroSingleV2() {
                 <div className="font-display text-2xl md:text-3xl font-bold text-white">
                   {stat.value}
                 </div>
-                <div className="text-sm text-slate-400 mt-0.5">{stat.label}</div>
+                <div className="text-sm text-slate-400 mt-0.5">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </motion.div>
+
+          {/* Footnote: clarifies that collection rate is platform average */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7, duration: 0.5 }}
+            className="text-xs text-slate-500 mb-6 max-w-xl mx-auto"
+          >
+            {COLLECTION_RATE_FOOTNOTE}
+          </motion.p>
 
           {/* Social proof line */}
           <motion.p
@@ -156,7 +186,9 @@ export function HeroSingleV2() {
         className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-500 hover:text-slate-400 transition-colors"
         aria-label="Scroll to content"
       >
-        <span className="text-xs font-medium uppercase tracking-wider">See how it works</span>
+        <span className="text-xs font-medium uppercase tracking-wider">
+          See how it works
+        </span>
         <ChevronDownIcon className="h-6 w-6 animate-scroll-bounce" />
       </motion.a>
     </section>
