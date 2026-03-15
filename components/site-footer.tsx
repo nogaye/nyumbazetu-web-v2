@@ -18,7 +18,6 @@ import {
 } from "@/components/social-icons";
 import { AppStoreBadge, GooglePlayBadge } from "@/components/app-store-badges";
 import { EXTERNAL_RESOURCES } from "@/lib/external-resources";
-import { useEffect, useState } from "react";
 import { staggerContainer, staggerChild } from "@/lib/motion";
 
 const footerLinks = {
@@ -83,16 +82,6 @@ const footerLinks = {
   ],
 };
 
-// Generate random stars
-function generateStars(count: number) {
-  return Array.from({ length: count }, (_, i) => ({
-    id: i,
-    top: Math.random() * 100,
-    left: Math.random() * 100,
-    delay: Math.random() * 3,
-    duration: 2 + Math.random() * 2,
-  }));
-}
 
 /**
  * Footer link columns grid with scroll-triggered stagger animation.
@@ -298,63 +287,10 @@ function FooterColumnsGrid() {
 }
 
 export function SiteFooter() {
-  const [stars, setStars] = useState<
-    Array<{
-      id: number;
-      top: number;
-      left: number;
-      delay: number;
-      duration: number;
-    }>
-  >([]);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    setStars(generateStars(50));
-  }, []);
-
   return (
     <footer className="relative border-t border-slate-800 bg-slate-950 overflow-hidden">
-      {/* Animated Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 opacity-50 animate-gradient-shift pointer-events-none" />
-
-      {/* Twinkling Stars Background */}
-      {mounted && (
-        <div className="absolute inset-0 pointer-events-none">
-          {stars.map((star) => (
-            <div
-              key={star.id}
-              className="absolute w-0.5 h-0.5 bg-white rounded-full"
-              style={{
-                top: `${star.top}%`,
-                left: `${star.left}%`,
-                animation: `twinkle ${star.duration}s ease-in-out infinite`,
-                animationDelay: `${star.delay}s`,
-                opacity: 0.2,
-              }}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* Floating Particles */}
-      {mounted && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div
-              key={`particle-${i}`}
-              className="absolute w-1 h-1 bg-primary/20 rounded-full blur-sm"
-              style={{
-                left: `${10 + i * 12}%`,
-                bottom: "-10px",
-                animation: `float-up ${15 + i * 2}s linear infinite`,
-                animationDelay: `${i * 2}s`,
-              }}
-            />
-          ))}
-        </div>
-      )}
+      {/* Subtle gradient overlay for depth */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-primary/[0.03] animate-gradient-shift pointer-events-none" />
 
       <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-20">
         {/* Footer columns: Brand, Product, Solutions, Company, Resources, Legal */}

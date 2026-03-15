@@ -95,7 +95,7 @@ export function LegacyTransactions() {
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
               >
-                <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 hover:border-primary/20">
+                <Card className="h-full border border-slate-200/80 dark:border-slate-700/80 shadow-card transition-all duration-200 hover:shadow-card-hover hover:-translate-y-0.5 hover:border-slate-300 dark:hover:border-slate-600">
                   <CardContent className="p-6 text-center">
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
                       <IconComponent className="h-8 w-8 text-primary" />

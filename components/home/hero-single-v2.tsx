@@ -29,11 +29,11 @@ const SOCIAL_PROOF = "Trusted by property managers, estates, and banks";
 export function HeroSingleV2() {
   return (
     <section className="relative bg-white dark:bg-slate-950 overflow-hidden min-h-[500px] md:min-h-[560px] lg:min-h-[600px] flex items-center">
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900" />
-      {/* Decorative background elements (from LegacyHomeHeader) */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50/80 via-white to-slate-50/80 dark:from-slate-900/95 dark:via-slate-950 dark:to-slate-900/95" />
+      {/* Subtle ambient orbs for depth */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-[480px] h-[480px] bg-primary/[0.04] dark:bg-primary/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/[0.03] dark:bg-primary/[0.05] rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
       </div>
       <div className="relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-16 md:pt-24 lg:pt-28 pb-12 md:pb-16 lg:pb-20 w-full">
         <motion.div
@@ -47,7 +47,7 @@ export function HeroSingleV2() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-primary mb-6 px-4 py-2 rounded-full bg-primary/10 border border-primary/20"
+            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary mb-6 px-3.5 py-2 rounded-full bg-primary/10 border border-primary/15"
           >
             <SparklesIcon className="h-4 w-4" aria-hidden />
             <span>{BADGE}</span>
@@ -58,7 +58,7 @@ export function HeroSingleV2() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight text-slate-900 dark:text-slate-50"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-[1.15] tracking-[-0.02em] text-slate-900 dark:text-slate-50"
           >
             {HEADLINE}
           </motion.h1>

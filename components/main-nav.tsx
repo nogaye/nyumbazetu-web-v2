@@ -153,7 +153,7 @@ export function MainNav() {
 
   return (
     <nav
-      className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-slate-950/80"
+      className="sticky top-0 z-50 w-full border-b border-slate-200/90 dark:border-slate-800/90 bg-white/98 dark:bg-slate-950/98 backdrop-blur-md supports-[backdrop-filter]:bg-white/90 dark:supports-[backdrop-filter]:bg-slate-950/90"
       role="navigation"
       aria-label="Main navigation"
     >
@@ -213,7 +213,7 @@ export function MainNav() {
                         variants={dropdownVariants}
                         transition={tweenTransition}
                       >
-                        <div className="bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200/80 dark:border-slate-700/80 overflow-hidden">
+                        <div className="bg-white dark:bg-slate-900 rounded-xl shadow-dropdown border border-slate-200/90 dark:border-slate-700/90 overflow-hidden">
                           {item.childGroups ? (
                             <nav
                               className="py-2"

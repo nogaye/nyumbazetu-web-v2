@@ -61,7 +61,7 @@ function FeatureCard({
       >
         <Link
           href={feature.href}
-          className="group flex items-start gap-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/50 p-5 transition-all duration-200 hover:border-primary/30 hover:shadow-md hover:-translate-y-0.5"
+          className="group flex items-start gap-4 rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white dark:bg-slate-900/50 p-5 shadow-card transition-all duration-200 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-card-hover hover:-translate-y-0.5"
         >
           <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 text-primary">
             <feature.icon className="h-5 w-5" />
@@ -92,7 +92,7 @@ function FeatureCard({
     >
       <Link
         href={feature.href}
-        className="group flex h-full flex-col rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/50 p-6 transition-all duration-200 hover:border-primary/30 hover:shadow-lg hover:-translate-y-0.5"
+        className="group flex h-full flex-col rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white dark:bg-slate-900/50 p-6 shadow-card transition-all duration-200 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-card-hover hover:-translate-y-0.5"
       >
         <div className="mb-4 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10 dark:bg-primary/20 text-primary">
           <feature.icon className="h-6 w-6" />
@@ -149,7 +149,7 @@ export function FeatureGrid({
             {groups.map((grp) => (
               <section
                 key={grp.groupId}
-                className="rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50/50 dark:bg-slate-800/30 p-6 sm:p-8"
+                className="rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50/60 dark:bg-slate-800/40 p-6 sm:p-8 shadow-card"
                 aria-labelledby={`feature-group-${grp.groupId}`}
               >
                 <h2
@@ -200,7 +200,7 @@ export function FeatureGrid({
       {showCta && (
         <Section className="bg-secondary">
           <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
               See all features in action
             </h2>
             <p className="text-lg text-white mb-8 leading-relaxed">
