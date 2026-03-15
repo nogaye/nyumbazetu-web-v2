@@ -34,7 +34,7 @@ export function SecurityReliabilitySection() {
     <AnimatedSection className="bg-white dark:bg-slate-950/50">
       <SectionHeader
         title="Security & Reliability"
-        description="Built for institutions that require enterprise-grade security and uptime."
+        description="Enterprise-grade security, audit trails, and uptime—so you and your stakeholders can trust the numbers."
         titleClassName="font-display tracking-tight"
       />
       <motion.div

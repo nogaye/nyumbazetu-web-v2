@@ -6,6 +6,7 @@ import { LegacyAwards } from "@/components/legacy/home/legacy-awards";
 import { LegacyPortfolio } from "@/components/legacy/home/legacy-portfolio";
 import { FeatureGrid } from "@/components/home/feature-grid";
 import { LegacyRequestDemo } from "@/components/legacy/home/legacy-request-demo";
+import { FinalCTA } from "@/components/home/final-cta";
 import { SecurityReliabilitySection } from "@/components/home/security-reliability-section";
 import { NewsletterSection } from "@/components/home/newsletter-section";
 import { HeroSingleV2 } from "@/components/home/hero-single-v2";
@@ -70,9 +71,9 @@ const LegacyReferralLazy = dynamic(
 );
 
 export const metadata = {
-  title: "Home | Nyumba Zetu - Property Management for Kenya",
+  title: "Home",
   description:
-    "Nyumba Zetu is Kenya's leading property management software for landlords, property managers, and real estate professionals. Streamline your property operations with our comprehensive platform.",
+    "The operating system for African real estate. One platform for collections, accounting, tenant experience, and compliance—trusted by property managers, estates, and banks across Kenya.",
 };
 
 export default function Home() {
@@ -86,7 +87,7 @@ export default function Home() {
       <LegacyAwards />
       <AsSeenOn />
       <LegacyPortfolio />
-      <FeatureGrid limit={6} showViewMore />
+      <FeatureGrid limit={6} showViewMore showCta />
       <LegacyScreenshotsLazy />
       <Integrations />
       <LegacyTestimonialsLazy />
@@ -99,6 +100,9 @@ export default function Home() {
       <SecurityReliabilitySection />
 
       <LegacyReferralLazy />
+
+      {/* Final conversion CTA before newsletter */}
+      <FinalCTA />
 
       {/* Stay updated — newsletter signup */}
       <NewsletterSection />

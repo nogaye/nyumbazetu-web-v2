@@ -26,7 +26,7 @@ interface SectionTransitionProps {
  */
 export function SectionTransition({
   className,
-  height = 80,
+  height = 100,
   showWave = true,
   id,
 }: SectionTransitionProps) {

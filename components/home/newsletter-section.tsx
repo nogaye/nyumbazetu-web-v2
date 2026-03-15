@@ -16,10 +16,10 @@ export function NewsletterSection() {
           Newsletter
         </p>
         <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-50 mb-4 tracking-tight">
-          Stay updated
+          Stay in the loop
         </h2>
         <p className="text-lg text-slate-600 dark:text-slate-400 mb-10 leading-relaxed">
-          Guides, case studies, and industry news—in your inbox. No spam, unsubscribe anytime.
+          Property management tips, product updates, and industry insights—delivered to your inbox. No spam, unsubscribe anytime.
         </p>
         <NewsletterSignup />
       </div>

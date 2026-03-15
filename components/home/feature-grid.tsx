@@ -37,9 +37,9 @@ export interface FeatureGridProps {
 }
 
 const DEFAULT_TITLE =
-  "One platform for every part of your property operations.";
+  "Everything you need to run property operations—in one place.";
 const DEFAULT_DESCRIPTION =
-  "From rent collection to accounting, tenant experience to compliance—everything you need in one integrated system.";
+  "Collections, accounting, tenant experience, maintenance, eTIMS, and reporting. No more spreadsheets, no more chaos—just one integrated system that scales with you.";
 
 /** Renders a single feature card; compact for homepage, full for /features page. */
 function FeatureCard({
@@ -203,21 +203,20 @@ export function FeatureGrid({
 
       {showCta && (
         <Section className="bg-secondary">
-          <div className="text-center max-w-3xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto py-4">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
-              See all features in action
+              See it all in action
             </h2>
             <p className="text-lg text-white/90 mb-8 leading-relaxed">
-              Schedule a demo to explore how these features work together to
-              transform your property operations.
+              Book a free demo and we’ll show you how collections, accounting, and tenant experience work together—in one platform.
             </p>
             <Button
               size="lg"
-              className="bg-primary hover:bg-primary-600 text-primary-foreground font-semibold shadow-lg hover:shadow-glow transition-shadow rounded-xl"
+              className="bg-primary hover:bg-primary-600 text-primary-foreground font-semibold shadow-lg hover:shadow-glow transition-all duration-300 rounded-xl px-8"
               asChild
             >
               <Link href="/request-demo" className="flex items-center gap-2">
-                Request a Demo
+                Book a free demo
                 <ArrowRightIcon className="h-4 w-4" />
               </Link>
             </Button>

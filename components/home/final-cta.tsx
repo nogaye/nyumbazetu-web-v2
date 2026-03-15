@@ -15,11 +15,11 @@ export function FinalCTA() {
         viewport={{ once: true }}
         className="text-center max-w-3xl mx-auto"
       >
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white leading-tight tracking-tight">
-          Ready to transform your property operations?
+        <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white leading-tight tracking-tight">
+          Ready to run property operations the right way?
         </h2>
-        <p className="text-xl text-white mb-8 leading-relaxed">
-          Talk to our team. See how Nyumba Zetu can improve collections, accounting, and tenant experience.
+        <p className="text-xl text-white/95 mb-8 leading-relaxed max-w-2xl mx-auto">
+          Book a free demo. Our team will show you how Nyumba Zetu improves collections, accounting, and tenant experience—in one platform.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button size="lg" className="bg-primary hover:bg-primary-600 text-primary-foreground" asChild>

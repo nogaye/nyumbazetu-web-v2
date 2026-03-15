@@ -18,23 +18,23 @@ import {
 import { SparklesIcon } from "@heroicons/react/24/solid";
 
 /** Credibility badge text; short trust statement above the headline. */
-const BADGE = "Built for Modern Property Managers";
+const BADGE = "Kenya's #1 property management platform";
 
 /** Category-defining vision headline; signals platform/infrastructure positioning. */
 const HEADLINE = "The operating system for African real estate";
 
 /** Clear product explanation: what the platform does (vision → explanation). */
 const SUBHEADLINE =
-  "Collect rent, automate property accounting, communicate with tenants, and generate reports — all in one platform.";
+  "One platform for collections, accounting, tenant experience, and compliance. M-Pesa, bank, eTIMS—all integrated. Real-time visibility for every stakeholder.";
 
 /** Social proof line; increases trust below the CTAs. */
-const SOCIAL_PROOF = "Trusted by property managers, estates, and banks";
+const SOCIAL_PROOF = "Trusted by property managers, estates, developers, and banks across Kenya";
 
 /** Stats shown in the hero for credibility and quick scanning. */
 const HERO_STATS = [
   { value: "500+", label: "Properties managed" },
   { value: "95.3%", label: "Collection rate" },
-  //{ value: "KES 20B+", label: "Processed" },
+  { value: "50k+", label: "Active tenants" },
 ];
 
 /** Footnote clarifying that the collection rate is an average across the platform. */
@@ -104,7 +104,7 @@ export function HeroSingleV2() {
             {SUBHEADLINE}
           </motion.p>
 
-          {/* CTAs — primary with glow on hover */}
+          {/* CTAs — primary with glow on hover; secondary for exploration */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -113,42 +113,42 @@ export function HeroSingleV2() {
           >
             <Button
               size="lg"
-              className="bg-primary hover:bg-primary-600 text-primary-foreground font-semibold shadow-lg hover:shadow-glow transition-all duration-300 rounded-xl px-8 text-base"
+              className="relative overflow-hidden cta-shine-hover bg-primary hover:bg-primary-600 text-primary-foreground font-semibold shadow-lg hover:shadow-glow transition-all duration-300 rounded-xl px-8 text-base group/btn"
               asChild
             >
-              <Link href="/request-demo" className="flex items-center gap-2">
-                Request a demo
-                <CalendarDaysIcon className="h-5 w-5" aria-hidden />
+              <Link href="/request-demo" className="flex items-center gap-2 relative z-10">
+                Book a free demo
+                <CalendarDaysIcon className="h-5 w-5 group-hover/btn:translate-x-0.5 transition-transform" aria-hidden />
               </Link>
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="border-2 border-slate-500 text-white hover:bg-white/10 hover:border-slate-400 font-medium rounded-xl px-8 text-base"
+              className="border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 font-medium rounded-xl px-8 text-base backdrop-blur-sm"
               asChild
             >
               <Link href="/features" className="flex items-center gap-2">
-                Explore Features
+                See all features
                 <ArrowRightIcon className="h-5 w-5" aria-hidden />
               </Link>
             </Button>
           </motion.div>
 
-          {/* Stats bar — social proof and quick value */}
+          {/* Stats bar — social proof and quick value; three columns for impact */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.65, duration: 0.5 }}
-            className="flex flex-wrap justify-center gap-8 md:gap-12 mb-10"
+            className="flex flex-wrap justify-center gap-6 sm:gap-10 md:gap-16 mb-10"
             role="list"
             aria-label="Key metrics"
           >
-            {HERO_STATS.map((stat, i) => (
+            {HERO_STATS.map((stat) => (
               <div key={stat.label} role="listitem" className="text-center">
-                <div className="font-display text-2xl md:text-3xl font-bold text-white">
+                <div className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white tabular-nums">
                   {stat.value}
                 </div>
-                <div className="text-sm text-slate-400 mt-0.5">
+                <div className="text-sm text-slate-400 mt-1">
                   {stat.label}
                 </div>
               </div>

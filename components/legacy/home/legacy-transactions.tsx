@@ -53,26 +53,26 @@ export function LegacyTransactions() {
     {
       icon: CurrencyDollarIcon,
       value: completed ? "KES 1B+" : formatCurrency(currentCount),
-      label: "In Monthly Transactions",
-      description: "Experience unmatched efficiency with our payments processing & property management solution",
+      label: "In monthly transactions",
+      description: "Secure, traceable payments—M-Pesa, bank, and wallet in one flow.",
     },
     {
       icon: UserGroupIcon,
       value: "50k+",
-      label: "Active Tenants",
-      description: "Growing community of satisfied tenants",
+      label: "Active tenants",
+      description: "Tenant and owner portals that reduce support and boost satisfaction.",
     },
     {
       icon: BuildingOfficeIcon,
       value: "500+",
-      label: "Properties Managed",
-      description: "Trusted by property managers across Africa",
+      label: "Properties managed",
+      description: "From single units to large estates—one platform scales with you.",
     },
     {
       icon: DocumentTextIcon,
       value: "1M+",
-      label: "Invoices Delivered",
-      description: "Automated invoicing and payment tracking",
+      label: "Invoices delivered",
+      description: "Automated invoicing, eTIMS-ready, and full audit trails.",
     },
   ];
 
@@ -80,8 +80,8 @@ export function LegacyTransactions() {
     <Section className="bg-slate-50 dark:bg-slate-900/50">
       <div className="container mx-auto px-4">
         <SectionHeader
-          title="Used by leading property managers and landlords"
-          description="Join hundreds of property managers, landlords, and committees using Nyumba Zetu to streamline their operations"
+          title="Numbers that matter"
+          description="Property teams across Kenya run on Nyumba Zetu—faster collections, fewer headaches, and one source of truth for every stakeholder."
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">

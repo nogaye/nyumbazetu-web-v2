@@ -189,3 +189,33 @@
   /* Slight contrast bump so text and edges read clearer */
   filter: contrast(1.03);
 }
+
+/* Premium CTA: subtle shine on hover for primary buttons */
+@keyframes cta-shine {
+  0% {
+    transform: translateX(-100%) skewX(-12deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.15;
+  }
+  100% {
+    transform: translateX(200%) skewX(-12deg);
+    opacity: 0;
+  }
+}
+.cta-shine-hover:hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.25) 45%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0.25) 55%,
+    transparent 100%
+  );
+  animation: cta-shine 0.8s ease-out;
+  pointer-events: none;
+}

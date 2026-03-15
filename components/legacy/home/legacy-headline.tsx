@@ -21,12 +21,12 @@ export function LegacyHeadline() {
           className="flex text-center justify-center"
         >
           <div className="w-full lg:w-2/3">
-            <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-[1.2] tracking-[-0.02em]">
-              The platform powering modern property management in Africa
-            </h1>
+            <h2 className="font-display text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-[1.15] tracking-[-0.02em]">
+              One system. Real-time visibility. Tax-ready.
+            </h2>
 
             <p className="text-white text-lg md:text-xl leading-relaxed opacity-90">
-              Nyumba Zetu is a cloud platform built for property managers, landlords, and estates to manage rent collection, accounting, tenant communication, maintenance, and reporting — all in one system.
+              Nyumba Zetu gives property managers, landlords, and estates a single place to collect rent, run accounting, talk to tenants, track maintenance, and stay compliant—so you spend less time on spreadsheets and more on growing your portfolio.
             </p>
           </div>
         </motion.div>
