@@ -8,6 +8,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { AfricanPatternBackground } from "@/components/design-system";
 
 export interface AuthSidePanelProps {
   /** Optional headline (e.g. "Welcome back"). */
@@ -39,13 +40,19 @@ export function AuthSidePanel({
   return (
     <div
       className={cn(
-        "flex flex-col justify-between rounded-2xl bg-slate-900/95 p-8 text-white dark:bg-slate-950/95 md:p-10 lg:p-12",
+        "relative flex flex-col justify-between rounded-2xl bg-slate-900/95 p-8 text-white dark:bg-slate-950/95 md:p-10 lg:p-12 overflow-hidden",
         "bg-gradient-to-br from-slate-800 to-slate-900 dark:from-slate-900 dark:to-slate-950",
         className
       )}
       aria-label="Branding and product information"
     >
-      <div className="space-y-6">
+      <AfricanPatternBackground
+        className="absolute inset-0 rounded-2xl"
+        variant="diamond"
+        opacity={0.14}
+        dark
+      />
+      <div className="relative z-10 space-y-6">
         {showBackToHome && (
           <Link
             href="/"
@@ -75,7 +82,7 @@ export function AuthSidePanel({
           </ul>
         )}
       </div>
-      <p className="mt-8 text-xs text-slate-500">
+      <p className="relative z-10 mt-8 text-xs text-slate-500">
         Secure sign-in. We never share your data.
       </p>
     </div>

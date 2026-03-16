@@ -133,13 +133,15 @@ export function VisitorsChart() {
 
           {/* Gradients */}
           <defs>
+            {/* Mobile: primary (brand gold) */}
             <linearGradient id="mobileGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="rgb(15 23 42)" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="rgb(15 23 42)" stopOpacity="0" />
+              <stop offset="0%" stopColor="rgb(185 128 54)" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="rgb(185 128 54)" stopOpacity="0" />
             </linearGradient>
+            {/* Desktop: deep-forest accent */}
             <linearGradient id="desktopGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="rgb(59 130 246)" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="rgb(59 130 246)" stopOpacity="0" />
+              <stop offset="0%" stopColor="rgb(31 61 43)" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="rgb(31 61 43)" stopOpacity="0" />
             </linearGradient>
           </defs>
 
@@ -182,7 +184,7 @@ export function VisitorsChart() {
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-blue-500 rounded"></div>
+                <div className="w-3 h-3 rounded bg-[#1f3d2b]" />
                 <span className="text-xs text-slate-600 dark:text-slate-400">
                   Desktop {chartData[hoveredIndex].desktop}
                 </span>

@@ -16,6 +16,7 @@ import {
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
 import { SparklesIcon } from "@heroicons/react/24/solid";
+import { AfricanPatternBackground } from "@/components/design-system";
 
 /** Credibility badge text; short trust statement above the headline. */
 const BADGE = "Kenya's #1 property management platform";
@@ -60,6 +61,12 @@ export function HeroSingleV2() {
           style={{ animationDelay: "-3s" }}
         />
         <div className="absolute inset-0 grain" aria-hidden />
+        <AfricanPatternBackground
+          className="absolute inset-0"
+          variant="grid"
+          opacity={0.14}
+          dark
+        />
       </div>
 
       <div className="relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl w-full pt-20 md:pt-28 pb-16 md:pb-24 text-center">

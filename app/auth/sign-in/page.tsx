@@ -75,7 +75,7 @@ function SignInForm() {
     <AuthFormCard
       icon={<Lock className="h-6 w-6" />}
       title="Sign in"
-      description="Use your email to continue to your account."
+      description="Welcome back — let's manage your properties."
       footer={
         <p className="text-center text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}

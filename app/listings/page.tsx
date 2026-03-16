@@ -10,6 +10,7 @@ import { Shield, CheckCircle2, FileCheck, FileText } from "lucide-react";
 import { ListingsHomeHero } from "@/components/listings/listings-home-hero";
 import { ListingCard } from "@/components/listings/ListingCard";
 import { ListingsCtaBand } from "@/components/listings/listings-cta-band";
+import { KenyaOutlineIllustration, AfricanPatternBackground } from "@/components/design-system";
 import { ListingsAnimatedSection } from "@/components/listings/listings-animated-section";
 import { ListingCardSkeleton } from "@/components/listings/ListingCardSkeleton";
 import { Button } from "@/components/ui/button";
@@ -39,9 +40,25 @@ async function FeaturedListings() {
   const featured = listings.slice(0, 8);
   if (featured.length === 0) {
     return (
-      <div className="rounded-2xl border border-slate-200/80 bg-white p-12 text-center dark:border-slate-700/80 dark:bg-slate-900/50">
-        <p className="text-slate-600 dark:text-slate-400">No listings yet. Check back soon or list your property.</p>
-        <Button asChild className="mt-4 bg-[#344767] hover:bg-[#2a3952] text-white">
+      <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-b from-[#fdfaf5] to-white p-12 text-center dark:border-slate-700/80 dark:bg-slate-900/50">
+        <AfricanPatternBackground
+          className="absolute inset-0 rounded-2xl"
+          variant="diamond"
+          opacity={0.2}
+          dark={false}
+        />
+        <div className="relative z-10 mx-auto mb-6 text-primary">
+          <KenyaOutlineIllustration
+            width={144}
+            stroke="currentColor"
+            strokeWidth={1.9}
+            opacity={1}
+          />
+        </div>
+        <p className="relative z-10 text-slate-600 dark:text-slate-400">
+          No listings yet. Add your first property.
+        </p>
+        <Button asChild className="relative z-10 mt-4 bg-[#344767] hover:bg-[#2a3952] text-white">
           <Link href="/listings/post">Post a listing</Link>
         </Button>
       </div>
@@ -58,7 +75,7 @@ async function FeaturedListings() {
 
 export default function ListingsHomePage() {
   return (
-    <div className="min-h-screen bg-slate-50/80 dark:bg-slate-950/80">
+    <div className="min-h-screen bg-gradient-to-b from-[#f0e8dc] via-[#f5f0e8] to-slate-50/90 dark:from-slate-950 dark:via-slate-950/95 dark:to-slate-950/80">
       {/* 1. Search hero */}
       <ListingsHomeHero />
 
@@ -92,21 +109,24 @@ export default function ListingsHomePage() {
             Why list with us
           </h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-            <div className="rounded-xl border border-slate-200/80 bg-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
-              <p className="font-medium text-slate-900 dark:text-slate-50">Visibility</p>
-              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <div className="relative overflow-hidden rounded-xl border border-slate-200/80 bg-gradient-to-b from-[#faf7f2] to-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
+              <AfricanPatternBackground className="absolute inset-0 rounded-xl" variant="grid" opacity={0.08} dark={false} />
+              <p className="relative z-10 font-medium text-slate-900 dark:text-slate-50">Visibility</p>
+              <p className="relative z-10 mt-1 text-sm text-slate-600 dark:text-slate-400">
                 Your listing reaches serious renters and buyers across Kenya.
               </p>
             </div>
-            <div className="rounded-xl border border-slate-200/80 bg-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
-              <p className="font-medium text-slate-900 dark:text-slate-50">Inquiries that convert</p>
-              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <div className="relative overflow-hidden rounded-xl border border-slate-200/80 bg-gradient-to-b from-[#faf7f2] to-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
+              <AfricanPatternBackground className="absolute inset-0 rounded-xl" variant="grid" opacity={0.08} dark={false} />
+              <p className="relative z-10 font-medium text-slate-900 dark:text-slate-50">Inquiries that convert</p>
+              <p className="relative z-10 mt-1 text-sm text-slate-600 dark:text-slate-400">
                 Direct contact and viewing requests from interested parties.
               </p>
             </div>
-            <div className="rounded-xl border border-slate-200/80 bg-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
-              <p className="font-medium text-slate-900 dark:text-slate-50">Easy management</p>
-              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <div className="relative overflow-hidden rounded-xl border border-slate-200/80 bg-gradient-to-b from-[#faf7f2] to-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
+              <AfricanPatternBackground className="absolute inset-0 rounded-xl" variant="grid" opacity={0.08} dark={false} />
+              <p className="relative z-10 font-medium text-slate-900 dark:text-slate-50">Easy management</p>
+              <p className="relative z-10 mt-1 text-sm text-slate-600 dark:text-slate-400">
                 Update, pause or boost listings from your portal anytime.
               </p>
             </div>
@@ -115,21 +135,21 @@ export default function ListingsHomePage() {
 
         {/* Marketplace trust strip */}
         <ListingsAnimatedSection aria-label="Trust indicators" className="mb-16">
-          <div className="flex flex-wrap items-center justify-center gap-8 rounded-2xl border border-slate-200/80 bg-white px-6 py-8 dark:border-slate-700/80 dark:bg-slate-900/50 sm:gap-12">
+          <div className="flex flex-wrap items-center justify-center gap-8 rounded-2xl border border-primary/15 bg-gradient-to-r from-[#faf7f2] via-white to-[#faf7f2] px-6 py-8 dark:border-slate-700/80 dark:bg-slate-900/50 sm:gap-12">
             <span className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
-              <CheckCircle2 className="h-5 w-5 text-[#36b9a0]" aria-hidden />
+              <CheckCircle2 className="h-5 w-5 text-primary" aria-hidden />
               Verified listings
             </span>
             <span className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
-              <Shield className="h-5 w-5 text-[#36b9a0]" aria-hidden />
+              <Shield className="h-5 w-5 text-primary" aria-hidden />
               Professional listers
             </span>
             <span className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
-              <FileCheck className="h-5 w-5 text-[#36b9a0]" aria-hidden />
+              <FileCheck className="h-5 w-5 text-primary" aria-hidden />
               Secure inquiries
             </span>
             <span className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
-              <FileText className="h-5 w-5 text-[#36b9a0]" aria-hidden />
+              <FileText className="h-5 w-5 text-primary" aria-hidden />
               Transparent details
             </span>
           </div>

@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { staggerContainer, staggerChild } from "@/lib/motion";
+import { AfricanPatternBackground } from "@/components/design-system";
 
 export function ListingsHomeHero() {
   const router = useRouter();
@@ -30,9 +31,9 @@ export function ListingsHomeHero() {
       className="relative overflow-hidden border-b border-slate-200/80 dark:border-slate-800"
       aria-label="Search properties"
     >
-      {/* Base gradient: warm-to-cool mesh for depth */}
+      {/* Base gradient: warm savannah tint on listings for stronger African identity */}
       <div
-        className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950"
+        className="absolute inset-0 bg-gradient-to-br from-[#f5efe6] via-[#faf6f0] to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950"
         aria-hidden
       />
       {/* Soft color orbs — blue/indigo and warm accent for visual interest */}
@@ -60,6 +61,12 @@ export function ListingsHomeHero() {
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
         }}
         aria-hidden
+      />
+      <AfricanPatternBackground
+        className="absolute inset-0"
+        variant="diamond"
+        opacity={0.28}
+        dark={false}
       />
 
       <motion.div

@@ -89,6 +89,20 @@ const config: Config = {
                 900: "#0f172a",
                 950: "#020617",
               },
+              /** African-inspired accents: use sparingly for highlights, charts, empty states. */
+              savannah: {
+                DEFAULT: "#e6d3a3",
+                light: "#f5e6c8",
+                dark: "#d4c18a",
+              },
+              clay: "#c06b3e",
+              "deep-forest": "#1f3d2b",
+            },
+            /** Rhythmic spacing inspired by African textile rhythm (8–16–24–16). Use for section gaps and card padding. */
+            spacing: {
+              "rhythm-sm": "0.5rem",  /* 8px */
+              "rhythm-md": "1rem",    /* 16px */
+              "rhythm-lg": "1.5rem",  /* 24px */
             },
             borderRadius: {
               lg: "var(--radius)",

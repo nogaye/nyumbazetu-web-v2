@@ -7,6 +7,7 @@
 
 import * as React from "react";
 import { AuthSidePanel } from "@/components/auth/auth-side-panel";
+import { SavannahGradient } from "@/components/design-system";
 import { cn } from "@/lib/utils";
 
 export interface AuthLayoutShellProps {
@@ -28,7 +29,7 @@ export function AuthLayoutShell({
   return (
     <div
       className={cn(
-        "min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:flex-row",
+        "min-h-screen flex flex-col md:flex-row",
         className
       )}
       role="main"
@@ -41,14 +42,16 @@ export function AuthLayoutShell({
           <AuthSidePanel showBackToHome />
         </aside>
       )}
-      <div
+      <SavannahGradient
+        direction="to-b"
+        dark={false}
         className={cn(
-          "flex flex-1 items-center justify-center p-4 sm:p-6",
+          "flex flex-1 items-center justify-center p-4 sm:p-6 min-h-screen",
           !hideSidePanel && "md:pl-8 lg:pl-12"
         )}
       >
         {children}
-      </div>
+      </SavannahGradient>
     </div>
   );
 }

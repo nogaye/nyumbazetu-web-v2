@@ -8,6 +8,7 @@
  */
 
 import { cn } from "@/lib/utils";
+import { AfricanPatternBackground } from "@/components/design-system";
 
 interface SectionTransitionProps {
   /** Extra class names for the wrapper. */
@@ -41,6 +42,12 @@ export function SectionTransition({
       <div
         className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900/80"
         style={{ height }}
+      />
+      <AfricanPatternBackground
+        className="absolute inset-0"
+        variant="stripes"
+        opacity={0.12}
+        dark
       />
       {/* Wave divider; fill matches next section background */}
       {showWave && (
