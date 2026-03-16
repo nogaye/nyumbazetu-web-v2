@@ -132,21 +132,21 @@ export default function ListingsHomePage() {
 
         {/* Marketplace trust strip */}
         <ListingsAnimatedSection aria-label="Trust indicators" className="mb-16">
-          <div className="flex flex-wrap items-center justify-center gap-8 rounded-2xl border border-primary/15 bg-gradient-to-r from-[#faf7f2] via-white to-[#faf7f2] px-6 py-8 dark:border-slate-700/80 dark:bg-slate-900/50 sm:gap-12">
+          <div className="flex flex-wrap items-center justify-center gap-8 rounded-2xl border border-slate-200/80 bg-white px-6 py-8 dark:border-slate-700/80 dark:bg-slate-900/50 sm:gap-12">
             <span className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
-              <CheckCircle2 className="h-5 w-5 text-primary" aria-hidden />
+              <CheckCircle2 className="h-5 w-5 text-[#36b9a0]" aria-hidden />
               Verified listings
             </span>
             <span className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
-              <Shield className="h-5 w-5 text-primary" aria-hidden />
+              <Shield className="h-5 w-5 text-[#36b9a0]" aria-hidden />
               Professional listers
             </span>
             <span className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
-              <FileCheck className="h-5 w-5 text-primary" aria-hidden />
+              <FileCheck className="h-5 w-5 text-[#36b9a0]" aria-hidden />
               Secure inquiries
             </span>
             <span className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
-              <FileText className="h-5 w-5 text-primary" aria-hidden />
+              <FileText className="h-5 w-5 text-[#36b9a0]" aria-hidden />
               Transparent details
             </span>
           </div>
