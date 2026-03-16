@@ -30,13 +30,32 @@ export function ListingsHomeHero() {
       className="relative overflow-hidden border-b border-slate-200/80 dark:border-slate-800"
       aria-label="Search properties"
     >
-      {/* Background: soft gradient + subtle grain for depth */}
+      {/* Base gradient: warm-to-cool mesh for depth */}
       <div
-        className="absolute inset-0 bg-gradient-to-b from-slate-50 via-slate-100/95 to-slate-100 dark:from-slate-900 dark:via-slate-900/98 dark:to-slate-950"
+        className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950"
+        aria-hidden
+      />
+      {/* Soft color orbs — blue/indigo and warm accent for visual interest */}
+      <div
+        className="absolute -left-[20%] top-0 h-[70%] w-[60%] rounded-full bg-gradient-to-br from-blue-200/40 to-indigo-300/30 blur-3xl dark:from-blue-950/50 dark:to-indigo-900/40"
         aria-hidden
       />
       <div
-        className="absolute inset-0 opacity-[0.015] dark:opacity-[0.03]"
+        className="absolute -right-[15%] top-1/4 h-[50%] w-[50%] rounded-full bg-gradient-to-tl from-amber-100/50 to-orange-100/30 blur-3xl dark:from-amber-950/30 dark:to-orange-900/20"
+        aria-hidden
+      />
+      <div
+        className="absolute bottom-0 left-1/2 h-[40%] w-[80%] -translate-x-1/2 rounded-full bg-gradient-to-t from-slate-200/60 to-transparent blur-2xl dark:from-slate-800/50"
+        aria-hidden
+      />
+      {/* Subtle radial vignette to keep focus on center content */}
+      <div
+        className="absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_40%,transparent_0%,rgba(255,255,255,0.4)_100%)] dark:bg-[radial-gradient(ellipse_80%_70%_at_50%_40%,transparent_0%,rgba(15,23,42,0.5)_100%)]"
+        aria-hidden
+      />
+      {/* Fine grain overlay for texture */}
+      <div
+        className="absolute inset-0 opacity-[0.02] dark:opacity-[0.04]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
         }}
