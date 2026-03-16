@@ -463,6 +463,35 @@ export interface Database {
           updated_at?: string;
         };
       };
+      /** App user profiles 1:1 with auth.users (tb_auth_users); synced on sign-up/sign-in. */
+      tb_auth_users: {
+        Row: {
+          id: string;
+          email: string | null;
+          full_name: string | null;
+          avatar_url: string | null;
+          auth_provider: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          email?: string | null;
+          full_name?: string | null;
+          avatar_url?: string | null;
+          auth_provider?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          email?: string | null;
+          full_name?: string | null;
+          avatar_url?: string | null;
+          auth_provider?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
     };
     Views: {
       [_ in never]: never;

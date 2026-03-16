@@ -1,43 +1,64 @@
 /**
  * Next.js Proxy (formerly Middleware)
  *
- * Request gateway at the network boundary. Protects admin routes with
- * authentication: allows /admin/login, redirects logged-in users from login
- * to /admin/properties, and redirects unauthenticated users to login for
- * other /admin/* routes.
+ * Request gateway at the network boundary. Responsibilities:
+ * 1. Refreshes Supabase Auth session and writes updated cookies to the response.
+ * 2. Protects admin routes: allows /admin/login, redirects logged-in users from
+ *    login to /admin/properties, and redirects unauthenticated users to login for other /admin/*.
  */
 
+import { createServerClient } from "@supabase/ssr";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-/** Cookie name used for admin session. */
+/** Cookie name used for admin session (legacy cookie-based admin auth). */
 const SESSION_COOKIE_NAME = "admin_session";
 
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
 /**
- * Proxy handler: runs before requests reach the app. Enforces admin auth
- * and redirects as needed.
+ * Proxy handler: runs before requests reach the app. Refreshes Supabase session
+ * when env is set, then enforces admin auth and redirects as needed.
  *
  * @param request - Incoming request.
  * @returns NextResponse (redirect or next()).
  */
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
+  let response = NextResponse.next({
+    request: { headers: request.headers },
+  });
+
+  // Refresh Supabase Auth session and write cookies to response so Server Components see the session.
+  if (supabaseUrl && supabaseAnonKey) {
+    const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            response.cookies.set(name, value, options);
+          });
+        },
+      },
+    });
+    await supabase.auth.getUser();
+  }
+
   const { pathname } = request.nextUrl;
 
-  // Allow access to login page
+  // Admin route protection (legacy admin_session cookie).
   if (pathname === "/admin/login") {
     const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME);
-    // If already logged in, redirect to properties page
     if (sessionCookie) {
       return NextResponse.redirect(new URL("/admin/properties", request.url));
     }
-    return NextResponse.next();
+    return response;
   }
 
-  // Protect all other admin routes
   if (pathname.startsWith("/admin")) {
     const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME);
-
-    // If no session, redirect to login
     if (!sessionCookie) {
       const loginUrl = new URL("/admin/login", request.url);
       loginUrl.searchParams.set("redirect", pathname);
@@ -45,12 +66,15 @@ export function proxy(request: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  return response;
 }
 
-/** Paths this proxy runs for. */
+/** Paths this proxy runs for: auth callback, account, dashboard, and admin. */
 export const config = {
   matcher: [
+    "/auth/callback",
+    "/account/:path*",
+    "/dashboard/:path*",
     "/admin/:path*",
   ],
 };

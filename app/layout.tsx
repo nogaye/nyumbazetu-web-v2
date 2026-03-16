@@ -11,6 +11,7 @@ import { StructuredData } from "@/components/structured-data";
 import { AnalyticsProvider } from "@/components/analytics-provider";
 import { IntercomProvider } from "@/components/intercom-provider";
 import { CookieConsent } from "@/components/cookie-consent";
+import { AuthProvider } from "@/components/auth/auth-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -104,6 +105,7 @@ export default function RootLayout({
         </a>
         <StructuredData />
         <ThemeProvider>
+          <AuthProvider>
           <AnalyticsProvider>
             <IntercomProvider />
             <ErrorBoundary>
@@ -116,6 +118,7 @@ export default function RootLayout({
               <CookieConsent />
             </ErrorBoundary>
           </AnalyticsProvider>
+          </AuthProvider>
         </ThemeProvider>
         <Analytics />
       </body>
