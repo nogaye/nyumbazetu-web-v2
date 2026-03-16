@@ -3,12 +3,16 @@
 /**
  * CTA band for the listings marketplace: Manage listings and Explore.
  * Post listing is only in the header. Used at the bottom of the listings home and search.
+ * Uses framer-motion for fade-in when the section enters the viewport.
  */
 
 import Link from "next/link";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { LayoutDashboard, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { fadeInUp, springSlow } from "@/lib/motion";
 
 export interface ListingsCtaBandProps {
   /** Optional class for the container. */
@@ -19,8 +23,16 @@ export interface ListingsCtaBandProps {
  * Renders a horizontal band of CTAs for listers and browsers (no Post — that is in the header only).
  */
 export function ListingsCtaBand({ className }: ListingsCtaBandProps) {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.2 });
+
   return (
-    <section
+    <motion.section
+      ref={ref}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      variants={fadeInUp}
+      transition={springSlow}
       className={cn(
         "rounded-2xl border border-slate-200/80 bg-white px-6 py-8 dark:border-slate-700/80 dark:bg-slate-900/50 sm:px-8 sm:py-10",
         className
@@ -41,6 +53,6 @@ export function ListingsCtaBand({ className }: ListingsCtaBandProps) {
           </Link>
         </Button>
       </div>
-    </section>
+    </motion.section>
   );
 }

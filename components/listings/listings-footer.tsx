@@ -3,9 +3,13 @@
 /**
  * Listings marketplace footer: dedicated footer for /listings/** with browse,
  * list-your-property, tools, and Nyumba Zetu links. Separate from main site footer.
+ * Uses framer-motion for staggered column entrance when in view.
  */
 
 import Link from "next/link";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { staggerContainer, staggerChild } from "@/lib/motion";
 
 const BROWSE = [
   { label: "Apartments for Rent", href: "/listings/search?listingPurpose=rent&propertyType=apartment" },
@@ -39,6 +43,7 @@ const NYUMBA_ZETU = [
   { label: "Terms", href: "/terms" },
 ];
 
+/** Single footer column with title and links; used inside motion layout for stagger. */
 function FooterColumn({
   title,
   links,
@@ -68,17 +73,33 @@ function FooterColumn({
 }
 
 export function ListingsFooter() {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.1 });
+
   return (
-    <footer
+    <motion.footer
+      ref={ref}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      variants={staggerContainer}
+      transition={{ staggerChildren: 0.06, delayChildren: 0.05 }}
       className="border-t border-slate-200 bg-slate-50/80 dark:border-slate-800 dark:bg-slate-950/80"
       role="contentinfo"
     >
       <div className="mx-auto max-w-[1600px] px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 md:grid-cols-4 lg:gap-12">
-          <FooterColumn title="Browse" links={BROWSE} />
-          <FooterColumn title="List Your Property" links={LIST_PROPERTY} />
-          <FooterColumn title="Tools" links={TOOLS} />
-          <FooterColumn title="Nyumba Zetu" links={NYUMBA_ZETU} />
+          <motion.div variants={staggerChild}>
+            <FooterColumn title="Browse" links={BROWSE} />
+          </motion.div>
+          <motion.div variants={staggerChild}>
+            <FooterColumn title="List Your Property" links={LIST_PROPERTY} />
+          </motion.div>
+          <motion.div variants={staggerChild}>
+            <FooterColumn title="Tools" links={TOOLS} />
+          </motion.div>
+          <motion.div variants={staggerChild}>
+            <FooterColumn title="Nyumba Zetu" links={NYUMBA_ZETU} />
+          </motion.div>
         </div>
         <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-slate-500 dark:text-slate-400">
@@ -89,6 +110,6 @@ export function ListingsFooter() {
           </p>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }

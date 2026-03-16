@@ -1,7 +1,8 @@
 "use client";
 
 /**
- * Sign-in page: email/password with optional remember me and Google OAuth.
+ * Sign-in page: email/password with optional remember me.
+ * Google OAuth is temporarily disabled; to re-enable, add SocialLoginSection with onGoogleClick and signInWithGoogle.
  * Redirects to redirect query param or /account on success. Uses reusable auth components.
  */
 
@@ -14,12 +15,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { AuthFormCard } from "@/components/auth/auth-form-card";
-import { SocialLoginSection } from "@/components/auth/social-login-section";
 import { AuthErrorAlert } from "@/components/auth/auth-error-alert";
 import { PasswordInput } from "@/components/auth/password-input";
 import { useCapsLock } from "@/components/auth/use-caps-lock";
 import { getAuthBrowserClient } from "@/lib/supabase/auth-client";
-import { signInWithEmail, signInWithGoogle } from "@/lib/auth/supabase-auth-service";
+import { signInWithEmail } from "@/lib/auth/supabase-auth-service";
 import { sanitizeRedirect } from "@/lib/auth/types";
 import { isEmailFormatValid } from "@/lib/auth/constants";
 
@@ -31,7 +31,6 @@ function SignInForm() {
   const [rememberMe, setRememberMe] = useState(true);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
   const { capsLockOn, onKeyDown } = useCapsLock();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -72,31 +71,11 @@ function SignInForm() {
     }
   };
 
-  const handleGoogle = async () => {
-    setError("");
-    setGoogleLoading(true);
-    try {
-      const supabase = getAuthBrowserClient();
-      if (!supabase) {
-        setError("Authentication is not configured. Please try again later.");
-        setGoogleLoading(false);
-        return;
-      }
-      await signInWithGoogle(supabase, {
-        next: sanitizeRedirect(searchParams.get("redirect") ?? null),
-      });
-    } catch (_err) {
-      setError("Google sign-in failed. Please try again.");
-    } finally {
-      setGoogleLoading(false);
-    }
-  };
-
   return (
     <AuthFormCard
       icon={<Lock className="h-6 w-6" />}
       title="Sign in"
-      description="Use your email or Google to continue to your account."
+      description="Use your email to continue to your account."
       footer={
         <p className="text-center text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
@@ -111,14 +90,6 @@ function SignInForm() {
     >
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
         <AuthErrorAlert message={error} />
-
-        <SocialLoginSection
-          onGoogleClick={handleGoogle}
-          googleLoading={googleLoading}
-          showDivider
-          dividerLabel="Or continue with email"
-          showSocial
-        />
 
         <div className="space-y-2">
           <Label htmlFor="signin-email">Email</Label>

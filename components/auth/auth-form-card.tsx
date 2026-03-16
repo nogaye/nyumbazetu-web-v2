@@ -3,11 +3,14 @@
 /**
  * Reusable auth form card: consistent container for sign-in, sign-up, forgot-password, reset-password.
  * Provides icon, title, description, and content slot with polished spacing and dark-mode support.
+ * Uses framer-motion for a subtle entrance animation.
  */
 
 import * as React from "react";
+import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { fadeInUp, springTransition } from "@/lib/motion";
 
 export interface AuthFormCardProps {
   /** Optional icon element (e.g. Lock, UserPlus) to show above the title. */
@@ -37,6 +40,12 @@ export function AuthFormCard({
   footer,
 }: AuthFormCardProps) {
   return (
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={fadeInUp}
+      transition={springTransition}
+    >
     <Card
       className={cn(
         "w-full max-w-[400px] border-slate-200/90 shadow-card dark:border-slate-700/90 dark:shadow-slate-900/20",
@@ -68,5 +77,6 @@ export function AuthFormCard({
       </CardContent>
       {footer ? <div className="px-6 pb-6 pt-0">{footer}</div> : null}
     </Card>
+    </motion.div>
   );
 }

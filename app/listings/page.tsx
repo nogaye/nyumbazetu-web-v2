@@ -10,6 +10,7 @@ import { Shield, CheckCircle2, FileCheck } from "lucide-react";
 import { ListingsHomeHero } from "@/components/listings/listings-home-hero";
 import { ListingCard } from "@/components/listings/ListingCard";
 import { ListingsCtaBand } from "@/components/listings/listings-cta-band";
+import { ListingsAnimatedSection } from "@/components/listings/listings-animated-section";
 import { ListingCardSkeleton } from "@/components/listings/ListingCardSkeleton";
 import { Button } from "@/components/ui/button";
 import { fetchListings } from "@/lib/listings/supabase-helpers";
@@ -63,7 +64,7 @@ export default function ListingsHomePage() {
 
       <div className="mx-auto max-w-[1600px] px-4 py-12 sm:px-6 lg:px-8">
         {/* Featured listings */}
-        <section aria-labelledby="featured-heading" className="mb-16">
+        <ListingsAnimatedSection aria-labelledby="featured-heading" className="mb-16">
           <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
             <h2 id="featured-heading" className="font-display text-2xl font-semibold text-slate-900 dark:text-slate-50">
               Featured listings
@@ -83,10 +84,10 @@ export default function ListingsHomePage() {
           >
             <FeaturedListings />
           </Suspense>
-        </section>
+        </ListingsAnimatedSection>
 
         {/* Why list with us */}
-        <section aria-labelledby="why-list-heading" className="mb-16">
+        <ListingsAnimatedSection aria-labelledby="why-list-heading" className="mb-16">
           <h2 id="why-list-heading" className="font-display text-2xl font-semibold text-slate-900 dark:text-slate-50 mb-6">
             Why list with us
           </h2>
@@ -110,10 +111,10 @@ export default function ListingsHomePage() {
               </p>
             </div>
           </div>
-        </section>
+        </ListingsAnimatedSection>
 
         {/* Marketplace trust strip */}
-        <section aria-label="Trust indicators" className="mb-16">
+        <ListingsAnimatedSection aria-label="Trust indicators" className="mb-16">
           <div className="flex flex-wrap items-center justify-center gap-8 rounded-2xl border border-slate-200/80 bg-white px-6 py-8 dark:border-slate-700/80 dark:bg-slate-900/50 sm:gap-12">
             <span className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
               <CheckCircle2 className="h-5 w-5 text-[#36b9a0]" aria-hidden />
@@ -131,7 +132,7 @@ export default function ListingsHomePage() {
               Transparent details
             </span>
           </div>
-        </section>
+        </ListingsAnimatedSection>
 
         {/* CTA band */}
         <ListingsCtaBand />

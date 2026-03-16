@@ -123,6 +123,7 @@ Protected routes use the `AuthGuard` component and redirect unauthenticated user
 ## 9. Troubleshooting
 
 - **“Authentication is not configured”**: Ensure `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are set in `.env.local`.
+- **“Unsupported provider: provider is not enabled”** (e.g. when clicking “Continue with Google”): The provider is disabled in Supabase. In Dashboard → **Authentication** → **Providers**, enable **Google**, then add the **Client ID** and **Client Secret** from Google Cloud Console (see §3). Save the provider; no code change is required.
 - **Google redirect fails**: Confirm the redirect URI in Google Console is exactly `https://<project-ref>.supabase.co/auth/v1/callback` and that the callback URL is listed in Supabase Redirect URLs.
 - **Session lost on refresh**: Ensure the proxy runs on the routes that need auth (see `proxy.ts` config matcher) and that cookies are not blocked.
 - **Profile missing**: Run migration `015_profiles_and_auth_rls.sql`; the trigger creates rows in `tb_auth_users` on sign-up. Existing users may need a one-time backfill or can get a row on next sign-in via `ensureProfile`.
