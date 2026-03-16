@@ -17,6 +17,9 @@ import {
   PlusCircle,
   FileText,
   BarChart3,
+  Sparkles,
+  MessageSquareQuote,
+  Star,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AuthGuard } from "@/components/auth/auth-guard";
@@ -27,6 +30,9 @@ const PORTAL_NAV = [
   { label: "New Listing", href: "/listings/portal/new", icon: PlusCircle },
   { label: "Leads / Inquiries", href: "/listings/portal/leads", icon: MessageSquare },
   { label: "Saved", href: "/listings/portal/favorites", icon: Heart },
+  { label: "Amenities", href: "/listings/portal/amenities", icon: Sparkles },
+  { label: "Comments", href: "/listings/portal/comments", icon: MessageSquareQuote },
+  { label: "Reviews", href: "/listings/portal/reviews", icon: Star },
   { label: "Performance", href: "/listings/portal/performance", icon: BarChart3 },
   { label: "Billing", href: "/listings/portal/billing", icon: FileText },
   { label: "Settings", href: "/listings/portal/settings", icon: Settings },

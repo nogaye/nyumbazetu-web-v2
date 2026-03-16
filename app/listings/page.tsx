@@ -6,7 +6,7 @@
 
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Shield, CheckCircle2, FileCheck } from "lucide-react";
+import { Shield, CheckCircle2, FileCheck, FileText } from "lucide-react";
 import { ListingsHomeHero } from "@/components/listings/listings-home-hero";
 import { ListingCard } from "@/components/listings/ListingCard";
 import { ListingsCtaBand } from "@/components/listings/listings-cta-band";
@@ -129,6 +129,7 @@ export default function ListingsHomePage() {
               Secure inquiries
             </span>
             <span className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+              <FileText className="h-5 w-5 text-[#36b9a0]" aria-hidden />
               Transparent details
             </span>
           </div>

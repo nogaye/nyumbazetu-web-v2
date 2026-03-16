@@ -774,7 +774,7 @@ export function PropertyFormModal({
                               </SelectItem>
                             ))}
                           {allAmenities.filter((opt) => !assignedAmenities.some((x) => x.amenity_id === opt.id)).length === 0 && (
-                            <SelectItem value="" disabled>
+                            <SelectItem value="__all_assigned__" disabled>
                               All amenities assigned
                             </SelectItem>
                           )}

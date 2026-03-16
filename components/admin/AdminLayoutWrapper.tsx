@@ -1,12 +1,10 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-
 /**
  * AdminLayoutWrapper
- * 
- * Conditionally renders children based on pathname
- * Login page is rendered without the admin layout structure
+ *
+ * Renders the admin layout (sidebar + main) for all /admin/* routes.
+ * Unauthenticated users are redirected to /auth/sign-in by the proxy and AdminAuthGuard.
  */
 
 interface AdminLayoutWrapperProps {
@@ -15,15 +13,6 @@ interface AdminLayoutWrapperProps {
 }
 
 export function AdminLayoutWrapper({ children, withLayout }: AdminLayoutWrapperProps) {
-  const pathname = usePathname();
-  const isLoginPage = pathname === "/admin/login";
-
-  // For login page, render children directly without admin layout
-  if (isLoginPage) {
-    return <>{children}</>;
-  }
-
-  // For other admin pages, render with admin layout
   return <>{withLayout}</>;
 }
 

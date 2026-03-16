@@ -3,8 +3,8 @@
  *
  * Request gateway at the network boundary. Responsibilities:
  * 1. Refreshes Supabase Auth session and writes updated cookies to the response.
- * 2. Protects admin routes: allows /admin/login, redirects logged-in users from
- *    login to /admin/properties, and redirects unauthenticated users to login for other /admin/*.
+ * 2. Protects admin routes: redirects unauthenticated users to /auth/sign-in with a
+ *    redirect param so they return to the requested admin path after sign-in.
  */
 
 import { createServerClient } from "@supabase/ssr";
@@ -48,21 +48,13 @@ export async function proxy(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // Admin route protection (legacy admin_session cookie).
-  if (pathname === "/admin/login") {
-    const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME);
-    if (sessionCookie) {
-      return NextResponse.redirect(new URL("/admin/properties", request.url));
-    }
-    return response;
-  }
-
+  // Admin route protection (legacy admin_session cookie): send unauthenticated users to shared sign-in.
   if (pathname.startsWith("/admin")) {
     const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME);
     if (!sessionCookie) {
-      const loginUrl = new URL("/admin/login", request.url);
-      loginUrl.searchParams.set("redirect", pathname);
-      return NextResponse.redirect(loginUrl);
+      const signInUrl = new URL("/auth/sign-in", request.url);
+      signInUrl.searchParams.set("redirect", pathname);
+      return NextResponse.redirect(signInUrl);
     }
   }
 
