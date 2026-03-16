@@ -40,19 +40,19 @@ async function FeaturedListings() {
   const featured = listings.slice(0, 8);
   if (featured.length === 0) {
     return (
-      <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-b from-[#fdfaf5] to-white p-12 text-center dark:border-slate-700/80 dark:bg-slate-900/50">
+      <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-12 text-center dark:border-slate-700/80 dark:bg-slate-900/50">
         <AfricanPatternBackground
           className="absolute inset-0 rounded-2xl"
           variant="diamond"
-          opacity={0.2}
+          opacity={0.07}
           dark={false}
         />
-        <div className="relative z-10 mx-auto mb-6 text-primary">
+        <div className="relative z-10 mx-auto mb-4 text-primary">
           <KenyaOutlineIllustration
-            width={144}
+            width={100}
             stroke="currentColor"
-            strokeWidth={1.9}
-            opacity={1}
+            strokeWidth={1.2}
+            opacity={0.7}
           />
         </div>
         <p className="relative z-10 text-slate-600 dark:text-slate-400">
@@ -75,7 +75,7 @@ async function FeaturedListings() {
 
 export default function ListingsHomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f0e8dc] via-[#f5f0e8] to-slate-50/90 dark:from-slate-950 dark:via-slate-950/95 dark:to-slate-950/80">
+    <div className="min-h-screen bg-slate-50/80 dark:bg-slate-950/80">
       {/* 1. Search hero */}
       <ListingsHomeHero />
 
@@ -109,24 +109,21 @@ export default function ListingsHomePage() {
             Why list with us
           </h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-            <div className="relative overflow-hidden rounded-xl border border-slate-200/80 bg-gradient-to-b from-[#faf7f2] to-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
-              <AfricanPatternBackground className="absolute inset-0 rounded-xl" variant="grid" opacity={0.08} dark={false} />
-              <p className="relative z-10 font-medium text-slate-900 dark:text-slate-50">Visibility</p>
-              <p className="relative z-10 mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <div className="rounded-xl border border-slate-200/80 bg-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
+              <p className="font-medium text-slate-900 dark:text-slate-50">Visibility</p>
+              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
                 Your listing reaches serious renters and buyers across Kenya.
               </p>
             </div>
-            <div className="relative overflow-hidden rounded-xl border border-slate-200/80 bg-gradient-to-b from-[#faf7f2] to-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
-              <AfricanPatternBackground className="absolute inset-0 rounded-xl" variant="grid" opacity={0.08} dark={false} />
-              <p className="relative z-10 font-medium text-slate-900 dark:text-slate-50">Inquiries that convert</p>
-              <p className="relative z-10 mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <div className="rounded-xl border border-slate-200/80 bg-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
+              <p className="font-medium text-slate-900 dark:text-slate-50">Inquiries that convert</p>
+              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
                 Direct contact and viewing requests from interested parties.
               </p>
             </div>
-            <div className="relative overflow-hidden rounded-xl border border-slate-200/80 bg-gradient-to-b from-[#faf7f2] to-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
-              <AfricanPatternBackground className="absolute inset-0 rounded-xl" variant="grid" opacity={0.08} dark={false} />
-              <p className="relative z-10 font-medium text-slate-900 dark:text-slate-50">Easy management</p>
-              <p className="relative z-10 mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <div className="rounded-xl border border-slate-200/80 bg-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
+              <p className="font-medium text-slate-900 dark:text-slate-50">Easy management</p>
+              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
                 Update, pause or boost listings from your portal anytime.
               </p>
             </div>
