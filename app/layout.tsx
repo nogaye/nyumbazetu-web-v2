@@ -2,15 +2,12 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Syne } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
-import { MainNav } from "@/components/main-nav";
-import { SiteFooter } from "@/components/site-footer";
+import { LayoutShell } from "@/components/layout-shell";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ScrollToTop } from "@/components/scroll-to-top";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { StructuredData } from "@/components/structured-data";
 import { AnalyticsProvider } from "@/components/analytics-provider";
 import { IntercomProvider } from "@/components/intercom-provider";
-import { CookieConsent } from "@/components/cookie-consent";
 import { AuthProvider } from "@/components/auth/auth-provider";
 
 const geistSans = Geist({
@@ -109,13 +106,7 @@ export default function RootLayout({
           <AnalyticsProvider>
             <IntercomProvider />
             <ErrorBoundary>
-              <MainNav />
-              <main className="min-h-screen" id="main-content" role="main">
-                {children}
-              </main>
-              <SiteFooter />
-              <ScrollToTop />
-              <CookieConsent />
+              <LayoutShell>{children}</LayoutShell>
             </ErrorBoundary>
           </AnalyticsProvider>
           </AuthProvider>

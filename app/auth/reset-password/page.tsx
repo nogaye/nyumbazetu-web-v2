@@ -2,18 +2,20 @@
 
 /**
  * Reset-password page: set new password after following the email link.
- * Supabase redirects here with tokens in the URL; the client exchanges them and then we show the form.
+ * Supabase redirects here with tokens; we verify session then show the form.
  */
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { KeyRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ExclamationCircleIcon, KeyIcon } from "@heroicons/react/24/outline";
+import { AuthFormCard } from "@/components/auth/auth-form-card";
+import { AuthErrorAlert } from "@/components/auth/auth-error-alert";
+import { PasswordInput } from "@/components/auth/password-input";
+import { PasswordStrengthHint } from "@/components/auth/password-strength-hint";
+import { useCapsLock } from "@/components/auth/use-caps-lock";
 import { getAuthBrowserClient } from "@/lib/supabase/auth-client";
 import { updatePassword } from "@/lib/auth/supabase-auth-service";
 import { isPasswordStrongEnough, MIN_PASSWORD_LENGTH } from "@/lib/auth/constants";
@@ -26,6 +28,7 @@ export default function ResetPasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [ready, setReady] = useState(false);
   const [sessionError, setSessionError] = useState<string | null>(null);
+  const { capsLockOn, onKeyDown } = useCapsLock();
 
   useEffect(() => {
     const supabase = getAuthBrowserClient();
@@ -62,11 +65,12 @@ export default function ResetPasswordPage() {
       const supabase = getAuthBrowserClient();
       if (!supabase) {
         setError("Authentication is not configured.");
+        setIsLoading(false);
         return;
       }
       const result = await updatePassword(supabase, password);
       if (result.success) {
-        router.push("/account?reset=ok");
+        router.push("/auth/sign-in?reset=ok");
         router.refresh();
       } else {
         setError(result.error ?? "Failed to update password.");
@@ -80,87 +84,104 @@ export default function ResetPasswordPage() {
 
   if (sessionError) {
     return (
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl">Link expired</CardTitle>
-          <CardDescription>{sessionError}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Button asChild className="w-full">
-            <Link href="/auth/forgot-password">Request a new reset link</Link>
-          </Button>
-        </CardContent>
-      </Card>
+      <AuthFormCard
+        icon={<KeyRound className="h-6 w-6" />}
+        title="Link expired"
+        description={sessionError}
+      >
+        <Button asChild className="w-full">
+          <Link href="/auth/forgot-password">Request a new reset link</Link>
+        </Button>
+      </AuthFormCard>
     );
   }
 
   if (!ready) {
     return (
-      <Card className="w-full max-w-md">
-        <CardContent className="pt-6">
-          <p className="text-center text-slate-600 dark:text-slate-400">Checking reset link…</p>
-        </CardContent>
-      </Card>
+      <AuthFormCard
+        icon={<KeyRound className="h-6 w-6" />}
+        title="Checking reset link"
+        description="Please wait while we verify your link."
+      >
+        <div className="flex justify-center py-4" aria-busy="true">
+          <span className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+        </div>
+      </AuthFormCard>
     );
   }
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader className="text-center">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-          <KeyIcon className="h-6 w-6 text-primary" />
-        </div>
-        <CardTitle className="text-2xl">Set new password</CardTitle>
-        <CardDescription>Choose a strong password for your account</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <Alert variant="destructive">
-              <ExclamationCircleIcon className="h-5 w-5" />
-              <AlertTitle>Error</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-
-          <div className="space-y-2">
-            <Label htmlFor="password">New password</Label>
-            <Input
-              id="password"
-              type="password"
-              autoComplete="new-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder={`At least ${MIN_PASSWORD_LENGTH} characters`}
-              required
-              minLength={MIN_PASSWORD_LENGTH}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="confirmPassword">Confirm password</Label>
-            <Input
-              id="confirmPassword"
-              type="password"
-              autoComplete="new-password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Repeat password"
-              required
-              minLength={MIN_PASSWORD_LENGTH}
-            />
-          </div>
-
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "Updating…" : "Update password"}
-          </Button>
-        </form>
-
-        <p className="mt-4 text-center text-sm text-slate-600 dark:text-slate-400">
-          <Link href="/auth/sign-in" className="text-primary font-medium hover:underline">
+    <AuthFormCard
+      icon={<KeyRound className="h-6 w-6" />}
+      title="Set new password"
+      description="Choose a strong password for your account."
+      footer={
+        <p className="text-center text-sm text-muted-foreground">
+          <Link
+            href="/auth/sign-in"
+            className="font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
+          >
             Back to sign in
           </Link>
         </p>
-      </CardContent>
-    </Card>
+      }
+    >
+      <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+        <AuthErrorAlert message={error} />
+
+        <div className="space-y-2">
+          <Label htmlFor="reset-password">New password</Label>
+          <PasswordInput
+            id="reset-password"
+            autoComplete="new-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={onKeyDown}
+            placeholder={`At least ${MIN_PASSWORD_LENGTH} characters`}
+            disabled={isLoading}
+            required
+            minLength={MIN_PASSWORD_LENGTH}
+            aria-describedby="password-requirements"
+          />
+          <PasswordStrengthHint minLength={MIN_PASSWORD_LENGTH} />
+          {capsLockOn && (
+            <p className="text-xs text-amber-600 dark:text-amber-500" role="status">
+              Caps Lock is on.
+            </p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="reset-confirm">Confirm password</Label>
+          <PasswordInput
+            id="reset-confirm"
+            autoComplete="new-password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            onKeyDown={onKeyDown}
+            placeholder="Repeat password"
+            disabled={isLoading}
+            required
+            minLength={MIN_PASSWORD_LENGTH}
+          />
+        </div>
+
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={isLoading}
+          aria-busy={isLoading}
+        >
+          {isLoading ? (
+            <>
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
+              Updating…
+            </>
+          ) : (
+            "Update password"
+          )}
+        </Button>
+      </form>
+    </AuthFormCard>
   );
 }

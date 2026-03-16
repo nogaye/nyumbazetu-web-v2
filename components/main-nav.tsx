@@ -26,7 +26,6 @@ import {
   SheetContent,
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { AuthNavLinks } from "@/components/auth/auth-nav-links";
 import { cn } from "@/lib/utils";
 import { getFeaturesForNavGrouped } from "@/lib/features";
 import type { FeatureNavGroup } from "@/lib/features/types";
@@ -350,7 +349,6 @@ export function MainNav() {
 
           <div className="hidden lg:flex lg:items-center lg:gap-2 lg:space-x-0">
             <ThemeToggle />
-            <AuthNavLinks overHero={navOverHero} />
             <Button
               variant="ghost"
               asChild
@@ -506,14 +504,6 @@ export function MainNav() {
             <div className="flex justify-center pb-2">
               <ThemeToggle />
             </div>
-            <Button variant="outline" className="w-full" asChild>
-              <Link
-                href="/auth/sign-in"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Sign in / Account
-              </Link>
-            </Button>
             <Button variant="outline" className="w-full" asChild>
               <Link
                 href="https://app.nyumbazetu.com/"

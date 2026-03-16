@@ -190,7 +190,7 @@ export default async function ListingDetailPage({
             <li aria-hidden>/</li>
             <li>
               <Link
-                href={`/listings?city=${encodeURIComponent(listing.city)}`}
+                href={`/listings/search?city=${encodeURIComponent(listing.city)}`}
                 className="transition-colors hover:text-slate-900 dark:hover:text-slate-100"
               >
                 {listing.city}

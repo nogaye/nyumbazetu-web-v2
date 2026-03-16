@@ -1,19 +1,23 @@
 "use client";
 
 /**
- * Sign-in page: email/password and Google OAuth.
- * Redirects to redirect query param or /account when successful.
+ * Sign-in page: email/password with optional remember me and Google OAuth.
+ * Redirects to redirect query param or /account on success. Uses reusable auth components.
  */
 
 import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ExclamationCircleIcon, LockClosedIcon } from "@heroicons/react/24/outline";
+import { Checkbox } from "@/components/ui/checkbox";
+import { AuthFormCard } from "@/components/auth/auth-form-card";
+import { SocialLoginSection } from "@/components/auth/social-login-section";
+import { AuthErrorAlert } from "@/components/auth/auth-error-alert";
+import { PasswordInput } from "@/components/auth/password-input";
+import { useCapsLock } from "@/components/auth/use-caps-lock";
 import { getAuthBrowserClient } from "@/lib/supabase/auth-client";
 import { signInWithEmail, signInWithGoogle } from "@/lib/auth/supabase-auth-service";
 import { sanitizeRedirect } from "@/lib/auth/types";
@@ -24,9 +28,11 @@ function SignInForm() {
   const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(true);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const { capsLockOn, onKeyDown } = useCapsLock();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,6 +54,7 @@ function SignInForm() {
       const supabase = getAuthBrowserClient();
       if (!supabase) {
         setError("Authentication is not configured. Please try again later.");
+        setIsLoading(false);
         return;
       }
       const result = await signInWithEmail(supabase, email, password);
@@ -72,9 +79,12 @@ function SignInForm() {
       const supabase = getAuthBrowserClient();
       if (!supabase) {
         setError("Authentication is not configured. Please try again later.");
+        setGoogleLoading(false);
         return;
       }
-      await signInWithGoogle(supabase);
+      await signInWithGoogle(supabase, {
+        next: sanitizeRedirect(searchParams.get("redirect") ?? null),
+      });
     } catch (_err) {
       setError("Google sign-in failed. Please try again.");
     } finally {
@@ -83,96 +93,126 @@ function SignInForm() {
   };
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader className="text-center">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-          <LockClosedIcon className="h-6 w-6 text-primary" />
-        </div>
-        <CardTitle className="text-2xl">Sign in</CardTitle>
-        <CardDescription>Use your email or Google to continue</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <Alert variant="destructive">
-              <ExclamationCircleIcon className="h-5 w-5" />
-              <AlertTitle>Error</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full"
-            onClick={handleGoogle}
-            disabled={isLoading || googleLoading}
+    <AuthFormCard
+      icon={<Lock className="h-6 w-6" />}
+      title="Sign in"
+      description="Use your email or Google to continue to your account."
+      footer={
+        <p className="text-center text-sm text-muted-foreground">
+          Don&apos;t have an account?{" "}
+          <Link
+            href="/auth/sign-up"
+            className="font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
           >
-            {googleLoading ? "Redirecting…" : "Continue with Google"}
-          </Button>
+            Sign up
+          </Link>
+        </p>
+      }
+    >
+      <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+        <AuthErrorAlert message={error} />
 
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-slate-200 dark:border-slate-700" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase text-slate-500 dark:text-slate-400">
-              <span className="bg-white dark:bg-slate-900 px-2">Or</span>
-            </div>
-          </div>
+        <SocialLoginSection
+          onGoogleClick={handleGoogle}
+          googleLoading={googleLoading}
+          showDivider
+          dividerLabel="Or continue with email"
+          showSocial
+        />
 
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              required
-            />
-          </div>
+        <div className="space-y-2">
+          <Label htmlFor="signin-email">Email</Label>
+          <Input
+            id="signin-email"
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@example.com"
+            disabled={isLoading}
+            required
+            aria-invalid={!!error}
+            aria-describedby={error ? "signin-error" : undefined}
+          />
+        </div>
 
-          <div className="flex justify-end">
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="signin-password">Password</Label>
             <Link
               href="/auth/forgot-password"
-              className="text-sm text-primary hover:underline"
+              className="text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
             >
               Forgot password?
             </Link>
           </div>
+          <PasswordInput
+            id="signin-password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={onKeyDown}
+            placeholder="••••••••"
+            disabled={isLoading}
+            required
+            aria-invalid={!!error}
+          />
+          {capsLockOn && (
+            <p className="text-xs text-amber-600 dark:text-amber-500" role="status">
+              Caps Lock is on.
+            </p>
+          )}
+        </div>
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "Signing in…" : "Sign in"}
-          </Button>
-        </form>
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="signin-remember"
+            checked={rememberMe}
+            onCheckedChange={(checked) => setRememberMe(checked === true)}
+            disabled={isLoading}
+            aria-describedby="signin-remember-desc"
+          />
+          <Label
+            id="signin-remember-desc"
+            htmlFor="signin-remember"
+            className="text-sm font-normal text-muted-foreground cursor-pointer"
+          >
+            Remember me
+          </Label>
+        </div>
 
-        <p className="mt-4 text-center text-sm text-slate-600 dark:text-slate-400">
-          Don&apos;t have an account?{" "}
-          <Link href="/auth/sign-up" className="text-primary font-medium hover:underline">
-            Sign up
-          </Link>
-        </p>
-      </CardContent>
-    </Card>
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={isLoading}
+          aria-busy={isLoading}
+        >
+          {isLoading ? (
+            <>
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
+              Signing in…
+            </>
+          ) : (
+            "Sign in"
+          )}
+        </Button>
+      </form>
+    </AuthFormCard>
   );
 }
 
 export default function SignInPage() {
   return (
-    <Suspense fallback={<div className="w-full max-w-md rounded-xl border border-slate-200 bg-white p-8 text-center text-slate-500 dark:border-slate-700 dark:bg-slate-900">Loading…</div>}>
+    <Suspense
+      fallback={
+        <div
+          className="w-full max-w-[400px] rounded-xl border border-slate-200 bg-card p-8 text-center text-muted-foreground dark:border-slate-700"
+          aria-busy="true"
+        >
+          Loading…
+        </div>
+      }
+    >
       <SignInForm />
     </Suspense>
   );

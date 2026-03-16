@@ -2,9 +2,24 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Search } from "lucide-react";
 import { SortOption } from "@/lib/listings/types";
 import { useState, useEffect } from "react";
+
+const SORT_OPTIONS: { value: SortOption; label: string }[] = [
+  { value: "recommended", label: "Recommended" },
+  { value: "price-low", label: "Price: Low to High" },
+  { value: "price-high", label: "Price: High to Low" },
+  { value: "newest", label: "Newest First" },
+  { value: "oldest", label: "Oldest First" },
+];
 
 interface ListingsSortAndSearchProps {
   currentSort?: SortOption;
@@ -34,7 +49,7 @@ export function ListingsSortAndSearch({
       params.set("sort", sort);
     }
     params.delete("page"); // Reset to page 1 when sorting
-    router.push(`/listings?${params.toString()}`);
+    router.push(`/listings/search?${params.toString()}`);
   };
 
   const updateSearch = (search: string) => {
@@ -52,7 +67,7 @@ export function ListingsSortAndSearch({
         params.delete("search");
       }
       params.delete("page"); // Reset to page 1 when searching
-      router.push(`/listings?${params.toString()}`);
+      router.push(`/listings/search?${params.toString()}`);
     }, 500); // 500ms debounce
 
     setDebounceTimer(timer);
@@ -87,21 +102,21 @@ export function ListingsSortAndSearch({
         />
       </div>
 
-      {/* Sort Dropdown */}
+      {/* Sort Dropdown — shadcn Select */}
       <div className="flex items-center gap-2">
         <span className="text-sm text-slate-600 dark:text-slate-400">Sort:</span>
-        <select
-          value={currentSort}
-          onChange={(e) => updateSort(e.target.value)}
-          className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary dark:border-slate-700 dark:bg-slate-900 dark:text-slate-50"
-          aria-label="Sort listings"
-        >
-          <option value="recommended">Recommended</option>
-          <option value="price-low">Price: Low to High</option>
-          <option value="price-high">Price: High to Low</option>
-          <option value="newest">Newest First</option>
-          <option value="oldest">Oldest First</option>
-        </select>
+        <Select value={currentSort} onValueChange={updateSort}>
+          <SelectTrigger className="w-[180px]" aria-label="Sort listings">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {SORT_OPTIONS.map((opt) => (
+              <SelectItem key={opt.value} value={opt.value}>
+                {opt.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
     </div>
   );

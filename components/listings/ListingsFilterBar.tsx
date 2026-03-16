@@ -13,6 +13,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
 import { ListingFilters, PropertyType } from "@/lib/listings/types";
 import { ListingsFilterForm } from "@/components/listings/ListingsFilterForm";
 import { cn } from "@/lib/utils";
@@ -71,12 +73,12 @@ export function ListingsFilterBar({
     if (localFilters.propertyType) params.set("propertyType", localFilters.propertyType);
     if (localFilters.tps === true) params.set("tps", "true");
 
-    router.push(`/listings?${params.toString()}`);
+    router.push(`/listings/search?${params.toString()}`);
     setMobileFiltersOpen(false);
   };
 
   const clearFilters = () => {
-    router.push("/listings");
+    router.push("/listings/search");
     setMobileFiltersOpen(false);
   };
 
@@ -109,11 +111,11 @@ export function ListingsFilterBar({
               <Filter className="h-4 w-4" />
               Filters
               {hasActiveFilters && (
-                <span className="rounded-full bg-primary px-2 py-0.5 text-xs text-primary-foreground">
+                <Badge className="rounded-full bg-primary text-xs text-primary-foreground">
                   {Object.keys(filters).filter(
                     (k) => k !== "page" && filters[k as keyof ListingFilters] !== undefined
                   ).length}
-                </span>
+                </Badge>
               )}
             </span>
           </Button>
@@ -251,14 +253,12 @@ export function ListingsFilterBar({
 
       {/* TPS Toggle */}
       <div className="flex items-center space-x-2">
-        <input
-          type="checkbox"
+        <Checkbox
           id="tps"
           checked={localFilters.tps === true}
-          onChange={(e) => updateFilters({ tps: e.target.checked || undefined })}
-          className="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
+          onCheckedChange={(checked) => updateFilters({ tps: checked ? true : undefined })}
         />
-        <label htmlFor="tps" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+        <label htmlFor="tps" className="text-sm font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
           TPS Available (Rent-to-own)
         </label>
       </div>
@@ -403,14 +403,12 @@ export function ListingsFilterBar({
 
             {/* TPS Checkbox */}
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="desktop-tps"
                 checked={localFilters.tps === true}
-                onChange={(e) => updateFilters({ tps: e.target.checked || undefined })}
-                className="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
+                onCheckedChange={(checked) => updateFilters({ tps: checked ? true : undefined })}
               />
-              <label htmlFor="desktop-tps" className="text-sm font-medium text-slate-700 dark:text-slate-300 whitespace-nowrap">
+              <label htmlFor="desktop-tps" className="text-sm font-medium text-slate-700 dark:text-slate-300 whitespace-nowrap cursor-pointer">
                 TPS
               </label>
             </div>
@@ -448,9 +446,9 @@ export function ListingsFilterBar({
               <Filter className="h-4 w-4" />
               Filters
               {hasActiveFilters && (
-                <span className="ml-2 rounded-full bg-primary px-2 py-0.5 text-xs text-white">
+                <Badge className="ml-2 rounded-full bg-primary text-xs text-primary-foreground">
                   {Object.keys(filters).filter((k) => k !== "page" && filters[k as keyof ListingFilters] !== undefined).length}
-                </span>
+                </Badge>
               )}
             </span>
           </Button>

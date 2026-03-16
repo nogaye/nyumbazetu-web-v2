@@ -1,251 +1,141 @@
 /**
- * Listings marketplace page: sidebar filters, compact header, grid of property cards.
- * Layout is intentionally different from the rest of the site (sidebar + full-bleed content).
+ * Listings marketplace homepage: search hero, featured listings,
+ * why list with us, trust strip, and CTA band.
+ * Served at /listings; uses the listings layout shell.
  */
 
-import { Suspense } from "react";
 import type { Metadata } from "next";
-import { ListingsFilterBar } from "@/components/listings/ListingsFilterBar";
-import { ListingsHeaderStrip } from "@/components/listings/ListingsHeaderStrip";
-import { ListingCard } from "@/components/listings/ListingCard";
-import { ListingCardSkeleton } from "@/components/listings/ListingCardSkeleton";
-import { ActiveFilterChips } from "@/components/listings/ActiveFilterChips";
-import { Button } from "@/components/ui/button";
-import { fetchListings, parseFilters } from "@/lib/listings/supabase-helpers";
-import { ListingFilters } from "@/lib/listings/types";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { Shield, CheckCircle2, FileCheck } from "lucide-react";
+import { ListingsHomeHero } from "@/components/listings/listings-home-hero";
+import { ListingCard } from "@/components/listings/ListingCard";
+import { ListingsCtaBand } from "@/components/listings/listings-cta-band";
+import { ListingCardSkeleton } from "@/components/listings/ListingCardSkeleton";
+import { Button } from "@/components/ui/button";
+import { fetchListings } from "@/lib/listings/supabase-helpers";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "Property Listings | Rent, Buy & Short Stay | Nyumba Zetu",
+  title: "Nyumba Zetu Listings | Find & List Properties in Kenya",
   description:
-    "Browse verified property listings: apartments, maisonettes and rent-to-own homes across Nairobi, Mombasa and Kenya. Rent, buy, or short stay.",
+    "Browse and list apartments, houses, commercial spaces and short stays across Nairobi, Mombasa and Kenya. Verified listings, trusted listers.",
   keywords: [
-    "property listings",
-    "apartments for rent",
-    "houses for rent",
-    "Nairobi properties",
-    "Mombasa properties",
-    "rent to own",
-    "TPS properties",
-    "Kenya real estate",
+    "property listings Kenya",
+    "apartments for rent Nairobi",
+    "houses for sale",
+    "short stay",
+    "Nyumba Zetu",
   ],
   openGraph: {
-    title: "Apartments & Properties for Rent | Nyumba Zetu",
-    description:
-      "Browse verified apartments, maisonettes and TPS homes across Nairobi and other Kenyan cities using Nyumba Zetu.",
+    title: "Nyumba Zetu Listings | Find & List Properties in Kenya",
+    description: "Browse and list verified properties across Kenya.",
     type: "website",
   },
 };
 
-interface ListingsPageProps {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}
-
-async function ListingsContent({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
-  const filters: ListingFilters = parseFilters(searchParams);
-  const { listings, total, page, totalPages } = await fetchListings(filters);
-
-  const getLocationText = () => {
-    if (filters.city && filters.area) return `${filters.area}, ${filters.city}`;
-    if (filters.city) return filters.city;
-    if (filters.area) return filters.area;
-    return "Kenya";
-  };
-
-  /** Builds query string for pagination (all current filters, no page). */
-  const baseQuery: Record<string, string> = {};
-  for (const [k, v] of Object.entries(filters)) {
-    if (k === "page" || v === undefined || v === null) continue;
-    baseQuery[k] = String(v);
-  }
-  const prevPageHref =
-    page > 1
-      ? `/listings?${new URLSearchParams({ ...baseQuery, page: (page - 1).toString() }).toString()}`
-      : null;
-  const nextPageHref =
-    page < totalPages
-      ? `/listings?${new URLSearchParams({ ...baseQuery, page: (page + 1).toString() }).toString()}`
-      : null;
-
-  return (
-    <div className="min-h-screen bg-slate-100/70 dark:bg-slate-900/50">
-      {/* Compact header: headline + search + sort */}
-      <ListingsHeaderStrip
-        currentSort={filters.sort ?? "recommended"}
-        currentSearch={filters.search ?? ""}
-        total={total}
-      />
-
-      {/* Sidebar (desktop) + mobile Filters button/sheet, then main content */}
-      <div className="mx-auto flex max-w-[1600px] flex-col lg:flex-row">
-        <ListingsFilterBar filters={filters} layout="sidebar" />
-
-        <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8" aria-label="Property listings">
-          {/* Active filter chips */}
-          <div className="mb-3">
-            <ActiveFilterChips filters={filters} />
-          </div>
-
-          {/* Result summary: "Showing 1–24 of 156 in Kenya · Page 1 of 7" */}
-          {total > 0 && (
-            <p className="mb-4 text-sm text-slate-600 dark:text-slate-400" aria-live="polite">
-              Showing {(page - 1) * 24 + 1}–{Math.min(page * 24, total)} of {total} in {getLocationText()}
-              {totalPages > 1 && (
-                <span aria-label={`Page ${page} of ${totalPages}`}>
-                  {" "}· Page {page} of {totalPages}
-                </span>
-              )}
-            </p>
-          )}
-
-          {/* Empty / no-results state */}
-          {total === 0 && (
-            <div
-              className="flex flex-col items-center justify-center rounded-2xl border border-slate-200/80 bg-white py-16 text-center dark:border-slate-700/80 dark:bg-slate-900/50 sm:py-20"
-              role="status"
-              aria-live="polite"
-            >
-              <p className="text-base font-medium text-slate-900 dark:text-slate-50">
-                No properties match your filters
-              </p>
-              <p className="mt-2 max-w-sm text-sm text-slate-600 dark:text-slate-400">
-                Try adjusting location, price range, or property type — or browse all listings.
-              </p>
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-                <Button asChild size="default">
-                  <Link href="/listings">Clear filters</Link>
-                </Button>
-                <Button asChild variant="outline" size="default">
-                  <Link href="/listings?city=nairobi">Browse Nairobi</Link>
-                </Button>
-                <Button asChild variant="outline" size="default">
-                  <Link href="/listings?city=mombasa">Browse Mombasa</Link>
-                </Button>
-              </div>
-            </div>
-          )}
-
-          {/* Listing grid */}
-          {total > 0 && (
-            <>
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-                {listings.map((listing) => (
-                  <ListingCard key={listing.id} listing={listing} />
-                ))}
-              </div>
-
-              {/* Bottom CTA: list your property / get help */}
-              <section className="mt-12 rounded-2xl border border-slate-200/80 bg-white p-6 text-center dark:border-slate-700/80 dark:bg-slate-900/40 sm:p-8">
-                <p className="text-base font-medium text-slate-900 dark:text-slate-50">
-                  Can&apos;t find what you need?
-                </p>
-                <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                  List your property with Nyumba Zetu or get in touch and we&apos;ll help you find the right place.
-                </p>
-                <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-                  <Button asChild size="default" className="rounded-lg">
-                    <Link href="/request-demo">List your property</Link>
-                  </Button>
-                  <Button asChild variant="outline" size="default" className="rounded-lg">
-                    <Link href="/contact">Contact us</Link>
-                  </Button>
-                </div>
-              </section>
-
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <nav
-                  className="mt-14 flex flex-wrap items-center justify-center gap-2 sm:gap-3"
-                  aria-label="Pagination"
-                >
-                  <span className="sr-only">
-                    Page {page} of {totalPages}
-                  </span>
-                  {page > 1 && prevPageHref ? (
-                    <Button variant="outline" size="default" className="gap-2" asChild>
-                      <Link href={prevPageHref} aria-label="Previous page">
-                        <ChevronLeft className="h-4 w-4" aria-hidden />
-                        Previous
-                      </Link>
-                    </Button>
-                  ) : (
-                    <Button variant="outline" size="default" className="gap-2" disabled>
-                      <ChevronLeft className="h-4 w-4" aria-hidden />
-                      Previous
-                    </Button>
-                  )}
-                  <span
-                    className="min-w-[4rem] text-center text-sm font-medium text-slate-700 dark:text-slate-300"
-                    aria-current="page"
-                  >
-                    {page} of {totalPages}
-                  </span>
-                  {page < totalPages && nextPageHref ? (
-                    <Button variant="outline" size="default" className="gap-2" asChild>
-                      <Link href={nextPageHref} aria-label="Next page">
-                        Next
-                        <ChevronRight className="h-4 w-4" aria-hidden />
-                      </Link>
-                    </Button>
-                  ) : (
-                    <Button variant="outline" size="default" className="gap-2" disabled>
-                      Next
-                      <ChevronRight className="h-4 w-4" aria-hidden />
-                    </Button>
-                  )}
-                </nav>
-              )}
-            </>
-          )}
-        </main>
+async function FeaturedListings() {
+  const { listings } = await fetchListings({ sort: "newest", page: 1 });
+  const featured = listings.slice(0, 8);
+  if (featured.length === 0) {
+    return (
+      <div className="rounded-2xl border border-slate-200/80 bg-white p-12 text-center dark:border-slate-700/80 dark:bg-slate-900/50">
+        <p className="text-slate-600 dark:text-slate-400">No listings yet. Check back soon or list your property.</p>
+        <Button asChild className="mt-4 bg-[#344767] hover:bg-[#2a3952] text-white">
+          <Link href="/listings/post">Post a listing</Link>
+        </Button>
       </div>
+    );
+  }
+  return (
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
+      {featured.map((listing) => (
+        <ListingCard key={listing.id} listing={listing} />
+      ))}
     </div>
   );
 }
 
-export default async function ListingsPage({ searchParams }: ListingsPageProps) {
-  const resolvedSearchParams = await searchParams;
-
+export default function ListingsHomePage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen bg-slate-100/70 dark:bg-slate-900/50">
-          <div className="border-b border-slate-200/80 bg-white/90 dark:border-slate-800 dark:bg-slate-950/90">
-            <div className="mx-auto max-w-[1600px] px-4 py-5 sm:px-6 lg:px-8">
-              <div className="h-10 w-48 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-800" />
-            </div>
+    <div className="min-h-screen bg-slate-50/80 dark:bg-slate-950/80">
+      {/* 1. Search hero */}
+      <ListingsHomeHero />
+
+      <div className="mx-auto max-w-[1600px] px-4 py-12 sm:px-6 lg:px-8">
+        {/* Featured listings */}
+        <section aria-labelledby="featured-heading" className="mb-16">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+            <h2 id="featured-heading" className="font-display text-2xl font-semibold text-slate-900 dark:text-slate-50">
+              Featured listings
+            </h2>
+            <Button asChild variant="outline" size="sm">
+              <Link href="/listings/search">View all</Link>
+            </Button>
           </div>
-          <div className="mx-auto flex max-w-[1600px]">
-            <div className="hidden w-64 shrink-0 border-r border-slate-200/80 bg-white/80 dark:border-slate-800 dark:bg-slate-950/80 lg:block">
-              <div className="p-4">
-                <div className="space-y-3">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <div
-                      key={i}
-                      className="h-9 animate-pulse rounded bg-slate-200 dark:bg-slate-800"
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8">
-              <div className="mb-4 h-5 w-32 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-                {Array.from({ length: 8 }).map((_, i) => (
+          <Suspense
+            fallback={
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
+                {Array.from({ length: 4 }).map((_, i) => (
                   <ListingCardSkeleton key={i} />
                 ))}
               </div>
+            }
+          >
+            <FeaturedListings />
+          </Suspense>
+        </section>
+
+        {/* Why list with us */}
+        <section aria-labelledby="why-list-heading" className="mb-16">
+          <h2 id="why-list-heading" className="font-display text-2xl font-semibold text-slate-900 dark:text-slate-50 mb-6">
+            Why list with us
+          </h2>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+            <div className="rounded-xl border border-slate-200/80 bg-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
+              <p className="font-medium text-slate-900 dark:text-slate-50">Visibility</p>
+              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                Your listing reaches serious renters and buyers across Kenya.
+              </p>
+            </div>
+            <div className="rounded-xl border border-slate-200/80 bg-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
+              <p className="font-medium text-slate-900 dark:text-slate-50">Inquiries that convert</p>
+              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                Direct contact and viewing requests from interested parties.
+              </p>
+            </div>
+            <div className="rounded-xl border border-slate-200/80 bg-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
+              <p className="font-medium text-slate-900 dark:text-slate-50">Easy management</p>
+              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                Update, pause or boost listings from your portal anytime.
+              </p>
             </div>
           </div>
-        </div>
-      }
-    >
-      <ListingsContent searchParams={resolvedSearchParams} />
-    </Suspense>
+        </section>
+
+        {/* Marketplace trust strip */}
+        <section aria-label="Trust indicators" className="mb-16">
+          <div className="flex flex-wrap items-center justify-center gap-8 rounded-2xl border border-slate-200/80 bg-white px-6 py-8 dark:border-slate-700/80 dark:bg-slate-900/50 sm:gap-12">
+            <span className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+              <CheckCircle2 className="h-5 w-5 text-[#36b9a0]" aria-hidden />
+              Verified listings
+            </span>
+            <span className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+              <Shield className="h-5 w-5 text-[#36b9a0]" aria-hidden />
+              Professional listers
+            </span>
+            <span className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+              <FileCheck className="h-5 w-5 text-[#36b9a0]" aria-hidden />
+              Secure inquiries
+            </span>
+            <span className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+              Transparent details
+            </span>
+          </div>
+        </section>
+
+        {/* CTA band */}
+        <ListingsCtaBand />
+      </div>
+    </div>
   );
 }

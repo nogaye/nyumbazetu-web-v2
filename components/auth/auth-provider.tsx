@@ -34,17 +34,25 @@ const defaultState: AuthState = {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-async function loadUserAndProfile() {
+const AUTH_CHECK_TIMEOUT_MS = 8000;
+
+async function loadUserAndProfile(): Promise<{ user: SupabaseUser | null; profile: AuthProfile | null }> {
   const supabase = getAuthBrowserClient();
   if (!supabase) {
     return { user: null, profile: null };
   }
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    return { user: null, profile: null };
-  }
-  const profile = await getCurrentProfile(supabase);
-  return { user, profile };
+  const timeout = new Promise<{ user: null; profile: null }>((resolve) =>
+    setTimeout(() => resolve({ user: null, profile: null }), AUTH_CHECK_TIMEOUT_MS)
+  );
+  const work = (async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return { user: null, profile: null };
+    }
+    const profile = await getCurrentProfile(supabase);
+    return { user, profile };
+  })();
+  return Promise.race([work, timeout]);
 }
 
 /**

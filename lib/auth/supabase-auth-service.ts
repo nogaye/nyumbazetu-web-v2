@@ -95,15 +95,18 @@ export async function signInWithEmail(
 
 /**
  * Initiates Google OAuth sign-in. Redirects to Supabase/Google; callback goes to redirectTo.
+ * Preserves return URL via optional next param so user is sent to intended destination after OAuth.
  *
  * @param supabase - Browser Supabase client.
- * @param redirectTo - Full URL for auth callback (e.g. origin + /auth/callback).
+ * @param options - Optional redirectTo (full callback URL) or next (path to redirect after OAuth).
  */
 export async function signInWithGoogle(
   supabase: TypedSupabase,
-  redirectTo?: string
+  options?: { redirectTo?: string; next?: string }
 ): Promise<{ success: boolean; error?: string }> {
-  const url = redirectTo ?? redirectToOrigin("/auth/callback");
+  const base = redirectToOrigin("/auth/callback");
+  const next = options?.next ? encodeURIComponent(options.next) : "";
+  const url = options?.redirectTo ?? (next ? `${base}?next=${next}` : base);
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: { redirectTo: url },

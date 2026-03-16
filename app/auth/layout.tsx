@@ -1,22 +1,19 @@
 /**
- * Auth layout: sign-in, sign-up, forgot-password, reset-password.
- * Centered card layout without full nav/footer for focused auth flows.
+ * Auth layout: split-screen on desktop (branding left, form right), centered card on mobile.
+ * No main nav/footer; full-viewport focused experience. Uses AuthLayoutShell for consistent structure.
  */
 
 import type { Metadata } from "next";
+import { AuthLayoutShell } from "@/components/auth/auth-layout-shell";
 
 export const metadata: Metadata = {
-  title: "Sign In",
-  description: "Sign in or create an account",
+  title: "Sign in",
+  description: "Sign in or create an account to access your dashboard.",
   robots: "noindex, nofollow",
 };
 
 export default function AuthLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4">
-      {children}
-    </div>
-  );
+  return <AuthLayoutShell hideSidePanel>{children}</AuthLayoutShell>;
 }

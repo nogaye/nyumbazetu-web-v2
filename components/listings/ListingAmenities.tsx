@@ -21,6 +21,7 @@ import {
   ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 /** Default amenity label to Lucide icon mapping for display. */
@@ -106,13 +107,14 @@ export function ListingAmenities({
         })}
       </ul>
       {hasMore && !showAll && (
-        <button
+        <Button
           type="button"
+          variant="link"
+          className="mt-4 h-auto p-0 text-sm font-medium text-slate-700 dark:text-slate-300"
           onClick={() => setShowAll(true)}
-          className="mt-4 text-sm font-medium text-slate-700 underline underline-offset-2 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-100"
         >
           Show all {total} amenities
-        </button>
+        </Button>
       )}
     </section>
   );

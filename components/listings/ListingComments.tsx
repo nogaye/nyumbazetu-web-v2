@@ -7,6 +7,10 @@
 
 import { MessageCircle, Send } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import type { ListingCommentDisplay } from "@/lib/listings/types";
 
 export type ListingComment = ListingCommentDisplay;
@@ -51,33 +55,34 @@ export function ListingComments({
           aria-label={`Comments for ${listingTitle}`}
         >
           {comments.map((comment, idx) => (
-            <li
-              key={`${comment.author}-${comment.date}-${idx}`}
-              className="rounded-lg border border-slate-200/80 bg-slate-50/50 px-4 py-3 dark:border-slate-700/80 dark:bg-slate-800/30"
-            >
-              <div className="flex flex-wrap items-center gap-2 mb-1">
-                <span className="font-medium text-slate-900 dark:text-slate-50">
-                  {comment.author}
-                </span>
-                {comment.label && (
-                  <span className="rounded bg-slate-200/80 px-1.5 py-0.5 text-xs text-slate-600 dark:bg-slate-600 dark:text-slate-300">
-                    {comment.label}
-                  </span>
-                )}
-                <time
-                  dateTime={comment.date}
-                  className="text-xs text-slate-500 dark:text-slate-400"
-                >
-                  {new Date(comment.date).toLocaleDateString(undefined, {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </time>
-              </div>
-              <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                {comment.body}
-              </p>
+            <li key={`${comment.author}-${comment.date}-${idx}`}>
+              <Card className="bg-slate-50/50 dark:bg-slate-800/30">
+                <CardContent className="flex flex-col gap-1 px-4 py-3">
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <span className="font-medium text-slate-900 dark:text-slate-50">
+                      {comment.author}
+                    </span>
+                    {comment.label && (
+                      <Badge variant="secondary" className="text-xs">
+                        {comment.label}
+                      </Badge>
+                    )}
+                    <time
+                      dateTime={comment.date}
+                      className="text-xs text-slate-500 dark:text-slate-400"
+                    >
+                      {new Date(comment.date).toLocaleDateString(undefined, {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </time>
+                  </div>
+                  <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                    {comment.body}
+                  </p>
+                </CardContent>
+              </Card>
             </li>
           ))}
         </ul>
@@ -91,18 +96,19 @@ export function ListingComments({
       {canComment && onSubmitComment ? (
         <CommentForm onSubmit={onSubmitComment} />
       ) : (
-        <div className="rounded-lg border border-slate-200/80 bg-slate-50 px-4 py-3 dark:border-slate-700/80 dark:bg-slate-800/30">
-          <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
-            Sign in to leave a comment or ask a question.
-          </p>
-          <Link
-            href="/admin/login"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
-          >
-            <Send className="h-4 w-4" aria-hidden />
-            Sign in to comment
-          </Link>
-        </div>
+        <Card className="bg-slate-50 dark:bg-slate-800/30">
+          <CardContent className="px-4 py-3">
+            <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
+              Sign in to leave a comment or ask a question.
+            </p>
+            <Button variant="link" className="h-auto p-0 text-primary" asChild>
+              <Link href="/auth/sign-in" className="inline-flex items-center gap-1.5">
+                <Send className="h-4 w-4" aria-hidden />
+                Sign in to comment
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
       )}
     </section>
   );
@@ -130,20 +136,17 @@ function CommentForm({ onSubmit }: { onSubmit: (body: string) => void }) {
       <label htmlFor="listing-comment-body" className="sr-only">
         Your comment or question
       </label>
-      <textarea
+      <Textarea
         id="listing-comment-body"
         name="body"
         rows={3}
         placeholder="Ask a question or leave a comment..."
-        className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400"
+        className="resize-none"
       />
-      <button
-        type="submit"
-        className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-      >
+      <Button type="submit" size="sm" className="gap-1.5">
         <Send className="h-4 w-4" aria-hidden />
         Post comment
-      </button>
+      </Button>
     </form>
   );
 }

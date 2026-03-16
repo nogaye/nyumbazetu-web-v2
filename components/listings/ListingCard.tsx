@@ -9,6 +9,8 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { CheckCircle2, Heart, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { ListingWithCoverImage } from "@/lib/listings/types";
 import { PropertyImage } from "@/components/listings/PropertyImage";
 import { fadeInUp, springTransition } from "@/lib/motion";
@@ -111,42 +113,38 @@ export function ListingCard({ listing }: ListingCardProps) {
           />
           {/* Badges: purpose + verified (top-left), save (top-right), TPS (bottom-left) */}
           <div className="absolute left-3 top-3 flex flex-wrap items-center gap-2">
-            <span
-              className="rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-semibold tracking-tight text-slate-800 shadow-sm backdrop-blur-sm dark:bg-slate-900/90 dark:text-slate-100"
-              aria-hidden
+            <Badge
+              variant="secondary"
+              className="!border-transparent !bg-white/95 !text-slate-800 text-[11px] font-semibold shadow-sm backdrop-blur-sm dark:!bg-slate-900/90 dark:!text-slate-100"
             >
               {purposeLabel}
-            </span>
+            </Badge>
             {listing.is_verified && (
-              <span
-                className="flex items-center gap-1 rounded-full bg-white/95 px-2 py-1 text-[10px] font-medium text-slate-700 shadow-sm backdrop-blur-sm dark:bg-slate-900/90 dark:text-slate-200"
+              <Badge
+                variant="secondary"
+                className="gap-1 !border-transparent !bg-white/95 !text-slate-700 text-[10px] shadow-sm backdrop-blur-sm dark:!bg-slate-900/90 dark:!text-slate-200"
                 aria-label="Verified listing"
               >
                 <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" aria-hidden />
                 Verified
-              </span>
+              </Badge>
             )}
           </div>
           {listing.is_tps_available && (
-            <span
-              className="absolute bottom-3 left-3 rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold text-primary-foreground shadow-md"
-              aria-hidden
-            >
+            <Badge className="absolute bottom-3 left-3 shadow-md">
               Rent-to-own
-            </span>
+            </Badge>
           )}
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="icon"
             onClick={handleSaveClick}
-            className={cn(
-              "absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 shadow-sm backdrop-blur-sm",
-              "transition-colors hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-800",
-              "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-            )}
+            className="absolute right-3 top-3 h-9 w-9 rounded-full bg-white/95 shadow-sm backdrop-blur-sm hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-800"
             aria-label="Save listing"
           >
             <Heart className="h-4 w-4 text-slate-600 dark:text-slate-300" aria-hidden />
-          </button>
+          </Button>
         </div>
 
         {/* Content: type, title, meta, location, price, CTA */}

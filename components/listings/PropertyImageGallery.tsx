@@ -104,9 +104,10 @@ export function PropertyImageGallery({
               thumbSlots > 0 ? "aspect-[4/3] md:aspect-auto md:min-h-[340px]" : "aspect-video"
             )}
           >
-            <button
+            <Button
               type="button"
-              className="absolute inset-0 block w-full h-full focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
+              variant="ghost"
+              className="absolute inset-0 h-full w-full rounded-none focus:ring-2 focus:ring-primary focus:ring-inset"
               onClick={() => setIsFullscreen(true)}
               aria-label="View fullscreen"
             >
@@ -121,7 +122,7 @@ export function PropertyImageGallery({
                 sizes="(max-width: 768px) 100vw, 55vw"
                 objectFit="cover"
               />
-            </button>
+            </Button>
           </div>
 
           {/* 2x2 thumbnail grid (right on desktop) */}
@@ -134,11 +135,12 @@ export function PropertyImageGallery({
                 const showOverlay = isLastSlot && showAllPhotosOverlay;
 
                 return (
-                  <button
+                  <Button
                     key={slot}
                     type="button"
+                    variant="ghost"
                     className={cn(
-                      "relative overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-800 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset",
+                      "relative h-full w-full overflow-hidden rounded-lg bg-slate-200 p-0 transition-all focus:ring-2 focus:ring-primary focus:ring-inset dark:bg-slate-800",
                       selectedIndex === idx && "ring-2 ring-primary ring-offset-2 ring-offset-slate-100 dark:ring-offset-slate-900"
                     )}
                     onClick={() => (showOverlay ? setIsFullscreen(true) : goToImage(idx))}
@@ -159,7 +161,7 @@ export function PropertyImageGallery({
                         Show all photos
                       </span>
                     )}
-                  </button>
+                  </Button>
                 );
               })}
             </div>

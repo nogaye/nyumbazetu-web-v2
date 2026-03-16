@@ -27,6 +27,8 @@ function getChipLabel(key: keyof ListingFilters, value: unknown): string {
       return value as string;
     case "area":
       return value as string;
+    case "listingPurpose":
+      return value === "short_stay" ? "Short stay" : String(value).charAt(0).toUpperCase() + String(value).slice(1);
     case "minPrice":
       return `Min ${new Intl.NumberFormat("en-KE", { style: "currency", currency: "KES", maximumFractionDigits: 0 }).format(value as number)}`;
     case "maxPrice":
@@ -52,6 +54,7 @@ export function ActiveFilterChips({ filters, className }: ActiveFilterChipsProps
   const chipKeys: (keyof ListingFilters)[] = [
     "city",
     "area",
+    "listingPurpose",
     "minPrice",
     "maxPrice",
     "bedrooms",
@@ -75,11 +78,11 @@ export function ActiveFilterChips({ filters, className }: ActiveFilterChipsProps
       if (v !== undefined && v !== null && v !== "")
         params.set(k, String(v));
     });
-    router.push(`/listings?${params.toString()}`);
+    router.push(`/listings/search?${params.toString()}`);
   };
 
   const clearAll = () => {
-    router.push("/listings");
+    router.push("/listings/search");
   };
 
   if (entries.length === 0) return null;
@@ -94,21 +97,18 @@ export function ActiveFilterChips({ filters, className }: ActiveFilterChipsProps
       aria-label="Active filters"
     >
       {entries.map(({ key, label }) => (
-        <button
+        <Button
           key={key}
           type="button"
+          variant="outline"
+          size="sm"
           onClick={() => removeFilter(key)}
-          className={cn(
-            "inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700",
-            "transition-colors hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900",
-            "dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-700/80 dark:hover:text-slate-100",
-            "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2"
-          )}
+          className="h-auto gap-1.5 rounded-full border-slate-200 px-3 py-1.5 text-xs font-medium dark:border-slate-700 dark:bg-slate-800/80 dark:hover:bg-slate-700/80"
           aria-label={`Remove filter: ${label}`}
         >
           <span>{label}</span>
           <X className="h-3.5 w-3.5 shrink-0 opacity-70" aria-hidden />
-        </button>
+        </Button>
       ))}
       <Button
         variant="ghost"

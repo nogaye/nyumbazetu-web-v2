@@ -349,6 +349,13 @@ export function parseFilters(searchParams: {
     filters.propertyType = searchParams.propertyType as any;
   }
 
+  if (searchParams.listingPurpose && typeof searchParams.listingPurpose === "string") {
+    const purpose = searchParams.listingPurpose as import("./types").ListingPurposeType;
+    if (["rent", "buy", "short_stay"].includes(purpose)) {
+      filters.listingPurpose = purpose;
+    }
+  }
+
   if (searchParams.tps === "true" || searchParams.tps === "1") {
     filters.tps = true;
   }

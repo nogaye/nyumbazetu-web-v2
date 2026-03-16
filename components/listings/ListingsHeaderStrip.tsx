@@ -51,7 +51,7 @@ export function ListingsHeaderStrip({
     if (sort === "recommended") params.delete("sort");
     else params.set("sort", sort);
     params.delete("page");
-    router.push(`/listings?${params.toString()}`);
+    router.push(`/listings/search?${params.toString()}`);
   };
 
   const updateSearch = (search: string) => {
@@ -61,7 +61,7 @@ export function ListingsHeaderStrip({
       if (search.trim()) params.set("search", search.trim());
       else params.delete("search");
       params.delete("page");
-      router.push(`/listings?${params.toString()}`);
+      router.push(`/listings/search?${params.toString()}`);
     }, 400);
     setDebounceTimer(timer);
   };

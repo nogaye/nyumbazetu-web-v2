@@ -245,13 +245,14 @@ export function ListingBookingCard({
         You won&apos;t be charged yet
       </p>
 
-      <button
+      <Button
         type="button"
-        className="mt-4 flex w-full items-center justify-center gap-2 text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300"
+        variant="ghost"
+        className="mt-4 w-full gap-2 text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300"
       >
         <Flag className="h-4 w-4" aria-hidden />
         Report this listing
-      </button>
+      </Button>
     </div>
   );
 }
@@ -323,9 +324,11 @@ export function ListingDateRangeCalendar({
       const start = isStart(d);
       const end = isEnd(d);
       cells.push(
-        <button
+        <Button
           key={day}
           type="button"
+          variant="ghost"
+          size="icon"
           disabled={past}
           onClick={() => handleClick(d)}
           className={cn(
@@ -345,7 +348,7 @@ export function ListingDateRangeCalendar({
           )}
         >
           {day}
-        </button>,
+        </Button>,
       );
     }
     return (
@@ -380,28 +383,32 @@ export function ListingDateRangeCalendar({
         {formatDisplayDate(checkIn)} – {formatDisplayDate(checkOut)}
       </p>
       <div className="flex gap-2 items-center mb-4">
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon"
+          className="rounded-full"
           onClick={() => setCalendarMonth((m) => addMonths(m, -1))}
-          className="rounded-full p-1 hover:bg-slate-100 dark:hover:bg-slate-800"
           aria-label="Previous month"
         >
           <ChevronLeft className="h-5 w-5" />
-        </button>
+        </Button>
         <span className="text-sm font-medium text-slate-700 dark:text-slate-300 min-w-[120px] text-center">
           {calendarMonth.toLocaleDateString("en-KE", {
             month: "long",
             year: "numeric",
           })}
         </span>
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon"
+          className="rounded-full"
           onClick={() => setCalendarMonth((m) => addMonths(m, 1))}
-          className="rounded-full p-1 hover:bg-slate-100 dark:hover:bg-slate-800"
           aria-label="Next month"
         >
           <ChevronRight className="h-5 w-5" />
-        </button>
+        </Button>
       </div>
       <div className="grid grid-cols-2 gap-6">
         {renderMonth(m1.year, m1.month)}

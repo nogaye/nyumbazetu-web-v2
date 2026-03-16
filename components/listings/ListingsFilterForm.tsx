@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { ListingFilters, PropertyType } from "@/lib/listings/types";
 
 /** Filter options for property type (includes display-only types beyond strict DB enum). */
@@ -65,6 +66,7 @@ export function ListingsFilterForm({
     const params = new URLSearchParams();
     if (localFilters.city) params.set("city", localFilters.city);
     if (localFilters.area) params.set("area", localFilters.area);
+    if (localFilters.listingPurpose) params.set("listingPurpose", localFilters.listingPurpose);
     if (localFilters.minPrice !== undefined)
       params.set("minPrice", localFilters.minPrice.toString());
     if (localFilters.maxPrice !== undefined)
@@ -74,11 +76,11 @@ export function ListingsFilterForm({
     if (localFilters.propertyType)
       params.set("propertyType", localFilters.propertyType);
     if (localFilters.tps === true) params.set("tps", "true");
-    router.push(`/listings?${params.toString()}`);
+    router.push(`/listings/search?${params.toString()}`);
   };
 
   const clearFilters = () => {
-    router.push("/listings");
+    router.push("/listings/search");
   };
 
   const hasActiveFilters = Object.keys(filters).some(
@@ -123,6 +125,30 @@ export function ListingsFilterForm({
             }
             className={isCompact ? "h-9 text-sm" : ""}
           />
+        </div>
+
+        <div className="space-y-1.5">
+          <label htmlFor="listings-purpose" className={labelClass}>
+            Purpose
+          </label>
+          <Select
+            value={localFilters.listingPurpose ?? "all"}
+            onValueChange={(value) =>
+              updateFilters({
+                listingPurpose: value === "all" ? undefined : (value as ListingFilters["listingPurpose"]),
+              })
+            }
+          >
+            <SelectTrigger id="listings-purpose" className={isCompact ? "h-9 text-sm" : ""}>
+              <SelectValue placeholder="Any" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Any</SelectItem>
+              <SelectItem value="rent">Rent</SelectItem>
+              <SelectItem value="buy">Buy</SelectItem>
+              <SelectItem value="short_stay">Short stay</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="grid grid-cols-2 gap-2">
@@ -237,13 +263,11 @@ export function ListingsFilterForm({
         </div>
 
         <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="checkbox"
+          <Checkbox
             checked={localFilters.tps === true}
-            onChange={(e) =>
-              updateFilters({ tps: e.target.checked || undefined })
+            onCheckedChange={(checked) =>
+              updateFilters({ tps: checked ? true : undefined })
             }
-            className="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
           />
           <span className={labelClass}>TPS (Rent-to-own)</span>
         </label>
