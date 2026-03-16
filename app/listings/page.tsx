@@ -17,9 +17,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Apartments & Properties for Rent | Nyumba Zetu",
+  title: "Property Listings | Rent, Buy & Short Stay | Nyumba Zetu",
   description:
-    "Browse verified apartments, maisonettes and TPS homes across Nairobi and other Kenyan cities using Nyumba Zetu.",
+    "Browse verified property listings: apartments, maisonettes and rent-to-own homes across Nairobi, Mombasa and Kenya. Rent, buy, or short stay.",
   keywords: [
     "property listings",
     "apartments for rent",
@@ -86,21 +86,21 @@ async function ListingsContent({
         <ListingsFilterBar filters={filters} layout="sidebar" />
 
         <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8" aria-label="Property listings">
-          {/* Active filter chips: show when filters applied and we have results or zero results */}
-          <div className="mb-4">
+          {/* Active filter chips */}
+          <div className="mb-3">
             <ActiveFilterChips filters={filters} />
           </div>
 
-          {/* Location + page context when we have results */}
+          {/* Result summary: "Showing 1–24 of 156 in Kenya · Page 1 of 7" */}
           {total > 0 && (
-            <div className="mb-4 flex flex-wrap items-baseline gap-2 text-sm text-slate-600 dark:text-slate-400">
-              <span>in {getLocationText()}</span>
+            <p className="mb-4 text-sm text-slate-600 dark:text-slate-400" aria-live="polite">
+              Showing {(page - 1) * 24 + 1}–{Math.min(page * 24, total)} of {total} in {getLocationText()}
               {totalPages > 1 && (
                 <span aria-label={`Page ${page} of ${totalPages}`}>
-                  · Page {page} of {totalPages}
+                  {" "}· Page {page} of {totalPages}
                 </span>
               )}
-            </div>
+            </p>
           )}
 
           {/* Empty / no-results state */}
@@ -138,6 +138,24 @@ async function ListingsContent({
                   <ListingCard key={listing.id} listing={listing} />
                 ))}
               </div>
+
+              {/* Bottom CTA: list your property / get help */}
+              <section className="mt-12 rounded-2xl border border-slate-200/80 bg-white p-6 text-center dark:border-slate-700/80 dark:bg-slate-900/40 sm:p-8">
+                <p className="text-base font-medium text-slate-900 dark:text-slate-50">
+                  Can&apos;t find what you need?
+                </p>
+                <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                  List your property with Nyumba Zetu or get in touch and we&apos;ll help you find the right place.
+                </p>
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+                  <Button asChild size="default" className="rounded-lg">
+                    <Link href="/request-demo">List your property</Link>
+                  </Button>
+                  <Button asChild variant="outline" size="default" className="rounded-lg">
+                    <Link href="/contact">Contact us</Link>
+                  </Button>
+                </div>
+              </section>
 
               {/* Pagination */}
               {totalPages > 1 && (

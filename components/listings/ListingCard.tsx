@@ -156,7 +156,7 @@ export function ListingCard({ listing }: ListingCardProps) {
               {[propertyTypeLabel, listingTypeLabel].filter(Boolean).join(" · ")}
             </p>
           )}
-          <h2 className="line-clamp-2 text-base font-semibold leading-snug text-slate-900 dark:text-slate-50">
+          <h2 className="font-display line-clamp-2 text-base font-semibold leading-snug text-slate-900 dark:text-slate-50">
             {listing.title}
           </h2>
           {meta && (

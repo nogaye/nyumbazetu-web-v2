@@ -90,7 +90,7 @@ export function ListingsFilterBar({
       <div className="contents">
         <aside
           className={cn(
-            "hidden lg:block w-64 shrink-0 border-r border-slate-200/80 bg-white/80 dark:border-slate-800 dark:bg-slate-950/80",
+            "hidden lg:block w-64 shrink-0 border-r border-slate-200/80 bg-white dark:border-slate-800 dark:bg-slate-950",
             "sticky top-16 self-start overflow-y-auto"
           )}
           aria-label="Filter listings"
