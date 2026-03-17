@@ -13,7 +13,7 @@ const HEADLINE = "The operating system for African real estate";
 
 /** Clear product explanation: what the platform does (vision → explanation). */
 const SUBHEADLINE =
-  "One platform for collections, accounting, tenant experience, and compliance. M-Pesa, bank, eTIMS—all integrated. Real-time visibility for every stakeholder.";
+  "One platform for collections, accounting, tenant experience, and compliance. M-Pesa, banks, Quickbooks, eTIMS—all integrated. Real-time visibility for every stakeholder.";
 
 /** Social proof line; increases trust below the CTAs. */
 const SOCIAL_PROOF =
@@ -208,7 +208,9 @@ export function HeroSingleV2() {
             {COLLECTION_RATE_FOOTNOTE}
           </p>
 
-          <p className="text-sm text-slate-600 dark:text-slate-500">{SOCIAL_PROOF}</p>
+          <p className="text-sm text-slate-600 dark:text-slate-500">
+            {SOCIAL_PROOF}
+          </p>
         </div>
       </div>
 
