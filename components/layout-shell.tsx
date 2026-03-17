@@ -5,6 +5,7 @@
  * the listings marketplace shell (ListingsHeader + ListingsFooter) based on pathname.
  * Used in the root layout so /listings/** gets a dedicated header/footer and the
  * rest of the site keeps the standard marketing nav and footer.
+ * Listings shell wraps header + main with AuthProvider so ListingsHeader and portal AuthGuard share context.
  */
 
 import { usePathname } from "next/navigation";
@@ -14,6 +15,7 @@ import { ListingsHeader } from "@/components/listings/listings-header";
 import { ListingsFooter } from "@/components/listings/listings-footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { CookieConsent } from "@/components/cookie-consent";
+import { AuthProvider } from "@/components/auth/auth-provider";
 
 /** Path prefix for routes that use the listings marketplace shell. */
 const LISTINGS_PREFIX = "/listings";
@@ -58,7 +60,7 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
 
   if (isListings) {
     return (
-      <>
+      <AuthProvider>
         <ListingsHeader />
         <main className="min-h-screen" id="main-content" role="main">
           {children}
@@ -66,7 +68,7 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
         <ListingsFooter />
         <ScrollToTop />
         <CookieConsent />
-      </>
+      </AuthProvider>
     );
   }
 

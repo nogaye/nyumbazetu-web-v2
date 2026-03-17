@@ -1,22 +1,9 @@
-"use client";
-
 /**
- * Single hero section for the marketing homepage.
- * Implements a high-impact SaaS hero: credibility badge, vision headline, product explanation,
- * two CTAs, social proof, and a stats bar. Uses display typography, gradient mesh background,
- * and scroll cue. Designed for clarity and conversion.
+ * Homepage hero: server-rendered for fast LCP/FCP (no Framer Motion or Heroicons on the critical path).
+ * Same copy and layout as before; pattern is inline SVG so the hero tree stays a Server Component.
  */
 
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {
-  CalendarDaysIcon,
-  ArrowRightIcon,
-  ChevronDownIcon,
-} from "@heroicons/react/24/outline";
-import { SparklesIcon } from "@heroicons/react/24/solid";
-import { AfricanPatternBackground } from "@/components/design-system";
 
 /** Credibility badge text; short trust statement above the headline. */
 const BADGE = "Kenya's #1 property management platform";
@@ -33,7 +20,8 @@ const SUBHEADLINE =
   "One platform for collections, accounting, tenant experience, and compliance. M-Pesa, bank, eTIMS—all integrated. Real-time visibility for every stakeholder.";
 
 /** Social proof line; increases trust below the CTAs. */
-const SOCIAL_PROOF = "Trusted by property managers, estates, developers, and banks across Kenya";
+const SOCIAL_PROOF =
+  "Trusted by property managers, estates, developers, and banks across Kenya";
 
 /** Stats shown in the hero for credibility and quick scanning. */
 const HERO_STATS = [
@@ -49,10 +37,57 @@ const COLLECTION_RATE_FOOTNOTE =
 /** Scroll indicator target (first section after hero). */
 const SCROLL_TARGET_ID = "how-it-works";
 
+/** Unique pattern id so multiple heroes on a page would not clash (single hero today). */
+const HERO_PATTERN_ID = "hero-african-grid";
+
+/**
+ * Renders the Kente-like grid pattern used behind hero content (same geometry as design-system variant).
+ * @param className - Wrapper classes (e.g. absolute inset-0).
+ * @param opacity - Pattern layer opacity.
+ */
+function HeroAfricanPattern({
+  className,
+  opacity = 0.14,
+}: {
+  className?: string;
+  opacity?: number;
+}) {
+  const stroke = "rgba(255,255,255,0.28)";
+  return (
+    <div className={`pointer-events-none select-none ${className ?? ""}`} aria-hidden>
+      <svg
+        className="h-full w-full"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ opacity }}
+      >
+        <defs>
+          <pattern
+            id={HERO_PATTERN_ID}
+            width="24"
+            height="24"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M0 12h24M12 0v24"
+              fill="none"
+              stroke={stroke}
+              strokeWidth="0.6"
+            />
+            <circle cx="12" cy="12" r="1" fill={stroke} fillOpacity="0.6" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill={`url(#${HERO_PATTERN_ID})`} />
+      </svg>
+    </div>
+  );
+}
+
+/**
+ * Marketing homepage hero: gradient mesh, headline, CTAs, stats. Fully server-rendered for performance.
+ */
 export function HeroSingleV2() {
   return (
     <section className="relative min-h-[90vh] flex flex-col items-center justify-center overflow-hidden bg-slate-950 dark:bg-slate-950">
-      {/* Gradient mesh background — animated orbs for depth */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900" />
         <div className="hero-mesh-orb absolute -top-[40%] -right-[20%] w-[80vw] max-w-[800px] h-[80vw] max-h-[800px] rounded-full bg-primary/20 blur-[120px]" />
@@ -65,102 +100,83 @@ export function HeroSingleV2() {
           style={{ animationDelay: "-3s" }}
         />
         <div className="absolute inset-0 grain" aria-hidden />
-        <AfricanPatternBackground
-          className="absolute inset-0"
-          variant="grid"
-          opacity={0.14}
-          dark
-        />
+        <HeroAfricanPattern className="absolute inset-0" opacity={0.14} />
       </div>
 
       <div className="relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl w-full pt-20 md:pt-28 pb-16 md:pb-24 text-center">
-        {/* initial={false} so LCP content (headline/text) is visible on first paint; avoids delayed LCP from opacity animation. */}
-        <motion.div
-          initial={false}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-4xl mx-auto"
-        >
-          {/* Credibility badge */}
-          <motion.div
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.5 }}
-            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary mb-8 px-4 py-2.5 rounded-full bg-primary/15 border border-primary/25 text-primary-foreground/90"
-          >
-            <SparklesIcon className="h-4 w-4" aria-hidden />
+        <div className="max-w-4xl mx-auto">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary mb-8 px-4 py-2.5 rounded-full bg-primary/15 border border-primary/25 text-primary-foreground/90">
+            <svg
+              className="h-4 w-4 shrink-0"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden
+            >
+              <path
+                fillRule="evenodd"
+                d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813a3.75 3.75 0 002.576-2.576l.813-2.846A.75.75 0 019 4.5zM3.105 8.969a.75.75 0 01.593-.882l3.736-.671a.75.75 0 01.684.684l.671 3.736a.75.75 0 01-.593.882l-3.736.671a.75.75 0 01-.684-.684l-.671-3.736z"
+                clipRule="evenodd"
+              />
+            </svg>
             <span>{BADGE}</span>
-          </motion.div>
+          </div>
 
-          {/* Headline — display font for impact; no initial opacity so LCP is immediate. */}
-          <motion.h1
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: 0.25,
-              duration: 0.6,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-3 leading-[1.08] tracking-[-0.03em] text-white"
-          >
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-3 leading-[1.08] tracking-[-0.03em] text-white">
             {HEADLINE}
-          </motion.h1>
+          </h1>
 
-          {/* SEO subline: keyword-rich for search; visible and readable. */}
-          <motion.p
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="text-base md:text-lg text-primary/95 font-medium mb-6"
-          >
+          <p className="text-base md:text-lg text-primary/95 font-medium mb-6">
             {SEO_SUBLINE}
-          </motion.p>
+          </p>
 
-          {/* Subheadline */}
-          <motion.p
-            initial={false}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-            className="text-lg md:text-xl lg:text-2xl text-slate-300 mb-10 leading-relaxed max-w-3xl mx-auto"
-          >
+          <p className="text-lg md:text-xl lg:text-2xl text-slate-300 mb-10 leading-relaxed max-w-3xl mx-auto">
             {SUBHEADLINE}
-          </motion.p>
+          </p>
 
-          {/* CTAs — primary with glow on hover; secondary for exploration */}
-          <motion.div
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.5 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
-          >
-            <Button
-              size="lg"
-              className="relative overflow-hidden cta-shine-hover bg-primary hover:bg-primary-600 text-primary-foreground font-semibold shadow-lg hover:shadow-glow transition-all duration-300 rounded-xl px-8 text-base group/btn"
-              asChild
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+            <Link
+              href="/request-demo"
+              className="relative overflow-hidden cta-shine-hover inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3 text-base font-semibold text-primary-foreground shadow-lg transition-all duration-300 hover:bg-primary-600 hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
-              <Link href="/request-demo" className="flex items-center gap-2 relative z-10">
-                Book a free demo
-                <CalendarDaysIcon className="h-5 w-5 group-hover/btn:translate-x-0.5 transition-transform" aria-hidden />
-              </Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 font-medium rounded-xl px-8 text-base backdrop-blur-sm"
-              asChild
+              Book a free demo
+              <svg
+                className="h-5 w-5 shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                aria-hidden
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5a2.25 2.25 0 002.25-2.25m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5a2.25 2.25 0 012.25 2.25v7.5"
+                />
+              </svg>
+            </Link>
+            <Link
+              href="/features"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/30 bg-transparent px-8 py-3 text-base font-medium text-white backdrop-blur-sm transition-colors hover:border-white/50 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
-              <Link href="/features" className="flex items-center gap-2">
-                See all features
-                <ArrowRightIcon className="h-5 w-5" aria-hidden />
-              </Link>
-            </Button>
-          </motion.div>
+              See all features
+              <svg
+                className="h-5 w-5 shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                aria-hidden
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                />
+              </svg>
+            </Link>
+          </div>
 
-          {/* Stats bar — social proof and quick value; three columns for impact */}
-          <motion.div
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.65, duration: 0.5 }}
+          <div
             className="flex flex-wrap justify-center gap-6 sm:gap-10 md:gap-16 mb-10"
             role="list"
             aria-label="Key metrics"
@@ -170,49 +186,42 @@ export function HeroSingleV2() {
                 <div className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white tabular-nums">
                   {stat.value}
                 </div>
-                <div className="text-sm text-slate-400 mt-1">
-                  {stat.label}
-                </div>
+                <div className="text-sm text-slate-400 mt-1">{stat.label}</div>
               </div>
             ))}
-          </motion.div>
+          </div>
 
-          {/* Footnote: clarifies that collection rate is platform average */}
-          <motion.p
-            initial={false}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7, duration: 0.5 }}
-            className="text-xs text-slate-500 mb-6 max-w-xl mx-auto"
-          >
+          <p className="text-xs text-slate-500 mb-6 max-w-xl mx-auto">
             {COLLECTION_RATE_FOOTNOTE}
-          </motion.p>
+          </p>
 
-          {/* Social proof line */}
-          <motion.p
-            initial={false}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.75, duration: 0.5 }}
-            className="text-sm text-slate-500"
-          >
-            {SOCIAL_PROOF}
-          </motion.p>
-        </motion.div>
+          <p className="text-sm text-slate-500">{SOCIAL_PROOF}</p>
+        </div>
       </div>
 
-      {/* Scroll indicator — invites user to explore; below fold so no LCP impact. */}
-      <motion.a
+      <a
         href={`#${SCROLL_TARGET_ID}`}
-        initial={false}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.5 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-500 hover:text-slate-400 transition-colors"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-500 hover:text-slate-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
         aria-label="Scroll to content"
       >
         <span className="text-xs font-medium uppercase tracking-wider">
           See how it works
         </span>
-        <ChevronDownIcon className="h-6 w-6 animate-scroll-bounce" />
-      </motion.a>
+        <svg
+          className="h-6 w-6 animate-scroll-bounce"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          aria-hidden
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+          />
+        </svg>
+      </a>
     </section>
   );
 }

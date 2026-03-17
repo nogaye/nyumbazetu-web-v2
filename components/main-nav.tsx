@@ -4,14 +4,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import {
-  dropdownVariants,
-  staggerContainer,
-  staggerChild,
-  tweenTransition,
-} from "@/lib/motion";
 import {
   Bars3Icon,
   ChevronDownIcon,
@@ -22,8 +15,6 @@ import {
   BuildingOffice2Icon,
   BanknotesIcon,
   GlobeAltIcon,
-  BookOpenIcon,
-  DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 import {
   Sheet,
@@ -251,136 +242,117 @@ export function MainNav() {
                   }
                   aria-expanded={openDropdown === item.label}
                 >
-                  <motion.span
-                    className="inline-block"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
+                  <span className="inline-block transition-transform duration-150 hover:scale-[1.02] active:scale-[0.98]">
                     {item.label}
-                  </motion.span>
+                  </span>
                 </Link>
-                {(item.children || item.childGroups) && (
-                  <AnimatePresence>
-                    {openDropdown === item.label && (
-                      <motion.div
-                        className={cn(
-                          "absolute left-0 mt-1.5 z-50",
-                          item.childGroups ? "w-80 min-w-[320px]" : "w-80",
-                        )}
-                        initial="closed"
-                        animate="open"
-                        exit="closed"
-                        variants={dropdownVariants}
-                        transition={tweenTransition}
-                      >
-                        <div className="bg-white dark:bg-slate-900 rounded-xl shadow-dropdown border border-slate-200/90 dark:border-slate-700/90 overflow-hidden">
-                          {item.childGroups ? (
-                            <nav
-                              className="py-2"
-                              aria-label="Features by category"
-                            >
-                              {item.childGroups.map((grp) => {
-                                const isExpanded = expandedFeatureGroups.has(
-                                  grp.groupId,
-                                );
-                                return (
-                                  <div
-                                    key={grp.groupId}
-                                    className="border-b border-slate-100 dark:border-slate-800 last:border-b-0"
-                                  >
-                                    <button
-                                      type="button"
-                                      onClick={(e) => {
-                                        e.preventDefault();
-                                        toggleFeatureGroup(grp.groupId);
-                                      }}
-                                      className="flex w-full items-center justify-between gap-3 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
-                                      aria-expanded={isExpanded}
-                                      aria-controls={`nav-feature-group-${grp.groupId}`}
-                                    >
-                                      <span>{grp.groupLabel}</span>
-                                      <ChevronDownIcon
-                                        className={cn(
-                                          "h-4 w-4 flex-shrink-0 transition-transform duration-200",
-                                          isExpanded
-                                            ? "rotate-0"
-                                            : "-rotate-90",
-                                        )}
-                                        aria-hidden
-                                      />
-                                    </button>
-                                    <div
-                                      id={`nav-feature-group-${grp.groupId}`}
-                                      role="region"
-                                      aria-label={`${grp.groupLabel} features`}
-                                      className={cn(
-                                        "overflow-hidden transition-[max-height] duration-200 ease-out",
-                                        isExpanded
-                                          ? "max-h-[500px]"
-                                          : "max-h-0",
-                                      )}
-                                    >
-                                      <ul className="space-y-1 pb-3 pt-1">
-                                        {grp.items.map((child) => {
-                                          const Icon = child.icon ?? null;
-                                          return (
-                                            <li key={child.href}>
-                                              <Link
-                                                href={child.href}
-                                                className="flex items-start gap-3 py-2.5 px-5 pl-6 text-sm text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group/item"
-                                              >
-                                                {Icon && (
-                                                  <Icon className="h-4 w-4 text-slate-400 dark:text-slate-500 group-hover/item:text-primary transition-colors flex-shrink-0 mt-0.5" />
-                                                )}
-                                                <span className="font-medium break-words min-w-0">
-                                                  {child.label}
-                                                </span>
-                                              </Link>
-                                            </li>
-                                          );
-                                        })}
-                                      </ul>
-                                    </div>
-                                  </div>
-                                );
-                              })}
-                            </nav>
-                          ) : (
-                            item.children?.map((child) => {
-                              const Icon =
-                                "icon" in child && child.icon
-                                  ? child.icon
-                                  : null;
+                {(item.children || item.childGroups) &&
+                  openDropdown === item.label && (
+                    <div
+                      className={cn(
+                        "absolute left-0 z-50 mt-1.5 animate-[fadeIn_0.15s_ease-out]",
+                        item.childGroups ? "w-80 min-w-[320px]" : "w-80",
+                      )}
+                    >
+                      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-dropdown border border-slate-200/90 dark:border-slate-700/90 overflow-hidden">
+                        {item.childGroups ? (
+                          <nav
+                            className="py-2"
+                            aria-label="Features by category"
+                          >
+                            {item.childGroups.map((grp) => {
+                              const isExpanded = expandedFeatureGroups.has(
+                                grp.groupId,
+                              );
                               return (
-                                <motion.div
-                                  key={child.href}
-                                  whileHover={{ x: 4 }}
-                                  transition={tweenTransition}
+                                <div
+                                  key={grp.groupId}
+                                  className="border-b border-slate-100 dark:border-slate-800 last:border-b-0"
                                 >
-                                  <Link
-                                    href={child.href}
-                                    className="block px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors duration-200 group/item"
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      toggleFeatureGroup(grp.groupId);
+                                    }}
+                                    className="flex w-full items-center justify-between gap-3 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                                    aria-expanded={isExpanded}
+                                    aria-controls={`nav-feature-group-${grp.groupId}`}
                                   >
-                                    <div className="flex items-start gap-3">
-                                      {Icon && (
-                                        <Icon className="h-5 w-5 text-slate-400 dark:text-slate-500 group-hover/item:text-primary transition-colors duration-200 flex-shrink-0 mt-0.5" />
+                                    <span>{grp.groupLabel}</span>
+                                    <ChevronDownIcon
+                                      className={cn(
+                                        "h-4 w-4 flex-shrink-0 transition-transform duration-200",
+                                        isExpanded ? "rotate-0" : "-rotate-90",
                                       )}
-                                      <div className="flex-1 min-w-0">
-                                        <div className="font-medium text-slate-900 dark:text-slate-50 group-hover/item:text-primary transition-colors duration-200">
-                                          {child.label}
-                                        </div>
+                                      aria-hidden
+                                    />
+                                  </button>
+                                  <div
+                                    id={`nav-feature-group-${grp.groupId}`}
+                                    role="region"
+                                    aria-label={`${grp.groupLabel} features`}
+                                    className={cn(
+                                      "overflow-hidden transition-[max-height] duration-200 ease-out",
+                                      isExpanded ? "max-h-[500px]" : "max-h-0",
+                                    )}
+                                  >
+                                    <ul className="space-y-1 pb-3 pt-1">
+                                      {grp.items.map((child) => {
+                                        const Icon = child.icon ?? null;
+                                        return (
+                                          <li key={child.href}>
+                                            <Link
+                                              href={child.href}
+                                              className="flex items-start gap-3 py-2.5 px-5 pl-6 text-sm text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group/item"
+                                            >
+                                              {Icon && (
+                                                <Icon className="h-4 w-4 text-slate-400 dark:text-slate-500 group-hover/item:text-primary transition-colors flex-shrink-0 mt-0.5" />
+                                              )}
+                                              <span className="font-medium break-words min-w-0">
+                                                {child.label}
+                                              </span>
+                                            </Link>
+                                          </li>
+                                        );
+                                      })}
+                                    </ul>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </nav>
+                        ) : (
+                          item.children?.map((child) => {
+                            const Icon =
+                              "icon" in child && child.icon ? child.icon : null;
+                            return (
+                              <div
+                                key={child.href}
+                                className="transition-transform duration-150 hover:translate-x-1"
+                              >
+                                <Link
+                                  href={child.href}
+                                  className="block px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors duration-200 group/item"
+                                >
+                                  <div className="flex items-start gap-3">
+                                    {Icon && (
+                                      <Icon className="h-5 w-5 text-slate-400 dark:text-slate-500 group-hover/item:text-primary transition-colors duration-200 flex-shrink-0 mt-0.5" />
+                                    )}
+                                    <div className="flex-1 min-w-0">
+                                      <div className="font-medium text-slate-900 dark:text-slate-50 group-hover/item:text-primary transition-colors duration-200">
+                                        {child.label}
                                       </div>
                                     </div>
-                                  </Link>
-                                </motion.div>
-                              );
-                            })
-                          )}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                )}
+                                  </div>
+                                </Link>
+                              </div>
+                            );
+                          })
+                        )}
+                      </div>
+                    </div>
+                  )}
               </div>
             ))}
           </div>
@@ -443,14 +415,9 @@ export function MainNav() {
           <SheetHeader>
             <SheetTitle>Menu</SheetTitle>
           </SheetHeader>
-          <motion.div
-            className="flex flex-col space-y-1 p-6 flex-1 overflow-y-auto"
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-          >
+          <div className="flex flex-1 flex-col space-y-1 overflow-y-auto p-6">
             {navItems.map((item) => (
-              <motion.div key={item.label} variants={staggerChild}>
+              <div key={item.label}>
                 {item.children || item.childGroups ? (
                   <>
                     <button
@@ -547,9 +514,9 @@ export function MainNav() {
                     {item.label}
                   </Link>
                 )}
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
           <div className="pt-4 space-y-2 border-t border-slate-200 dark:border-slate-800">
             <div className="flex justify-center pb-2">
               <ThemeToggle />

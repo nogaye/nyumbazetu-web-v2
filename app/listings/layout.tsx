@@ -1,7 +1,6 @@
 /**
- * Listings section layout: no extra wrapper; the root LayoutShell already renders
- * ListingsHeader + ListingsFooter for /listings/**. This layout only wraps children
- * so nested routes (portal, search, etc.) share the same shell.
+ * Listings section layout: AuthProvider lives in LayoutShell around ListingsHeader + main
+ * so the header and portal routes share one context; marketing routes skip that cost.
  */
 
 export default function ListingsLayout({

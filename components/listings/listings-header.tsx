@@ -3,15 +3,13 @@
 /**
  * Listings marketplace header: single clean row — logo and actions.
  * Saved and Manage listings only when signed in; Sign in only when signed out.
- * Uses framer-motion for a subtle entrance animation.
+ * Plain header (no motion lib) for smaller JS on listings routes.
  */
 
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { Heart, PlusCircle, User, Menu, ArrowLeft } from "lucide-react";
-import { fadeIn } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -29,11 +27,7 @@ export function ListingsHeader() {
   const signedIn = !!user;
 
   return (
-    <motion.header
-      initial={false}
-      animate="visible"
-      variants={fadeIn}
-      transition={{ duration: 0.25 }}
+    <header
       className="sticky top-0 z-50 w-full border-b border-slate-200/90 bg-white/98 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/98"
       role="banner"
     >
@@ -162,6 +156,6 @@ export function ListingsHeader() {
           </div>
         </SheetContent>
       </Sheet>
-    </motion.header>
+    </header>
   );
 }

@@ -46,10 +46,11 @@ export function IntercomProvider() {
 
   if (!INTERCOM_APP_ID) return null;
 
+  /** lazyOnload defers chat widget until after load so it does not compete with LCP/INP. */
   return (
     <Script
       id="intercom-script"
-      strategy="afterInteractive"
+      strategy="lazyOnload"
       src={`https://widget.intercom.io/widget/${INTERCOM_APP_ID}`}
     />
   );

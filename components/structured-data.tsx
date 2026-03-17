@@ -40,6 +40,7 @@ export function StructuredData() {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": "https://www.nyumbazetu.com/#organization",
     name: "Nyumba Zetu",
     url: "https://www.nyumbazetu.com",
     logo: "https://www.nyumbazetu.com/logo.svg",
@@ -117,8 +118,31 @@ export function StructuredData() {
     })),
   };
 
+  /** WebSite + sitelinks search box hint for Google rich results. */
+  const webSiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Nyumba Zetu",
+    url: "https://www.nyumbazetu.com",
+    description:
+      "Property management software for Kenya: M-Pesa rent collection, accounting, and tenant management.",
+    publisher: { "@id": "https://www.nyumbazetu.com/#organization" },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: "https://www.nyumbazetu.com/listings/search?search={search_term_string}",
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}

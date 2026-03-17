@@ -20,18 +20,21 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
     analytics.trackPageView(pathname, document.title);
   }, [pathname]);
 
+  /**
+   * Defers GA/Plausible until the browser is idle (or after timeout) so first interaction
+   * and paint are not delayed by analytics network and parse work.
+   */
   useEffect(() => {
-    // Initialize Google Analytics if measurement ID is provided
-    const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
-    if (gaId && typeof window !== "undefined") {
-      // Load GA4 script
-      const script1 = document.createElement("script");
-      script1.async = true;
-      script1.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
-      document.head.appendChild(script1);
+    const loadAnalytics = () => {
+      const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+      if (gaId && typeof window !== "undefined") {
+        const script1 = document.createElement("script");
+        script1.async = true;
+        script1.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+        document.head.appendChild(script1);
 
-      const script2 = document.createElement("script");
-      script2.innerHTML = `
+        const script2 = document.createElement("script");
+        script2.innerHTML = `
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -39,18 +42,34 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
           page_path: window.location.pathname,
         });
       `;
-      document.head.appendChild(script2);
-    }
+        document.head.appendChild(script2);
+      }
 
-    // Initialize Plausible Analytics if domain is provided
-    const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
-    if (plausibleDomain && typeof window !== "undefined") {
-      const script = document.createElement("script");
-      script.defer = true;
-      script.setAttribute("data-domain", plausibleDomain);
-      script.src = "https://plausible.io/js/script.js";
-      document.head.appendChild(script);
+      const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
+      if (plausibleDomain && typeof window !== "undefined") {
+        const script = document.createElement("script");
+        script.defer = true;
+        script.setAttribute("data-domain", plausibleDomain);
+        script.src = "https://plausible.io/js/script.js";
+        document.head.appendChild(script);
+      }
+    };
+
+    if (typeof window === "undefined") return;
+    let idleHandle: number | undefined;
+    /** Browser setTimeout returns number; Node types use Timeout — use number for DOM. */
+    let timeoutHandle: number | undefined;
+    if (typeof window.requestIdleCallback === "function") {
+      idleHandle = window.requestIdleCallback(loadAnalytics, { timeout: 6000 });
+    } else {
+      timeoutHandle = window.setTimeout(loadAnalytics, 3500) as number;
     }
+    return () => {
+      if (idleHandle != null && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleHandle);
+      }
+      if (timeoutHandle != null) clearTimeout(timeoutHandle);
+    };
   }, []);
 
   return <>{children}</>;

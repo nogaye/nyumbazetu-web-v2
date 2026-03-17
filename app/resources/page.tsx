@@ -1,6 +1,7 @@
 /**
  * Resources hub page: lists guides, case studies, blog posts, and webinars with filter
- * by type. Each card links to app/resources/[slug] for the full article.
+ * by type. Each card links to app/resources/[slug] for the full article. SEO: metadata,
+ * Open Graph, ItemList JSON-LD.
  */
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
@@ -13,17 +14,43 @@ import {
 } from "@/components/ui/card";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import Link from "next/link";
+import Image from "next/image";
 import {
   getResourcesByFilter,
   type ResourceFilter,
   type ResourceItem,
 } from "@/lib/resources/content";
 import { ResourcesFilterBar } from "@/components/resources-filter-bar";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: "Resources | Nyumba Zetu",
+const SITE_URL = "https://www.nyumbazetu.com";
+
+export const metadata: Metadata = {
+  title: "Resources",
   description:
-    "Property management insights, guides, case studies, and webinars for Kenyan landlords and property managers.",
+    "Guides, case studies, blog posts, and webinars on property management in Kenya: rent collection, M-Pesa, HOA service charges, KRA eTIMS, and accounting.",
+  keywords: [
+    "property management resources Kenya",
+    "rent collection guide",
+    "HOA case study",
+    "KRA audit property manager",
+    "property accounting webinar",
+  ],
+  alternates: { canonical: `${SITE_URL}/resources` },
+  openGraph: {
+    title: "Resources | Nyumba Zetu",
+    description:
+      "Guides, case studies, blog posts, and webinars on property management in Kenya.",
+    url: `${SITE_URL}/resources`,
+    type: "website",
+    siteName: "Nyumba Zetu",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Resources | Nyumba Zetu",
+    description:
+      "Guides, case studies, blog posts, and webinars on property management in Kenya.",
+  },
 };
 
 /** Valid type search param; maps to ResourceFilter. */
@@ -48,6 +75,23 @@ interface PageProps {
   searchParams: Promise<{ type?: string }>;
 }
 
+/** Builds ItemList JSON-LD for the current resource list (SEO). */
+function buildItemListJsonLd(resources: ResourceItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Property management resources for Kenya",
+    description: "Guides, case studies, blog posts, and webinars for Kenyan landlords and property managers.",
+    numberOfItems: resources.length,
+    itemListElement: resources.map((r, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `${SITE_URL}/resources/${r.slug}`,
+      name: r.title,
+    })),
+  };
+}
+
 export default async function ResourcesPage({ searchParams }: PageProps) {
   const { type: typeParam } = await searchParams;
   const filter: ResourceFilter =
@@ -55,9 +99,14 @@ export default async function ResourcesPage({ searchParams }: PageProps) {
       ? (typeParam as ResourceFilter)
       : "All";
   const resources = getResourcesByFilter(filter);
+  const itemListJsonLd = buildItemListJsonLd(resources);
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
       <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
         <SectionHeader
           title="Property management resources for the Kenyan market"
@@ -96,24 +145,44 @@ export default async function ResourcesPage({ searchParams }: PageProps) {
   );
 }
 
-/** Renders a single resource card with type, title, description, date, and Read more link. */
+/** Renders a single resource card with optional image, type, title, description, date, and Read more link. */
 function ResourceCard({ resource }: { resource: ResourceItem }) {
   return (
-    <Card className="h-full hover:shadow-lg transition-shadow">
+    <Card className="h-full hover:shadow-lg transition-shadow overflow-hidden">
+      {resource.image && (
+        <Link href={`/resources/${resource.slug}`} className="block relative aspect-[16/9] w-full bg-slate-100 dark:bg-slate-800">
+          <Image
+            src={resource.image.src}
+            alt={resource.image.alt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </Link>
+      )}
       <CardHeader>
         <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
           {resource.type}
         </div>
-        <CardTitle className="text-xl">{resource.title}</CardTitle>
+        <CardTitle className="text-xl">
+          <Link
+            href={`/resources/${resource.slug}`}
+            className="text-slate-900 dark:text-slate-50 hover:text-primary transition-colors"
+          >
+            {resource.title}
+          </Link>
+        </CardTitle>
         <CardDescription>{resource.description}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-          {new Date(resource.date).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
+          <time dateTime={resource.date}>
+            {new Date(resource.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </time>
         </div>
         <Link
           href={`/resources/${resource.slug}`}

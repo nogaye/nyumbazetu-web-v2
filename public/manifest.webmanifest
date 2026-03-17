@@ -1,0 +1,17 @@
+{
+  "name": "Nyumba Zetu — Property Management Software Kenya",
+  "short_name": "Nyumba Zetu",
+  "description": "Rent collection, accounting, and tenant management for Kenya.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

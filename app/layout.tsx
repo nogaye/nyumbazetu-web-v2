@@ -1,6 +1,5 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Syne } from "next/font/google";
-import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { LayoutShell } from "@/components/layout-shell";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -8,7 +7,7 @@ import { ErrorBoundary } from "@/components/error-boundary";
 import { StructuredData } from "@/components/structured-data";
 import { AnalyticsProvider } from "@/components/analytics-provider";
 import { IntercomProvider } from "@/components/intercom-provider";
-import { AuthProvider } from "@/components/auth/auth-provider";
+import { DeferVercelAnalytics } from "@/components/defer-vercel-analytics";
 
 /** Body font; display: swap avoids invisible text (FOIT) and improves FCP/LCP. */
 const geistSans = Geist({
@@ -23,12 +22,13 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-/** Display font for marketing headlines; distinctive and confident. Swap prevents FOIT. */
+/** Display font: only weights used site-wide (semibold/bold) to cut font bytes and speed FCP. */
 const syne = Syne({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["600", "700"],
   display: "swap",
+  adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {
@@ -88,7 +88,24 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/logo.svg",
+    apple: "/logo.svg",
   },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: "Nyumba Zetu",
+    statusBarStyle: "default",
+  },
+};
+
+/** Mobile browser chrome theming and tap-target sizing for Lighthouse / PSI. */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
 };
 
 export default function RootLayout({
@@ -106,16 +123,14 @@ export default function RootLayout({
         </a>
         <StructuredData />
         <ThemeProvider>
-          <AuthProvider>
           <AnalyticsProvider>
             <IntercomProvider />
             <ErrorBoundary>
               <LayoutShell>{children}</LayoutShell>
             </ErrorBoundary>
           </AnalyticsProvider>
-          </AuthProvider>
         </ThemeProvider>
-        <Analytics />
+        <DeferVercelAnalytics />
       </body>
     </html>
   );

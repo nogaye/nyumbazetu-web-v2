@@ -1,6 +1,6 @@
 /**
  * Listings marketplace homepage: search hero, featured listings,
- * why list with us, trust strip, and CTA band.
+ * why list with us, marketplace SEO strategy block, trust strip, and CTA band.
  * Served at /listings; uses the listings layout shell.
  */
 
@@ -12,6 +12,7 @@ import { ListingCard } from "@/components/listings/ListingCard";
 import { ListingsCtaBand } from "@/components/listings/listings-cta-band";
 import { KenyaOutlineIllustration, AfricanPatternBackground } from "@/components/design-system";
 import { ListingsAnimatedSection } from "@/components/listings/listings-animated-section";
+import { ListingsMarketplaceSeoSection } from "@/components/listings/listings-marketplace-seo-section";
 import { ListingCardSkeleton } from "@/components/listings/ListingCardSkeleton";
 import { Button } from "@/components/ui/button";
 import { fetchListings } from "@/lib/listings/supabase-helpers";
@@ -128,6 +129,11 @@ export default function ListingsHomePage() {
               </p>
             </div>
           </div>
+        </ListingsAnimatedSection>
+
+        {/* Marketplace SEO: Zillow / Property24-style programmatic discovery */}
+        <ListingsAnimatedSection aria-labelledby="marketplace-seo-heading" className="mb-16">
+          <ListingsMarketplaceSeoSection />
         </ListingsAnimatedSection>
 
         {/* Marketplace trust strip */}

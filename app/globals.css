@@ -169,6 +169,27 @@
   animation: hero-mesh 20s ease-in-out infinite;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes fadeIn {
+    from,
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
 /* Subtle grain overlay for premium texture (optional, use .grain on a pseudo-element) */
 .grain::before {
   content: "";
