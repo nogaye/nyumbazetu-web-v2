@@ -7,3 +7,4 @@ export { AfricanPatternBackground } from "./african-pattern-background";
 export { SavannahGradient } from "./savannah-gradient";
 export { SectionDividerPattern } from "./section-divider-pattern";
 export { KenyaOutlineIllustration } from "./kenya-outline-illustration";
+export { SeoBlueprintGrid } from "./seo-blueprint-grid";

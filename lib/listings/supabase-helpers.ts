@@ -156,8 +156,11 @@ async function fetchListingsFromSupabase(
     query = query.ilike('city', `%${filters.city}%`);
   }
 
-  if (filters.area) {
-    query = query.ilike('area', `%${filters.area}%`);
+  if (filters.areaOr && filters.areaOr.length > 0) {
+    const orClause = filters.areaOr.map((a) => `area.ilike.%${a}%`).join(",");
+    query = query.or(orClause);
+  } else if (filters.area) {
+    query = query.ilike("area", `%${filters.area}%`);
   }
 
   if (filters.minPrice !== undefined) {

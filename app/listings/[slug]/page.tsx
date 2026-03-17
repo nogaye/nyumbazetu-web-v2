@@ -29,6 +29,10 @@ import {
   LISTING_TYPE_LABELS,
   ListingPurpose,
 } from "@/lib/listings/enums";
+import {
+  APARTMENTS_RENT_SEO_HUBS,
+  resolveApartmentsRentHubForListing,
+} from "@/lib/listings/apartments-rent-seo-hubs";
 
 async function getListing(slug: string): Promise<Property | null> {
   return fetchPropertyBySlug(slug);
@@ -144,32 +148,68 @@ export default async function ListingDetailPage({
         ? "Request to book"
         : "Schedule a viewing";
 
-  /** JSON-LD for SEO: Place + Offer. */
+  const listingCanonicalUrl = `https://www.nyumbazetu.com/listings/${slug}`;
+  const rentHubSlug = resolveApartmentsRentHubForListing(
+    listing.city,
+    listing.area,
+    listing.property_type,
+    listing.listing_purpose
+  );
+  const rentHubConfig = rentHubSlug ? APARTMENTS_RENT_SEO_HUBS[rentHubSlug] : null;
+  /** Short neighbourhood/city fragment for hub breadcrumb copy (non-Nairobi hubs). */
+  const rentHubAreaShort = rentHubConfig
+    ? rentHubConfig.h1.replace(/^Apartments for rent in /i, "").replace(/, Nairobi$/i, "")
+    : "";
+  const rentHubCrumb = rentHubConfig
+    ? rentHubConfig.slug === "nairobi"
+      ? "Nairobi apartments for rent"
+      : `Apartments for rent in ${rentHubAreaShort}`
+    : null;
+
+  /**
+   * @graph bundles Product (indexable listing entity) + Place for rich results,
+   * following common marketplace patterns (Zillow-style listing URLs as first-class SEO pages).
+   */
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Place",
-    name: listing.title,
-    description: listing.description,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: listing.area,
-      addressRegion: listing.city,
-    },
-    ...(listing.latitude != null &&
-      listing.longitude != null && {
-        geo: {
-          "@type": "GeoCoordinates",
-          latitude: listing.latitude,
-          longitude: listing.longitude,
+    "@graph": [
+      {
+        "@type": "Product",
+        "@id": `${listingCanonicalUrl}#product`,
+        name: listing.title,
+        description: listing.description,
+        url: listingCanonicalUrl,
+        image: propertyImages.map((img) => img.url),
+        category: propertyTypeLabel,
+        offers: {
+          "@type": "Offer",
+          url: listingCanonicalUrl,
+          price: displayPrice,
+          priceCurrency: currency,
+          availability: "https://schema.org/InStock",
         },
-      }),
-    image: propertyImages.map((img) => img.url),
-    offers: {
-      "@type": "Offer",
-      price: displayPrice,
-      priceCurrency: currency,
-      availability: "https://schema.org/InStock",
-    },
+      },
+      {
+        "@type": "Place",
+        "@id": `${listingCanonicalUrl}#place`,
+        name: listing.title,
+        description: listing.description,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: listing.area,
+          addressRegion: listing.city,
+        },
+        ...(listing.latitude != null &&
+          listing.longitude != null && {
+            geo: {
+              "@type": "GeoCoordinates",
+              latitude: listing.latitude,
+              longitude: listing.longitude,
+            },
+          }),
+        image: propertyImages.map((img) => img.url),
+      },
+    ],
   };
 
   return (
@@ -192,15 +232,31 @@ export default async function ListingDetailPage({
               </Link>
             </li>
             <li aria-hidden>/</li>
-            <li>
-              <Link
-                href={`/listings/search?city=${encodeURIComponent(listing.city)}`}
-                className="transition-colors hover:text-slate-900 dark:hover:text-slate-100"
-              >
-                {listing.city}
-              </Link>
-            </li>
-            <li aria-hidden>/</li>
+            {rentHubConfig && rentHubCrumb != null ? (
+              <>
+                <li>
+                  <Link
+                    href={rentHubConfig.pathname}
+                    className="transition-colors hover:text-slate-900 dark:hover:text-slate-100"
+                  >
+                    {rentHubCrumb}
+                  </Link>
+                </li>
+                <li aria-hidden>/</li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link
+                    href={`/listings/search?city=${encodeURIComponent(listing.city)}`}
+                    className="transition-colors hover:text-slate-900 dark:hover:text-slate-100"
+                  >
+                    {listing.city}
+                  </Link>
+                </li>
+                <li aria-hidden>/</li>
+              </>
+            )}
             <li className="font-medium text-slate-900 dark:text-slate-50" aria-current="page">
               <span className="line-clamp-1">{listing.title}</span>
             </li>

@@ -79,6 +79,11 @@ export type SortOption =
 export interface ListingFilters {
   city?: string;
   area?: string;
+  /**
+   * Match listings whose `area` contains any of these substrings (OR). Used for SEO hubs
+   * that span adjacent neighbourhoods (e.g. Ruaka + Runda). When set, `area` is ignored for the query.
+   */
+  areaOr?: string[];
   minPrice?: number;
   maxPrice?: number;
   bedrooms?: number | "3+";

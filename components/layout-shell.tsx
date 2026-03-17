@@ -3,8 +3,8 @@
 /**
  * Layout shell switcher: renders the main marketing shell (MainNav + SiteFooter) or
  * the listings marketplace shell (ListingsHeader + ListingsFooter) based on pathname.
- * Used in the root layout so /listings/** gets a dedicated header/footer and the
- * rest of the site keeps the standard marketing nav and footer.
+ * Used in the root layout so /listings/** and /apartments-for-rent-* SEO hubs share
+ * the listings chrome; the rest of the site keeps the standard marketing nav and footer.
  * Listings shell wraps header + main with AuthProvider so ListingsHeader and portal AuthGuard share context.
  */
 
@@ -20,6 +20,9 @@ import { AuthProvider } from "@/components/auth/auth-provider";
 /** Path prefix for routes that use the listings marketplace shell. */
 const LISTINGS_PREFIX = "/listings";
 
+/** Regex: programmatic apartment-rent SEO hubs (same chrome as listings). */
+const APARTMENTS_RENT_SEO = /^\/apartments-for-rent-/;
+
 /** Path prefix for auth pages; these use a full-viewport layout without main nav/footer. */
 const AUTH_PREFIX = "/auth";
 
@@ -28,7 +31,9 @@ const AUTH_PREFIX = "/auth";
  */
 function useListingsShell(): boolean {
   const pathname = usePathname();
-  return pathname?.startsWith(LISTINGS_PREFIX) ?? false;
+  if (!pathname) return false;
+  if (pathname.startsWith(LISTINGS_PREFIX)) return true;
+  return APARTMENTS_RENT_SEO.test(pathname);
 }
 
 /**

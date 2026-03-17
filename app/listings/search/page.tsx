@@ -11,6 +11,7 @@ import { ListingCard } from "@/components/listings/ListingCard";
 import { ListingCardSkeleton } from "@/components/listings/ListingCardSkeleton";
 import { ActiveFilterChips } from "@/components/listings/ActiveFilterChips";
 import { ListingsCtaBand } from "@/components/listings/listings-cta-band";
+import { ListingsSearchSeoHubsStrip } from "@/components/listings/listings-search-seo-hubs-strip";
 import { Button } from "@/components/ui/button";
 import { fetchListings, parseFilters } from "@/lib/listings/supabase-helpers";
 import { ListingFilters } from "@/lib/listings/types";
@@ -78,6 +79,7 @@ async function ListingsSearchContent({
         currentSearch={filters.search ?? ""}
         total={total}
       />
+      <ListingsSearchSeoHubsStrip />
 
       <div className="mx-auto flex max-w-[1600px] flex-col lg:flex-row">
         <ListingsFilterBar filters={filters} layout="sidebar" />

@@ -1,6 +1,27 @@
 import type { NextConfig } from "next";
+import { APARTMENTS_RENT_HUB_SLUGS } from "./lib/listings/apartment-rent-hub-paths";
+
+/**
+ * SEO hub slugs expanded at build time: hyphen public URLs rewrite to /apartments-for-rent/[hub].
+ */
+const apartmentRentRewrites = APARTMENTS_RENT_HUB_SLUGS.map((hub) => ({
+  source: `/apartments-for-rent-${hub}`,
+  destination: `/apartments-for-rent/${hub}`,
+}));
+
+const apartmentRentRedirects = APARTMENTS_RENT_HUB_SLUGS.map((hub) => ({
+  source: `/apartments-for-rent/${hub}`,
+  destination: `/apartments-for-rent-${hub}`,
+  permanent: true as const,
+}));
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return apartmentRentRedirects;
+  },
+  async rewrites() {
+    return { beforeFiles: apartmentRentRewrites };
+  },
   poweredByHeader: false,
   /** Security and cache hints for Lighthouse Best Practices / performance. */
   async headers() {

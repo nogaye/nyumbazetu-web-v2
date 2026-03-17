@@ -3,11 +3,12 @@ import { getAllFeatureSlugs } from '@/lib/features'
 import { getAllListingSlugs } from '@/lib/listings/supabase-helpers'
 import { getAllBlogSlugs } from '@/lib/blogs/content'
 import { getAllResourceSlugs } from '@/lib/resources/content'
+import { APARTMENTS_RENT_HUB_SLUGS } from '@/lib/listings/apartments-rent-seo-hubs'
 
 /**
  * Generates the sitemap for www.nyumbazetu.com: static marketing/solution pages,
  * SEO pillar pages, feature pages, blog posts, partnership pages, and dynamic
- * listing detail URLs (when Supabase is available).
+ * apartment-rent SEO hubs, listing detail URLs (when Supabase is available).
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.nyumbazetu.com'
@@ -41,6 +42,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
+  }))
+
+  /** Location-intent apartment rent hubs (Zillow/Property24-style URLs). */
+  const apartmentRentHubEntries: MetadataRoute.Sitemap = APARTMENTS_RENT_HUB_SLUGS.map((hub) => ({
+    url: `${baseUrl}/apartments-for-rent-${hub}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily' as const,
+    priority: 0.85,
   }))
 
   /** Public listing detail URLs for SEO; empty if DB unavailable. */
@@ -95,7 +104,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route === '' ? 1 : 0.8,
   }))
 
-  return [...staticEntries, ...blogEntries, ...resourceEntries, ...listingEntries]
+  return [...staticEntries, ...apartmentRentHubEntries, ...blogEntries, ...resourceEntries, ...listingEntries]
 }
 
 
