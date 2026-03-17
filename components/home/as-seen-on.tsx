@@ -278,6 +278,7 @@ export function AsSeenOn() {
                           className="w-full h-full object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-all duration-300"
                           sizes="(max-width: 640px) 150px, 150px"
                           loading="lazy"
+                          quality={70}
                         />
                       ) : (
                         <span className="text-white text-sm font-bold text-center leading-tight opacity-90 hover:opacity-100 transition-opacity duration-300 tracking-wide uppercase whitespace-nowrap px-2">

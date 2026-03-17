@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
@@ -48,12 +47,8 @@ export function Integrations() {
       />
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6 lg:gap-8 items-center">
         {integrations.map((integration, idx) => (
-          <motion.div
+          <div
             key={integration.name}
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: idx * 0.1 }}
             className="h-24 flex items-center justify-center bg-slate-50 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-primary dark:hover:border-primary hover:shadow-sm transition-all duration-200 p-4"
           >
             <div className="w-full h-full flex flex-col items-center justify-center gap-2">
@@ -64,13 +59,14 @@ export function Integrations() {
                   width={64}
                   height={64}
                   className="object-contain w-full h-full"
+                  quality={75}
                 />
               </div>
               <span className="text-slate-600 dark:text-slate-400 font-medium text-xs text-center">
                 {integration.name}
               </span>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
       <div className="flex justify-center mt-8">

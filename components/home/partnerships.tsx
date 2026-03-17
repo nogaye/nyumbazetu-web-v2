@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
@@ -45,12 +44,8 @@ export function Partnerships() {
       />
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {partnerships.map((partner, idx) => (
-          <motion.div
+          <div
             key={partner.name}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: idx * 0.1 }}
           >
             <Card className="h-full hover:shadow-lg transition-shadow duration-200">
               <CardContent className="p-6 flex flex-col items-center text-center">
@@ -62,6 +57,7 @@ export function Partnerships() {
                       width={80}
                       height={80}
                       className="object-contain w-full h-full"
+                      quality={75}
                     />
                   ) : (
                     <div className="w-20 h-20 bg-slate-200 dark:bg-slate-700 rounded flex items-center justify-center">
@@ -85,7 +81,7 @@ export function Partnerships() {
                 </Button>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         ))}
       </div>
       <div className="text-center mt-8">
