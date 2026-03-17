@@ -3,6 +3,7 @@
  * with metadata and HTML content. Supports static generation via generateStaticParams.
  */
 import { Section } from "@/components/section";
+import { ArticleContent } from "@/components/article-content";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getAllBlogSlugs, getBlogPostBySlug } from "@/lib/blogs/content";
@@ -48,6 +49,9 @@ export default async function BlogPostPage({ params }: PageProps) {
             <ArrowLeftIcon className="h-4 w-4" />
             Back to blog
           </Link>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-3">
+            Blog post
+          </p>
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-50 mb-4">
             {post.title}
           </h1>
@@ -71,12 +75,9 @@ export default async function BlogPostPage({ params }: PageProps) {
       </Section>
 
       <Section>
-        <article className="max-w-3xl mx-auto">
-          <div
-            className="prose prose-slate dark:prose-invert prose-lg max-w-none prose-headings:font-bold prose-a:text-primary prose-a:no-underline hover:prose-a:underline"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
-        </article>
+        <div className="max-w-6xl mx-auto">
+          <ArticleContent html={post.content} title="On this page" />
+        </div>
       </Section>
 
       <Section className="bg-slate-50 dark:bg-slate-900">

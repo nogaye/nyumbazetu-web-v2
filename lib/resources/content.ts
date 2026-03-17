@@ -39,6 +39,168 @@ export interface ResourceItem {
 /** All resources, newest first. */
 export const RESOURCES: ResourceItem[] = [
   {
+    slug: "agentic-ai-for-property-management-kenya",
+    type: "Guide",
+    title: "Agentic AI for property management in Kenya: where it helps and where it should not act alone",
+    description:
+      "A practical 2026 guide to agentic AI in property operations: task planning, workflows, approvals, and the controls every Kenyan manager should keep.",
+    date: "2026-03-10",
+    author: "Nyumba Zetu",
+    image: {
+      src: "/images/features/feature-tasks.jpg",
+      alt: "Agentic AI workflow planning and task automation for property managers in Kenya",
+    },
+    keywords: [
+      "agentic AI property management",
+      "AI workflows Kenya",
+      "real estate AI",
+      "property operations automation",
+    ],
+    content: `
+      <p>Agentic AI is moving beyond chatbots. In property management, it can help coordinate multi-step work such as chasing arrears, creating maintenance tickets, routing approvals, and drafting tenant messages. The best use cases are the ones that save time but still keep humans in charge of money, legal decisions, and sensitive disputes.</p>
+
+      <h2>Where agentic AI is useful</h2>
+      <p>Think of repeatable workflows with clear inputs and outputs: identify overdue invoices, draft reminders, open a task, assign it to a team member, and escalate if there is no response. That is more valuable than asking a model to “manage the property” in the abstract.</p>
+
+      <h2>Where humans must stay involved</h2>
+      <p>Never let an automated system make final decisions about eviction, legal notices, deposits, refunds, or financial write-offs without review. The agent can prepare a recommendation, but a manager should approve the final action.</p>
+
+      <h2>How to implement safely</h2>
+      <ul>
+        <li><strong>Start with low-risk tasks</strong> — reminders, summaries, and task routing.</li>
+        <li><strong>Add approval gates</strong> — anything that affects tenants, money, or compliance should require a human sign-off.</li>
+        <li><strong>Keep logs</strong> — record what the agent did, what data it used, and who approved the result.</li>
+      </ul>
+
+      <h2>What current industry work suggests</h2>
+      <p>Recent coverage from firms like <a href="https://www.forbes.com/sites/deloitte/2026/01/21/how-agentic-physical-and-sovereign-ai-are-rewriting-the-rules-of-enterprise-innovation/" target="_blank" rel="noreferrer">Deloitte via Forbes</a> and <a href="https://aws.amazon.com/nova/act/" target="_blank" rel="noreferrer">AWS</a> shows that agentic AI is being used for real workflow automation, not just content generation. In real estate, that means practical gains when the workflow is defined and auditable. See also <a href="/features/tasks">task automation</a>, <a href="/features/communications">tenant communications</a>, and <a href="/request-demo">request a demo</a>.</p>
+    `,
+  },
+  {
+    slug: "ai-property-maintenance-predictive-approach-kenya",
+    type: "Blog",
+    title: "How AI can improve property maintenance planning in Kenya",
+    description:
+      "Use AI to spot maintenance patterns earlier, prioritise repairs, and reduce downtime—without replacing good inspections and vendor control.",
+    date: "2026-02-24",
+    author: "Nyumba Zetu",
+    image: {
+      src: "/images/features/feature-maintenance.jpg",
+      alt: "AI-assisted property maintenance planning and work order triage in Kenya",
+    },
+    keywords: [
+      "AI maintenance Kenya",
+      "predictive maintenance real estate",
+      "property repairs AI",
+      "work order automation",
+    ],
+    content: `
+      <p>Maintenance is one of the best places to apply AI in real estate because the data is structured enough to be useful: request type, property, frequency, cost, and resolution time. AI can help turn that history into better planning.</p>
+
+      <h2>What AI can do well</h2>
+      <p>AI can cluster recurring issues, identify properties with unusually high repair spend, and suggest preventive work before a small issue becomes an expensive outage. It can also summarise work order history so managers know what keeps failing.</p>
+
+      <h2>What AI cannot replace</h2>
+      <p>An AI model cannot inspect a leaking roof, verify electrical safety, or judge whether a vendor quote is fair without real context. Use it to assist planning, not to replace physical inspection or accountability.</p>
+
+      <h2>Best practice workflow</h2>
+      <p>Collect maintenance requests in one system, categorise them properly, and link them to cost and completion data. Over time, the pattern reveals whether a building needs preventive action. Nyumba Zetu’s <a href="/features/maintenance">maintenance tools</a>, <a href="/features/expense-vendor-management">vendor management</a>, and <a href="/features/reports">reports</a> are designed for that kind of visibility. <a href="/request-demo">Request a demo</a> to see the workflow.</p>
+    `,
+  },
+  {
+    slug: "ai-leasing-assistants-real-estate-kenya",
+    type: "Guide",
+    title: "AI leasing assistants for real estate teams in Kenya",
+    description:
+      "A guide to using AI for lead qualification, viewing scheduling, FAQs, and application follow-up while keeping the human sales touch where it matters.",
+    date: "2026-02-05",
+    author: "Nyumba Zetu",
+    image: {
+      src: "/images/features/feature-lease-applications.jpg",
+      alt: "AI leasing assistant for tenant applications and viewing follow-up in Kenya",
+    },
+    keywords: [
+      "AI leasing assistant",
+      "real estate lead qualification",
+      "tenant applications AI",
+      "property leasing automation",
+    ],
+    content: `
+      <p>Leasing teams spend a lot of time answering the same questions: availability, rent, parking, requirements, and viewing slots. An AI assistant can handle the repetitive part quickly so your team can focus on the leads most likely to convert.</p>
+
+      <h2>What to automate</h2>
+      <p>Use AI to answer FAQs, suggest available viewing times, collect basic application information, and summarise each lead before handoff. This reduces response delays and improves the applicant experience.</p>
+
+      <h2>What to keep manual</h2>
+      <p>Do not let automation approve applicants, change pricing without review, or make promises about lease terms. Final decisions should remain with a human leasing or property manager.</p>
+
+      <h2>Why this matters in practice</h2>
+      <p>Real estate prospects move quickly. A prompt, consistent response can be the difference between a signed lease and a lost lead. See <a href="/features/lease-applications">lease applications</a>, <a href="/features/crm">CRM</a>, and <a href="/request-demo">request a demo</a> to learn how Nyumba Zetu supports the full leasing journey.</p>
+    `,
+  },
+  {
+    slug: "ai-governance-for-property-teams",
+    type: "Blog",
+    title: "AI governance for property teams: policies, approvals, and audit trails",
+    description:
+      "Practical governance for real estate AI: what to permit, what to review, and how to keep property decisions explainable and defensible.",
+    date: "2026-01-20",
+    author: "Nyumba Zetu",
+    image: {
+      src: "/images/features/feature-reports.jpg",
+      alt: "AI governance, reporting, and audit trail management for property teams",
+    },
+    keywords: [
+      "AI governance real estate",
+      "property AI policy",
+      "audit trail AI",
+      "AI risk management",
+    ],
+    content: `
+      <p>As AI becomes more useful, governance becomes more important. Property teams deal with tenant data, payment records, maintenance issues, and legal notices, so AI needs rules just like any other operational tool.</p>
+
+      <h2>Set boundaries first</h2>
+      <p>Define which tasks AI may perform independently and which tasks require approval. A good boundary is whether the action affects money, rights, safety, or compliance.</p>
+
+      <h2>Track the full trail</h2>
+      <p>Keep a record of the prompt or input, the output, the person who reviewed it, and the final action taken. If a tenant disputes a notice or a manager questions a recommendation, you should be able to explain what happened.</p>
+
+      <h2>Build around real workflows</h2>
+      <p>Governance should live inside the product, not as a policy document no one reads. Nyumba Zetu’s <a href="/features/reports">reports</a>, <a href="/features/communications">communications</a>, and <a href="/features/tasks">tasks</a> features are the right place to enforce human review. For more context, compare this with broader enterprise AI governance discussions from <a href="https://www.forbes.com/sites/deloitte/2026/01/21/how-agentic-physical-and-sovereign-ai-are-rewriting-the-rules-of-enterprise-innovation/" target="_blank" rel="noreferrer">Deloitte</a> and <a href="https://aws.amazon.com/blogs/machine-learning/ai-agent-driven-browser-automation-for-enterprise-workflow-management/" target="_blank" rel="noreferrer">AWS</a>.</p>
+    `,
+  },
+  {
+    slug: "technology-shaping-real-estate-2026",
+    type: "Blog",
+    title: "Technology shaping real estate in 2026: AI, automation, and smarter operations",
+    description:
+      "A forward-looking summary of the tech trends shaping real estate in 2026, with practical advice for landlords, committees, and managers in Kenya.",
+    date: "2026-01-08",
+    author: "Nyumba Zetu",
+    image: {
+      src: "/images/features/feature-dashboard.jpg",
+      alt: "Real estate technology dashboard for modern property operations in Kenya",
+    },
+    keywords: [
+      "real estate technology 2026",
+      "AI in property management",
+      "property technology Kenya",
+      "real estate automation",
+    ],
+    content: `
+      <p>Real estate technology in 2026 is less about isolated tools and more about connected operations. The strongest platforms combine collections, accounting, maintenance, communications, and reporting so data flows once and gets reused many times.</p>
+
+      <h2>Three trends to watch</h2>
+      <p>First, AI is moving into workflow execution rather than just text generation. Second, predictive analytics is helping teams identify risk earlier, from arrears to maintenance. Third, owners and residents expect faster, clearer digital communication.</p>
+
+      <h2>What this means for Kenya</h2>
+      <p>Local market realities still matter: M-Pesa reconciliation, HOA transparency, service charge reporting, and compliance. Technology only works when it fits those workflows instead of forcing teams into generic global templates.</p>
+
+      <h2>How to stay ahead</h2>
+      <p>Choose systems that are easy to use, auditable, and built for the property types you manage. Start with practical automation, measure the result, then expand. Explore <a href="/property-management-software-kenya">property management software in Kenya</a>, <a href="/features/accounting">accounting</a>, and <a href="/features/reports">reporting</a>, or <a href="/request-demo">request a demo</a>.</p>
+    `,
+  },
+  {
     slug: "tenant-onboarding-checklist-kenya-landlords",
     type: "Guide",
     title: "Tenant onboarding checklist for landlords in Kenya",
@@ -832,6 +994,161 @@ export const RESOURCES: ResourceItem[] = [
       <p>Good records support tax compliance (including KRA eTIMS where applicable), audits, and reporting to owners or committees. They also give you real insight into performance: which properties collect well, where arrears are building, and how costs compare to income. Property management software that combines rent collection and accounting—like Nyumba Zetu—keeps everything in one place so you don’t re-enter data in a separate package.</p>
 
       <p>For more, explore our <a href="/features/accounting">Accounting & General Ledger</a> feature and <a href="/property-management-software-kenya">property management software for Kenya</a>. To see the platform in action, <a href="/request-demo">request a demo</a>.</p>
+    `,
+  },
+  {
+    slug: "rental-market-trends-kenya-2022",
+    type: "Blog",
+    title: "Rental market trends in Kenya: what landlords should watch in 2022",
+    description:
+      "A practical 2022 outlook for Kenyan landlords: demand shifts, vacancy pressure, tenant expectations, and how to keep your portfolio competitive.",
+    date: "2022-12-20",
+    author: "Nyumba Zetu",
+    image: {
+      src: "/images/features/feature-dashboard.jpg",
+      alt: "Property portfolio dashboards and rental market tracking in Kenya",
+    },
+    keywords: [
+      "rental market Kenya 2022",
+      "Kenya landlord trends",
+      "vacancy rates Kenya",
+      "property market outlook",
+    ],
+    content: `
+      <p>The Kenyan rental market changes quickly, especially in urban areas where supply, affordability, and tenant preferences move together. If you manage units professionally, it helps to treat market tracking as part of your operating routine rather than a once-a-year exercise.</p>
+
+      <h2>What to monitor</h2>
+      <p>Track asking rent versus achieved rent, average days on market, and the number of enquiries per listing. Those numbers tell you whether your pricing and presentation are aligned with the market.</p>
+
+      <h2>What tenants value</h2>
+      <p>In many areas, tenants are willing to pay more for reliable water, security, parking, easy transport access, and clear communication. When your unit offers those benefits, make them obvious in your listings and renewal discussions.</p>
+
+      <h2>Why systems matter</h2>
+      <p>Market insight is stronger when it comes from data, not guesswork. If your listings, collections, and reports live in one place, you can adjust rent, reduce vacancy, and follow up consistently. Explore <a href="/features/listings">listings management</a>, <a href="/features/reports">reporting</a>, or <a href="/request-demo">request a demo</a> to see how Nyumba Zetu supports smarter decisions.</p>
+    `,
+  },
+  {
+    slug: "first-time-landlord-guide-kenya",
+    type: "Guide",
+    title: "A first-time landlord guide for Kenya",
+    description:
+      "The essentials for new landlords in Kenya: setting rent, screening tenants, collecting payments, and keeping proper records from day one.",
+    date: "2022-11-28",
+    author: "Nyumba Zetu",
+    image: {
+      src: "/images/solutions/solution-landlords.jpg",
+      alt: "First-time landlord managing a rental property in Kenya",
+    },
+    keywords: [
+      "first time landlord Kenya",
+      "landlord guide Kenya",
+      "rental property records",
+      "new landlord tips",
+    ],
+    content: `
+      <p>Becoming a landlord is simple; running a good rental business is not. New landlords often start with a unit and a spreadsheet, then discover that rent collection, repairs, and records are all happening at once. This guide gives you the basics.</p>
+
+      <h2>Set up the business properly</h2>
+      <p>Separate property income from personal money as early as possible. Use a dedicated account or paybill, and keep a clear record of rent, deposits, and expenses. If you later need to explain a number to an accountant or auditor, this discipline will save time.</p>
+
+      <h2>Choose tenants carefully</h2>
+      <p>Ask for references, confirm occupation and income where possible, and use a written lease. Good tenants appreciate clear rules as much as good landlords do.</p>
+
+      <h2>Use software before things get messy</h2>
+      <p>Once you have recurring invoices and payments, software becomes useful quickly. Automated reminders, reconciliation, and reporting reduce mistakes and make you look professional from the start. Learn more about <a href="/rent-collection-software-kenya">rent collection software</a> or <a href="/request-demo">request a demo</a>.</p>
+    `,
+  },
+  {
+    slug: "service-charge-basics-kenya-estates",
+    type: "Blog",
+    title: "Service charge basics for Kenyan estates and apartments",
+    description:
+      "Understand what service charge covers, how to budget fairly, and how committees can communicate charges clearly to residents and owners.",
+    date: "2022-10-14",
+    author: "Nyumba Zetu",
+    image: {
+      src: "/images/solutions/solution-committees.jpg",
+      alt: "Estate committee explaining service charge budgets in Kenya",
+    },
+    keywords: [
+      "service charge Kenya",
+      "estate management basics",
+      "HOA charges Kenya",
+      "apartment service charge",
+    ],
+    content: `
+      <p>Service charge is one of the most misunderstood parts of estate ownership. When residents do not understand what they are paying for, disputes grow quickly. Clear budgets and reports solve a large part of the problem.</p>
+
+      <h2>What service charge usually covers</h2>
+      <p>Common items include cleaning, security, gardening, common-area utilities, minor maintenance, and management costs. Reserve fund contributions should be discussed separately so operating costs remain transparent.</p>
+
+      <h2>How to communicate it</h2>
+      <p>Share a simple budget by category and update it when costs change. Residents do not need accounting jargon; they need clarity on what changed and why.</p>
+
+      <h2>Make collection easier</h2>
+      <p>Issue clear invoices and track payment status against each unit. If you manage an HOA or apartment block, see <a href="/hoa-management-software-kenya">HOA management software</a> and <a href="/solutions/committees">committee workflows</a>, or <a href="/request-demo">request a demo</a> for a closer look.</p>
+    `,
+  },
+  {
+    slug: "maintenance-planning-property-kenya",
+    type: "Blog",
+    title: "Maintenance planning for property owners in Kenya",
+    description:
+      "Prevent costly surprises with a simple maintenance plan for rentals: inspections, vendor management, budgets, and tenant communication.",
+    date: "2022-09-02",
+    author: "Nyumba Zetu",
+    image: {
+      src: "/images/features/feature-maintenance.jpg",
+      alt: "Property maintenance planning and vendor coordination in Kenya",
+    },
+    keywords: [
+      "property maintenance Kenya",
+      "rental maintenance plan",
+      "landlord repairs",
+      "vendor management Kenya",
+    ],
+    content: `
+      <p>Reactive maintenance is expensive. A planned approach reduces emergency costs, keeps tenants happier, and protects the asset. For Kenyan landlords and property managers, even a simple schedule makes a big difference.</p>
+
+      <h2>Plan around inspections</h2>
+      <p>Schedule periodic inspections for roofs, plumbing, electricals, doors, and common areas. Catching problems early is cheaper than fixing failures after complaints pile up.</p>
+
+      <h2>Use trusted vendors</h2>
+      <p>Keep a shortlist of electricians, plumbers, painters, and cleaners with agreed rates and response times. Track who did the work and how much it cost so you can compare performance over time.</p>
+
+      <h2>Connect work to reporting</h2>
+      <p>When maintenance data sits beside financial records, you can see which properties consume more spend and why. Explore <a href="/features/maintenance">maintenance tools</a>, <a href="/features/expense-vendor-management">vendor management</a>, and <a href="/request-demo">request a demo</a>.</p>
+    `,
+  },
+  {
+    slug: "vacancy-reduction-strategies-kenya",
+    type: "Blog",
+    title: "Vacancy reduction strategies for Kenyan rentals",
+    description:
+      "Practical ways to reduce vacancy in 2022: better listings, faster responses, clean units, flexible renewals, and sharper follow-up.",
+    date: "2022-08-18",
+    author: "Nyumba Zetu",
+    image: {
+      src: "/images/features/feature-listings.jpg",
+      alt: "Rental listings and vacancy reduction strategy for Kenyan landlords",
+    },
+    keywords: [
+      "vacancy reduction Kenya",
+      "rental marketing Kenya",
+      "reduce empty units",
+      "property listings Kenya",
+    ],
+    content: `
+      <p>Every vacant unit costs money. Vacancy reduction is part marketing, part operations, and part customer service. The faster a qualified tenant can view, apply, and move in, the better your yield.</p>
+
+      <h2>Improve the listing</h2>
+      <p>Use accurate photos, honest descriptions, and clear pricing. Highlight the features that matter most to your target tenant, such as parking, security, water, or proximity to work.</p>
+
+      <h2>Respond quickly</h2>
+      <p>Slow replies lose good leads. Set a process for enquiry follow-up, viewing schedules, and application screening so prospects do not drift to other listings.</p>
+
+      <h2>Keep current tenants</h2>
+      <p>The cheapest vacancy is the one you never create. Good communication, timely repairs, and easy payments improve renewals. See <a href="/features/tenant-experience">tenant experience tools</a> and <a href="/request-demo">request a demo</a> to reduce turnover.</p>
     `,
   },
 ];

@@ -5,11 +5,11 @@
  */
 
 import Link from "next/link";
-import { CheckCircle2, Heart, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { CheckCircle2, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ListingWithCoverImage } from "@/lib/listings/types";
 import { PropertyImage } from "@/components/listings/PropertyImage";
+import { SaveListingButton } from "@/components/listings/SaveListingButton";
 import {
   LISTING_PURPOSE_LABELS,
   LISTING_PROPERTY_TYPE_LABELS,
@@ -70,12 +70,6 @@ export function ListingCard({ listing }: ListingCardProps) {
     .filter(Boolean)
     .join(" · ");
 
-  const handleSaveClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    // TODO: wire to auth + saved listings API
-  };
-
   return (
     <article className="group relative">
       <Link
@@ -124,16 +118,7 @@ export function ListingCard({ listing }: ListingCardProps) {
               Rent-to-own
             </Badge>
           )}
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={handleSaveClick}
-            className="absolute right-3 top-3 h-9 w-9 rounded-full bg-white/95 shadow-sm backdrop-blur-sm hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-800"
-            aria-label="Save listing"
-          >
-            <Heart className="h-4 w-4 text-slate-600 dark:text-slate-300" aria-hidden />
-          </Button>
+          <SaveListingButton />
         </div>
 
         {/* Content: type, title, meta, location, price, CTA */}

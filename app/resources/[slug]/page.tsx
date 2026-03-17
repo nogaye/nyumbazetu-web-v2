@@ -4,6 +4,7 @@
  * HTML content. Optimized for SEO (canonical, Open Graph, Twitter, Article schema).
  */
 import { Section } from "@/components/section";
+import { ArticleContent } from "@/components/article-content";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -149,9 +150,9 @@ export default async function ResourceSlugPage({ params }: PageProps) {
             </Link>
           </nav>
           <header>
-            <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-3">
               {resource.type}
-            </div>
+            </p>
             <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-50 mb-4">
               {resource.title}
             </h1>
@@ -161,6 +162,9 @@ export default async function ResourceSlugPage({ params }: PageProps) {
               </span>
               <time dateTime={resource.date}>{formatDate(resource.date)}</time>
             </div>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-400">
+              {resource.description}
+            </p>
           </header>
         </div>
       </Section>
@@ -184,12 +188,9 @@ export default async function ResourceSlugPage({ params }: PageProps) {
       )}
 
       <Section>
-        <article className="max-w-3xl mx-auto">
-          <div
-            className="prose prose-slate dark:prose-invert prose-lg max-w-none prose-headings:font-bold prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg"
-            dangerouslySetInnerHTML={{ __html: resource.content }}
-          />
-        </article>
+        <div className="max-w-6xl mx-auto">
+          <ArticleContent html={resource.content} title="In this article" />
+        </div>
       </Section>
 
       <Section className="bg-slate-50 dark:bg-slate-900">

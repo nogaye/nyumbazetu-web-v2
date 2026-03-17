@@ -144,7 +144,7 @@ export default async function ResourcesPage({ searchParams }: PageProps) {
   );
 }
 
-/** Renders a single resource card with optional image, type, title, description, date, and Read more link. */
+/** Renders a single resource card with type, title, description, date, and Read more link. */
 function ResourceCard({ resource }: { resource: ResourceItem }) {
   return (
     <Card className="h-full hover:shadow-lg transition-shadow overflow-hidden">
