@@ -1,55 +1,61 @@
+/**
+ * Resources hub page: lists guides, case studies, blog posts, and webinars with filter
+ * by type. Each card links to app/resources/[slug] for the full article.
+ */
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import Link from "next/link";
+import {
+  getResourcesByFilter,
+  type ResourceFilter,
+  type ResourceItem,
+} from "@/lib/resources/content";
+import { ResourcesFilterBar } from "@/components/resources-filter-bar";
 
 export const metadata = {
   title: "Resources | Nyumba Zetu",
-  description: "Property management insights, guides, case studies, and webinars for Kenyan landlords and property managers.",
+  description:
+    "Property management insights, guides, case studies, and webinars for Kenyan landlords and property managers.",
 };
 
-const resources = [
-  {
-    type: "Guide",
-    title: "How to modernize rent collections in Kenya",
-    description: "Best practices for transitioning from manual to automated rent collection.",
-    date: "2024-01-15",
-  },
-  {
-    type: "Case Study",
-    title: "Service charge transparency for estates and apartments",
-    description: "How one HOA increased transparency and reduced disputes by 60%.",
-    date: "2024-01-10",
-  },
-  {
-    type: "Blog",
-    title: "Preparing for KRA audits as a property manager",
-    description: "Essential steps to ensure your property records are audit-ready.",
-    date: "2024-01-05",
-  },
-  {
-    type: "Guide",
-    title: "Setting up automated invoicing for property portfolios",
-    description: "Step-by-step guide to configuring automated rent and service charge invoicing.",
-    date: "2023-12-20",
-  },
-  {
-    type: "Case Study",
-    title: "How a property management company increased collections by 30%",
-    description: "Real-world results from implementing Nyumba Zetu across a 100-unit portfolio.",
-    date: "2023-12-15",
-  },
-  {
-    type: "Webinar",
-    title: "Introduction to property management accounting",
-    description: "Learn the fundamentals of property accounting and general ledger management.",
-    date: "2023-12-10",
-  },
+/** Valid type search param; maps to ResourceFilter. */
+const VALID_TYPES: ResourceFilter[] = [
+  "All",
+  "Blog",
+  "Guide",
+  "Case Study",
+  "Webinar",
 ];
 
-export default function ResourcesPage() {
+/** Filter options for the bar: param value and display label. */
+const FILTER_OPTIONS: { value: ResourceFilter; label: string }[] = [
+  { value: "All", label: "All" },
+  { value: "Blog", label: "Blog" },
+  { value: "Guide", label: "Guides" },
+  { value: "Case Study", label: "Case Studies" },
+  { value: "Webinar", label: "Webinars" },
+];
+
+interface PageProps {
+  searchParams: Promise<{ type?: string }>;
+}
+
+export default async function ResourcesPage({ searchParams }: PageProps) {
+  const { type: typeParam } = await searchParams;
+  const filter: ResourceFilter =
+    typeParam && (VALID_TYPES as string[]).includes(typeParam)
+      ? (typeParam as ResourceFilter)
+      : "All";
+  const resources = getResourcesByFilter(filter);
+
   return (
     <>
       <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
@@ -60,45 +66,15 @@ export default function ResourcesPage() {
       </Section>
 
       <Section>
-        <div className="flex flex-wrap gap-2 mb-8 justify-center">
-          {["All", "Blog", "Guides", "Case Studies", "Webinars"].map((filter) => (
-            <Button
-              key={filter}
-              type="button"
-              variant="outline"
-              size="sm"
-            >
-              {filter}
-            </Button>
-          ))}
-        </div>
+        <ResourcesFilterBar
+          options={FILTER_OPTIONS}
+          currentFilter={filter}
+          basePath="/resources"
+        />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {resources.map((resource, idx) => (
-            <Card key={idx} className="h-full hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
-                  {resource.type}
-                </div>
-                <CardTitle className="text-xl">{resource.title}</CardTitle>
-                <CardDescription>{resource.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                  {new Date(resource.date).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </div>
-                <Link
-                  href="#"
-                  className="text-sm font-medium text-primary hover:underline inline-flex items-center"
-                >
-                  Read more →
-                </Link>
-              </CardContent>
-            </Card>
+          {resources.map((resource) => (
+            <ResourceCard key={resource.slug} resource={resource} />
           ))}
         </div>
       </Section>
@@ -110,7 +86,8 @@ export default function ResourcesPage() {
             Stay updated with property management insights
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 mb-8">
-            Get the latest guides, case studies, and industry news delivered to your inbox.
+            Get the latest guides, case studies, and industry news delivered to
+            your inbox.
           </p>
           <NewsletterSignup />
         </div>
@@ -119,3 +96,32 @@ export default function ResourcesPage() {
   );
 }
 
+/** Renders a single resource card with type, title, description, date, and Read more link. */
+function ResourceCard({ resource }: { resource: ResourceItem }) {
+  return (
+    <Card className="h-full hover:shadow-lg transition-shadow">
+      <CardHeader>
+        <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
+          {resource.type}
+        </div>
+        <CardTitle className="text-xl">{resource.title}</CardTitle>
+        <CardDescription>{resource.description}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+          {new Date(resource.date).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </div>
+        <Link
+          href={`/resources/${resource.slug}`}
+          className="text-sm font-medium text-primary hover:underline inline-flex items-center"
+        >
+          Read more →
+        </Link>
+      </CardContent>
+    </Card>
+  );
+}

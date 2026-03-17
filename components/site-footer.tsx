@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * Site-wide footer: brand, product, solutions, company, resources, legal.
- * No Awards/status links (per audit); single canonical contact and taglines.
+ * Site-wide footer: brand, product, solutions, company, resources, learn, legal.
+ * Resources and Learn are separate columns so neither is too long. No Awards/status links (per audit).
  */
 
 import Link from "next/link";
@@ -51,13 +51,10 @@ const footerLinks = {
     { label: "Banks & SACCOS", href: "/solutions/banks" },
     { label: "Diaspora", href: "/solutions/diaspora" },
   ],
+  /** Core resources: hub, blog, support, external status/docs. Kept short so footer column height matches others. */
   resources: [
     { label: "Resources", href: "/resources" },
     { label: "Blog", href: "/blogs" },
-    { label: "Property Management Kenya", href: "/property-management-software-kenya" },
-    { label: "Rent Collection Software", href: "/rent-collection-software-kenya" },
-    { label: "M-Pesa Rent Collection", href: "/mpesa-rent-collection" },
-    { label: "HOA & Estate Management", href: "/hoa-management-software-kenya" },
     { label: "FAQs", href: "/faqs" },
     { label: "Newsletters", href: "/newsletters" },
     {
@@ -70,6 +67,13 @@ const footerLinks = {
       href: EXTERNAL_RESOURCES.docs.href,
       external: true,
     },
+  ],
+  /** Solution/guide landing pages; separate column so Resources column is not too long. */
+  learn: [
+    { label: "Property Management Kenya", href: "/property-management-software-kenya" },
+    { label: "Rent Collection Software", href: "/rent-collection-software-kenya" },
+    { label: "M-Pesa Rent Collection", href: "/mpesa-rent-collection" },
+    { label: "HOA & Estate Management", href: "/hoa-management-software-kenya" },
   ],
   company: [
     { label: "About", href: "/about" },
@@ -97,7 +101,7 @@ function FooterColumnsGrid() {
   return (
     <motion.div
       ref={ref}
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-10 mb-12"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-8 lg:gap-10 mb-12"
       variants={staggerContainer}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
@@ -267,6 +271,25 @@ function FooterColumnsGrid() {
           ))}
         </ul>
       </motion.div>
+      {/* Learn Column — solution/guide pages; split out so Resources column height matches others */}
+      <motion.div variants={staggerChild}>
+        <h3 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">
+          Learn
+        </h3>
+        <ul className="space-y-3">
+          {footerLinks.learn.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className="text-sm text-slate-200 hover:text-primary transition-all duration-200 relative group"
+              >
+                <span className="relative z-10">{link.label}</span>
+                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </motion.div>
       {/* Legal Column */}
       <motion.div variants={staggerChild}>
         <h3 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">
@@ -297,7 +320,7 @@ export function SiteFooter() {
       <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-primary/[0.03] animate-gradient-shift pointer-events-none" />
 
       <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-20">
-        {/* Footer columns: Brand, Product, Solutions, Company, Resources, Legal */}
+        {/* Footer columns: Brand, Product, Solutions, Company, Resources, Learn, Legal */}
         <FooterColumnsGrid />
 
         {/* Bottom Bar */}

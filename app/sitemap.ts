@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next'
 import { getAllFeatureSlugs } from '@/lib/features'
 import { getAllListingSlugs } from '@/lib/listings/supabase-helpers'
 import { getAllBlogSlugs } from '@/lib/blogs/content'
+import { getAllResourceSlugs } from '@/lib/resources/content'
 
 /**
  * Generates the sitemap for www.nyumbazetu.com: static marketing/solution pages,
@@ -28,6 +29,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogSlugs = getAllBlogSlugs()
   const blogEntries: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
     url: `${baseUrl}/blogs/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }))
+
+  /** Resource article URLs (guides, case studies, blog, webinars). */
+  const resourceSlugs = getAllResourceSlugs()
+  const resourceEntries: MetadataRoute.Sitemap = resourceSlugs.map((slug) => ({
+    url: `${baseUrl}/resources/${slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
@@ -85,7 +95,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route === '' ? 1 : 0.8,
   }))
 
-  return [...staticEntries, ...blogEntries, ...listingEntries]
+  return [...staticEntries, ...blogEntries, ...resourceEntries, ...listingEntries]
 }
 
 
