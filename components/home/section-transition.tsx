@@ -22,8 +22,8 @@ interface SectionTransitionProps {
 }
 
 /**
- * Gradient + wave strip that bridges the hero (white) and the next section (slate-50).
- * Reduces the visual shock of a hard break and guides the eye downward.
+ * Gradient + wave strip that bridges the hero and the next section (slate-50 / slate-900).
+ * Light hero: soft fade from off-white into slate-50. Dark hero: slate mesh into body background.
  */
 export function SectionTransition({
   className,
@@ -38,13 +38,13 @@ export function SectionTransition({
       style={{ height }}
       aria-hidden={!id}
     >
-      {/* Gradient from hero (slate-950) to next section (light or dark content) */}
       <div
-        className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900/80"
+        className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900/80"
         style={{ height }}
       />
+      {/* Pattern only in dark mode (avoids duplicate SVG pattern ids; light strip stays clean). */}
       <AfricanPatternBackground
-        className="absolute inset-0"
+        className="absolute inset-0 hidden dark:block"
         variant="stripes"
         opacity={0.12}
         dark

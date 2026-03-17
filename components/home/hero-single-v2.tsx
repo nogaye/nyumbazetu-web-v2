@@ -40,15 +40,21 @@ const HERO_PATTERN_ID = "hero-african-grid";
  * Renders the Kente-like grid pattern used behind hero content (same geometry as design-system variant).
  * @param className - Wrapper classes (e.g. absolute inset-0).
  * @param opacity - Pattern layer opacity.
+ * @param patternIdSuffix - Appended to the pattern id so light and dark layers can coexist without id clashes.
+ * @param stroke - SVG stroke/fill color for grid lines (light bg = dark strokes; dark bg = light strokes).
  */
 function HeroAfricanPattern({
   className,
   opacity = 0.14,
+  patternIdSuffix = "",
+  stroke = "rgba(15, 23, 42, 0.08)",
 }: {
   className?: string;
   opacity?: number;
+  patternIdSuffix?: string;
+  stroke?: string;
 }) {
-  const stroke = "rgba(255,255,255,0.28)";
+  const patternId = `${HERO_PATTERN_ID}${patternIdSuffix}`;
   return (
     <div
       className={`pointer-events-none select-none ${className ?? ""}`}
@@ -61,7 +67,7 @@ function HeroAfricanPattern({
       >
         <defs>
           <pattern
-            id={HERO_PATTERN_ID}
+            id={patternId}
             width="24"
             height="24"
             patternUnits="userSpaceOnUse"
@@ -75,7 +81,7 @@ function HeroAfricanPattern({
             <circle cx="12" cy="12" r="1" fill={stroke} fillOpacity="0.6" />
           </pattern>
         </defs>
-        <rect width="100%" height="100%" fill={`url(#${HERO_PATTERN_ID})`} />
+        <rect width="100%" height="100%" fill={`url(#${patternId})`} />
       </svg>
     </div>
   );
@@ -83,25 +89,38 @@ function HeroAfricanPattern({
 
 /**
  * Marketing homepage hero: gradient mesh, headline, CTAs, stats. Fully server-rendered for performance.
+ * Defaults to a light palette above the fold; dark mode keeps the previous slate mesh treatment.
  */
 export function HeroSingleV2() {
   return (
-    <section className="relative min-h-[90vh] flex flex-col items-center justify-center overflow-hidden bg-slate-950 dark:bg-slate-950">
+    <section className="relative min-h-[90vh] flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-950 dark:to-slate-950">
       {/* Decorative layer: paint containment so blur/grain don't affect rest of page (better LCP/CLS). */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none [contain:paint]">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900" />
-        <div className="hero-mesh-orb absolute -top-[40%] -right-[20%] w-[72vw] max-w-[720px] h-[72vw] max-h-[720px] rounded-full bg-primary/18 blur-[96px]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900" />
+        <div className="hero-mesh-orb absolute -top-[40%] -right-[20%] w-[72vw] max-w-[720px] h-[72vw] max-h-[720px] rounded-full bg-primary/14 blur-[96px] dark:bg-primary/18" />
         <div
-          className="hero-mesh-orb absolute -bottom-[30%] -left-[15%] w-[56vw] max-w-[540px] h-[56vw] max-h-[540px] rounded-full bg-secondary/12 blur-[84px]"
+          className="hero-mesh-orb absolute -bottom-[30%] -left-[15%] w-[56vw] max-w-[540px] h-[56vw] max-h-[540px] rounded-full bg-secondary/10 blur-[84px] dark:bg-secondary/12"
           style={{ animationDelay: "-7s" }}
         />
         <div className="absolute inset-0 grain" aria-hidden />
-        <HeroAfricanPattern className="absolute inset-0" opacity={0.14} />
+        {/* Light-hero pattern (hidden in dark mode); dark-hero pattern uses light strokes on slate. */}
+        <HeroAfricanPattern
+          className="absolute inset-0 dark:hidden"
+          opacity={0.35}
+          patternIdSuffix="-light"
+          stroke="rgba(15, 23, 42, 0.07)"
+        />
+        <HeroAfricanPattern
+          className="absolute inset-0 hidden dark:block"
+          opacity={0.14}
+          patternIdSuffix="-dark"
+          stroke="rgba(255,255,255,0.28)"
+        />
       </div>
 
       <div className="relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl w-full pt-20 md:pt-28 pb-16 md:pb-24 text-center">
         <div className="max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary mb-8 px-4 py-2.5 rounded-full bg-primary/15 border border-primary/25 text-primary-foreground/90">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary mb-8 px-4 py-2.5 rounded-full bg-primary/10 border border-primary/20 dark:bg-primary/15 dark:border-primary/25">
             <svg
               className="h-4 w-4 shrink-0"
               viewBox="0 0 24 24"
@@ -117,18 +136,18 @@ export function HeroSingleV2() {
             <span>{BADGE}</span>
           </div>
 
-          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-3 leading-[1.08] tracking-[-0.03em] text-white">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-3 leading-[1.08] tracking-[-0.03em] text-slate-900 dark:text-white">
             {HEADLINE}
           </h1>
 
-          <p className="text-lg md:text-xl lg:text-2xl text-slate-300 mb-10 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl lg:text-2xl text-slate-600 dark:text-slate-300 mb-10 leading-relaxed max-w-3xl mx-auto">
             {SUBHEADLINE}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Link
               href="/request-demo"
-              className="relative overflow-hidden cta-shine-hover inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3 text-base font-semibold text-primary-foreground shadow-lg transition-all duration-300 hover:bg-primary-600 hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="relative overflow-hidden cta-shine-hover inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3 text-base font-semibold text-primary-foreground shadow-lg transition-all duration-300 hover:bg-primary-600 hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950"
             >
               Book a free demo
               <svg
@@ -148,7 +167,7 @@ export function HeroSingleV2() {
             </Link>
             <Link
               href="/features"
-              className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/30 bg-transparent px-8 py-3 text-base font-medium text-white backdrop-blur-sm transition-colors hover:border-white/50 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-slate-300 bg-white/60 px-8 py-3 text-base font-medium text-slate-800 backdrop-blur-sm transition-colors hover:border-slate-400 hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/30 dark:bg-transparent dark:text-white dark:hover:border-white/50 dark:hover:bg-white/10 dark:focus-visible:ring-white/50 dark:focus-visible:ring-offset-slate-950"
             >
               See all features
               <svg
@@ -175,10 +194,12 @@ export function HeroSingleV2() {
           >
             {HERO_STATS.map((stat) => (
               <div key={stat.label} role="listitem" className="text-center">
-                <div className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white tabular-nums">
+                <div className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 tabular-nums dark:text-white">
                   {stat.value}
                 </div>
-                <div className="text-sm text-slate-400 mt-1">{stat.label}</div>
+                <div className="text-sm text-slate-500 mt-1 dark:text-slate-400">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>
@@ -187,13 +208,13 @@ export function HeroSingleV2() {
             {COLLECTION_RATE_FOOTNOTE}
           </p>
 
-          <p className="text-sm text-slate-500">{SOCIAL_PROOF}</p>
+          <p className="text-sm text-slate-600 dark:text-slate-500">{SOCIAL_PROOF}</p>
         </div>
       </div>
 
       <a
         href={`#${SCROLL_TARGET_ID}`}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-500 hover:text-slate-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-500 hover:text-slate-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md dark:hover:text-slate-400"
         aria-label="Scroll to content"
       >
         <span className="text-xs font-medium uppercase tracking-wider">

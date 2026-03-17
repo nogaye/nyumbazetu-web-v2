@@ -184,7 +184,7 @@ export function MainNav() {
       className={cn(
         "sticky top-0 z-50 w-full border-b backdrop-blur-md transition-colors duration-300",
         navOverHero
-          ? "border-white/15 bg-slate-950/80 text-white"
+          ? "border-slate-200/80 bg-white/85 text-slate-900 supports-[backdrop-filter]:bg-white/80 dark:border-white/15 dark:bg-slate-950/80 dark:text-white dark:supports-[backdrop-filter]:bg-slate-950/80"
           : "border-slate-200/90 dark:border-slate-800/90 bg-white/98 dark:bg-slate-950/98 supports-[backdrop-filter]:bg-white/90 dark:supports-[backdrop-filter]:bg-slate-950/90",
       )}
       role="navigation"
@@ -210,7 +210,7 @@ export function MainNav() {
               className={cn(
                 "text-xl font-bold transition-colors",
                 navOverHero
-                  ? "text-white"
+                  ? "text-secondary dark:text-white"
                   : "text-secondary dark:text-slate-50",
               )}
             >
@@ -235,7 +235,7 @@ export function MainNav() {
                   className={cn(
                     "text-sm font-medium hover:text-primary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md px-2 py-1 inline-block",
                     navOverHero
-                      ? "text-white hover:text-primary"
+                      ? "text-slate-700 hover:text-primary dark:text-white dark:hover:text-primary"
                       : "text-slate-700 dark:text-slate-300",
                   )}
                   aria-haspopup={
@@ -365,7 +365,7 @@ export function MainNav() {
               asChild
               className={cn(
                 navOverHero &&
-                  "text-white hover:text-primary hover:bg-white/10",
+                  "text-slate-700 hover:text-primary hover:bg-slate-100 dark:text-white dark:hover:bg-white/10",
               )}
             >
               <Link
@@ -378,10 +378,10 @@ export function MainNav() {
             </Button>
             <Button
               asChild
-              variant={navOverHero ? "outline" : "default"}
+              variant="default"
               className={cn(
                 navOverHero &&
-                  "border-2 border-white bg-primary text-white hover:bg-primary-600 hover:border-primary-500 hover:text-white",
+                  "dark:ring-2 dark:ring-white/90 dark:ring-offset-2 dark:ring-offset-slate-950",
               )}
             >
               <Link href="/request-demo" className="flex items-center gap-2">
@@ -398,7 +398,8 @@ export function MainNav() {
             size="icon"
             className={cn(
               "lg:hidden",
-              navOverHero && "text-white hover:bg-white/10",
+              navOverHero &&
+                "text-slate-800 hover:bg-slate-100 dark:text-white dark:hover:bg-white/10",
             )}
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
