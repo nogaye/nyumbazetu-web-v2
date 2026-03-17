@@ -105,34 +105,7 @@ export default function ListingsHomePage() {
         </ListingsAnimatedSection>
 
         {/* Why list with us */}
-        <ListingsAnimatedSection aria-labelledby="why-list-heading" className="mb-16">
-          <h2 id="why-list-heading" className="font-display text-2xl font-semibold text-slate-900 dark:text-slate-50 mb-6">
-            Why list with us
-          </h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-            <div className="rounded-xl border border-slate-200/80 bg-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
-              <p className="font-medium text-slate-900 dark:text-slate-50">Visibility</p>
-              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                Your listing reaches serious renters and buyers across Kenya.
-              </p>
-            </div>
-            <div className="rounded-xl border border-slate-200/80 bg-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
-              <p className="font-medium text-slate-900 dark:text-slate-50">Inquiries that convert</p>
-              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                Direct contact and viewing requests from interested parties.
-              </p>
-            </div>
-            <div className="rounded-xl border border-slate-200/80 bg-white p-6 dark:border-slate-700/80 dark:bg-slate-900/50">
-              <p className="font-medium text-slate-900 dark:text-slate-50">Easy management</p>
-              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                Update, pause or boost listings from your portal anytime.
-              </p>
-            </div>
-          </div>
-        </ListingsAnimatedSection>
-
-        {/* Marketplace SEO: Zillow / Property24-style programmatic discovery */}
-        <ListingsAnimatedSection aria-labelledby="marketplace-seo-heading" className="mb-16">
+        <ListingsAnimatedSection aria-labelledby="why-list-with-us-heading" className="mb-16">
           <ListingsMarketplaceSeoSection />
         </ListingsAnimatedSection>
 
