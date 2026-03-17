@@ -1,7 +1,7 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+/**
+ * Homepage credibility stats. Renders static transaction and portfolio numbers so the
+ * first screen does not pay for animated counters on the critical path.
+ */
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,46 +13,10 @@ import {
 } from "@heroicons/react/24/outline";
 
 export function LegacyTransactions() {
-  const [currentCount, setCurrentCount] = useState(0);
-  const [completed, setCompleted] = useState(false);
-
-  useEffect(() => {
-    const maxCount = 500000000; // 500 million
-    const duration = 2000; // milliseconds
-    const steps = 60;
-    const increment = maxCount / steps;
-    let currentStep = 0;
-
-    const intervalId = setInterval(() => {
-      currentStep++;
-      const newCount = Math.min(increment * currentStep, maxCount);
-      setCurrentCount(newCount);
-      
-      if (newCount >= maxCount) {
-        setCompleted(true);
-        clearInterval(intervalId);
-      }
-    }, duration / steps);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  const formatCurrency = (value: number) => {
-    if (value >= 1000000) {
-      return `KES ${(value / 1000000).toFixed(0)}M`;
-    }
-    return new Intl.NumberFormat("en-KE", {
-      style: "currency",
-      currency: "KES",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
-
   const stats = [
     {
       icon: CurrencyDollarIcon,
-      value: completed ? "KES 1B+" : formatCurrency(currentCount),
+      value: "KES 1B+",
       label: "In monthly transactions",
       description: "Secure, traceable payments—M-Pesa, bank, and wallet in one flow.",
     },
@@ -88,12 +52,8 @@ export function LegacyTransactions() {
           {stats.map((stat, idx) => {
             const IconComponent = stat.icon;
             return (
-              <motion.div
+              <div
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
               >
                 <Card className="h-full border border-slate-200/80 dark:border-slate-700/80 shadow-card transition-all duration-200 hover:shadow-card-hover hover:-translate-y-0.5 hover:border-slate-300 dark:hover:border-slate-600">
                   <CardContent className="p-6 text-center">
@@ -111,7 +71,7 @@ export function LegacyTransactions() {
                     </p>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             );
           })}
         </div>

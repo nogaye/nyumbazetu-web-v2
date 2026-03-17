@@ -90,14 +90,10 @@ export function HeroSingleV2() {
     <section className="relative min-h-[90vh] flex flex-col items-center justify-center overflow-hidden bg-slate-950 dark:bg-slate-950">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900" />
-        <div className="hero-mesh-orb absolute -top-[40%] -right-[20%] w-[80vw] max-w-[800px] h-[80vw] max-h-[800px] rounded-full bg-primary/20 blur-[120px]" />
+        <div className="hero-mesh-orb absolute -top-[40%] -right-[20%] w-[72vw] max-w-[720px] h-[72vw] max-h-[720px] rounded-full bg-primary/18 blur-[96px]" />
         <div
-          className="hero-mesh-orb absolute -bottom-[30%] -left-[15%] w-[60vw] max-w-[600px] h-[60vw] max-h-[600px] rounded-full bg-secondary/15 blur-[100px]"
+          className="hero-mesh-orb absolute -bottom-[30%] -left-[15%] w-[56vw] max-w-[540px] h-[56vw] max-h-[540px] rounded-full bg-secondary/12 blur-[84px]"
           style={{ animationDelay: "-7s" }}
-        />
-        <div
-          className="hero-mesh-orb absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] max-w-[400px] h-[40vw] max-h-[400px] rounded-full bg-tertiary/10 blur-[80px]"
-          style={{ animationDelay: "-3s" }}
         />
         <div className="absolute inset-0 grain" aria-hidden />
         <HeroAfricanPattern className="absolute inset-0" opacity={0.14} />

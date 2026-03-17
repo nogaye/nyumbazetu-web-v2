@@ -1,22 +1,37 @@
+/**
+ * Marketing homepage entry point. Keeps the hero and first section on the critical path,
+ * while deferring heavier client sections so first paint and LCP stay fast on mobile and desktop.
+ */
 import dynamic from "next/dynamic";
-import { LegacyHomeHeader } from "@/components/legacy/home/legacy-home-header";
 import { LegacyTransactions } from "@/components/legacy/home/legacy-transactions";
 import { LegacyHeadline } from "@/components/legacy/home/legacy-headline";
 import { LegacyAwards } from "@/components/legacy/home/legacy-awards";
-import { LegacyPortfolio } from "@/components/legacy/home/legacy-portfolio";
-import { FeatureGrid } from "@/components/home/feature-grid";
 import { LegacyRequestDemo } from "@/components/legacy/home/legacy-request-demo";
-import { FinalCTA } from "@/components/home/final-cta";
-import { SecurityReliabilitySection } from "@/components/home/security-reliability-section";
-import { NewsletterSection } from "@/components/home/newsletter-section";
 import { HeroSingleV2 } from "@/components/home/hero-single-v2";
 import { SectionTransition } from "@/components/home/section-transition";
 
-// Lazy load below-the-fold components for better performance
+/**
+ * Homepage below-the-fold sections are code-split so the hero can paint sooner.
+ * These sections still render on the server, but their client bundles load later.
+ */
 const AsSeenOn = dynamic(
   () =>
     import("@/components/home/as-seen-on").then((mod) => ({
       default: mod.AsSeenOn,
+    })),
+  { ssr: true },
+);
+const LegacyPortfolio = dynamic(
+  () =>
+    import("@/components/legacy/home/legacy-portfolio").then((mod) => ({
+      default: mod.LegacyPortfolio,
+    })),
+  { ssr: true },
+);
+const FeatureGrid = dynamic(
+  () =>
+    import("@/components/home/feature-grid").then((mod) => ({
+      default: mod.FeatureGrid,
     })),
   { ssr: true },
 );
@@ -69,6 +84,27 @@ const LegacyReferralLazy = dynamic(
     })),
   { ssr: true },
 );
+const SecurityReliabilitySection = dynamic(
+  () =>
+    import("@/components/home/security-reliability-section").then((mod) => ({
+      default: mod.SecurityReliabilitySection,
+    })),
+  { ssr: true },
+);
+const FinalCTA = dynamic(
+  () =>
+    import("@/components/home/final-cta").then((mod) => ({
+      default: mod.FinalCTA,
+    })),
+  { ssr: true },
+);
+const NewsletterSection = dynamic(
+  () =>
+    import("@/components/home/newsletter-section").then((mod) => ({
+      default: mod.NewsletterSection,
+    })),
+  { ssr: true },
+);
 
 export const metadata = {
   title: "Property Management Software for Kenya | Rent Collection, Accounting & Tenant Management",
@@ -81,7 +117,6 @@ export default function Home() {
     <>
       <HeroSingleV2 />
       <SectionTransition id="how-it-works" />
-      {/* <LegacyHomeHeader /> */}
       <LegacyTransactions />
       <LegacyHeadline />
       <LegacyAwards />

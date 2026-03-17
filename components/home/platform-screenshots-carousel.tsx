@@ -199,7 +199,7 @@ export function PlatformScreenshotsCarousel({
                         fill
                         className="object-contain object-top platform-screenshot-img"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1440px"
-                        quality={90}
+                        quality={80}
                         priority={index === 0}
                         loading={index === 0 ? "eager" : "lazy"}
                       />
