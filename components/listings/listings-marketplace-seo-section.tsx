@@ -1,6 +1,6 @@
 /**
  * Homepage value-proposition section for sellers and agents. It explains why listing on
- * Nyumba Zetu is worthwhile and keeps the SEO hub links as supporting discovery paths.
+ * Nyumba Zetu is worthwhile using concrete benefits around visibility, trust, and leads.
  */
 
 import Link from "next/link";
@@ -43,8 +43,9 @@ export function ListingsMarketplaceSeoSection({ className }: ListingsMarketplace
           <strong className="font-semibold text-slate-800 dark:text-slate-200">
             Put your property in front of serious renters and buyers
           </strong>{" "}
-          with a listing experience built to drive visibility, trust, and direct inquiries. Strong
-          presentation, clear details, and location-based discovery help good properties stand out.
+          with a listing experience built to improve visibility, build trust, and generate direct
+          inquiries. Clear pricing, strong photos, and complete details help the right listings stand
+          out.
         </p>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2 lg:gap-10">
@@ -55,7 +56,7 @@ export function ListingsMarketplaceSeoSection({ className }: ListingsMarketplace
                 Built for visibility
               </div>
               <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                Your listing is presented clearly so serious renters and buyers can notice it faster.
+                Your property is presented clearly so serious renters and buyers can spot it faster.
               </p>
             </div>
             <div className="rounded-lg border border-slate-200/80 bg-white/90 p-4 dark:border-slate-700/80 dark:bg-slate-900/60">
@@ -65,7 +66,7 @@ export function ListingsMarketplaceSeoSection({ className }: ListingsMarketplace
               </div>
               <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
                 Verified details, clean presentation, and location context help people contact you with
-                confidence.
+                confidence instead of browsing casually.
               </p>
             </div>
           </div>
@@ -81,11 +82,11 @@ export function ListingsMarketplaceSeoSection({ className }: ListingsMarketplace
                 <div className="rounded-lg border border-slate-200/80 bg-slate-50/80 p-4 dark:border-slate-700/70 dark:bg-slate-950/50">
                   <div className="flex items-center gap-2 text-sm font-medium text-slate-900 dark:text-slate-50">
                     <Search className="h-4 w-4 text-[#36b9a0]" aria-hidden />
-                    Better visibility
+                    Better visibility in search
                   </div>
                   <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                    Your property appears alongside relevant searches and nearby alternatives, giving it
-                    a better chance to be seen.
+                    Your property appears alongside relevant searches and nearby alternatives, improving
+                    the chance it gets seen by the right audience.
                   </p>
                 </div>
                 <div className="rounded-lg border border-slate-200/80 bg-slate-50/80 p-4 dark:border-slate-700/70 dark:bg-slate-950/50">
@@ -95,7 +96,7 @@ export function ListingsMarketplaceSeoSection({ className }: ListingsMarketplace
                   </div>
                   <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
                     Clear pricing, amenities, and location details help people self-select before they
-                    contact you.
+                    contact you, which saves time on both sides.
                   </p>
                 </div>
                 <div className="rounded-lg border border-slate-200/80 bg-slate-50/80 p-4 dark:border-slate-700/70 dark:bg-slate-950/50">
@@ -105,7 +106,7 @@ export function ListingsMarketplaceSeoSection({ className }: ListingsMarketplace
                   </div>
                   <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
                     Add, edit, or refresh listings as your availability changes so your inventory stays
-                    current.
+                    current and accurate.
                   </p>
                 </div>
               </div>

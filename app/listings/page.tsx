@@ -1,6 +1,6 @@
 /**
  * Listings marketplace homepage: search hero, featured listings,
- * why list with us, marketplace SEO strategy block, trust strip, and CTA band.
+ * why list with us, trust strip, and CTA band.
  * Served at /listings; uses the listings layout shell.
  */
 
@@ -19,26 +19,28 @@ import { fetchListings } from "@/lib/listings/supabase-helpers";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "Nyumba Zetu Listings | Find & List Properties in Kenya",
+  title: "Find & List Properties in Kenya | Nyumba Zetu Listings",
   description:
-    "Browse and list apartments, houses, commercial spaces and short stays across Nairobi, Mombasa and Kenya. Verified listings, trusted listers.",
+    "Browse and list apartments, houses, commercial spaces and short stays across Nairobi, Mombasa and Kenya. Discover verified listings or post your property on Nyumba Zetu.",
   keywords: [
     "property listings Kenya",
     "apartments for rent Nairobi",
     "houses for sale",
     "short stay",
+    "list property in Kenya",
+    "real estate listings Kenya",
     "Nyumba Zetu",
   ],
   openGraph: {
-    title: "Nyumba Zetu Listings | Find & List Properties in Kenya",
-    description: "Browse and list verified properties across Kenya.",
+    title: "Find & List Properties in Kenya | Nyumba Zetu Listings",
+    description: "Browse verified property listings or post your own property across Kenya.",
     type: "website",
   },
 };
 
 async function FeaturedListings() {
   const { listings } = await fetchListings({ sort: "newest", page: 1 });
-  const featured = listings.slice(0, 8);
+  const featured = listings.slice(0, 4);
   if (featured.length === 0) {
     return (
       <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-12 text-center dark:border-slate-700/80 dark:bg-slate-900/50">

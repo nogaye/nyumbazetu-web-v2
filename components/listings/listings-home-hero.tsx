@@ -1,31 +1,16 @@
-"use client";
-
 /**
  * Listings marketplace homepage hero: headline and location search only.
- * Search-first, conversion-focused. Uses framer-motion for staggered entrance animations.
+ * Search-first, conversion-focused. Uses a plain HTML form so the hero stays server-rendered
+ * and lightweight on mobile.
  */
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { staggerContainer, staggerChild } from "@/lib/motion";
 import { AfricanPatternBackground } from "@/components/design-system";
 
 export function ListingsHomeHero() {
-  const router = useRouter();
-  const [location, setLocation] = useState("");
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    const params = new URLSearchParams();
-    if (location.trim()) params.set("city", location.trim());
-    router.push(`/listings/search?${params.toString()}`);
-  };
-
   return (
     <section
       className="relative overflow-hidden border-b border-slate-200/80 dark:border-slate-800"
@@ -69,25 +54,21 @@ export function ListingsHomeHero() {
         dark={false}
       />
 
-      <motion.div
+      <div
         className="relative mx-auto flex max-w-[1000px] flex-col items-center px-4 pt-8 pb-6 sm:px-6 sm:pt-10 sm:pb-6 lg:px-8 lg:pt-12 lg:pb-8"
-        initial="hidden"
-        animate="visible"
-        variants={staggerContainer}
-        transition={{ staggerChildren: 0.1, delayChildren: 0.05 }}
       >
-        {/* Headline and subtitle — centered */}
-        <motion.header className="text-center" variants={staggerChild}>
+        {/* Headline and subtitle stay static to avoid extra motion work on first paint. */}
+        <header className="text-center">
           <h1 className="font-display text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-3xl lg:text-4xl lg:leading-tight">
             Find your next home
           </h1>
           <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base">
             Browse verified properties to rent, buy or short stay across Kenya
           </p>
-        </motion.header>
+        </header>
 
-        {/* Search card — centered */}
-        <motion.form onSubmit={handleSearch} className="mt-5 w-full max-w-xl sm:mt-6" variants={staggerChild}>
+        {/* Native GET form keeps the search interaction functional without client routing code. */}
+        <form action="/listings/search" method="get" className="mt-5 w-full max-w-xl sm:mt-6">
           <Card className="shadow-md sm:shadow-lg">
             <CardContent className="flex flex-col gap-2 p-3 sm:flex-row sm:items-center sm:gap-3 sm:p-4">
               <div className="relative flex-1 min-w-0">
@@ -96,10 +77,9 @@ export function ListingsHomeHero() {
                   aria-hidden
                 />
                 <Input
+                  name="city"
                   type="text"
                   placeholder="City or area (e.g. Nairobi, Kilimani)"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
                   className="h-11 pl-10 pr-3 text-sm placeholder:text-slate-400 sm:h-12"
                   aria-label="Search by city or area"
                 />
@@ -114,8 +94,8 @@ export function ListingsHomeHero() {
               </Button>
             </CardContent>
           </Card>
-        </motion.form>
-      </motion.div>
+        </form>
+      </div>
     </section>
   );
 }

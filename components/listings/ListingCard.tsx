@@ -1,19 +1,15 @@
-"use client";
-
 /**
  * Premium marketplace listing card: image-first, clear price hierarchy, badges, and primary CTA.
- * Used on the listings grid; links to the listing detail page. Supports save/favorite and
- * accessible hover/focus states for trust and conversion.
+ * Used on the listings grid; links to the listing detail page. Keeps the card server-rendered
+ * so the initial listings grid avoids extra client-side animation work on mobile.
  */
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { CheckCircle2, Heart, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ListingWithCoverImage } from "@/lib/listings/types";
 import { PropertyImage } from "@/components/listings/PropertyImage";
-import { fadeInUp, springTransition } from "@/lib/motion";
 import {
   LISTING_PURPOSE_LABELS,
   LISTING_PROPERTY_TYPE_LABELS,
@@ -81,14 +77,7 @@ export function ListingCard({ listing }: ListingCardProps) {
   };
 
   return (
-    <motion.article
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-      variants={fadeInUp}
-      transition={springTransition}
-      className="group relative"
-    >
+    <article className="group relative">
       <Link
         href={`/listings/${listing.slug}`}
         className={cn(
@@ -179,6 +168,6 @@ export function ListingCard({ listing }: ListingCardProps) {
           </div>
         </div>
       </Link>
-    </motion.article>
+    </article>
   );
 }

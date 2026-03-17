@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/card";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import Link from "next/link";
-import Image from "next/image";
 import {
   getResourcesByFilter,
   type ResourceFilter,
@@ -149,17 +148,6 @@ export default async function ResourcesPage({ searchParams }: PageProps) {
 function ResourceCard({ resource }: { resource: ResourceItem }) {
   return (
     <Card className="h-full hover:shadow-lg transition-shadow overflow-hidden">
-      {resource.image && (
-        <Link href={`/resources/${resource.slug}`} className="block relative aspect-[16/9] w-full bg-slate-100 dark:bg-slate-800">
-          <Image
-            src={resource.image.src}
-            alt={resource.image.alt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-        </Link>
-      )}
       <CardHeader>
         <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
           {resource.type}

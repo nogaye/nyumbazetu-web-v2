@@ -1,15 +1,10 @@
-"use client";
-
 /**
- * Listings-specific section wrapper that fades in when it enters the viewport.
- * Uses framer-motion and shared motion variants; no extra layout (padding/width).
- * Use to animate sections on the listings home and search pages.
+ * Listings-specific section wrapper that preserves semantic grouping without client-side
+ * animation overhead. This keeps large homepage sections server-rendered and cheap to paint
+ * on low-end mobile devices.
  */
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { fadeInUp, springSlow } from "@/lib/motion";
 
 export interface ListingsAnimatedSectionProps {
   /** Section content. */
@@ -25,8 +20,10 @@ export interface ListingsAnimatedSectionProps {
 }
 
 /**
- * Renders a section that animates in (fade + slide up) when it scrolls into view.
- * Uses useInView so the animation runs once when the section enters the viewport.
+ * Renders a plain section wrapper for homepage content.
+ *
+ * @param props - Section content and optional accessibility/layout attributes.
+ * @returns A semantic section element with the provided attributes.
  */
 export function ListingsAnimatedSection({
   children,
@@ -35,22 +32,14 @@ export function ListingsAnimatedSection({
   "aria-labelledby": ariaLabelledby,
   "aria-label": ariaLabel,
 }: ListingsAnimatedSectionProps) {
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.08 });
-
   return (
-    <motion.section
-      ref={ref}
+    <section
       id={id}
       aria-labelledby={ariaLabelledby}
       aria-label={ariaLabel}
-      initial="hidden"
-      animate={inView ? "visible" : "hidden"}
-      variants={fadeInUp}
-      transition={springSlow}
       className={cn(className)}
     >
       {children}
-    </motion.section>
+    </section>
   );
 }
