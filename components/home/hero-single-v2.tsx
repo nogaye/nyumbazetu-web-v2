@@ -6,7 +6,7 @@
 import Link from "next/link";
 
 /** Credibility badge text; short trust statement above the headline. */
-const BADGE = "Kenya's #1 property management platform";
+const BADGE = "Kenya's #1 property management software";
 
 /** Category-defining vision headline; signals platform/infrastructure positioning. */
 const HEADLINE = "The operating system for African real estate";
@@ -50,7 +50,10 @@ function HeroAfricanPattern({
 }) {
   const stroke = "rgba(255,255,255,0.28)";
   return (
-    <div className={`pointer-events-none select-none ${className ?? ""}`} aria-hidden>
+    <div
+      className={`pointer-events-none select-none ${className ?? ""}`}
+      aria-hidden
+    >
       <svg
         className="h-full w-full"
         xmlns="http://www.w3.org/2000/svg"
