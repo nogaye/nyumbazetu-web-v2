@@ -30,7 +30,7 @@ export function ListingsHeader() {
 
   return (
     <motion.header
-      initial="hidden"
+      initial={false}
       animate="visible"
       variants={fadeIn}
       transition={{ duration: 0.25 }}
@@ -53,7 +53,7 @@ export function ListingsHeader() {
             className="flex shrink-0 items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#344767] focus-visible:ring-offset-2 rounded-md"
             aria-label="Nyumba Zetu Listings Home"
           >
-            <Image src="/logo.svg" alt="" width={28} height={28} className="h-7 w-7" />
+            <Image src="/logo.svg" alt="Nyumba Zetu" width={28} height={28} className="h-7 w-7" />
             <span className="hidden font-display text-base font-semibold text-slate-900 dark:text-slate-50 sm:inline">
               Nyumba Zetu
             </span>

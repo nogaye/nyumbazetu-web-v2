@@ -54,6 +54,10 @@ const footerLinks = {
   resources: [
     { label: "Resources", href: "/resources" },
     { label: "Blog", href: "/blogs" },
+    { label: "Property Management Kenya", href: "/property-management-software-kenya" },
+    { label: "Rent Collection Software", href: "/rent-collection-software-kenya" },
+    { label: "M-Pesa Rent Collection", href: "/mpesa-rent-collection" },
+    { label: "HOA & Estate Management", href: "/hoa-management-software-kenya" },
     { label: "FAQs", href: "/faqs" },
     { label: "Newsletters", href: "/newsletters" },
     {

@@ -58,10 +58,14 @@ export async function generateMetadata({
   return {
     title: `${listing.title} | Nyumba Zetu`,
     description,
+    alternates: {
+      canonical: `https://www.nyumbazetu.com/listings/${slug}`,
+    },
     openGraph: {
       title: `${listing.title} | Nyumba Zetu`,
       description,
       type: "website",
+      url: `https://www.nyumbazetu.com/listings/${slug}`,
       ...(firstImage && { images: [{ url: firstImage, alt: listing.title }] }),
     },
     twitter: {

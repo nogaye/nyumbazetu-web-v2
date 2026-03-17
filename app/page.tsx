@@ -71,9 +71,9 @@ const LegacyReferralLazy = dynamic(
 );
 
 export const metadata = {
-  title: "Home",
+  title: "Property Management Software for Kenya | Rent Collection, Accounting & Tenant Management",
   description:
-    "The operating system for African real estate. One platform for collections, accounting, tenant experience, and compliance—trusted by property managers, estates, and banks across Kenya.",
+    "Nyumba Zetu is Kenya's leading property management software. Collect rent via M-Pesa, manage tenants, track maintenance, and run full accounting for estates, landlords, and developers. Trusted by 500+ properties.",
 };
 
 export default function Home() {

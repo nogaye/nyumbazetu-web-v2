@@ -1,11 +1,46 @@
 import { MetadataRoute } from 'next'
 import { getAllFeatureSlugs } from '@/lib/features'
+import { getAllListingSlugs } from '@/lib/listings/supabase-helpers'
+import { getAllBlogSlugs } from '@/lib/blogs/content'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://nyumbazetu.com'
+/**
+ * Generates the sitemap for www.nyumbazetu.com: static marketing/solution pages,
+ * SEO pillar pages, feature pages, blog posts, partnership pages, and dynamic
+ * listing detail URLs (when Supabase is available).
+ */
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = 'https://www.nyumbazetu.com'
 
   /** Feature detail page routes from central registry. */
   const featureRoutes = getAllFeatureSlugs().map((slug) => `/features/${slug}`)
+
+  /** SEO pillar pages (high priority for organic search). */
+  const pillarRoutes = [
+    '/property-management-software-kenya',
+    '/rent-collection-software-kenya',
+    '/hoa-management-software-kenya',
+    '/estate-management-system',
+    '/property-management-for-developers',
+    '/mpesa-rent-collection',
+  ]
+
+  /** Blog post URLs for content SEO. */
+  const blogSlugs = getAllBlogSlugs()
+  const blogEntries: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
+    url: `${baseUrl}/blogs/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }))
+
+  /** Public listing detail URLs for SEO; empty if DB unavailable. */
+  const listingSlugs = await getAllListingSlugs()
+  const listingEntries: MetadataRoute.Sitemap = listingSlugs.map(({ slug, updated_at }) => ({
+    url: `${baseUrl}/listings/${slug}`,
+    lastModified: new Date(updated_at),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }))
 
   const routes = [
     '',
@@ -33,6 +68,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/solutions/banks',
     '/solutions/diaspora',
     '/features',
+    ...pillarRoutes,
     ...featureRoutes,
     '/partnerships',
     '/partnerships/ncba',
@@ -42,12 +78,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/clients',
   ]
 
-  return routes.map((route) => ({
+  const staticEntries: MetadataRoute.Sitemap = routes.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: route === '' ? 1 : 0.8,
   }))
+
+  return [...staticEntries, ...blogEntries, ...listingEntries]
 }
 
 

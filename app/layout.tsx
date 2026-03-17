@@ -10,31 +10,35 @@ import { AnalyticsProvider } from "@/components/analytics-provider";
 import { IntercomProvider } from "@/components/intercom-provider";
 import { AuthProvider } from "@/components/auth/auth-provider";
 
+/** Body font; display: swap avoids invisible text (FOIT) and improves FCP/LCP. */
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
-/** Display font for marketing headlines; distinctive and confident. */
+/** Display font for marketing headlines; distinctive and confident. Swap prevents FOIT. */
 const syne = Syne({
   variable: "--font-display",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://nyumbazetu.com"),
+  metadataBase: new URL("https://www.nyumbazetu.com"),
   title: {
-    default: "Nyumba Zetu | Property Management Infrastructure for Modern Kenyan Real Estate",
+    default: "Property Management Software for Kenya | Rent Collection, Accounting & Tenant Management | Nyumba Zetu",
     template: "%s | Nyumba Zetu",
   },
-  description: "Nyumba Zetu is a full-stack property, accounting, and tenant experience platform built for landlords, property managers, committees, developers, and banks in Kenya.",
-  keywords: ["property management", "Kenya", "real estate", "rent collection", "accounting", "KRA eTIMS", "property management software", "M-Pesa", "property management Kenya", "landlord software"],
+  description: "Nyumba Zetu is Kenya's leading property management software. Collect rent via M-Pesa, manage tenants, track maintenance, and run full accounting for estates, landlords, and developers.",
+  keywords: ["property management software Kenya", "rent collection software Kenya", "property management system Kenya", "HOA management Kenya", "M-Pesa rent collection", "estate management Kenya", "landlord software Kenya", "tenant management", "KRA eTIMS", "property accounting"],
   authors: [{ name: "Nyumba Zetu" }],
   creator: "Nyumba Zetu",
   publisher: "Nyumba Zetu",
@@ -46,10 +50,10 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_KE",
-    url: "https://nyumbazetu.com",
+    url: "https://www.nyumbazetu.com",
     siteName: "Nyumba Zetu",
-    title: "Nyumba Zetu | Property Management Infrastructure for Modern Kenyan Real Estate",
-    description: "Nyumba Zetu is a full-stack property, accounting, and tenant experience platform built for landlords, property managers, committees, developers, and banks in Kenya.",
+    title: "Property Management Software for Kenya | Nyumba Zetu",
+    description: "Nyumba Zetu is Kenya's leading property management software. Collect rent via M-Pesa, manage tenants, track maintenance, and run full accounting for estates, landlords, and developers.",
     images: [
       {
         url: "/og-image.jpg",
@@ -61,8 +65,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nyumba Zetu | Property Management Infrastructure for Modern Kenyan Real Estate",
-    description: "Nyumba Zetu is a full-stack property, accounting, and tenant experience platform built for landlords, property managers, committees, developers, and banks in Kenya.",
+    title: "Property Management Software for Kenya | Nyumba Zetu",
+    description: "Nyumba Zetu is Kenya's leading property management software. Collect rent via M-Pesa, manage tenants, track maintenance, and run full accounting for estates, landlords, and developers.",
     images: ["/og-image.jpg"],
     creator: "@nyumbazetu",
   },

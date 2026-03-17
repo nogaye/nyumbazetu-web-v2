@@ -24,6 +24,10 @@ const BADGE = "Kenya's #1 property management platform";
 /** Category-defining vision headline; signals platform/infrastructure positioning. */
 const HEADLINE = "The operating system for African real estate";
 
+/** SEO-facing line: primary keywords for search (visible to users and crawlers). */
+const SEO_SUBLINE =
+  "Property management software for Kenya: rent collection, accounting & tenant management.";
+
 /** Clear product explanation: what the platform does (vision → explanation). */
 const SUBHEADLINE =
   "One platform for collections, accounting, tenant experience, and compliance. M-Pesa, bank, eTIMS—all integrated. Real-time visibility for every stakeholder.";
@@ -70,15 +74,16 @@ export function HeroSingleV2() {
       </div>
 
       <div className="relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl w-full pt-20 md:pt-28 pb-16 md:pb-24 text-center">
+        {/* initial={false} so LCP content (headline/text) is visible on first paint; avoids delayed LCP from opacity animation. */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-4xl mx-auto"
         >
           {/* Credibility badge */}
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.5 }}
             className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary mb-8 px-4 py-2.5 rounded-full bg-primary/15 border border-primary/25 text-primary-foreground/90"
@@ -87,23 +92,33 @@ export function HeroSingleV2() {
             <span>{BADGE}</span>
           </motion.div>
 
-          {/* Headline — display font for impact */}
+          {/* Headline — display font for impact; no initial opacity so LCP is immediate. */}
           <motion.h1
-            initial={{ opacity: 0, y: 16 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               delay: 0.25,
               duration: 0.6,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-[1.08] tracking-[-0.03em] text-white"
+            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-3 leading-[1.08] tracking-[-0.03em] text-white"
           >
             {HEADLINE}
           </motion.h1>
 
+          {/* SEO subline: keyword-rich for search; visible and readable. */}
+          <motion.p
+            initial={false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="text-base md:text-lg text-primary/95 font-medium mb-6"
+          >
+            {SEO_SUBLINE}
+          </motion.p>
+
           {/* Subheadline */}
           <motion.p
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.5 }}
             className="text-lg md:text-xl lg:text-2xl text-slate-300 mb-10 leading-relaxed max-w-3xl mx-auto"
@@ -113,7 +128,7 @@ export function HeroSingleV2() {
 
           {/* CTAs — primary with glow on hover; secondary for exploration */}
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.5 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
@@ -143,7 +158,7 @@ export function HeroSingleV2() {
 
           {/* Stats bar — social proof and quick value; three columns for impact */}
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.65, duration: 0.5 }}
             className="flex flex-wrap justify-center gap-6 sm:gap-10 md:gap-16 mb-10"
@@ -164,7 +179,7 @@ export function HeroSingleV2() {
 
           {/* Footnote: clarifies that collection rate is platform average */}
           <motion.p
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.5 }}
             className="text-xs text-slate-500 mb-6 max-w-xl mx-auto"
@@ -174,7 +189,7 @@ export function HeroSingleV2() {
 
           {/* Social proof line */}
           <motion.p
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.75, duration: 0.5 }}
             className="text-sm text-slate-500"
@@ -184,10 +199,10 @@ export function HeroSingleV2() {
         </motion.div>
       </div>
 
-      {/* Scroll indicator — invites user to explore */}
+      {/* Scroll indicator — invites user to explore; below fold so no LCP impact. */}
       <motion.a
         href={`#${SCROLL_TARGET_ID}`}
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.5 }}
         className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-500 hover:text-slate-400 transition-colors"

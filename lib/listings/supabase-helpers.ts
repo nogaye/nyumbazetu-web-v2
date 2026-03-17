@@ -266,6 +266,40 @@ export async function fetchPropertyBySlug(slug: string): Promise<Property | null
 }
 
 /**
+ * Fetch slugs (and updated_at) of all public, active listings for sitemap generation.
+ * Returns empty array when Supabase is not configured or on error so sitemap build does not fail.
+ *
+ * @returns Array of { slug, updated_at } for use in sitemap.xml
+ */
+export async function getAllListingSlugs(): Promise<Array<{ slug: string; updated_at: string }>> {
+  if (!isSupabaseConfigured()) {
+    return [];
+  }
+
+  try {
+    const { data, error } = await supabaseServer!
+      .from("tb_listing_properties")
+      .select("slug, updated_at")
+      .eq("is_active", true)
+      .eq("is_published", true)
+      .eq("is_deleted", false);
+
+    if (error) {
+      console.warn("getAllListingSlugs:", error.message);
+      return [];
+    }
+
+    return (data || []).map((row: { slug: string; updated_at: string }) => ({
+      slug: row.slug,
+      updated_at: row.updated_at ?? new Date().toISOString(),
+    }));
+  } catch (error) {
+    console.warn("getAllListingSlugs error:", error);
+    return [];
+  }
+}
+
+/**
  * Fetch all images for a property from Supabase.
  * Returns empty array when not configured or on error; no mock fallback.
  *

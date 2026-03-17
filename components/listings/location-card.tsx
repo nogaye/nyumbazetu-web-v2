@@ -3,9 +3,11 @@
 /**
  * Location card for the listings marketplace: shows a location/neighborhood with
  * listing count and optional image. Used on the listings homepage for "Popular locations".
+ * Uses Next/Image with explicit aspect ratio to avoid CLS and enable AVIF/WebP.
  */
 
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -49,10 +51,12 @@ export function LocationCard({
     >
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
         {imageUrl ? (
-          <img
+          <Image
             src={imageUrl}
-            alt=""
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+            alt={`Properties in ${name}`}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">

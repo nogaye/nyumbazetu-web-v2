@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/'],
     },
-    sitemap: 'https://nyumbazetu.com/sitemap.xml',
+    sitemap: 'https://www.nyumbazetu.com/sitemap.xml',
   }
 }
 

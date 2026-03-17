@@ -1,121 +1,67 @@
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent } from "@/components/ui/card";
-import Image from "next/image";
 import Link from "next/link";
+import { BLOG_POSTS } from "@/lib/blogs/content";
 
 export const metadata = {
-  title: "Blogs - Nyumba Zetu",
-  description: "Read the latest articles and insights from Nyumba Zetu",
+  title: "Blog – Property Management Insights for Kenya",
+  description:
+    "Articles on property management software, rent collection with M-Pesa, HOA and estate management, and accounting in Kenya. Tips and guides from Nyumba Zetu.",
 };
 
-// This would typically come from an API or CMS
-// For now, using placeholder data structure
-interface Blog {
-  id: number;
-  uuid?: string;
-  title: string;
-  url?: string;
-  author?: {
-    name?: string;
-    imageUrl?: string;
-  } | string;
-  content?: string;
-  summary?: string;
-  publishedDate?: Date;
-  timeAgo?: string;
-  lastUpdated?: Date | string;
-  tags?: string[];
-  categories?: string[];
-  imageUrl?: string;
-  slug?: string;
-  status?: "draft" | "published" | "archived";
+/** Formats a date string for display (e.g. "15 Jan 2025"). */
+function formatDate(iso: string): string {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 }
 
 export default function BlogsPage() {
-  // Placeholder - in production, this would fetch from an API
-  const blogs: Blog[] = [];
 
   return (
     <>
       <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
         <SectionHeader
-          title="Blogs & Insights"
-          description="Stay updated with the latest property management insights, tips, and industry news"
+          title="Blog & Insights"
+          description="Property management insights for Kenya: rent collection, M-Pesa, HOA and estate management, and accounting. Original guides and articles from Nyumba Zetu."
         />
       </Section>
 
       <Section>
         <div className="max-w-5xl mx-auto">
-          {blogs.length === 0 ? (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <p className="text-lg text-slate-600 dark:text-slate-400">
-                  No blog posts available at the moment. Check back soon for updates!
-                </p>
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="space-y-8">
-              {blogs.map((item) => (
-                <Card key={item.id} className="overflow-hidden">
-                  <div className="flex flex-col md:flex-row gap-4">
-                    {item.imageUrl && (
-                      <div className="w-full md:w-1/3 relative rounded-lg overflow-hidden">
-                        <Image
-                          className="w-full h-full object-cover"
-                          src={item.imageUrl}
-                          alt={item.title}
-                          width={400}
-                          height={300}
-                          sizes="(max-width: 768px) 100vw, 400px"
-                        />
-                      </div>
-                    )}
-                    <div className={`flex-1 ${item.imageUrl ? "md:w-2/3" : "w-full"} p-4 md:p-6`}>
-                      <h3 className="text-2xl font-semibold mb-2">
-                        <Link
-                          href={item.url || `/blogs/${item.slug || item.id}`}
-                          className="text-slate-900 dark:text-slate-50 hover:underline"
-                        >
-                          {item.title}
-                        </Link>
-                      </h3>
-                      {item.summary && (
-                        <p
-                          className="text-slate-700 dark:text-slate-300 mb-4"
-                          dangerouslySetInnerHTML={{ __html: item.summary }}
-                        />
-                      )}
-                      <div className="author mt-3 flex items-center gap-2">
-                        {typeof item.author === "object" && item.author?.imageUrl && (
-                          <Image
-                            src={item.author.imageUrl}
-                            alt={item.author.name || "Author"}
-                            className="rounded-full shadow-md"
-                            width={40}
-                            height={40}
-                          />
-                        )}
-                        <div className="name">
-                          <span className="text-slate-700 dark:text-slate-300 font-medium">
-                            {typeof item.author === "object"
-                              ? item.author?.name
-                              : item.author || "Nyumba Zetu"}
+          <div className="space-y-8">
+            {BLOG_POSTS.map((post) => (
+              <Card key={post.slug} className="overflow-hidden hover:shadow-md transition-shadow">
+                <CardContent className="p-6 md:p-8">
+                  <h2 className="text-2xl font-semibold mb-2">
+                    <Link
+                      href={`/blogs/${post.slug}`}
+                      className="text-slate-900 dark:text-slate-50 hover:text-primary transition-colors"
+                    >
+                      {post.title}
+                    </Link>
+                  </h2>
+                  <p className="text-slate-700 dark:text-slate-300 mb-4">{post.summary}</p>
+                  <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+                    <span className="font-medium text-slate-700 dark:text-slate-300">{post.author}</span>
+                    <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+                    {post.tags.length > 0 && (
+                      <span className="flex flex-wrap gap-2">
+                        {post.tags.slice(0, 3).map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-xs"
+                          >
+                            {tag}
                           </span>
-                          <div className="stats">
-                            <small className="text-slate-500 dark:text-slate-400 block">
-                              {item.timeAgo || "Recently"}
-                            </small>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                        ))}
+                      </span>
+                    )}
                   </div>
-                </Card>
-              ))}
-            </div>
-          )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </Section>
     </>
