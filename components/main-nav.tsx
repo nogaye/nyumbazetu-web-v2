@@ -204,6 +204,7 @@ export function MainNav() {
               height={36}
               className="h-9 w-9 flex-shrink-0"
               priority
+              fetchPriority="high"
             />
             <span
               className={cn(

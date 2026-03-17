@@ -84,7 +84,8 @@ function HeroAfricanPattern({
 export function HeroSingleV2() {
   return (
     <section className="relative min-h-[90vh] flex flex-col items-center justify-center overflow-hidden bg-slate-950 dark:bg-slate-950">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Decorative layer: paint containment so blur/grain don't affect rest of page (better LCP/CLS). */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none [contain:paint]">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900" />
         <div className="hero-mesh-orb absolute -top-[40%] -right-[20%] w-[72vw] max-w-[720px] h-[72vw] max-h-[720px] rounded-full bg-primary/18 blur-[96px]" />
         <div
