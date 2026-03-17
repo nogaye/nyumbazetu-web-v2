@@ -46,11 +46,17 @@ export function AuthLayoutShell({
         direction="to-b"
         dark={false}
         className={cn(
-          "flex flex-1 items-center justify-center p-4 sm:p-6 min-h-screen",
+          "relative flex min-h-screen flex-1",
           !hideSidePanel && "md:pl-8 lg:pl-12"
         )}
       >
-        {children}
+        {/**
+         * Full-bleed inner column so routes (e.g. sign-in) can use absolute inset-0
+         * overlays that cover the whole gradient, not just the form’s box.
+         */}
+        <div className="flex min-h-screen w-full min-w-0 flex-1 flex-col items-center justify-center p-4 sm:p-6">
+          {children}
+        </div>
       </SavannahGradient>
     </div>
   );

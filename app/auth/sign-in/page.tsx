@@ -72,103 +72,107 @@ function SignInForm() {
   };
 
   return (
-    <AuthFormCard
-      icon={<Lock className="h-6 w-6" />}
-      title="Sign in"
-      description="Welcome back — let's manage your properties."
-      footer={
-        <p className="text-center text-sm text-muted-foreground">
-          Don&apos;t have an account?{" "}
-          <Link
-            href="/auth/sign-up"
-            className="font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
-          >
-            Sign up
-          </Link>
-        </p>
-      }
-    >
-      <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-        <AuthErrorAlert message={error} />
-
-        <div className="space-y-2">
-          <Label htmlFor="signin-email">Email</Label>
-          <Input
-            id="signin-email"
-            type="email"
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@example.com"
-            disabled={isLoading}
-            required
-            aria-invalid={!!error}
-            aria-describedby={error ? "signin-error" : undefined}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <Label htmlFor="signin-password">Password</Label>
+    <>
+      {/* Frosted card: readable and premium on the Ankara-style backdrop. */}
+      <AuthFormCard
+        className="border-2 border-amber-200/80 bg-white/95 shadow-2xl shadow-amber-900/10 ring-2 ring-amber-400/25 backdrop-blur-xl backdrop-saturate-150 dark:border-amber-900/40 dark:bg-slate-950/92 dark:shadow-black/40 dark:ring-amber-500/15"
+        icon={<Lock className="h-6 w-6" />}
+        title="Sign in"
+        description="Welcome back — let's manage your properties."
+        footer={
+          <p className="text-center text-sm text-muted-foreground">
+            Don&apos;t have an account?{" "}
             <Link
-              href="/auth/forgot-password"
-              className="text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
+              href="/auth/sign-up"
+              className="font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
             >
-              Forgot password?
+              Sign up
             </Link>
+          </p>
+        }
+      >
+        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+          <AuthErrorAlert message={error} />
+
+          <div className="space-y-2">
+            <Label htmlFor="signin-email">Email</Label>
+            <Input
+              id="signin-email"
+              type="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              disabled={isLoading}
+              required
+              aria-invalid={!!error}
+              aria-describedby={error ? "signin-error" : undefined}
+            />
           </div>
-          <PasswordInput
-            id="signin-password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={onKeyDown}
-            placeholder="••••••••"
-            disabled={isLoading}
-            required
-            aria-invalid={!!error}
-          />
-          {capsLockOn && (
-            <p className="text-xs text-amber-600 dark:text-amber-500" role="status">
-              Caps Lock is on.
-            </p>
-          )}
-        </div>
 
-        <div className="flex items-center gap-2">
-          <Checkbox
-            id="signin-remember"
-            checked={rememberMe}
-            onCheckedChange={(checked) => setRememberMe(checked === true)}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <Label htmlFor="signin-password">Password</Label>
+              <Link
+                href="/auth/forgot-password"
+                className="text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
+              >
+                Forgot password?
+              </Link>
+            </div>
+            <PasswordInput
+              id="signin-password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={onKeyDown}
+              placeholder="••••••••"
+              disabled={isLoading}
+              required
+              aria-invalid={!!error}
+            />
+            {capsLockOn && (
+              <p className="text-xs text-amber-600 dark:text-amber-500" role="status">
+                Caps Lock is on.
+              </p>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id="signin-remember"
+              checked={rememberMe}
+              onCheckedChange={(checked) => setRememberMe(checked === true)}
+              disabled={isLoading}
+              aria-describedby="signin-remember-desc"
+            />
+            <Label
+              id="signin-remember-desc"
+              htmlFor="signin-remember"
+              className="text-sm font-normal text-muted-foreground cursor-pointer"
+            >
+              Remember me
+            </Label>
+          </div>
+
+          <Button
+            type="submit"
+            className="w-full"
             disabled={isLoading}
-            aria-describedby="signin-remember-desc"
-          />
-          <Label
-            id="signin-remember-desc"
-            htmlFor="signin-remember"
-            className="text-sm font-normal text-muted-foreground cursor-pointer"
+            aria-busy={isLoading}
           >
-            Remember me
-          </Label>
-        </div>
-
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={isLoading}
-          aria-busy={isLoading}
-        >
-          {isLoading ? (
-            <>
-              <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
-              Signing in…
-            </>
-          ) : (
-            "Sign in"
-          )}
-        </Button>
-      </form>
-    </AuthFormCard>
+            {isLoading ? (
+              <>
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
+                Signing in…
+              </>
+            ) : (
+              "Sign in"
+            )}
+          </Button>
+        </form>
+      </AuthFormCard>
+    </>
   );
 }
 
@@ -177,7 +181,7 @@ export default function SignInPage() {
     <Suspense
       fallback={
         <div
-          className="w-full max-w-[400px] rounded-xl border border-slate-200 bg-card p-8 text-center text-muted-foreground dark:border-slate-700"
+          className="w-full max-w-[400px] rounded-xl border-2 border-amber-200/80 bg-white/95 p-8 text-center text-muted-foreground shadow-2xl shadow-amber-900/10 ring-2 ring-amber-400/20 backdrop-blur-xl dark:border-amber-900/40 dark:bg-slate-950/92 dark:ring-amber-500/15"
           aria-busy="true"
         >
           Loading…

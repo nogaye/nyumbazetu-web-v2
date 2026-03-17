@@ -255,3 +255,48 @@
   animation: cta-shine 0.8s ease-out;
   pointer-events: none;
 }
+
+/* Sign-in Ankara backdrop: slow “living cloth” motion; off when prefers-reduced-motion. */
+@keyframes auth-ankara-float {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(-18px, 12px);
+  }
+  66% {
+    transform: translate(14px, -10px);
+  }
+}
+@keyframes auth-ankara-stripe-shift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 180px 140px;
+  }
+}
+@keyframes auth-ankara-bloom-pulse {
+  0%,
+  100% {
+    opacity: 0.82;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .auth-ankara-float {
+    animation: auth-ankara-float 32s ease-in-out infinite;
+  }
+  .auth-ankara-float-reverse {
+    animation: auth-ankara-float 42s ease-in-out infinite reverse;
+  }
+  .auth-ankara-stripe-shift {
+    animation: auth-ankara-stripe-shift 70s linear infinite;
+  }
+  .auth-ankara-bloom-pulse {
+    animation: auth-ankara-bloom-pulse 10s ease-in-out infinite;
+  }
+}
