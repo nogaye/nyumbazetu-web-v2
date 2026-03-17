@@ -11,10 +11,6 @@ const BADGE = "Kenya's #1 property management platform";
 /** Category-defining vision headline; signals platform/infrastructure positioning. */
 const HEADLINE = "The operating system for African real estate";
 
-/** SEO-facing line: primary keywords for search (visible to users and crawlers). */
-const SEO_SUBLINE =
-  "Property management software for Kenya: rent collection, accounting & tenant management.";
-
 /** Clear product explanation: what the platform does (vision → explanation). */
 const SUBHEADLINE =
   "One platform for collections, accounting, tenant experience, and compliance. M-Pesa, bank, eTIMS—all integrated. Real-time visibility for every stakeholder.";
@@ -120,10 +116,6 @@ export function HeroSingleV2() {
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-3 leading-[1.08] tracking-[-0.03em] text-white">
             {HEADLINE}
           </h1>
-
-          <p className="text-base md:text-lg text-primary/95 font-medium mb-6">
-            {SEO_SUBLINE}
-          </p>
 
           <p className="text-lg md:text-xl lg:text-2xl text-slate-300 mb-10 leading-relaxed max-w-3xl mx-auto">
             {SUBHEADLINE}
