@@ -2,7 +2,7 @@ import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
-import { BLOG_POSTS } from "@/lib/blogs/content";
+import { getAllBlogListingEntries } from "@/lib/blogs/content";
 
 export const metadata = {
   title: "Blog – Property Management Insights for Kenya",
@@ -17,6 +17,7 @@ function formatDate(iso: string): string {
 }
 
 export default function BlogsPage() {
+  const posts = getAllBlogListingEntries();
 
   return (
     <>
@@ -30,12 +31,12 @@ export default function BlogsPage() {
       <Section>
         <div className="max-w-5xl mx-auto">
           <div className="space-y-8">
-            {BLOG_POSTS.map((post) => (
-              <Card key={post.slug} className="overflow-hidden hover:shadow-md transition-shadow">
+            {posts.map((post) => (
+              <Card key={post.href} className="overflow-hidden hover:shadow-md transition-shadow">
                 <CardContent className="p-6 md:p-8">
                   <h2 className="text-2xl font-semibold mb-2">
                     <Link
-                      href={`/blogs/${post.slug}`}
+                      href={post.href}
                       className="text-slate-900 dark:text-slate-50 hover:text-primary transition-colors"
                     >
                       {post.title}

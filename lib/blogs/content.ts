@@ -1,8 +1,11 @@
 /**
  * Static blog content for SEO and thought leadership. Each post targets
  * specific keywords and links to product/solutions pages. Used by the blogs
- * list and blog slug page.
+ * list and /blogs/[slug] pages. Legacy Heroku posts live under /blogs/[id]/[slug]
+ * via migrated-content.ts and are merged into the listing here.
  */
+
+import { MIGRATED_BLOG_POSTS } from "@/lib/blogs/migrated-content";
 
 export interface BlogPost {
   /** URL slug; used in /blogs/[slug]. */
@@ -141,4 +144,50 @@ export function getAllBlogSlugs(): string[] {
 /** Returns a single post by slug, or null if not found. */
 export function getBlogPostBySlug(slug: string): BlogPost | null {
   return BLOG_POSTS.find((p) => p.slug === slug) ?? null;
+}
+
+/**
+ * One row for the /blogs index: either a legacy URL (/blogs/{id}/{slug}) or a
+ * newer single-segment post (/blogs/{slug}).
+ */
+export interface BlogListingEntry {
+  /** Next.js href, e.g. /blogs/114/foo or /blogs/how-to-collect-rent. */
+  href: string;
+  /** Card and H1 title. */
+  title: string;
+  /** Excerpt for the listing card. */
+  summary: string;
+  /** Byline. */
+  author: string;
+  /** Sort key and display date (ISO YYYY-MM-DD). */
+  publishedAt: string;
+  /** Topic chips (may be empty). */
+  tags: string[];
+}
+
+/**
+ * Returns all blog posts for the listing page: migrated legacy articles first
+ * by date merged with newer single-slug posts, newest first.
+ * @returns Sorted array of href + metadata for each post.
+ */
+export function getAllBlogListingEntries(): BlogListingEntry[] {
+  const migrated: BlogListingEntry[] = MIGRATED_BLOG_POSTS.map((p) => ({
+    href: `/blogs/${p.legacyId}/${p.slug}`,
+    title: p.title,
+    summary: p.summary,
+    author: p.author,
+    publishedAt: p.publishedAt,
+    tags: p.tags,
+  }));
+  const newer: BlogListingEntry[] = BLOG_POSTS.map((p) => ({
+    href: `/blogs/${p.slug}`,
+    title: p.title,
+    summary: p.summary,
+    author: p.author,
+    publishedAt: p.publishedAt,
+    tags: p.tags,
+  }));
+  return [...migrated, ...newer].sort((a, b) =>
+    b.publishedAt.localeCompare(a.publishedAt)
+  );
 }

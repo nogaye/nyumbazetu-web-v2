@@ -1,42 +1,78 @@
 /**
- * Dynamic blog post page. Renders a single post from lib/blogs/content.ts
- * with metadata and HTML content. Supports static generation via generateStaticParams.
+ * Blog detail page that supports both URL formats:
+ * - /blogs/{slug}
+ * - /blogs/{legacyId}/{slug}
  */
 import { Section } from "@/components/section";
 import { ArticleContent } from "@/components/article-content";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getAllBlogSlugs, getBlogPostBySlug } from "@/lib/blogs/content";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { getAllBlogSlugs, getBlogPostBySlug } from "@/lib/blogs/content";
+import {
+  getAllMigratedBlogParams,
+  getMigratedBlogPost,
+} from "@/lib/blogs/migrated-content";
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ segments: string[] }>;
+}
+
+type BlogPageData = {
+  title: string;
+  summary: string;
+  content: string;
+  publishedAt: string;
+  author: string;
+  tags: string[];
+};
+
+function getBlogPageData(segments: string[]): BlogPageData | null {
+  if (segments.length === 1) {
+    return getBlogPostBySlug(segments[0]);
+  }
+
+  if (segments.length === 2) {
+    const [id, slug] = segments;
+    return getMigratedBlogPost(id, slug);
+  }
+
+  return null;
 }
 
 export async function generateStaticParams() {
-  return getAllBlogSlugs().map((slug) => ({ slug }));
+  return [
+    ...getAllBlogSlugs().map((slug) => ({ segments: [slug] })),
+    ...getAllMigratedBlogParams().map(({ id, slug }) => ({ segments: [id, slug] })),
+  ];
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const { slug } = await params;
-  const post = getBlogPostBySlug(slug);
-  if (!post) return { title: "Blog Post | Nyumba Zetu" };
+  const { segments } = await params;
+  const post = getBlogPageData(segments);
+
+  if (!post) {
+    return { title: "Blog Post | Nyumba Zetu" };
+  }
+
   return {
     title: post.title,
     description: post.summary,
   };
 }
 
-/** Formats a date string for display. */
 function formatDate(iso: string): string {
   const d = new Date(iso);
   return d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
-  const { slug } = await params;
-  const post = getBlogPostBySlug(slug);
-  if (!post) notFound();
+  const { segments } = await params;
+  const post = getBlogPageData(segments);
+
+  if (!post) {
+    notFound();
+  }
 
   return (
     <>
