@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getFeaturesForPricing, PLAN_IDS } from "@/lib/features";
+import { cn } from "@/lib/utils";
 import {
   BillingMode,
   calculateAnnualUnitPrice,
@@ -135,6 +136,46 @@ export function PricingContent() {
   /** Annual is pre-selected to emphasize best value while keeping monthly visible. */
   const [billingMode, setBillingMode] = useState<BillingMode>("annual");
 
+  /** Plans currently enabled for display on the pricing page. */
+  const visiblePlans = useMemo(
+    () => PRICING_PLANS.filter((plan) => plan.isVisible),
+    [],
+  );
+  /** Whether the Free tier is currently enabled in pricing visibility settings. */
+  const isFreePlanVisible = useMemo(
+    () => PRICING_PLANS.some((plan) => plan.id === "free" && plan.isVisible),
+    [],
+  );
+  /** FAQ entries filtered by active pricing visibility configuration. */
+  const visibleFaqs = useMemo(
+    () =>
+      PRICING_FAQS.filter(
+        (faq) => isFreePlanVisible || faq.q !== "What’s included in the Free tier?",
+      ),
+    [isFreePlanVisible],
+  );
+  /** Grid sizing that adapts to how many plans are currently visible. */
+  const planGridClassName = useMemo(() => {
+    if (visiblePlans.length <= 1) {
+      return "grid-cols-1 max-w-md mx-auto";
+    }
+
+    if (visiblePlans.length === 2) {
+      return "sm:grid-cols-2 max-w-4xl mx-auto";
+    }
+
+    if (visiblePlans.length === 3) {
+      return "md:grid-cols-3 max-w-7xl mx-auto";
+    }
+
+    return "sm:grid-cols-2 xl:grid-cols-4";
+  }, [visiblePlans.length]);
+  /** Plan IDs for the "Features by plan" matrix, filtered by visible pricing plans. */
+  const visibleFeaturePlanIds = useMemo(
+    () => PLAN_IDS.filter((planId) => visiblePlans.some((plan) => plan.name === planId)),
+    [visiblePlans],
+  );
+
   /** Example calculations for Premier portfolio sizes based on current billing mode. */
   const premierExamples = useMemo(
     () => getPremierPortfolioExamples(billingMode),
@@ -146,7 +187,7 @@ export function PricingContent() {
       <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
         <SectionHeader
           title="Start free. Scale when you’re ready."
-          description="Free for up to 3 units. Paid plans start at KES 80 per unit/month (annual billing) or KES 100 per unit/month (monthly billing)."
+          description="Paid plans start at KES 80 per unit/month (annual billing) or KES 100 per unit/month (monthly billing)."
         />
       </Section>
 
@@ -186,8 +227,8 @@ export function PricingContent() {
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8">
-          {PRICING_PLANS.map((plan) => {
+        <div className={cn("grid gap-6 lg:gap-8", planGridClassName)}>
+          {visiblePlans.map((plan) => {
             const pricing = getPlanPricingDisplay(billingMode, plan.id);
 
             return (
@@ -383,18 +424,14 @@ export function PricingContent() {
                 <th className="py-4 px-4 font-semibold text-slate-900 dark:text-slate-50 w-[min(220px,30%)]">
                   Feature
                 </th>
-                <th className="py-4 px-3 font-semibold text-slate-700 dark:text-slate-300 text-center w-[72px]">
-                  Free
-                </th>
-                <th className="py-4 px-3 font-semibold text-slate-700 dark:text-slate-300 text-center w-[72px]">
-                  Standard
-                </th>
-                <th className="py-4 px-3 font-semibold text-slate-700 dark:text-slate-300 text-center w-[72px]">
-                  Premier
-                </th>
-                <th className="py-4 px-3 font-semibold text-slate-700 dark:text-slate-300 text-center w-[72px]">
-                  Enterprise
-                </th>
+                {visibleFeaturePlanIds.map((planId) => (
+                  <th
+                    key={planId}
+                    className="py-4 px-3 font-semibold text-slate-700 dark:text-slate-300 text-center w-[72px]"
+                  >
+                    {planId}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -415,7 +452,7 @@ export function PricingContent() {
                       {row.description}
                     </p>
                   </td>
-                  {PLAN_IDS.map((planId) => (
+                  {visibleFeaturePlanIds.map((planId) => (
                     <td key={planId} className="py-4 px-3 text-center">
                       {planId === "Free" ? (
                         row.plans.includes("Free") ? (
@@ -480,7 +517,7 @@ export function PricingContent() {
           </p>
         </div>
         <div className="max-w-3xl mx-auto space-y-6">
-          {PRICING_FAQS.map((faq) => (
+          {visibleFaqs.map((faq) => (
             <Card
               key={faq.q}
               className="hover:shadow-md transition-all duration-200 bg-white/10 backdrop-blur-sm border-white/20"

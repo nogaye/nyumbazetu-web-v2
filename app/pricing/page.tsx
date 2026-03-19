@@ -11,7 +11,7 @@ import { PricingContent } from "@/app/pricing/pricing-content";
 export const metadata = {
   title: "Pricing | Nyumba Zetu",
   description:
-    "Free for up to 3 units. Paid plans start at KES 80 per unit/month (annual billing) or KES 100 per unit/month (monthly billing).",
+    "Paid plans start at KES 80 per unit/month (annual billing) or KES 100 per unit/month (monthly billing).",
 };
 
 /**

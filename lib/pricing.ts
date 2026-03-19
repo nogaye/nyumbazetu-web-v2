@@ -18,6 +18,8 @@ export const PREMIER_EXAMPLE_UNITS = [10, 50, 200] as const;
 export interface PricingPlan {
   /** Stable identifier used for keys, calculations, and conditional UI. */
   id: "free" | "standard" | "premier" | "enterprise";
+  /** Controls whether the plan is currently displayed on the pricing page. */
+  isVisible: boolean;
   /** Human-readable plan name displayed on pricing cards and section labels. */
   name: string;
   /** Optional subtitle for additional positioning context (for Free tier). */
@@ -53,6 +55,7 @@ export const DEFAULT_ANNUAL_DISCOUNT_PERCENT = 20;
 export const PRICING_PLANS: PricingPlan[] = [
   {
     id: "free",
+    isVisible: false,
     name: "Free",
     subtitle: "Landlord Starter",
     whoIsItFor: "Individual landlords",
@@ -83,6 +86,7 @@ export const PRICING_PLANS: PricingPlan[] = [
   },
   {
     id: "standard",
+    isVisible: true,
     name: "Standard",
     whoIsItFor: "Small property managers",
     description:
@@ -104,6 +108,7 @@ export const PRICING_PLANS: PricingPlan[] = [
   },
   {
     id: "premier",
+    isVisible: true,
     name: "Premier",
     whoIsItFor: "Growing portfolios",
     description:
@@ -133,6 +138,7 @@ export const PRICING_PLANS: PricingPlan[] = [
   },
   {
     id: "enterprise",
+    isVisible: true,
     name: "Enterprise",
     whoIsItFor: "Large estates & institutions",
     description:
