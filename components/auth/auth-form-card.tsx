@@ -8,7 +8,13 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { fadeInUp, springTransition } from "@/lib/motion";
 
@@ -46,37 +52,41 @@ export function AuthFormCard({
       variants={fadeInUp}
       transition={springTransition}
     >
-    <Card
-      className={cn(
-        "w-full max-w-[400px] border-slate-200/90 shadow-card dark:border-slate-700/90 dark:shadow-slate-900/20",
-        className
-      )}
-      aria-labelledby="auth-form-title"
-      aria-describedby={description ? "auth-form-desc" : undefined}
-    >
-      <CardHeader className="space-y-3 pb-4 text-center">
-        {icon && (
-          <div
-            className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary"
-            aria-hidden
+      <Card
+        className={cn(
+          "w-full max-w-[400px] border-slate-200/90 shadow-card dark:border-slate-700/90 dark:shadow-slate-900/20",
+          className,
+        )}
+        aria-labelledby="auth-form-title"
+        aria-describedby={description ? "auth-form-desc" : undefined}
+      >
+        <CardHeader className="space-y-3 pb-4 text-center">
+          {icon && (
+            <div
+              className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary"
+              aria-hidden
+            >
+              {icon}
+            </div>
+          )}
+          <CardTitle
+            id="auth-form-title"
+            className="text-2xl font-semibold tracking-tight"
           >
-            {icon}
-          </div>
-        )}
-        <CardTitle id="auth-form-title" className="text-2xl font-semibold tracking-tight">
-          {title}
-        </CardTitle>
-        {description != null && description !== "" && (
-          <CardDescription id="auth-form-desc" className="text-sm text-muted-foreground">
-            {description}
-          </CardDescription>
-        )}
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {children}
-      </CardContent>
-      {footer ? <div className="px-6 pb-6 pt-0">{footer}</div> : null}
-    </Card>
+            {title}
+          </CardTitle>
+          {description != null && description !== "" && (
+            <CardDescription
+              id="auth-form-desc"
+              className="text-sm text-muted-foreground"
+            >
+              {description}
+            </CardDescription>
+          )}
+        </CardHeader>
+        <CardContent className="space-y-4">{children}</CardContent>
+        {footer ? <div className="px-6 pb-6 pt-0">{footer}</div> : null}
+      </Card>
     </motion.div>
   );
 }

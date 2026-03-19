@@ -1,16 +1,32 @@
+/**
+ * Homepage testimonials: prefers live Google reviews when Places API is configured
+ * (`GOOGLE_PLACES_API_KEY` + `GOOGLE_BUSINESS_PLACE_ID`); otherwise uses curated
+ * static quotes. Grid + carousel share the same three visible items; new Google
+ * reviews appear after cache refresh (see `/api/google-reviews`).
+ */
+
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Section } from "@/components/section";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
+/** One testimonial card / carousel slide (static or mapped from Google). */
 interface ITestimonial {
+  /** Unique id for keys (static 1–8 or derived from Google). */
   id: number;
+  /** Reviewer or customer name. */
   name: string;
+  /** Role, location, or Google subline (stars · relative time). */
   workTitle?: string;
+  /** Short headline. */
   title: string;
+  /** Body copy. */
   description: string;
-  default?: boolean;
+  /** When true, row is from Google (optional author link). */
+  fromGoogle?: boolean;
+  /** Profile URL on Google Maps when `fromGoogle`. */
+  authorUri?: string;
 }
 
 const TESTIMONIALS: ITestimonial[] = [
@@ -18,7 +34,6 @@ const TESTIMONIALS: ITestimonial[] = [
     id: 1,
     name: "Grace Nyambura",
     workTitle: "Property Manager, Gatma Ltd, Nairobi",
-    default: true,
     title: "Great Customer Support",
     description: `Our experience with your customer support and training has been outstanding, deserving a perfect 10/10 score. Your team has shown exceptional reliability, patience, and understanding throughout our interactions. While we encountered occasional challenges with suspense accounts, particularly in reflecting reverted payments, these instances were rare.`,
   },
@@ -73,17 +88,102 @@ const TESTIMONIALS: ITestimonial[] = [
   },
 ];
 
+/** API shape for a single Google review from `/api/google-reviews`. */
+type ApiGoogleReview = {
+  id: string;
+  name: string;
+  workTitle: string;
+  title: string;
+  description: string;
+  rating: number;
+  authorUri?: string;
+};
+
+/**
+ * Shuffles a copy of the array and returns the first `count` items (Fisher–Yates).
+ *
+ * @param items - Source testimonials.
+ * @param count - Max items to return (capped by array length).
+ * @returns Random subset for grid/carousel.
+ */
+function shuffleTake<T>(items: T[], count: number): T[] {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy.slice(0, Math.min(count, copy.length));
+}
+
+/**
+ * Maps API review objects to testimonial rows and merges with static rows until `target` count.
+ *
+ * @param googleRows - Reviews from Google Places.
+ * @param target - Desired number of cards (e.g. 3).
+ * @returns Combined list, Google first then static fillers.
+ */
+function mergeGoogleWithFallback(
+  googleRows: ApiGoogleReview[],
+  target: number,
+): ITestimonial[] {
+  const fromApi: ITestimonial[] = googleRows.map((r, i) => ({
+    id: 10_000 + i,
+    name: r.name,
+    workTitle: r.workTitle,
+    title: r.title,
+    description: r.description,
+    fromGoogle: true,
+    authorUri: r.authorUri,
+  }));
+  if (fromApi.length >= target) {
+    return shuffleTake(fromApi, target);
+  }
+  const need = target - fromApi.length;
+  const fillers = shuffleTake(TESTIMONIALS, need);
+  return shuffleTake([...fromApi, ...fillers], target);
+}
+
 export function LegacyTestimonials() {
-  const [longTestimonials, setLongTestimonials] = useState<ITestimonial[]>(
-    () => TESTIMONIALS.slice(0, 3),
+  const [longTestimonials, setLongTestimonials] = useState<ITestimonial[]>(() =>
+    TESTIMONIALS.slice(0, 3),
   );
   const [currentSlide, setCurrentSlide] = useState(0);
+  /** Average Google rating when synced; null uses legacy 4.9 copy. */
+  const [googleRating, setGoogleRating] = useState<number | null>(null);
+  /** Total rating count from Google when synced. */
+  const [googleRatingCount, setGoogleRatingCount] = useState<number | null>(
+    null,
+  );
+  /** Link to the business on Google Maps. */
+  const [googleMapsUri, setGoogleMapsUri] = useState<string | null>(null);
+
+  const loadGoogleReviews = useCallback(async () => {
+    try {
+      const res = await fetch("/api/google-reviews", { cache: "no-store" });
+      const data = await res.json();
+      if (!data.synced || !Array.isArray(data.reviews) || data.reviews.length === 0) {
+        setLongTestimonials(shuffleTake(TESTIMONIALS, 3));
+        return;
+      }
+      setGoogleRating(
+        typeof data.placeRating === "number" ? data.placeRating : null,
+      );
+      setGoogleRatingCount(
+        typeof data.userRatingCount === "number" ? data.userRatingCount : null,
+      );
+      setGoogleMapsUri(
+        typeof data.googleMapsUri === "string" ? data.googleMapsUri : null,
+      );
+      setLongTestimonials(mergeGoogleWithFallback(data.reviews, 3));
+      setCurrentSlide(0);
+    } catch {
+      setLongTestimonials(shuffleTake(TESTIMONIALS, 3));
+    }
+  }, []);
 
   useEffect(() => {
-    setLongTestimonials(
-      [...TESTIMONIALS].sort(() => 0.5 - Math.random()).slice(0, 3),
-    );
-  }, []);
+    void loadGoogleReviews();
+  }, [loadGoogleReviews]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -91,6 +191,15 @@ export function LegacyTestimonials() {
     }, 5000);
     return () => clearInterval(interval);
   }, [longTestimonials.length]);
+
+  const ratingLabel =
+    googleRating != null
+      ? `${googleRating.toFixed(1)}`
+      : "4.9";
+  const countLabel =
+    googleRatingCount != null && googleRatingCount > 0
+      ? ` (${googleRatingCount.toLocaleString()} reviews)`
+      : "";
 
   return (
     <Section className="bg-slate-900 dark:bg-slate-950 py-5 relative overflow-hidden">
@@ -101,8 +210,13 @@ export function LegacyTestimonials() {
               See why others are making the switch
             </h2>
             <h3 className="text-white font-light text-lg mb-4">
-              We are rated 4.9 star in Google and top-rated by landlords and
-              property managers
+              We are rated{" "}
+              <span className="font-semibold text-yellow-400/95">
+                {ratingLabel}
+              </span>{" "}
+              star{googleRating != null && googleRating !== 1 ? "s" : ""} on
+              Google{countLabel} and top-rated by landlords and property
+              managers
             </h3>
 
             <div className="text-center mb-4">
@@ -112,18 +226,40 @@ export function LegacyTestimonials() {
                 </span>
               ))}
             </div>
+            {googleMapsUri ? (
+              <p className="mb-2">
+                <a
+                  href={googleMapsUri}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-tertiary hover:underline text-sm font-medium"
+                >
+                  Read all reviews on Google →
+                </a>
+              </p>
+            ) : null}
             <hr className="border-t border-white/20 my-4" />
           </div>
         </div>
 
-        {/* Detailed testimonials */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-5">
           {longTestimonials.map((item) => (
             <div key={item.id} className="mb-4 md:mb-0">
               <Card className="mb-6">
                 <CardContent className="text-center pb-0 pt-6">
                   <h4 className="mb-0 text-xl font-semibold text-slate-900 dark:text-slate-50">
-                    {item.name}
+                    {item.fromGoogle && item.authorUri ? (
+                      <a
+                        href={item.authorUri}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline"
+                      >
+                        {item.name}
+                      </a>
+                    ) : (
+                      item.name
+                    )}
                   </h4>
                   <p className="text-slate-600 dark:text-slate-400">
                     {item.workTitle}
@@ -135,6 +271,11 @@ export function LegacyTestimonials() {
                   <p className="mt-2 text-slate-700 dark:text-slate-300 text-start text-sm leading-relaxed">
                     {item.description}
                   </p>
+                  {item.fromGoogle ? (
+                    <p className="mt-2 text-xs text-slate-500 dark:text-slate-500">
+                      Posted on Google
+                    </p>
+                  ) : null}
                 </CardContent>
                 <CardFooter className="text-center pt-1">
                   <div className="mx-auto opacity-20">
@@ -144,6 +285,7 @@ export function LegacyTestimonials() {
                       viewBox="0 0 270 270"
                       version="1.1"
                       xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden
                     >
                       <g
                         stroke="none"
@@ -166,26 +308,25 @@ export function LegacyTestimonials() {
           ))}
         </div>
 
-        {/* Slides */}
         <div className="flex mt-8">
           <div className="w-full flex justify-center text-center flex-col">
             <div className="carousel-container">
               <div className="carousel-inner">
                 <div className="text-center mb-4">
                   <h5 className="text-white text-xl font-semibold mb-2">
-                    {longTestimonials[currentSlide].title}
+                    {longTestimonials[currentSlide]?.title}
                   </h5>
                   <p className="text-white text-start max-w-3xl mx-auto">
-                    {longTestimonials[currentSlide].description}
+                    {longTestimonials[currentSlide]?.description}
                   </p>
                   <div className="author flex justify-center text-center mt-4">
                     <div className="name">
                       <span className="text-white font-semibold">
-                        {longTestimonials[currentSlide].name}
+                        {longTestimonials[currentSlide]?.name}
                       </span>
                       <div className="stats">
                         <small className="text-white opacity-80">
-                          {longTestimonials[currentSlide].workTitle}
+                          {longTestimonials[currentSlide]?.workTitle}
                         </small>
                       </div>
                     </div>
@@ -196,6 +337,7 @@ export function LegacyTestimonials() {
                 {longTestimonials.map((_, index) => (
                   <button
                     key={index}
+                    type="button"
                     className={`w-3 h-3 rounded-full ${
                       currentSlide === index
                         ? "bg-white"

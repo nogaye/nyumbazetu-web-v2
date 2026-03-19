@@ -55,6 +55,8 @@ const nextConfig: NextConfig = {
   images: {
     /** Prefer AVIF/WebP for smaller payloads and faster LCP. */
     formats: ["image/avif", "image/webp"],
+    /** Restrict image qualities to the values used across the site. */
+    qualities: [70, 75, 80],
     remotePatterns: [
       {
         protocol: "https",
