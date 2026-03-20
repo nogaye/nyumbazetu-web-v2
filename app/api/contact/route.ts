@@ -33,6 +33,19 @@ type ContactFormPayload = {
   source?: string;
 };
 
+/**
+ * Context about persistence outcome, included in support notifications so the
+ * team can quickly tell whether the lead exists in the database.
+ */
+type LeadPersistenceContext = {
+  /** True when the lead was successfully inserted into tb_sales_opportunities. */
+  wasSavedToDatabase: boolean;
+  /** Generated database ID when persistence succeeds, otherwise null. */
+  leadId: number | null;
+  /** Database error details captured for support visibility when save fails. */
+  databaseErrorMessage: string | null;
+};
+
 /** Fixed org scope requested for contact form opportunities. */
 const CONTACT_FORM_ORG_ID = 3;
 /** Fixed branch scope requested for contact form opportunities. */
@@ -127,10 +140,14 @@ function buildOpportunityInsert(
  * Sends support email with submitted contact details.
  *
  * @param payload - Validated form payload.
+ * @param persistence - Database save status details for this submission.
  * @returns Resolves when email send has been attempted successfully.
  * @throws When Resend is misconfigured or the send operation fails.
  */
-async function sendSupportEmail(payload: ContactFormPayload): Promise<void> {
+async function sendSupportEmail(
+  payload: ContactFormPayload,
+  persistence: LeadPersistenceContext,
+): Promise<void> {
   const resendApiKey = process.env.RESEND_API_KEY;
   if (!resendApiKey) {
     throw new Error("RESEND_API_KEY is not configured");
@@ -139,26 +156,73 @@ async function sendSupportEmail(payload: ContactFormPayload): Promise<void> {
   const resend = new Resend(resendApiKey);
   const fromEmail =
     process.env.CONTACT_FORM_FROM_EMAIL ??
-    "Nyumba Zetu Contact <onboarding@resend.dev>";
+    "Nyumba Zetu Contact <support@tax.ke>";
 
   const messageBlock = payload.message?.trim()
     ? `<p><strong>Message</strong><br/>${escapeHtml(payload.message.trim())}</p>`
     : "<p><strong>Message</strong><br/>No additional message provided.</p>";
+  const databaseStatusText = persistence.wasSavedToDatabase
+    ? "Saved to database"
+    : "NOT saved to database";
+  const leadReferenceText =
+    persistence.leadId != null
+      ? String(persistence.leadId)
+      : "No lead ID generated";
+  const databaseErrorBlock = persistence.databaseErrorMessage
+    ? `<p style="margin: 8px 0 0 0; color: #b42318;"><strong>Database Error:</strong> ${escapeHtml(
+        persistence.databaseErrorMessage,
+      )}</p>`
+    : "";
 
   await resend.emails.send({
     from: fromEmail,
     to: CONTACT_EMAIL,
-    subject: `New website contact from ${payload.name.trim()}`,
+    subject: "Lead Opportunity Submitted on nyumbazetu.com",
     html: `
-      <h2>New Contact Form Submission</h2>
-      <p><strong>Name:</strong> ${escapeHtml(payload.name.trim())}</p>
-      <p><strong>Email:</strong> ${escapeHtml(payload.email.trim().toLowerCase())}</p>
-      <p><strong>Phone:</strong> ${escapeHtml(payload.phone.trim())}</p>
-      <p><strong>Company:</strong> ${escapeHtml(payload.company?.trim() || "Not provided")}</p>
-      <p><strong>Role:</strong> ${escapeHtml(payload.role?.trim() || "Not provided")}</p>
-      <p><strong>Portfolio:</strong> ${escapeHtml(payload.portfolio?.trim() || "Not provided")}</p>
-      <p><strong>Source:</strong> ${escapeHtml(payload.source?.trim() || "Not provided")}</p>
-      ${messageBlock}
+      <div style="margin: 0; padding: 24px; background: #f8fafc; font-family: Arial, sans-serif; color: #0f172a;">
+        <div style="max-width: 720px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+          <div style="padding: 20px 24px; background: #0f172a; color: #ffffff;">
+            <p style="margin: 0; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.85;">
+              Nyumba Zetu
+            </p>
+            <h1 style="margin: 8px 0 0 0; font-size: 20px; line-height: 1.3;">
+              New Lead Opportunity Submitted on nyumbazetu.com
+            </h1>
+          </div>
+          <div style="padding: 24px;">
+            <p style="margin: 0 0 16px 0; color: #334155;">
+              This notification confirms a new contact form submission from the website.
+            </p>
+
+            <div style="margin: 0 0 20px 0; padding: 12px 14px; border-radius: 10px; background: #f8fafc; border: 1px solid #e2e8f0;">
+              <p style="margin: 0 0 6px 0;">
+                <strong>Database Status:</strong> ${escapeHtml(databaseStatusText)}
+              </p>
+              <p style="margin: 0;">
+                <strong>Lead ID:</strong> ${escapeHtml(leadReferenceText)}
+              </p>
+              ${databaseErrorBlock}
+            </div>
+
+            <h2 style="margin: 0 0 12px 0; font-size: 16px;">Submission Details</h2>
+            <p style="margin: 0 0 8px 0;"><strong>Name:</strong> ${escapeHtml(payload.name.trim())}</p>
+            <p style="margin: 0 0 8px 0;"><strong>Email:</strong> ${escapeHtml(payload.email.trim().toLowerCase())}</p>
+            <p style="margin: 0 0 8px 0;"><strong>Phone:</strong> ${escapeHtml(payload.phone.trim())}</p>
+            <p style="margin: 0 0 8px 0;"><strong>Company:</strong> ${escapeHtml(payload.company?.trim() || "Not provided")}</p>
+            <p style="margin: 0 0 8px 0;"><strong>Role:</strong> ${escapeHtml(payload.role?.trim() || "Not provided")}</p>
+            <p style="margin: 0 0 8px 0;"><strong>Portfolio:</strong> ${escapeHtml(payload.portfolio?.trim() || "Not provided")}</p>
+            <p style="margin: 0 0 16px 0;"><strong>Source:</strong> ${escapeHtml(payload.source?.trim() || "Not provided")}</p>
+            <div style="margin: 0 0 8px 0; color: #0f172a;">
+              ${messageBlock}
+            </div>
+          </div>
+          <div style="padding: 16px 24px; background: #f8fafc; border-top: 1px solid #e2e8f0;">
+            <p style="margin: 0; font-size: 12px; color: #64748b;">
+              This is an automated notification from nyumbazetu.com contact form submissions.
+            </p>
+          </div>
+        </div>
+      </div>
     `,
   });
 }
@@ -187,30 +251,40 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    let wasSavedToDatabase = false;
+    let leadId: number | null = null;
+    let databaseErrorMessage: string | null = null;
     if (!supabaseAdmin) {
-      return NextResponse.json(
-        { error: "Database is not configured on the server." },
-        { status: 500 },
-      );
-    }
+      databaseErrorMessage = "Database is not configured on the server.";
+    } else {
+      const insertPayload = buildOpportunityInsert(body, request);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Table is not yet present in generated DB types.
+      const { data, error: insertError } = await (supabaseAdmin as any)
+        .from("tb_sales_opportunities")
+        .insert(insertPayload)
+        .select("id")
+        .single();
 
-    const insertPayload = buildOpportunityInsert(body, request);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Table is not yet present in generated DB types.
-    const { error: insertError } = await (supabaseAdmin as any)
-      .from("tb_sales_opportunities")
-      .insert(insertPayload);
-
-    if (insertError) {
-      console.error("Failed to insert contact opportunity:", insertError);
-      return NextResponse.json(
-        { error: "Failed to save your message. Please try again." },
-        { status: 500 },
-      );
+      if (insertError) {
+        databaseErrorMessage =
+          insertError.message ?? "Unknown database insert error.";
+        console.error("Failed to insert contact opportunity:", insertError);
+      } else {
+        wasSavedToDatabase = true;
+        leadId =
+          data?.id != null && !Number.isNaN(Number(data.id))
+            ? Number(data.id)
+            : null;
+      }
     }
 
     let emailNotificationSent = true;
     try {
-      await sendSupportEmail(body);
+      await sendSupportEmail(body, {
+        wasSavedToDatabase,
+        leadId,
+        databaseErrorMessage,
+      });
     } catch (emailError) {
       emailNotificationSent = false;
       // We intentionally do not fail the request here because the lead has
@@ -226,11 +300,14 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       {
-        success: true,
-        message: "Your message has been submitted successfully.",
+        success: wasSavedToDatabase,
+        message: wasSavedToDatabase
+          ? "Your message has been submitted successfully."
+          : "Your message was received but could not be saved in the database.",
+        leadId,
         emailNotificationSent,
       },
-      { status: 200 },
+      { status: wasSavedToDatabase ? 200 : 500 },
     );
   } catch (error) {
     console.error("Error processing contact form submission:", error);
