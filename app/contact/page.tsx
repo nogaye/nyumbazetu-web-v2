@@ -128,19 +128,18 @@ export default function ContactPage() {
     setSubmitStatus("idle");
 
     try {
-      // TODO: Replace with actual API endpoint
-      // const response = await fetch("/api/contact", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(formData),
-      // });
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      // if (!response.ok) throw new Error("Submission failed");
+      if (!response.ok) {
+        throw new Error("Submission failed");
+      }
 
       setSubmitStatus("success");
+      trackFormSubmit("contact", true);
       setFormData({
         name: "",
         company: "",
@@ -284,34 +283,11 @@ export default function ContactPage() {
                 Send a message
               </CardTitle>
               <CardDescription>
-                Fill out the form below and we&apos;ll get back to you within 24
+                Fill out the form below and we&apos;ll get back to you within 12
                 hours.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6 pt-6">
-              {submitStatus === "success" && (
-                <Alert className="border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20">
-                  <CheckCircleIcon className="h-5 w-5 text-green-600 dark:text-green-400" />
-                  <AlertTitle className="text-green-800 dark:text-green-200">
-                    Thank you for your message!
-                  </AlertTitle>
-                  <AlertDescription className="text-green-700 dark:text-green-300">
-                    We&apos;ll get back to you within 24 hours.
-                  </AlertDescription>
-                </Alert>
-              )}
-
-              {submitStatus === "error" && (
-                <Alert variant="destructive">
-                  <ExclamationCircleIcon className="h-5 w-5" />
-                  <AlertTitle>Something went wrong</AlertTitle>
-                  <AlertDescription>
-                    Please try again or contact us directly at{" "}
-                    {CONTACT_EMAIL}
-                  </AlertDescription>
-                </Alert>
-              )}
-
               <form className="space-y-6" onSubmit={handleSubmit} noValidate>
                 <div className="space-y-4 rounded-xl border border-slate-200/70 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/30 p-4">
                   <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
@@ -535,6 +511,28 @@ export default function ContactPage() {
                       </>
                     )}
                   </Button>
+                  {submitStatus === "success" && (
+                    <Alert className="mt-4 border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20">
+                      <CheckCircleIcon className="h-5 w-5 text-green-600 dark:text-green-400" />
+                      <AlertTitle className="text-green-800 dark:text-green-200">
+                        Thank you for your message!
+                      </AlertTitle>
+                      <AlertDescription className="text-green-700 dark:text-green-300">
+                        Our team typically gets back to you within 12 hours.
+                      </AlertDescription>
+                    </Alert>
+                  )}
+
+                  {submitStatus === "error" && (
+                    <Alert className="mt-4" variant="destructive">
+                      <ExclamationCircleIcon className="h-5 w-5" />
+                      <AlertTitle>Something went wrong</AlertTitle>
+                      <AlertDescription>
+                        Please try again or contact us directly at{" "}
+                        {CONTACT_EMAIL}
+                      </AlertDescription>
+                    </Alert>
+                  )}
                   <p className="text-xs text-center text-slate-500 dark:text-slate-400 mt-3">
                     * Required fields
                   </p>
