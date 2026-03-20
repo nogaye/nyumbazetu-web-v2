@@ -171,8 +171,8 @@ export default function ContactPage() {
         />
       </Section>
 
-      <Section>
-        <div className="max-w-2xl mx-auto flex flex-col items-center text-center md:text-left md:items-start">
+      <Section className="bg-gradient-to-b from-white to-slate-50/60 dark:from-slate-950 dark:to-slate-900/40">
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-14 items-start">
           <div className="space-y-8 w-full">
             <div>
               <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">
@@ -192,10 +192,10 @@ export default function ContactPage() {
             </div>
 
             <div className="space-y-6">
-              <Card className="border-slate-200 dark:border-slate-800">
+              <Card className="rounded-2xl border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-950/70 shadow-sm">
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
-                    <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20">
+                    <div className="p-2.5 rounded-xl bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/15">
                       <BuildingOfficeIcon className="h-6 w-6 text-primary" />
                     </div>
                     <div>
@@ -214,10 +214,10 @@ export default function ContactPage() {
                 </CardContent>
               </Card>
 
-              <Card className="border-slate-200 dark:border-slate-800">
+              <Card className="rounded-2xl border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-950/70 shadow-sm">
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
-                    <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20">
+                    <div className="p-2.5 rounded-xl bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/15">
                       <PhoneIcon className="h-6 w-6 text-primary" />
                     </div>
                     <div>
@@ -246,10 +246,10 @@ export default function ContactPage() {
                 </CardContent>
               </Card>
 
-              <Card className="border-slate-200 dark:border-slate-800">
+              <Card className="rounded-2xl border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-950/70 shadow-sm">
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
-                    <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20">
+                    <div className="p-2.5 rounded-xl bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/15">
                       <EnvelopeIcon className="h-6 w-6 text-primary" />
                     </div>
                     <div>
@@ -267,10 +267,10 @@ export default function ContactPage() {
                 </CardContent>
               </Card>
 
-              <Card className="border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+              <Card className="rounded-2xl border-slate-200/80 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900/50 shadow-sm">
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
-                    <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20">
+                    <div className="p-2.5 rounded-xl bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/15">
                       <InformationCircleIcon className="h-6 w-6 text-primary" />
                     </div>
                     <div>
@@ -288,9 +288,9 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Send a message form – commented out for now
-          <Card className="shadow-lg">
-            <CardHeader className="space-y-2 pb-4">
+          {/* Send a message form */}
+          <Card className="shadow-xl shadow-primary/10 w-full rounded-2xl border-primary/20 bg-white/95 dark:bg-slate-950/85 backdrop-blur">
+            <CardHeader className="space-y-2 pb-4 border-b border-slate-200/80 dark:border-slate-800">
               <CardTitle className="text-2xl font-bold">
                 Send a message
               </CardTitle>
@@ -299,7 +299,7 @@ export default function ContactPage() {
                 hours.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-6 pt-6">
               {submitStatus === "success" && (
                 <Alert className="border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20">
                   <CheckCircleIcon className="h-5 w-5 text-green-600 dark:text-green-400" />
@@ -324,7 +324,7 @@ export default function ContactPage() {
               )}
 
               <form className="space-y-6" onSubmit={handleSubmit} noValidate>
-                <div className="space-y-4">
+                <div className="space-y-4 rounded-xl border border-slate-200/70 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/30 p-4">
                   <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
                     <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
                       Personal Information
@@ -427,7 +427,7 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-4 rounded-xl border border-slate-200/70 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/30 p-4">
                   <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
                     <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
                       Company Information
@@ -481,7 +481,7 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-4 rounded-xl border border-slate-200/70 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/30 p-4">
                   <div className="pb-2 border-b border-slate-200 dark:border-slate-700">
                     <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
                       Additional Information
@@ -553,7 +553,6 @@ export default function ContactPage() {
               </form>
             </CardContent>
           </Card>
-          */}
         </div>
       </Section>
     </>
