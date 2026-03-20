@@ -173,12 +173,10 @@ export default function ContactPage() {
 
       <Section className="bg-gradient-to-b from-white to-slate-50/60 dark:from-slate-950 dark:to-slate-900/40">
         <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-14 items-start">
-          <div className="space-y-8 w-full">
-            <div>
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">
-                Get in Touch
-              </h2>
-              <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+          <Card className="shadow-xl shadow-primary/10 w-full rounded-2xl border-primary/20 bg-white/95 dark:bg-slate-950/85 backdrop-blur">
+            <CardHeader className="space-y-2 pb-4 border-b border-slate-200/80 dark:border-slate-800">
+              <CardTitle className="text-2xl font-bold">Get in touch</CardTitle>
+              <CardDescription className="text-base leading-relaxed">
                 Fill out the form and our team will get back to you within 24
                 hours. Want to book a product demo?{" "}
                 <Link
@@ -188,105 +186,96 @@ export default function ContactPage() {
                   Request a demo
                 </Link>
                 .
-              </p>
-            </div>
-
-            <div className="space-y-6">
-              <Card className="rounded-2xl border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-950/70 shadow-sm">
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="p-2.5 rounded-xl bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/15">
-                      <BuildingOfficeIcon className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">
-                        Find us at the office
-                      </h3>
-                      <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Zetu Innovations
-                        <br />
-                        90 JGO, James Gichuru Road,
-                        <br />
-                        Nairobi, Kenya
-                      </p>
-                    </div>
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4 pt-6">
+              <div className="rounded-xl border border-slate-200/70 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/30 p-4">
+                <div className="flex items-start gap-4">
+                  <div className="p-2.5 rounded-xl bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/15">
+                    <BuildingOfficeIcon className="h-6 w-6 text-primary" />
                   </div>
-                </CardContent>
-              </Card>
-
-              <Card className="rounded-2xl border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-950/70 shadow-sm">
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="p-2.5 rounded-xl bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/15">
-                      <PhoneIcon className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">
-                        Give us a ring
-                      </h3>
-                      <p className="text-slate-600 dark:text-slate-400 space-y-1">
-                        <a
-                          href={CONTACT_PHONE_PRIMARY_TEL}
-                          className="block text-primary hover:underline transition-colors"
-                        >
-                          {CONTACT_PHONE_PRIMARY_DISPLAY}
-                        </a>
-                        <a
-                          href={CONTACT_PHONE_SECONDARY_TEL}
-                          className="block text-primary hover:underline transition-colors"
-                        >
-                          {CONTACT_PHONE_SECONDARY_DISPLAY}
-                        </a>
-                        <span className="block text-sm mt-2">
-                          {CONTACT_BUSINESS_HOURS}
-                        </span>
-                      </p>
-                    </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">
+                      Find us at the office
+                    </h3>
+                    <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                      Zetu Innovations
+                      <br />
+                      90 JGO, James Gichuru Road,
+                      <br />
+                      Nairobi, Kenya
+                    </p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              <Card className="rounded-2xl border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-950/70 shadow-sm">
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="p-2.5 rounded-xl bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/15">
-                      <EnvelopeIcon className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">
-                        Email us
-                      </h3>
+              <div className="rounded-xl border border-slate-200/70 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/30 p-4">
+                <div className="flex items-start gap-4">
+                  <div className="p-2.5 rounded-xl bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/15">
+                    <PhoneIcon className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">
+                      Give us a ring
+                    </h3>
+                    <p className="text-slate-600 dark:text-slate-400 space-y-1">
                       <a
-                        href={CONTACT_EMAIL_MAILTO}
-                        className="text-primary hover:underline transition-colors block"
+                        href={CONTACT_PHONE_PRIMARY_TEL}
+                        className="block text-primary hover:underline transition-colors"
                       >
-                        {CONTACT_EMAIL}
+                        {CONTACT_PHONE_PRIMARY_DISPLAY}
                       </a>
-                    </div>
+                      <a
+                        href={CONTACT_PHONE_SECONDARY_TEL}
+                        className="block text-primary hover:underline transition-colors"
+                      >
+                        {CONTACT_PHONE_SECONDARY_DISPLAY}
+                      </a>
+                      <span className="block text-sm mt-2">
+                        {CONTACT_BUSINESS_HOURS}
+                      </span>
+                    </p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              <Card className="rounded-2xl border-slate-200/80 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900/50 shadow-sm">
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="p-2.5 rounded-xl bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/15">
-                      <InformationCircleIcon className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">
-                        Response Time
-                      </h3>
-                      <p className="text-slate-600 dark:text-slate-400">
-                        We typically respond within 24 hours during business
-                        days.
-                      </p>
-                    </div>
+              <div className="rounded-xl border border-slate-200/70 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/30 p-4">
+                <div className="flex items-start gap-4">
+                  <div className="p-2.5 rounded-xl bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/15">
+                    <EnvelopeIcon className="h-6 w-6 text-primary" />
                   </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">
+                      Email us
+                    </h3>
+                    <a
+                      href={CONTACT_EMAIL_MAILTO}
+                      className="text-primary hover:underline transition-colors block"
+                    >
+                      {CONTACT_EMAIL}
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-slate-200/70 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/30 p-4">
+                <div className="flex items-start gap-4">
+                  <div className="p-2.5 rounded-xl bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/15">
+                    <InformationCircleIcon className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-2">
+                      Response Time
+                    </h3>
+                    <p className="text-slate-600 dark:text-slate-400">
+                      Our team typically responds within 12 hours during business
+                      days.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Send a message form */}
           <Card className="shadow-xl shadow-primary/10 w-full rounded-2xl border-primary/20 bg-white/95 dark:bg-slate-950/85 backdrop-blur">
