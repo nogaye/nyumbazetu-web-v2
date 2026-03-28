@@ -23,6 +23,7 @@ import { staggerContainer, staggerChild } from "@/lib/motion";
 const footerLinks = {
   product: [
     { label: "Overview", href: "/product" },
+    //{ label: "Vendor marketplace", href: "/services" },
     { label: "Features", href: "/features" },
     { label: "Integrations", href: "/integrations" },
     { label: "Compare Solutions", href: "/compare" },
@@ -70,10 +71,19 @@ const footerLinks = {
   ],
   /** Solution/guide landing pages; separate column so Resources column is not too long. */
   learn: [
-    { label: "Property Management Kenya", href: "/property-management-software-kenya" },
-    { label: "Rent Collection Software", href: "/rent-collection-software-kenya" },
+    {
+      label: "Property Management Kenya",
+      href: "/property-management-software-kenya",
+    },
+    {
+      label: "Rent Collection Software",
+      href: "/rent-collection-software-kenya",
+    },
     { label: "M-Pesa Rent Collection", href: "/mpesa-rent-collection" },
-    { label: "HOA & Estate Management", href: "/hoa-management-software-kenya" },
+    {
+      label: "HOA & Estate Management",
+      href: "/hoa-management-software-kenya",
+    },
   ],
   company: [
     { label: "About", href: "/about" },
@@ -89,7 +99,6 @@ const footerLinks = {
     { label: "Data Protection (ODPC)", href: "/compliance/odpc" },
   ],
 };
-
 
 /**
  * Footer link columns grid with scroll-triggered stagger animation.
@@ -349,8 +358,14 @@ export function SiteFooter() {
               aria-label="System Status – check platform uptime and incidents"
             >
               <div className="relative flex-shrink-0 flex items-center justify-center">
-                <span className="absolute inline-flex h-4 w-4 rounded-full bg-green-500/40 animate-ping" aria-hidden />
-                <SignalIcon className="h-4 w-4 text-green-500 animate-pulse stroke-[2.5]" aria-hidden />
+                <span
+                  className="absolute inline-flex h-4 w-4 rounded-full bg-green-500/40 animate-ping"
+                  aria-hidden
+                />
+                <SignalIcon
+                  className="h-4 w-4 text-green-500 animate-pulse stroke-[2.5]"
+                  aria-hidden
+                />
               </div>
               <span className="text-xs">All Systems Operational</span>
             </a>

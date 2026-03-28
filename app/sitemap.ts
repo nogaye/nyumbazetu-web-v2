@@ -5,6 +5,10 @@ import { getAllBlogSlugs } from "@/lib/blogs/content";
 import { getAllMigratedBlogParams } from "@/lib/blogs/migrated-content";
 import { getAllResourceSlugs } from "@/lib/resources/content";
 import { APARTMENTS_RENT_HUB_SLUGS } from "@/lib/listings/apartments-rent-seo-hubs";
+import {
+  getAllVendorSlugs,
+  SERVICE_CATEGORY_SLUGS,
+} from "@/lib/services/vendors-mock";
 
 /**
  * Generates the sitemap for www.nyumbazetu.com: static marketing/solution pages,
@@ -63,6 +67,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.85,
     }));
 
+  /** Vendor marketplace marketing routes (mock vendor profiles and category hubs). */
+  const vendorMarketplaceEntries: MetadataRoute.Sitemap = [
+    "/services",
+    "/services/request",
+    "/services/property-managers",
+    "/services/vendors",
+    "/services/for-vendors",
+    "/services/for-managers",
+    "/services/how-it-works",
+    ...getAllVendorSlugs().map((slug) => ({
+      url: `${baseUrl}/services/vendors/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
+    ...SERVICE_CATEGORY_SLUGS.map((cat) => ({
+      url: `${baseUrl}/services/categories/${cat}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.72,
+    })),
+  ].map((entry) =>
+    typeof entry === "string"
+      ? {
+          url: `${baseUrl}${entry}`,
+          lastModified: new Date(),
+          changeFrequency: "monthly" as const,
+          priority: 0.78,
+        }
+      : entry,
+  );
+
   /** Public listing detail URLs for SEO; empty if DB unavailable. */
   const listingSlugs = await getAllListingSlugs();
   const listingEntries: MetadataRoute.Sitemap = listingSlugs.map(
@@ -119,6 +155,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticEntries,
+    ...vendorMarketplaceEntries,
     ...apartmentRentHubEntries,
     ...blogEntries,
     ...resourceEntries,

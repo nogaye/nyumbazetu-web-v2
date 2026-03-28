@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useCallback, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -125,17 +125,55 @@ const navItems: NavItem[] = [
   //   ],
   // },
   { label: "Property Listings", href: "/listings" },
+  //{ label: "Services", href: "/services" },
   { label: "Pricing", href: "/pricing" },
 ];
 
 /** Initial desktop feature groups expanded state: all collapsed so user expands as needed. */
 const initialFeatureGroupsExpanded = new Set<string>();
 
+/**
+ * Scroll Y threshold (px) for the home hero: while `window.scrollY` is below this value on `/`,
+ * the main nav uses the lighter “over hero” styles.
+ */
+const HERO_NAV_BLEND_SCROLL_PX = 420;
+
+/**
+ * Subscribes to `window` scroll and forwards updates to `useSyncExternalStore` only when the
+ * current pathname is `/`, so scrolling on other routes does not schedule unnecessary nav re-renders.
+ *
+ * @param onStoreChange - `useSyncExternalStore` callback to schedule a re-read of the snapshot.
+ * @param pathname - Pathname captured when the subscription was created; must match `usePathname()` for that render so scroll events only notify on `/`.
+ * @returns Teardown that removes the passive scroll listener.
+ */
+function subscribeMainNavHeroScroll(
+  onStoreChange: () => void,
+  pathname: string,
+): () => void {
+  const onScroll = (): void => {
+    if (pathname === "/") {
+      onStoreChange();
+    }
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  return () => window.removeEventListener("scroll", onScroll);
+}
+
 export function MainNav() {
   const pathname = usePathname();
+
+  /**
+   * Subscribe callback for `useSyncExternalStore`. Recreated when `pathname` changes so the scroll
+   * listener closes over the current route (no ref updates during render); `useSyncExternalStore`
+   * tears down the previous listener when this identity changes.
+   */
+  const subscribeHeroScroll = useCallback(
+    (onStoreChange: () => void) =>
+      subscribeMainNavHeroScroll(onStoreChange, pathname),
+    [pathname],
+  );
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  /** When true, hero is in view — nav uses transparent/dark style to blend with hero. */
-  const [isOverHero, setIsOverHero] = useState(false);
   /** Tracks which mobile menu sections (e.g. Solutions, Features) are expanded. */
   const [expandedSections, setExpandedSections] = useState<Set<string>>(
     new Set(),
@@ -147,16 +185,15 @@ export function MainNav() {
     Set<string>
   >(initialFeatureGroupsExpanded);
 
-  useEffect(() => {
-    if (pathname !== "/") {
-      setIsOverHero(false);
-      return;
-    }
-    const onScroll = () => setIsOverHero(window.scrollY < 420);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [pathname]);
+  /**
+   * Home-only hero overlap: derived synchronously from pathname + scroll via `useSyncExternalStore`
+   * (avoids effect + `setState` to sync scroll, which triggers cascading-render warnings).
+   */
+  const navOverHero = useSyncExternalStore(
+    subscribeHeroScroll,
+    () => pathname === "/" && window.scrollY < HERO_NAV_BLEND_SCROLL_PX,
+    () => false,
+  );
 
   const toggleSection = (label: string) => {
     setExpandedSections((prev) => {
@@ -176,8 +213,6 @@ export function MainNav() {
       return next;
     });
   };
-
-  const navOverHero = pathname === "/" && isOverHero;
 
   return (
     <nav
