@@ -17,7 +17,7 @@ import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 export default function RequestDemoPage() {
   return (
     <>
-      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 pb-8 md:pb-10">
+      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 pb-2 md:pb-3">
         <SectionHeader
           title="Request a demo"
           description="Book a 45-minute call with our team. We will walk you through the platform and answer your questions — pick a time below."
