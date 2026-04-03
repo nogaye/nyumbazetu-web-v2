@@ -20,7 +20,7 @@ export const metadata = {
 export default function RentCollectionSoftwareKenyaPage() {
   return (
     <>
-      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
+      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 pb-3 md:pb-4 lg:pb-5">
         <SectionHeader
           title="Rent Collection Software for Kenya"
           description="Automate rent and service charge collection with M-Pesa and bank integration. Real-time reconciliation, reminders, and reporting—built for Kenyan landlords and property managers."

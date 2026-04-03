@@ -17,7 +17,7 @@ export const metadata = {
 export default function ProductPage() {
   return (
     <>
-      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
+      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 pb-3 md:pb-4 lg:pb-5">
         <SectionHeader
           title="One platform for every layer of property operations in Kenya."
           description="Nyumba Zetu integrates property management, accounting, tenant experience, and compliance into a single, powerful platform."

@@ -138,7 +138,7 @@ export default async function ResourceSlugPage({ params }: PageProps) {
         />
       )}
 
-      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
+      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 pb-3 md:pb-4 lg:pb-5">
         <div className="max-w-3xl mx-auto">
           <nav aria-label="Breadcrumb">
             <Link

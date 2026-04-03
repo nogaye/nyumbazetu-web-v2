@@ -18,7 +18,7 @@ export const metadata = {
 export default function IntegrationsPage() {
   return (
     <>
-      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 pb-12 md:pb-16">
+      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 pb-3 md:pb-4 lg:pb-5">
         <SectionHeader
           title="Plug into the tools that already run your business."
           description="Nyumba Zetu becomes your operational and financial source of truth while staying connected to your bank, M-Pesa, accounting tools, smart meters, and more."

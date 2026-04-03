@@ -25,9 +25,8 @@ interface SectionHeaderProps {
  * Centered section title, optional eyebrow and description.
  * When animate is true, content animates in when in view.
  *
- * Default bottom margin keeps a modest gap before the next block; it is intentionally
- * tighter than before so hero-style sections sit closer to the content below. Pass
- * `className` (e.g. `mb-0` or `mb-16`) when a page needs different spacing.
+ * Default bottom margin is small because spacing also comes from `Section` padding; pass
+ * `className` (e.g. `mb-8` or `mb-0`) when a layout needs more or less separation.
  */
 export function SectionHeader({
   eyebrow,
@@ -78,7 +77,7 @@ export function SectionHeader({
     return (
       <div
         ref={ref}
-        className={cn("text-center max-w-3xl mx-auto mb-6 md:mb-8", className)}
+        className={cn("text-center max-w-3xl mx-auto mb-3 md:mb-4", className)}
       >
         {content}
       </div>
@@ -88,7 +87,7 @@ export function SectionHeader({
   return (
     <motion.div
       ref={ref}
-      className={cn("text-center max-w-3xl mx-auto mb-6 md:mb-8", className)}
+      className={cn("text-center max-w-3xl mx-auto mb-3 md:mb-4", className)}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       variants={fadeInUp}

@@ -163,7 +163,7 @@ export default function ContactPage() {
   };
   return (
     <>
-      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
+      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 pb-3 md:pb-4 lg:pb-5">
         <SectionHeader
           title="Get in touch"
           description="Ask questions, share feedback, or learn how Nyumba Zetu can help your property operations. We'll respond within 24 hours."

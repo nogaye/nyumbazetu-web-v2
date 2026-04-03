@@ -20,7 +20,7 @@ export const metadata = {
 export default function HoaManagementSoftwareKenyaPage() {
   return (
     <>
-      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
+      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 pb-3 md:pb-4 lg:pb-5">
         <SectionHeader
           title="HOA & Estate Management Software for Kenya"
           description="Service charge collection, committee workflows, resident communication, and transparent financial reporting—for housing estates and homeowners associations in Kenya."

@@ -184,7 +184,7 @@ export function PricingContent() {
 
   return (
     <>
-      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
+      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 pb-3 md:pb-4 lg:pb-5">
         <SectionHeader
           title="Start free. Scale when you’re ready."
           description="Paid plans start at KES 80 per unit/month (annual billing) or KES 100 per unit/month (monthly billing)."

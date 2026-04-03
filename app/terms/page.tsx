@@ -41,7 +41,7 @@ export default function TermsPage() {
 
   return (
     <>
-      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
+      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 pb-3 md:pb-4 lg:pb-5">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row gap-6">
             <div className="w-full lg:w-1/4 mb-4 lg:mb-0">

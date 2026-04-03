@@ -13,7 +13,7 @@ export const metadata = {
 export default function CareersPage() {
   return (
     <>
-      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 relative">
+      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 pb-3 md:pb-4 lg:pb-5 relative">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-10 dark:opacity-5"
           style={{ backgroundImage: "url(/legacy/images/events/bg33.jpg)" }}

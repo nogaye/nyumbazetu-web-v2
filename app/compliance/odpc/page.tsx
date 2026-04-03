@@ -34,7 +34,7 @@ export default function ODPCPage() {
 
   return (
     <>
-      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24">
+      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 pb-3 md:pb-4 lg:pb-5">
         <SectionHeader
           title="Data Protection Compliance"
           description="Nyumba Zetu is certified by the Office of the Data Protection Commissioner (ODPC) in Kenya, ensuring your data is handled with the highest standards of security and privacy."

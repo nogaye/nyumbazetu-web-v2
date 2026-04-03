@@ -286,7 +286,9 @@ export function MainNav() {
                   openDropdown === item.label && (
                     <div
                       className={cn(
-                        "absolute left-0 z-50 mt-1.5 animate-[fadeIn_0.15s_ease-out]",
+                        // top-full + pt-1.5 (not mt-1.5): padding belongs to this layer so the
+                        // pointer can cross the gap without leaving the nav item’s hover subtree.
+                        "absolute left-0 top-full z-50 pt-1.5 animate-[fadeIn_0.15s_ease-out]",
                         item.childGroups ? "w-80 min-w-[320px]" : "w-80",
                       )}
                     >
