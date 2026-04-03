@@ -1,10 +1,11 @@
 "use client";
 
 /**
- * Reusable platform screenshots carousel. Displays the five Nyumba Zetu
- * dashboard screens (overview, analytics, amenities, tasks, smart meters)
- * with Embla carousel, autoplay, and optional section header. Used on
- * the homepage and product page.
+ * Reusable platform screenshots carousel. Displays Nyumba Zetu product
+ * screens (management dashboard, property calendar, occupancy scheduler,
+ * analytics, amenities, tasks, smart meters) with Embla carousel, autoplay,
+ * and an optional section header. Consumes PNGs from
+ * `public/images/dashboard-screenshots/`. Used on the homepage and product page.
  */
 
 import { useState, useEffect, useCallback } from "react";
@@ -19,29 +20,55 @@ import {
   ChartBarIcon,
   TableCellsIcon,
   CalendarDaysIcon,
+  CalendarIcon,
+  ViewColumnsIcon,
   BoltIcon,
   BuildingOffice2Icon,
 } from "@heroicons/react/24/outline";
 
-/** Single carousel slide: image path, accessibility text, and caption. */
+/** Single carousel slide: public image URL, accessibility text, marketing copy, and optional icon key. */
 export interface ScreenshotSlide {
+  /** Public path under `public/`, e.g. `/images/dashboard-screenshots/...`. */
   src: string;
+  /** Concise description for screen readers and SEO. */
   alt: string;
+  /** Heading shown below the carousel for the active slide. */
   title: string;
+  /** Short paragraph explaining the screen. */
   description: string;
+  /** One-line label under the thumbnail. */
   caption: string;
-  icon?: "dashboard" | "analytics" | "amenities" | "tasks" | "meters";
+  /** Icon key mapped in `ICON_MAP` for the active slide; omit only for slides without an icon. */
+  icon?: "dashboard" | "calendar" | "occupancy" | "analytics" | "amenities" | "tasks" | "meters";
 }
 
 export const PLATFORM_SCREENSHOTS: ScreenshotSlide[] = [
   {
     src: "/images/dashboard-screenshots/dashboard-overview.png",
-    alt: "Nyumba Zetu dashboard showing outstanding balance, units, residents, occupancy, and scheduled tasks",
+    alt: "Nyumba Zetu management dashboard showing outstanding balance, unpaid expenses, units, residents, occupancy, leases, sentiment, and scheduled tasks",
     title: "Comprehensive Management Dashboard",
     description:
-      "A centralized hub for real-time insights—outstanding balance, units, residents, occupancy, leases, and scheduled tasks at a glance.",
+      "A centralized hub for real-time insights—balances, units, residents, wallet and suspense, occupancy, leases, operational tasks, and sentiment in one place.",
     caption: "Your entire portfolio in one view.",
     icon: "dashboard",
+  },
+  {
+    src: "/images/dashboard-screenshots/property-calendar.png",
+    alt: "Property calendar monthly view with color-coded lease, rent, maintenance, inspection, and visit events",
+    title: "Property Calendar",
+    description:
+      "Plan and scan lease milestones, rent due dates, maintenance, inspections, and visits in a clear month view—with event types and details at your fingertips.",
+    caption: "Never miss a lease, rent, or maintenance date.",
+    icon: "calendar",
+  },
+  {
+    src: "/images/dashboard-screenshots/occupancy-scheduler.png",
+    alt: "Occupancy scheduler timeline with units by block and colored status segments across a date range",
+    title: "Occupancy Scheduler",
+    description:
+      "See every unit on a horizontal timeline—occupied, reserved, notice, maintenance, vacant hold, move-in pending—so you can forecast availability and transitions.",
+    caption: "Unit-level occupancy across time.",
+    icon: "occupancy",
   },
   {
     src: "/images/dashboard-screenshots/analytics-reports.png",
@@ -83,6 +110,8 @@ export const PLATFORM_SCREENSHOTS: ScreenshotSlide[] = [
 
 const ICON_MAP = {
   dashboard: ChartBarIcon,
+  calendar: CalendarIcon,
+  occupancy: ViewColumnsIcon,
   analytics: TableCellsIcon,
   amenities: BuildingOffice2Icon,
   tasks: CalendarDaysIcon,
@@ -108,7 +137,8 @@ export interface PlatformScreenshotsCarouselProps {
  */
 export function PlatformScreenshotsCarousel({
   title = "See the platform in action",
-  description = "Real screens from Nyumba Zetu—dashboard, analytics, amenities, tasks, and smart meters.",
+  description =
+    "Real screens from Nyumba Zetu—dashboard, property calendar, occupancy scheduler, analytics, amenities, tasks, and smart meters.",
   variant = "light",
   className = "",
 }: PlatformScreenshotsCarouselProps) {

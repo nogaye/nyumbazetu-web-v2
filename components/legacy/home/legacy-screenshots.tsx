@@ -16,7 +16,7 @@ export function LegacyScreenshots() {
       <div className="relative">
         <PlatformScreenshotsCarousel
           title="See the platform in action"
-          description="Real screens from Nyumba Zetu—dashboard, analytics, amenities, tasks, and smart meters."
+          description="Real screens from Nyumba Zetu—dashboard, property calendar, occupancy scheduler, analytics, amenities, tasks, and smart meters."
           variant="light"
         />
       </div>

@@ -46,12 +46,12 @@ export default function ProductPage() {
         </div>
       </Section>
 
-      {/* Platform screenshots carousel — real dashboard, analytics, amenities, tasks, smart meters */}
+      {/* Platform screenshots carousel — dashboard, calendar, occupancy, analytics, amenities, tasks, meters */}
       <Section className="bg-secondary">
         <div className="max-w-7xl mx-auto">
           <PlatformScreenshotsCarousel
             title="The platform in action"
-            description="Dashboard overview, analytics and reports, amenities, task management, and smart meter readings—all in one place."
+            description="Management dashboard, property calendar, occupancy scheduler, analytics and reports, amenities, task management, and smart meter readings—all in one place."
             variant="dark"
           />
         </div>
