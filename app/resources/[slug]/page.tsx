@@ -138,31 +138,34 @@ export default async function ResourceSlugPage({ params }: PageProps) {
         />
       )}
 
-      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 pb-3 md:pb-4 lg:pb-5">
-        <div className="max-w-3xl mx-auto">
+      <Section className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pt-16 md:pt-20 lg:pt-24 pb-8 md:pb-10 lg:pb-12">
+        <div className="max-w-3xl mx-auto px-1 sm:px-0">
           <nav aria-label="Breadcrumb">
             <Link
               href="/resources"
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline mb-6"
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline mb-8"
             >
-              <ArrowLeftIcon className="h-4 w-4" />
+              <ArrowLeftIcon className="h-4 w-4 shrink-0" />
               Back to resources
             </Link>
           </nav>
-          <header>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-3">
+          <header className="text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-4">
               {resource.type}
             </p>
-            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-50 mb-4">
+            <h1 className="text-3xl md:text-4xl lg:text-[2.5rem] font-bold text-slate-900 dark:text-slate-50 mb-6 leading-tight max-w-[52rem] mx-auto">
               {resource.title}
             </h1>
-            <div className="flex flex-wrap items-center gap-4 text-slate-600 dark:text-slate-400">
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm md:text-base text-slate-600 dark:text-slate-400">
               <span className="font-medium text-slate-700 dark:text-slate-300">
                 {resource.author}
               </span>
+              <span className="hidden sm:inline text-slate-300 dark:text-slate-600" aria-hidden>
+                ·
+              </span>
               <time dateTime={resource.date}>{formatDate(resource.date)}</time>
             </div>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-400">
+            <p className="mt-8 max-w-2xl mx-auto text-base leading-relaxed text-slate-600 dark:text-slate-400">
               {resource.description}
             </p>
           </header>

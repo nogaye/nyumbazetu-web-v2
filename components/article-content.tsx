@@ -2,6 +2,8 @@
  * Shared article renderer for long-form blog and resource pages.
  * It normalizes heading ids, enforces readable prose width and spacing, and
  * optionally exposes a table of contents for faster scanning and navigation.
+ * Body styles use Tailwind Typography (`prose`); the `@tailwindcss/typography` plugin
+ * must be enabled in `tailwind.config.ts` or these classes have no effect.
  */
 
 import Link from "next/link";
@@ -22,7 +24,12 @@ interface ArticleContentProps {
   title?: string;
 }
 
-/** Converts a heading label into a URL-friendly id. */
+/**
+ * Converts a heading label into a URL-friendly fragment id (lowercase, hyphenated).
+ *
+ * @param label - Plain text or HTML-stripped heading text.
+ * @returns A slug safe for `id` and hash URLs.
+ */
 function slugifyHeading(label: string): string {
   return label
     .toLowerCase()
@@ -84,10 +91,14 @@ export function ArticleContent({ html, title = "On this page" }: ArticleContentP
         <div
           className="prose prose-slate dark:prose-invert prose-lg max-w-none
             prose-headings:font-bold prose-headings:tracking-tight prose-headings:scroll-mt-28
-            prose-h2:mt-12 prose-h2:mb-4 prose-h3:mt-8 prose-h3:mb-3
-            prose-p:leading-8 prose-li:my-2 prose-li:leading-7
+            prose-h2:mt-14 prose-h2:mb-5 prose-h2:text-2xl md:prose-h2:text-[1.75rem] prose-h2:leading-snug prose-h2:text-slate-900 dark:prose-h2:text-slate-50
+            prose-h2:first:mt-0
+            prose-h3:mt-10 prose-h3:mb-4 prose-h3:text-xl md:prose-h3:text-2xl prose-h3:text-slate-900 dark:prose-h3:text-slate-50
+            prose-p:leading-[1.75] prose-p:my-5 prose-p:text-slate-700 dark:prose-p:text-slate-300
+            prose-li:my-2 prose-li:leading-7
             prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-            prose-img:rounded-2xl prose-img:shadow-sm"
+            prose-img:rounded-2xl prose-img:shadow-sm
+            prose-ul:my-5 prose-ol:my-5"
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </article>
