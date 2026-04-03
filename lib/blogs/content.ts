@@ -29,6 +29,60 @@ export interface BlogPost {
 /** All published blog posts, newest first. */
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "long-rains-rental-maintenance-checklist-kenya",
+    title: "Long Rains and Rentals: A Maintenance Checklist for Landlords in Kenya",
+    summary:
+      "As the long rains arrive, use this practical checklist to reduce leaks, disputes, and emergency repairs—while keeping tenants safe and your books predictable.",
+    publishedAt: "2026-04-03",
+    author: "Nyumba Zetu",
+    tags: ["maintenance", "Kenya", "landlords", "seasonal", "property care"],
+    content: `
+      <p>The long rains in Kenya typically bring heavier downpours and more humidity. For landlords and property managers, that is not just weather—it is a window when small problems become expensive ones: roof leaks, drainage failures, damp walls, and electrical risks. A short, disciplined maintenance pass in early April helps you protect income, avoid emergency spend, and keep tenant relationships steady.</p>
+
+      <h2>Roof, gutters, and drainage</h2>
+      <p>Walk the property (or ask your caretaker or manager to) with a simple checklist: clear gutters and downpipes, check for cracked roofing sheets or loose flashing, and confirm water flows away from foundations. Ponding near walls invites damp and structural stress. If you manage multiple units, record what you find so you can schedule repairs before the heaviest weeks.</p>
+
+      <h2>Electrical safety</h2>
+      <p>Wet seasons increase the chance of faults where wiring meets moisture. Ensure external lights, gate motors, and common-area circuits are properly earthed and protected. If tenants report flickering, burning smells, or tripping breakers, treat it as urgent. Good property management software helps you log requests, assign follow-up, and keep an audit trail—useful if an insurer or committee ever asks what was done and when.</p>
+
+      <h2>Plumbing and water ingress</h2>
+      <p>Check tanks, pumps, and exposed pipes for leaks. Inside units, look at ceilings under bathrooms and kitchens for stains that may pre-signal leaks from above. Early fixes are almost always cheaper than mold remediation or ceiling replacement after a slow leak.</p>
+
+      <h2>Tenant communication</h2>
+      <p>Send a short message reminding tenants how to report leaks and emergencies, and who to contact. Clear channels reduce panic and duplicate work. If you use automated rent reminders and portals, combine seasonal notices with routine billing so operational communication stays in one place.</p>
+
+      <h2>Budget and cash flow</h2>
+      <p>Seasonal maintenance is easier when you have visibility on collections and reserves. If you are still reconciling M-Pesa manually, consider moving to a system that matches payments to tenants and invoices automatically—see our guide on <a href="/blogs/how-to-collect-rent-with-mpesa">how to collect rent with M-Pesa</a>. For full operations and accounting in one stack, explore <a href="/property-management-software-kenya">property management software for Kenya</a> or <a href="/request-demo">book a demo</a> to walk through Nyumba Zetu with our team.</p>
+    `,
+  },
+  {
+    slug: "how-to-choose-property-manager-kenya",
+    title: "How to Choose a Property Manager in Kenya: What to Ask Before You Sign",
+    summary:
+      "A practical framework for comparing property managers: fees, coverage, reporting, compliance, and fit for your portfolio—plus where to start your search.",
+    publishedAt: "2026-04-01",
+    author: "Nyumba Zetu",
+    tags: ["property managers", "Kenya", "landlords", "outsourcing", "due diligence"],
+    content: `
+      <p>Hiring a property manager is a strategic decision. The right partner improves collection, reduces vacancy, and keeps maintenance from becoming crises. The wrong fit creates opaque fees, slow responses, and owners who still feel like they are doing everything themselves. Whether you own a few units or a growing portfolio, a structured comparison saves time and reduces regret.</p>
+
+      <h2>Clarify what you are buying</h2>
+      <p>Property managers bundle different services: tenant placement, rent collection, maintenance coordination, owner reporting, and sometimes accounting or committee support. Before you meet anyone, list what you must have versus what is optional. That makes proposals comparable and stops you from paying for services you do not need—or discovering gaps after you have signed.</p>
+
+      <h2>Ask about fees and incentives</h2>
+      <p>Understand percentage-of-rent, fixed monthly fees, leasing fees, and any mark-ups on maintenance. Ask how arrears are chased and whether you see the same reports your manager sees. Alignment matters: you want a manager who is rewarded for stable occupancy and clean books, not for opaque pass-through costs.</p>
+
+      <h2>Verify coverage and capacity</h2>
+      <p>Confirm which areas and property types they actively serve, response-time expectations, and how many units their team realistically handles. If you run apartments, commercial, or mixed-use, ask for relevant references. A manager who excels at single-family homes may not be set up for estates with service charges and AGMs.</p>
+
+      <h2>Compliance and records</h2>
+      <p>In Kenya, financial discipline and traceable records matter for tax, committees, and disputes. Ask how they record income and expenses, how owners receive statements, and how maintenance approvals work. The best operators are happy to explain their workflow; they should not rely on informal WhatsApp alone for financial decisions.</p>
+
+      <h2>Where to compare options</h2>
+      <p>Once you know your criteria, comparing several firms side by side is much faster than ad-hoc outreach. Nyumba Zetu hosts a dedicated <a href="/services/property-managers">property manager marketplace</a> where you can explore profiles, services, and coverage in one place—built for owners who want clarity before the first call. For software that supports your own management or augments a manager’s reporting, see <a href="/property-management-software-kenya">property management software for Kenya</a> or <a href="/request-demo">request a demo</a>.</p>
+    `,
+  },
+  {
     slug: "how-to-collect-rent-with-mpesa",
     title: "How to Collect Rent with M-Pesa: A Guide for Landlords in Kenya",
     summary:
