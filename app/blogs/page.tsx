@@ -1,8 +1,13 @@
+/**
+ * Blog index: lists every article surfaced as a blog post site-wide (routes under `/blogs/...`
+ * and `/resources/...` where the resource type is Blog), merged and sorted by date via
+ * `getAllUnifiedBlogEntries`.
+ */
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
-import { getAllBlogListingEntries } from "@/lib/blogs/content";
+import { getAllUnifiedBlogEntries } from "@/lib/blogs/unified-blog-list";
 
 export const metadata = {
   title: "Blog – Property Management Insights for Kenya",
@@ -17,7 +22,7 @@ function formatDate(iso: string): string {
 }
 
 export default function BlogsPage() {
-  const posts = getAllBlogListingEntries();
+  const posts = getAllUnifiedBlogEntries();
 
   return (
     <>

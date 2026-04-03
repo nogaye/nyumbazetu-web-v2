@@ -1,7 +1,8 @@
 /**
  * Resources hub page: lists guides, case studies, blog posts, and webinars with filter
- * by type. Each card links to app/resources/[slug] for the full article. SEO: metadata,
- * Open Graph, ItemList JSON-LD.
+ * by type. Most cards link to `/resources/[slug]`; the Blog filter uses the unified blog
+ * catalog so the same articles appear as on `/blogs` (including `/blogs/...` URLs). SEO:
+ * metadata, Open Graph, ItemList JSON-LD.
  */
 import { Section } from "@/components/section";
 import { SectionHeader } from "@/components/section-header";
@@ -19,6 +20,10 @@ import {
   type ResourceFilter,
   type ResourceItem,
 } from "@/lib/resources/content";
+import {
+  getAllUnifiedBlogEntries,
+  type UnifiedBlogEntry,
+} from "@/lib/blogs/unified-blog-list";
 import { ResourcesFilterBar } from "@/components/resources-filter-bar";
 import type { Metadata } from "next";
 
@@ -91,6 +96,29 @@ function buildItemListJsonLd(resources: ResourceItem[]) {
   };
 }
 
+/**
+ * ItemList JSON-LD for the unified blog view (`?type=Blog`), using each entry’s canonical
+ * path (`/blogs/...` or `/resources/...`).
+ * @param entries Rows from `getAllUnifiedBlogEntries`, newest first.
+ * @returns Schema.org ItemList suitable for `application/ld+json`.
+ */
+function buildUnifiedBlogItemListJsonLd(entries: UnifiedBlogEntry[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Property management blog posts for Kenya",
+    description:
+      "Blog posts and articles for Kenyan landlords, committees, and property managers.",
+    numberOfItems: entries.length,
+    itemListElement: entries.map((e, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `${SITE_URL}${e.href}`,
+      name: e.title,
+    })),
+  };
+}
+
 export default async function ResourcesPage({ searchParams }: PageProps) {
   const { type: typeParam } = await searchParams;
   const filter: ResourceFilter =
@@ -98,7 +126,11 @@ export default async function ResourcesPage({ searchParams }: PageProps) {
       ? (typeParam as ResourceFilter)
       : "All";
   const resources = getResourcesByFilter(filter);
-  const itemListJsonLd = buildItemListJsonLd(resources);
+  const unifiedBlogs = filter === "Blog" ? getAllUnifiedBlogEntries() : [];
+  const itemListJsonLd =
+    filter === "Blog"
+      ? buildUnifiedBlogItemListJsonLd(unifiedBlogs)
+      : buildItemListJsonLd(resources);
 
   return (
     <>
@@ -121,9 +153,13 @@ export default async function ResourcesPage({ searchParams }: PageProps) {
         />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {resources.map((resource) => (
-            <ResourceCard key={resource.slug} resource={resource} />
-          ))}
+          {filter === "Blog"
+            ? unifiedBlogs.map((entry) => (
+                <UnifiedBlogResourceCard key={entry.href} entry={entry} />
+              ))
+            : resources.map((resource) => (
+                <ResourceCard key={resource.slug} resource={resource} />
+              ))}
         </div>
       </Section>
 
@@ -141,6 +177,49 @@ export default async function ResourcesPage({ searchParams }: PageProps) {
         </div>
       </Section>
     </>
+  );
+}
+
+/**
+ * Card for the Blog filter: supports both `/blogs/...` and `/resources/...` targets from the
+ * unified blog list.
+ * @param entry One row from `getAllUnifiedBlogEntries`.
+ */
+function UnifiedBlogResourceCard({ entry }: { entry: UnifiedBlogEntry }) {
+  return (
+    <Card className="h-full hover:shadow-lg transition-shadow overflow-hidden">
+      <CardHeader>
+        <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
+          Blog
+        </div>
+        <CardTitle className="text-xl">
+          <Link
+            href={entry.href}
+            className="text-slate-900 dark:text-slate-50 hover:text-primary transition-colors"
+          >
+            {entry.title}
+          </Link>
+        </CardTitle>
+        <CardDescription>{entry.summary}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+          <time dateTime={entry.publishedAt}>
+            {new Date(entry.publishedAt).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </time>
+        </div>
+        <Link
+          href={entry.href}
+          className="text-sm font-medium text-primary hover:underline inline-flex items-center"
+        >
+          Read more →
+        </Link>
+      </CardContent>
+    </Card>
   );
 }
 

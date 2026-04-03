@@ -220,8 +220,9 @@ export interface BlogListingEntry {
 }
 
 /**
- * Returns all blog posts for the listing page: migrated legacy articles first
- * by date merged with newer single-slug posts, newest first.
+ * Returns `/blogs`-route posts only (legacy URLs plus `BLOG_POSTS`). For the full index that
+ * also includes `Blog`-typed articles under `/resources/[slug]`, use `getAllUnifiedBlogEntries`
+ * from `unified-blog-list.ts` (used by `/blogs` and `/resources?type=Blog`).
  * @returns Sorted array of href + metadata for each post.
  */
 export function getAllBlogListingEntries(): BlogListingEntry[] {
